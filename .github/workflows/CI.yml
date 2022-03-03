@@ -1,0 +1,50 @@
+# Workflow name
+name: Test
+on:
+# When it will be triggered
+# And in which branch
+  pull_request:
+  push:
+    branches:
+      - dev
+      
+# Where will they run
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2.3.3
+      
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'temurin'
+        java-version: '11'
+        
+        
+    - name: Gradle Wrapper Validation
+      uses: gradle/wrapper-validation-action@v1
+        
+        
+    # Cache gradle files, otherwise they will be rebuilt (takes ~5 minutes) on each execution
+    - uses: actions/cache@v2
+      with:
+        path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+            ${{ runner.os }}-gradle-
+
+       
+    - name: Run Unit Tests
+      id: runTests
+      uses: eskatos/gradle-command-action@v1.3.3
+      with:
+        gradle-version: current
+        wrapper-cache-enabled: true
+        dependencies-cache-enabled: true
+        configuration-cache-enabled: true
+        # Run ./gradlew test
+        arguments: test

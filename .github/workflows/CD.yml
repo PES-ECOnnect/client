@@ -1,0 +1,80 @@
+# Workflow name
+name: Test
+on:
+# When it will be triggered
+# And in which branch
+  pull_request:
+  push:
+    branches:
+      - master
+      
+# Where will they run
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2.3.3
+      
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'temurin'
+        java-version: '11'
+        
+        
+    - name: Gradle Wrapper Validation
+      uses: gradle/wrapper-validation-action@v1
+        
+        
+    # This may improve performance
+    - uses: actions/cache@v2
+      with:
+        path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+            ${{ runner.os }}-gradle-
+    
+    ## Build artifact ##
+    - name: Build all artifacts
+      id: buildAllApks
+      uses: eskatos/gradle-command-action@v1.3.3
+      with:
+        gradle-version: current
+        wrapper-cache-enabled: true
+        dependencies-cache-enabled: true
+        configuration-cache-enabled: true
+        # Run ./gradlew test assembleRelease
+        # This runs unit tests and builds the app
+        arguments: test assembleRelease
+      
+    ## Sign artifact ##
+    - name: Sign artifact
+      id: signArtifact
+      uses: r0adkll/sign-android-release@v1
+      with:
+        releaseDirectory: app/build/outputs/apk/release
+        alias: ${{ secrets.KEYALIAS }}
+        signingKeyBase64: ${{ secrets.KEYSTORE }}
+        keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
+        keyPassword: ${{ secrets.KEY_PASSWORD }}
+    - name: Rename signed APK
+      id: renameArtifact
+      run: cp ${{steps.signArtifact.outputs.signedReleaseFile}} ECOnnect.apk
+
+    - name: Upload signed APK
+      uses: actions/upload-artifact@v2.2.0
+      with:
+        name: Release artifact
+        path: ECOnnect.apk
+
+    - uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "latest"
+        prerelease: true
+        title: "Development Build"
+        files: |
+          ECOnnect.apk
