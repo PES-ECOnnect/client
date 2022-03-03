@@ -1,5 +1,5 @@
 # Workflow name
-name: Test
+name: Build
 on:
 # When it will be triggered
 # And in which branch
@@ -75,6 +75,6 @@ jobs:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         automatic_release_tag: "latest"
         prerelease: true
-        title: "Development Build"
+        title: "Latest Build"
         files: |
           ECOnnect.apk
