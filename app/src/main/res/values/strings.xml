@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ECOnnect</string>
+    <string name="products_name">Products</string>
+    <string name="companies_name">Companies</string>
+    <string name="forum_name">Forum</string>
+    <string name="profile_name">Profile</string>
 </resources>
