@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 
 public class ProductsFragment extends Fragment {
 
-    public ProductsFragment() {
+    CtrlVistes ctrlVistes;
+    public ProductsFragment(CtrlVistes ctrlVistes) {
         // Required empty public constructor
+        this.ctrlVistes = ctrlVistes;
     }
 
     @Override

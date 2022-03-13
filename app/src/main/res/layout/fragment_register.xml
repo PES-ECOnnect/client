@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#928BC34A">
+    android:background="#928BC34A"
+    android:onClick="navigateToLogin">
 
     <LinearLayout
         android:layout_width="410dp"
@@ -116,7 +117,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
                 android:linksClickable="true"
-                android:onClick="navigateToScreen"
+                android:onClick="navigateToLogin"
                 android:text="Already have an account"
                 android:textSize="20sp" />
         </LinearLayout>

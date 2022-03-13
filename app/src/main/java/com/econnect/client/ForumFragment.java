@@ -11,8 +11,10 @@ import android.view.ViewGroup;
 
 public class ForumFragment extends Fragment {
 
-    public ForumFragment() {
+    CtrlVistes ctrlVistes;
+    public ForumFragment(CtrlVistes ctrlVistes) {
         // Required empty public constructor
+        this.ctrlVistes = ctrlVistes;
     }
 
     @Override

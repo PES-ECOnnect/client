@@ -18,6 +18,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Default screen is Products
+        CtrlVistes ctrlVistes = new CtrlVistes(this);
+       ctrlVistes.inciar();
+    }
+
+    /*
+    private BottomNavigationView bottomNavigationView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
         bottomNavigationView = findViewById(R.id.bottomNav);
         bottomNavigationView.setOnItemSelectedListener(bottomNavSelected);
 
@@ -30,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     };
 
-    private void navigateToScreen(int id) {
+     private void navigateToScreen(int id) {
         Fragment selectedFragment = null;
         switch (id) {
             case R.id.products:
@@ -54,6 +67,6 @@ public class MainActivity extends AppCompatActivity {
         }
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         //ft.replace(R.id.mainFrameLayout, selectedFragment).commit();
-        ft.replace(R.id.mainFrameLayout, new RegisterFragment()).commit();
-    }
+        ft.replace(R.id.mainFrameLayout, new RegisterActivity()).commit();
+    } */
 }
