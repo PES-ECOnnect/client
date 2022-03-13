@@ -20,5 +20,4 @@ public class InicialFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_inicial, container, false);
     }
-
 }
