@@ -116,6 +116,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
                 android:linksClickable="true"
+                android:onClick="navigateToScreen"
                 android:text="Already have an account"
                 android:textSize="20sp" />
         </LinearLayout>
