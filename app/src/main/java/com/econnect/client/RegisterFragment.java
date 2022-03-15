@@ -9,11 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.econnect.client.databinding.FragmentFirstBinding;
+import com.econnect.client.databinding.FragmentRegisterBinding;
 
 public class RegisterFragment extends Fragment {
 
-    private FragmentFirstBinding binding;
+    private FragmentRegisterBinding binding;
 
     @Override
     public View onCreateView(
@@ -21,7 +21,7 @@ public class RegisterFragment extends Fragment {
             Bundle savedInstanceState
     ) {
 
-        binding = FragmentFirstBinding.inflate(inflater, container, false);
+        binding = FragmentRegisterBinding.inflate(inflater, container, false);
         return binding.getRoot();
 
     }
