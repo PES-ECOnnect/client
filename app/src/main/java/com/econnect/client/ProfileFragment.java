@@ -10,10 +10,8 @@ import android.view.ViewGroup;
 
 public class ProfileFragment extends Fragment {
 
-    CtrlVistes ctrlVistes;
-    public ProfileFragment(CtrlVistes ctrlVistes) {
+    public ProfileFragment() {
         // Required empty public constructor
-        this.ctrlVistes = ctrlVistes;
     }
 
     @Override

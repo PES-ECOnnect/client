@@ -11,11 +11,10 @@ import java.util.List;
 
 public class LogInActivity extends Activity {
 
-    CtrlVistes ctrlVistes;
 
-    public LogInActivity(CtrlVistes ctrlVistes) {
+
+    public LogInActivity() {
         // Required empty public constructor
-        this.ctrlVistes = ctrlVistes;
     }
 
     @Override

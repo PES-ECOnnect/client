@@ -11,19 +11,9 @@ import com.google.android.material.navigation.NavigationBarView.OnItemSelectedLi
 
 public class MainActivity extends AppCompatActivity {
 
-    private BottomNavigationView bottomNavigationView;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        // Default screen is Products
-        CtrlVistes ctrlVistes = new CtrlVistes(this);
-       ctrlVistes.inciar();
-    }
 
-    /*
     private BottomNavigationView bottomNavigationView;
 
     @Override
@@ -66,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 assert(false);
         }
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        //ft.replace(R.id.mainFrameLayout, selectedFragment).commit();
-        ft.replace(R.id.mainFrameLayout, new RegisterActivity()).commit();
-    } */
+        ft.replace(R.id.mainFrameLayout, selectedFragment).commit();
+
+    }
 }
