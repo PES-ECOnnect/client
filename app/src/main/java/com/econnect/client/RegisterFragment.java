@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.econnect.client.databinding.FragmentRegisterBinding;
-import com.google.android.material.snackbar.Snackbar;
 
 public class RegisterFragment extends Fragment {
 
@@ -31,18 +30,18 @@ public class RegisterFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonFirst.setOnClickListener(new View.OnClickListener() {
+        binding.buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String user_name = binding.editTextTextPersonName.getText().toString();
-                String user_pass = binding.editTextTextPersonName.getText().toString();
+                String user_pass = binding.editTextTextPassword3.getText().toString();
                 String user_email = binding.editTextTextEmailAddress.getText().toString();
                 String user_adress = binding.editTextTextPostalAddress.getText().toString();
 
                 if (!user_adress.isEmpty() && !user_email.isEmpty() && !user_name.isEmpty() && !user_pass.isEmpty()) {
                     //comunicarse con backend
                     NavHostFragment.findNavController(RegisterFragment.this)
-                            .navigate(R.id.action_FirstFragment_to_SecondFragment);
+                            .navigate(R.id.action_FirstFragment_to_mainActivity);
                 }
                 else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -54,7 +53,7 @@ public class RegisterFragment extends Fragment {
             }
         });
 
-        binding.textView.setOnClickListener(new View.OnClickListener() {
+        binding.textRegisterToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(RegisterFragment.this)

@@ -1,5 +1,6 @@
 package com.econnect.client;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,11 +30,37 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonSecond.setOnClickListener(new View.OnClickListener() {
+        binding.buttonLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                String user_pass = binding.editTextTextPassword2.getText().toString();
+                String user_email = binding.editTextTextEmailAddress2.getText().toString();
+
+
+                if ( !user_email.isEmpty() && !user_pass.isEmpty()) {
+                    //comunicarse con backend i warning baneados
+
+                    //TOKEN PROVISIONAL
+                    String token_user = "1234";
+                    NavHostFragment.findNavController(LoginFragment.this)
+                            .navigate(R.id.action_SecondFragment_to_mainActivity);
+                }
+                else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage("You have to fill all the fields").setTitle("WARNING");
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+            }
+        });
+
+        binding.textLoginToRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(LoginFragment.this)
-                        .navigate(R.id.action_SecondFragment_to_mainActivity);
+                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
             }
         });
     }
