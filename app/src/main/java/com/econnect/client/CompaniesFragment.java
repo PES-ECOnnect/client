@@ -12,6 +12,7 @@ public class CompaniesFragment extends Fragment {
 
     public CompaniesFragment() {
         // Required empty public constructor
+
     }
 
     @Override

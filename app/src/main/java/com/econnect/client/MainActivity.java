@@ -1,21 +1,18 @@
 package com.econnect.client;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationBarView.OnItemSelectedListener;
 
 public class MainActivity extends AppCompatActivity {
+
+
+    static String token;
 
     private BottomNavigationView bottomNavigationView;
 
@@ -27,6 +24,11 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottomNav);
         bottomNavigationView.setOnItemSelectedListener(bottomNavSelected);
 
+
+        //posem token a null de primeres
+
+        token = null;
+
         // Default screen is Products
         navigateToScreen(R.id.products);
     }
@@ -36,7 +38,16 @@ public class MainActivity extends AppCompatActivity {
         return true;
     };
 
-    private void navigateToScreen(int id) {
+    public void setToken(String newtoken){
+        token = newtoken;
+    }
+
+    public void cerrarSession(){
+        token = null;
+        //navegar a login
+    }
+
+     private void navigateToScreen(int id) {
         Fragment selectedFragment = null;
         switch (id) {
             case R.id.products:
@@ -60,5 +71,6 @@ public class MainActivity extends AppCompatActivity {
         }
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.mainFrameLayout, selectedFragment).commit();
+
     }
 }
