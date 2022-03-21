@@ -3,33 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/LoginFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.econnect.client.RegisterFragment"
-        android:label="@string/first_fragment_label"
+        android:id="@+id/RegisterFragment"
+        android:name="com.econnect.client.RegisterLogin.RegisterFragment"
+        android:label="@string/register_fragment_label"
         tools:layout="@layout/fragment_register">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_navigate_to_login"
+            app:destination="@id/LoginFragment" />
         <action
-            android:id="@+id/action_FirstFragment_to_mainActivity"
+            android:id="@+id/action_successful_register"
             app:destination="@id/mainActivity" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.econnect.client.LoginFragment"
-        android:label="@string/second_fragment_label"
+        android:id="@+id/LoginFragment"
+        android:name="com.econnect.client.RegisterLogin.LoginFragment"
+        android:label="@string/login_fragment_label"
         tools:layout="@layout/fragment_login">
 
         <action
-            android:id="@+id/action_SecondFragment_to_mainActivity"
+            android:id="@+id/action_successful_login"
             app:destination="@id/mainActivity" />
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_navigate_to_register"
+            app:destination="@id/RegisterFragment" />
     </fragment>
     <activity
         android:id="@+id/mainActivity"

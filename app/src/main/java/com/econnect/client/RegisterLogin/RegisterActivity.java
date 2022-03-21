@@ -1,7 +1,8 @@
-package com.econnect.client;
+package com.econnect.client.RegisterLogin;
 
 import android.os.Bundle;
 
+import com.econnect.client.R;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;

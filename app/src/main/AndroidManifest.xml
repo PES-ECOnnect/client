@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ECOnnect">
         <activity
-            android:name=".RegisterActivity"
+            android:name=".RegisterLogin.RegisterActivity"
             android:exported="true"
             android:label="@string/title_activity_register"
             android:theme="@style/Theme.ECOnnect.NoActionBar" >
