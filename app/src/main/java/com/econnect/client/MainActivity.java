@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     };
 
-    public void setToken(String newtoken){
+    public static void setToken(String newtoken){
         token = newtoken;
     }
 
