@@ -12,8 +12,6 @@ import com.google.android.material.navigation.NavigationBarView.OnItemSelectedLi
 public class MainActivity extends AppCompatActivity {
 
 
-    static String token;
-
     private BottomNavigationView bottomNavigationView;
 
     @Override
@@ -24,11 +22,6 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottomNav);
         bottomNavigationView.setOnItemSelectedListener(bottomNavSelected);
 
-
-        //posem token a null de primeres
-
-        token = null;
-
         // Default screen is Products
         navigateToScreen(R.id.products);
     }
@@ -37,15 +30,6 @@ public class MainActivity extends AppCompatActivity {
         navigateToScreen(item.getItemId());
         return true;
     };
-
-    public void setToken(String newtoken){
-        token = newtoken;
-    }
-
-    public void cerrarSession(){
-        token = null;
-        //navegar a login
-    }
 
      private void navigateToScreen(int id) {
         Fragment selectedFragment = null;

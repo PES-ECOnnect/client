@@ -36,5 +36,17 @@
         android:name="com.econnect.client.MainActivity"
         android:label="activity_main"
         tools:layout="@layout/activity_main" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.econnect.client.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_successful_logout"
+            app:destination="@id/LoginFragment" />
+        <action
+            android:id="@+id/macaco"
+            app:destination="@id/RegisterFragment" />
+    </fragment>
 
 </navigation>

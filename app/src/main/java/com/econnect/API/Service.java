@@ -14,7 +14,7 @@ public abstract class Service {
     // Reference to the HttpClient used to communicate with the API
     private static HttpClient httpClient;
     // Store the secret token and insert it into the request headers
-    private static String adminToken = null;
+    private static String token = null;
     // Gson object used to serialize and deserialize JSON
     private Gson gson = new Gson();
     // Set by the subclass to indicate whether the request needs an adminToken
@@ -34,13 +34,13 @@ public abstract class Service {
     // Update the admin token, called from AdminLoginService
     protected static void setToken(String token) {
         if (token == null) throw new IllegalArgumentException("Token cannot be null");
-        if (adminToken != null) throw new IllegalStateException("Token already set");
-        adminToken = token;
+        if (Service.token != null) throw new IllegalStateException("Token already set");
+        Service.token = token;
     }
     // Invalidate the admin token, called from AdminLogoutService
-    protected static void deleteAdminToken() {
-        if (adminToken == null) throw new IllegalStateException("Session token was already deleted");
-        adminToken = null;
+    protected static void deleteToken() {
+        if (token == null) throw new IllegalStateException("Session token was already deleted");
+        token = null;
     }
     
     // Generic GET request
@@ -76,13 +76,13 @@ public abstract class Service {
     
     private Map<String,String> addTokenToRequest(Map<String,String> params) {
         if (!needsToken) return params;
-        if (adminToken == null) {
+        if (token == null) {
             throw new IllegalStateException("Admin token not set");
         }
         if (params == null) {
             params = new TreeMap<>();
         }
-        params.put(ApiConstants.TOKEN, adminToken);
+        params.put(ApiConstants.TOKEN, token);
         return params;
     }
     
@@ -101,7 +101,7 @@ public abstract class Service {
         
         if (error != null) {
             if (error == ApiConstants.ERROR_INVALID_TOKEN) {
-                deleteAdminToken();
+                deleteToken();
                 throw new InvalidTokenApiException();
             }
             throw new ApiException(error);

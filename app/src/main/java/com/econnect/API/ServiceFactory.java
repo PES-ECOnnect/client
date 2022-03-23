@@ -28,4 +28,12 @@ public class ServiceFactory {
         return loginService;
     }
 
+    private static RegisterService registerService = null;
+    public RegisterService getRegisterService() {
+        if (registerService == null) {
+            registerService = new RegisterService();
+        }
+        return registerService;
+    }
+
 }

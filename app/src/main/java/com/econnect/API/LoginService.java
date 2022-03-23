@@ -47,13 +47,13 @@ public class LoginService extends Service {
     // Invalidates the user token, throws an exception if an error occurs
     public void logout() {       
         try {
-            // Call API to invalidate in server (no parameters needed)
+            // Call API to invalidate in server
             super.needsToken = true;
             get(ApiConstants.LOGOUT_PATH, null);
         }
         finally {
             // Delete local token whether or not the API call succeeded
-            super.deleteAdminToken();
+            super.deleteToken();
         }
     }
 }
