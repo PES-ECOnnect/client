@@ -10,7 +10,7 @@ public class LoginService extends Service {
     LoginService() {}
     
     // Sets the user token, throws an exception if an error occurs or the user is not admin
-    public void login(String email, String password) {
+    public String login(String email, String password) {
         
         // Add parameters
         TreeMap<String, String> params = new TreeMap<>();
@@ -40,8 +40,10 @@ public class LoginService extends Service {
             // This should never happen, the API should always return a token or an error
             throwInvalidResponseError(result, ApiConstants.RET_TOKEN);
         }
-        
+        //?
         super.setToken(token);
+
+        return token;
     }
     
     // Invalidates the user token, throws an exception if an error occurs
