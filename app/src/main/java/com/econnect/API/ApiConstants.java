@@ -15,7 +15,7 @@ public interface ApiConstants {
     public final String LOGIN_NAME = "email";
     public final String LOGIN_PASSWORD = "password";
 
-    public final String REGISTER_NAME = "name";
+    public final String REGISTER_NAME = "username";
     public final String REGISTER_PASSWORD = "password";
     public final String REGISTER_EMAIL = "email";
     

@@ -4,6 +4,7 @@ package com.econnect.Utilities;
 import android.app.Activity;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 public class ExecutionThread {
@@ -20,7 +21,8 @@ public class ExecutionThread {
     // Navigate to another fragment
     public static void navigate(Fragment caller, int action) {
         UI(caller, ()-> {
-            NavHostFragment.findNavController(caller).navigate(action);
+            NavController nc =NavHostFragment.findNavController(caller);
+            nc.navigate(action);
         });
     }
 }

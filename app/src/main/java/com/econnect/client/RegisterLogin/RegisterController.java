@@ -5,6 +5,8 @@ import android.view.View;
 
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.econnect.API.RegisterService;
+import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
 import com.econnect.client.R;
@@ -32,10 +34,26 @@ public class RegisterController {
             PopupMessage.warning(fragment, "You have to fill all the fields");
             return;
         }
-
+        fragment.enableInput(false);
         // TODO: Call signup endpoint
+        ExecutionThread.nonUI(() -> {
+            try{
+                RegisterService registerService = ServiceFactory.getInstance().getRegisterService();
+                registerService.register(user_email, user_pass,user_name);
+                ExecutionThread.UI(fragment, ()->{
+                    fragment.enableInput(true);
+                    ExecutionThread.navigate(fragment, R.id.action_successful_register);
+                });
 
-        ExecutionThread.navigate(fragment, R.id.action_successful_register);
+            } catch (Exception e){
+                ExecutionThread.UI(fragment, ()->{
+                    fragment.enableInput(true);
+                    PopupMessage.warning(fragment, "There has been an error: " + e.getMessage());
+                });
+            }
+
+        });
+
     }
 
     private void loginButtonClick() {

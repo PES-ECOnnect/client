@@ -51,4 +51,9 @@ public class RegisterFragment extends Fragment {
     String getPostalAddressText() {
         return binding.editTextTextPostalAddress.getText().toString();
     }
+
+    public void enableInput(boolean b) {
+        binding.buttonRegister.setEnabled(b);
+        binding.textRegisterToLogin.setEnabled(b);
+    }
 }

@@ -42,7 +42,11 @@ public class LoginController {
             try {
                 token = loginService.login(user_email, user_pass);
                 MainActivity.setToken(token);
-                ExecutionThread.navigate(fragment, R.id.action_successful_login);
+                ExecutionThread.UI(fragment, ()->{
+                    fragment.enableInput(true);
+                    ExecutionThread.navigate(fragment, R.id.action_successful_login);
+                });
+
             }
             catch (Exception e) {
                 // Return to UI for showing errors
@@ -52,6 +56,7 @@ public class LoginController {
                 });
             }
         });
+
     }
 
     private void registerButtonClick() {
