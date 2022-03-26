@@ -6,7 +6,6 @@ import com.econnect.API.LoginService;
 import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
-import com.econnect.client.MainActivity;
 import com.econnect.client.R;
 
 public class LoginController {
@@ -38,10 +37,8 @@ public class LoginController {
         ExecutionThread.nonUI(() -> {
             // Login and store token
             LoginService loginService = ServiceFactory.getInstance().getLoginService();
-            String token;
             try {
-                token = loginService.login(user_email, user_pass);
-                MainActivity.setToken(token);
+                loginService.login(user_email, user_pass);
                 ExecutionThread.UI(fragment, ()->{
                     fragment.enableInput(true);
                     ExecutionThread.navigate(fragment, R.id.action_successful_login);
