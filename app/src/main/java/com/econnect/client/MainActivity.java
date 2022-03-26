@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.os.Looper;
 
 import com.econnect.Utilities.PopupMessage;
+import com.econnect.client.Companies.CompaniesFragment;
+import com.econnect.client.Forum.ForumFragment;
 import com.econnect.client.Products.ProductsFragment;
 import com.econnect.client.Profile.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -15,18 +17,29 @@ import com.google.android.material.navigation.NavigationBarView.OnItemSelectedLi
 
 public class MainActivity extends AppCompatActivity {
 
-    private BottomNavigationView bottomNavigationView;
+    private BottomNavigationView _bottomNavigationView;
+
+    private final Fragment[] _fragments = {new ProductsFragment(), new CompaniesFragment(),
+            new ForumFragment(), new ProfileFragment()};
+
+    // Default screen is Products
+    private Fragment _selectedFragment = _fragments[0];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        bottomNavigationView = findViewById(R.id.bottomNav);
-        bottomNavigationView.setOnItemSelectedListener(bottomNavSelected);
+        _bottomNavigationView = findViewById(R.id.bottomNav);
+        _bottomNavigationView.setOnItemSelectedListener(bottomNavSelected);
 
-        // Default screen is Products
-        navigateToScreen(R.id.products);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+        // Add and hide all fragments, show only default fragment
+        for (Fragment f : _fragments) {
+            ft = ft.add(R.id.mainFrameLayout, f).hide(f);
+        }
+        ft.show(_selectedFragment).commit();
     }
 
     private OnItemSelectedListener bottomNavSelected = item -> {
@@ -34,31 +47,37 @@ public class MainActivity extends AppCompatActivity {
         return true;
     };
 
-     private void navigateToScreen(int id) {
-        Fragment selectedFragment = null;
+    private void navigateToScreen(int id) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        // Hide old selected fragment
+        ft = ft.hide(_selectedFragment);
+
         switch (id) {
             case R.id.products:
-                selectedFragment = new ProductsFragment();
+                _selectedFragment = _fragments[0];
                 super.setTitle(R.string.products_name);
                 break;
+
             case R.id.companies:
-                selectedFragment = new CompaniesFragment();
+                _selectedFragment = _fragments[1];
                 super.setTitle(R.string.companies_name);
                 break;
+
             case R.id.forum:
-                selectedFragment = new ForumFragment();
+                _selectedFragment = _fragments[2];
                 super.setTitle(R.string.forum_name);
                 break;
+
             case R.id.profile:
-                selectedFragment = new ProfileFragment();
+                _selectedFragment = _fragments[3];
                 super.setTitle(R.string.profile_name);
                 break;
+
             default:
                 assert(false);
         }
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.mainFrameLayout, selectedFragment).commit();
-
+        // Show new selected fragment
+        ft.show(_selectedFragment).commit();
     }
 
     // Double tap to exit

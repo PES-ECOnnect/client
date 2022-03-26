@@ -1,9 +1,11 @@
 package com.econnect.client.Products;
 
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 
@@ -21,6 +23,9 @@ public class ProductsFragment extends CustomFragment<FragmentProductsBinding> {
 
     @Override
     protected void addListeners() {
-        binding.myButton.setOnClickListener(_ctrl.testButton());
+        String[] items = new String[]{"This is a very long text", "aaaaaa", "hello there"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.list_item, items);
+        binding.filterDropdown.setAdapter(adapter);
+        binding.filterDropdown.setText("Any", false);
     }
 }

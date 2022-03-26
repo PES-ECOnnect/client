@@ -1,4 +1,4 @@
-package com.econnect.client;
+package com.econnect.client.Forum;
 
 import android.os.Bundle;
 

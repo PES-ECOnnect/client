@@ -21,6 +21,8 @@
     <string name="register_button_text">REGISTER</string>
     <string name="already_have_an_account_text">Already have an account</string>
 
-    <string name="search_products_hint">Search products...</string>
+    <string name="search_products_hint">Search</string>
     <string name="logout_button_text">Logout</string>
+    <string name="filter_type_text">Filter by product type</string>
+    <string name="filter_type_hint">Product Type</string>
 </resources>

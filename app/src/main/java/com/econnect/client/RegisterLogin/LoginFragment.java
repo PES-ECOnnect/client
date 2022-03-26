@@ -36,10 +36,10 @@ public class LoginFragment extends CustomFragment<FragmentLoginBinding> {
     }
 
     String getEmailText() {
-        return binding.editTextTextEmailAddress2.getText().toString();
+        return binding.emailTextInput.getText().toString();
     }
 
     String getPasswordText() {
-        return binding.editTextTextPassword2.getText().toString();
+        return binding.passwordTextInput.getText().toString();
     }
 }

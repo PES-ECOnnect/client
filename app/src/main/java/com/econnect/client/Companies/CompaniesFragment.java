@@ -1,4 +1,4 @@
-package com.econnect.client;
+package com.econnect.client.Companies;
 
 import com.econnect.Utilities.CustomFragment;
 import com.econnect.client.databinding.FragmentCompaniesBinding;

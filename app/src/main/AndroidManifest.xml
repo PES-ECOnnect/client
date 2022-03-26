@@ -12,7 +12,6 @@
         <activity
             android:name=".RegisterLogin.RegisterActivity"
             android:exported="true"
-            android:label="@string/title_activity_register"
             android:theme="@style/Theme.ECOnnect.NoActionBar" >
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />

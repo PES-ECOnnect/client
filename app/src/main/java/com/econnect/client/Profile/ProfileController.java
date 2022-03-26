@@ -20,7 +20,6 @@ public class ProfileController {
 
     // Boilerplate for interfacing with the fragment
     View.OnClickListener logoutButton() { return view -> logoutButtonClick(); }
-    View.OnClickListener testButton() { return view -> testButtonClick(); }
 
     private void logoutButtonClick() {
         // Show dialog
@@ -46,10 +45,6 @@ public class ProfileController {
                 }
             });
         });
-    }
-
-    private void testButtonClick() {
-        PopupMessage.showToast(fragment, "hi!");
     }
 
 }

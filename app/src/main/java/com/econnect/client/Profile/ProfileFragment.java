@@ -25,11 +25,9 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> {
     @Override
     protected void addListeners() {
         binding.buttonLogout.setOnClickListener(ctrl.logoutButton());
-        binding.testButton.setOnClickListener(ctrl.testButton());
     }
 
     void enableInput(boolean enabled) {
         binding.buttonLogout.setEnabled(enabled);
-        binding.testButton.setEnabled(false);
     }
 }
