@@ -1,17 +1,13 @@
 package com.econnect.client.Products;
 
-import android.os.Bundle;
-import android.text.InputFilter;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
-import androidx.annotation.NonNull;
-
+import com.econnect.API.ProductService;
 import com.econnect.Utilities.CustomFragment;
 import com.econnect.client.R;
 import com.econnect.client.databinding.FragmentProductsBinding;
+
+import java.util.List;
 
 public class ProductsFragment extends CustomFragment<FragmentProductsBinding> {
 
@@ -23,9 +19,19 @@ public class ProductsFragment extends CustomFragment<FragmentProductsBinding> {
 
     @Override
     protected void addListeners() {
-        String[] items = new String[]{"This is a very long text", "aaaaaa", "hello there"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.list_item, items);
+        binding.filterDropdown.setOnItemClickListener(_ctrl.typesDropdown());
+        //binding.itemList.setOnItemClickListener();
+        _ctrl.updateTypesDropdownElements();
+    }
+
+    void setTypesDropdownElements(List<String> items) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.types_list_item, items);
         binding.filterDropdown.setAdapter(adapter);
-        binding.filterDropdown.setText("Any", false);
+        binding.filterDropdown.setText(_ctrl.getDefaultType(), false);
+    }
+
+    void setProductElements(ProductService.Product[] products) {
+        ProductListAdapter adapter = new ProductListAdapter(getContext(), products);
+        binding.itemList.setAdapter(adapter);
     }
 }
