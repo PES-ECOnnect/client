@@ -25,4 +25,6 @@
     <string name="logout_button_text">Logout</string>
     <string name="filter_type_text">Filter by product type</string>
     <string name="filter_type_hint">Product Type</string>
+    <string name="product_image_description">Product image</string>
+    <string name="star_image_description">Star</string>
 </resources>

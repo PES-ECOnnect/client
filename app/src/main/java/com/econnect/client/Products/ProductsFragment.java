@@ -12,6 +12,7 @@ import java.util.List;
 public class ProductsFragment extends CustomFragment<FragmentProductsBinding> {
 
     private final ProductsController _ctrl = new ProductsController(this);
+    private ProductListAdapter _products_adapter;
 
     public ProductsFragment() {
         super(FragmentProductsBinding.class);
@@ -20,8 +21,10 @@ public class ProductsFragment extends CustomFragment<FragmentProductsBinding> {
     @Override
     protected void addListeners() {
         binding.filterDropdown.setOnItemClickListener(_ctrl.typesDropdown());
+        binding.searchText.addTextChangedListener(_ctrl.searchText());
         //binding.itemList.setOnItemClickListener();
-        _ctrl.updateTypesDropdownElements();
+
+        _ctrl.updateLists();
     }
 
     void setTypesDropdownElements(List<String> items) {
@@ -31,7 +34,14 @@ public class ProductsFragment extends CustomFragment<FragmentProductsBinding> {
     }
 
     void setProductElements(ProductService.Product[] products) {
-        ProductListAdapter adapter = new ProductListAdapter(getContext(), products);
-        binding.itemList.setAdapter(adapter);
+        _products_adapter = new ProductListAdapter(getContext(), products);
+        binding.itemList.setAdapter(_products_adapter);
+    }
+
+    void filterProductList(String filter) {
+        _products_adapter.getFilter().filter(filter);
+    }
+    void filterProductList() {
+        filterProductList(binding.searchText.getText().toString());
     }
 }

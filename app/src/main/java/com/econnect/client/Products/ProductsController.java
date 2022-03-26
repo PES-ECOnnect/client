@@ -1,5 +1,7 @@
 package com.econnect.client.Products;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -22,19 +24,11 @@ public class ProductsController {
     }
 
 
-    void updateTypesDropdownElements() {
-        ExecutionThread.nonUI(()->{
-            // Get types
-            ProductTypesService service = ServiceFactory.getInstance().getProductTypesService();
-            ProductType[] types = service.getProductTypes();
-            // Allocate space for items (with extra "Any" element)
-            ArrayList<String> items = new ArrayList<>(types.length + 1);
-            items.add(_ALL_TYPES);
-            for (ProductType t : types) items.add(t.getName());
-
-            ExecutionThread.UI(_fragment, ()->{
-                _fragment.setTypesDropdownElements(items);
-            });
+    void updateLists() {
+        ExecutionThread.nonUI(()-> {
+            updateTypesList();
+            // null means all products
+            updateProductsList(null);
         });
     }
 
@@ -48,16 +42,46 @@ public class ProductsController {
             String type;
             if (position == 0) type = null;
             else type = (String) parent.getItemAtPosition(position);
+            // Update list
+            updateProductsList(type);
+        };
+    }
 
-            // Get products of this type (on a non-ui thread)
-            ExecutionThread.nonUI(() -> {
-                ProductService service = ServiceFactory.getInstance().getProductService();
-                ProductService.Product[] products = service.getProducts(type);
+    private void updateTypesList() {
+        // Get types
+        ProductTypesService service = ServiceFactory.getInstance().getProductTypesService();
+        ProductType[] types = service.getProductTypes();
+        // Allocate space for items (with extra "Any" element)
+        ArrayList<String> items = new ArrayList<>(types.length + 1);
+        items.add(_ALL_TYPES);
+        for (ProductType t : types) items.add(t.getName());
 
-                ExecutionThread.UI(_fragment, ()->{
-                    _fragment.setProductElements(products);
-                });
-            });
+        ExecutionThread.UI(_fragment, ()->{
+            _fragment.setTypesDropdownElements(items);
+        });
+    }
+
+    private void updateProductsList(String type) {
+        // Get products of this type
+        ProductService service = ServiceFactory.getInstance().getProductService();
+        ProductService.Product[] products = service.getProducts(type);
+
+        ExecutionThread.UI(_fragment, ()->{
+            _fragment.setProductElements(products);
+            _fragment.filterProductList();
+        });
+    }
+
+    public TextWatcher searchText() {
+        return new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {}
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                _fragment.filterProductList(s.toString());
+            }
         };
     }
 }
