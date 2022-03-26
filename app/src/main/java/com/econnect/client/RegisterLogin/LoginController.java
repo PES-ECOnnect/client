@@ -6,6 +6,7 @@ import com.econnect.API.LoginService;
 import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
+import com.econnect.Utilities.SettingsFile;
 import com.econnect.client.R;
 
 public class LoginController {
@@ -37,8 +38,9 @@ public class LoginController {
         ExecutionThread.nonUI(() -> {
             // Login and store token
             LoginService loginService = ServiceFactory.getInstance().getLoginService();
+            SettingsFile file = new SettingsFile(fragment);
             try {
-                loginService.login(user_email, user_pass);
+                loginService.login(user_email, user_pass, file);
                 ExecutionThread.UI(fragment, ()->{
                     fragment.enableInput(true);
                     ExecutionThread.navigate(fragment, R.id.action_successful_login);
@@ -58,5 +60,15 @@ public class LoginController {
 
     private void registerButtonClick() {
         ExecutionThread.navigate(fragment, R.id.action_navigate_to_register);
+    }
+
+    // Called once the view has been initialized
+    void attemptAutoLogin() {
+        LoginService loginService = ServiceFactory.getInstance().getLoginService();
+        SettingsFile file = new SettingsFile(fragment);
+        boolean success = loginService.autoLogin(file);
+        if (success) {
+            ExecutionThread.navigate(fragment, R.id.action_successful_login);
+        }
     }
 }

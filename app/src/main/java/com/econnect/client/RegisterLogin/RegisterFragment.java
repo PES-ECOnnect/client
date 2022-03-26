@@ -10,31 +10,24 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.econnect.Utilities.CustomFragment;
 import com.econnect.client.R;
 import com.econnect.client.databinding.FragmentRegisterBinding;
 
-public class RegisterFragment extends Fragment {
+public class RegisterFragment extends CustomFragment<FragmentRegisterBinding> {
 
-    private FragmentRegisterBinding binding;
-    private RegisterController ctrl = new RegisterController(this);
+    private final RegisterController ctrl = new RegisterController(this);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        binding = FragmentRegisterBinding.inflate(inflater, container, false);
-        return binding.getRoot();
+    public RegisterFragment() {
+        super(FragmentRegisterBinding.class);
     }
 
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    @Override
+    protected void addListeners() {
         binding.buttonRegister.setOnClickListener(ctrl.registerButton());
         binding.textRegisterToLogin.setOnClickListener(ctrl.toLoginButton());
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
 
     String getUsernameText() {
         return binding.editTextTextPersonName.getText().toString();

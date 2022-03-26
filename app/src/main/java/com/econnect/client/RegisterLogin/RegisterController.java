@@ -9,6 +9,7 @@ import com.econnect.API.RegisterService;
 import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
+import com.econnect.Utilities.SettingsFile;
 import com.econnect.client.R;
 
 public class RegisterController {
@@ -39,7 +40,8 @@ public class RegisterController {
         ExecutionThread.nonUI(() -> {
             try{
                 RegisterService registerService = ServiceFactory.getInstance().getRegisterService();
-                registerService.register(user_email, user_pass,user_name);
+                SettingsFile file = new SettingsFile(fragment);
+                registerService.register(user_email, user_pass, user_name, file);
                 ExecutionThread.UI(fragment, ()->{
                     fragment.enableInput(true);
                     ExecutionThread.navigate(fragment, R.id.action_successful_register);
@@ -57,6 +59,6 @@ public class RegisterController {
     }
 
     private void loginButtonClick() {
-        ExecutionThread.navigate(fragment, R.id.action_navigate_to_login);
+        ExecutionThread.navigateUp(fragment);
     }
 }

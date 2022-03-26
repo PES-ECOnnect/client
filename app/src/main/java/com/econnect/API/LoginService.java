@@ -3,14 +3,18 @@ package com.econnect.API;
 import java.util.TreeMap;
 
 import com.econnect.API.Exceptions.ApiException;
+import com.econnect.Utilities.SettingsFile;
 
 public class LoginService extends Service {
+
+    final static String STORED_TOKEN_KEY = "LOGIN_SERVICE_USER_TOKEN";
     
     // Only allow instantiating from ServiceFactory
     LoginService() {}
     
-    // Sets the user token, throws an exception if an error occurs or the user is not admin
-    public void login(String email, String password) {
+    // Sets the user token, throws an exception if an error occurs
+    // If file is not null, the token is stored for later
+    public void login(String email, String password, SettingsFile file) {
         
         // Add parameters
         TreeMap<String, String> params = new TreeMap<>();
@@ -41,10 +45,14 @@ public class LoginService extends Service {
             throwInvalidResponseError(result, ApiConstants.RET_TOKEN);
         }
         super.setToken(token);
+
+        if (file != null) {
+            file.putString(STORED_TOKEN_KEY, token);
+        }
     }
     
     // Invalidates the user token, throws an exception if an error occurs
-    public void logout() {       
+    public void logout(SettingsFile file) {
         try {
             // Call API to invalidate in server
             super.needsToken = true;
@@ -52,7 +60,18 @@ public class LoginService extends Service {
         }
         finally {
             // Delete local token whether or not the API call succeeded
+            if (file != null) file.remove(STORED_TOKEN_KEY);
             super.deleteToken();
         }
+    }
+
+    // Attempt to login automatically. Return true if it succeeded
+    public boolean autoLogin(SettingsFile file) {
+        String token = file.getString(STORED_TOKEN_KEY);
+
+        if (token == null) return false;
+
+        super.setToken(token);
+        return true;
     }
 }

@@ -1,6 +1,7 @@
 package com.econnect.API;
 
 import com.econnect.API.Exceptions.ApiException;
+import com.econnect.Utilities.SettingsFile;
 
 import java.util.TreeMap;
 
@@ -8,8 +9,9 @@ public class RegisterService extends Service{
 
     RegisterService() {};
 
-    // Sets the user token, throws an exception if an error occurs or the user is not admin
-    public void register(String email, String password, String name) {
+    // Sets the user token, throws an exception if an error occurs
+    // If file is not null, the token is stored for later
+    public void register(String email, String password, String name, SettingsFile file) {
 
         // Add parameters
         TreeMap<String, String> params = new TreeMap<>();
@@ -42,6 +44,10 @@ public class RegisterService extends Service{
         }
 
         super.setToken(token);
+
+        if (file != null) {
+            file.putString(LoginService.STORED_TOKEN_KEY, token);
+        }
     }
 
 }

@@ -8,18 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.econnect.Utilities.CustomFragment;
+import com.econnect.client.databinding.FragmentForumBinding;
 
-public class ForumFragment extends Fragment {
+
+public class ForumFragment extends CustomFragment<FragmentForumBinding> {
 
     public ForumFragment() {
-        // Required empty public constructor
-
+        super(FragmentForumBinding.class);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_forum, container, false);
+    protected void addListeners() {
+
     }
 }

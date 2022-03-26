@@ -38,7 +38,7 @@
         tools:layout="@layout/activity_main" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.econnect.client.ProfileFragment"
+        android:name="com.econnect.client.Profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action

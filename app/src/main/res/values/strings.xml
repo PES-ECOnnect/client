@@ -20,4 +20,7 @@
     <string name="username_textbox_hint">User Name</string>
     <string name="register_button_text">REGISTER</string>
     <string name="already_have_an_account_text">Already have an account</string>
+
+    <string name="search_products_hint">Search products...</string>
+    <string name="logout_button_text">Logout</string>
 </resources>

@@ -25,4 +25,12 @@ public class ExecutionThread {
             nc.navigate(action);
         });
     }
+
+    // Return to previous fragment
+    public static void navigateUp(Fragment caller) {
+        UI(caller, ()-> {
+            NavController nc =NavHostFragment.findNavController(caller);
+            nc.navigateUp();
+        });
+    }
 }

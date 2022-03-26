@@ -1,24 +1,16 @@
 package com.econnect.client;
 
-import android.os.Bundle;
+import com.econnect.Utilities.CustomFragment;
+import com.econnect.client.databinding.FragmentCompaniesBinding;
 
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-public class CompaniesFragment extends Fragment {
+public class CompaniesFragment extends CustomFragment<FragmentCompaniesBinding> {
 
     public CompaniesFragment() {
-        // Required empty public constructor
-
+        super(FragmentCompaniesBinding.class);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_companies, container, false);
+    protected void addListeners() {
+
     }
 }

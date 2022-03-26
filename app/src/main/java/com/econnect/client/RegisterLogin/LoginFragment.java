@@ -10,34 +10,25 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.econnect.Utilities.CustomFragment;
 import com.econnect.client.R;
 import com.econnect.client.databinding.FragmentLoginBinding;
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends CustomFragment<FragmentLoginBinding> {
 
-    private FragmentLoginBinding binding;
-    private LoginController ctrl = new LoginController(this);
+    private final LoginController ctrl = new LoginController(this);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentLoginBinding.inflate(inflater, container, false);
-        return binding.getRoot();
+    public LoginFragment() {
+        super(FragmentLoginBinding.class);
     }
 
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    @Override
+    protected void addListeners() {
         binding.buttonLogin.setOnClickListener(ctrl.loginButton());
         binding.textLoginToRegister.setOnClickListener(ctrl.toRegisterButton());
+
+        ctrl.attemptAutoLogin();
     }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-
-
-    // Called from Controller:
 
     void enableInput(boolean enabled) {
         binding.textLoginToRegister.setEnabled(enabled);
