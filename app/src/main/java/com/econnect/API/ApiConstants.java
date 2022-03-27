@@ -51,4 +51,5 @@ public interface ApiConstants {
 
     // Get products
     public final String ERROR_TYPE_NOT_EXISTS = "ERROR_TYPE_NOT_EXISTS";
+    public final String ERROR_PRODUCT_NOT_EXISTS = "ERROR_PRODUCT_NOT_EXISTS";
 }

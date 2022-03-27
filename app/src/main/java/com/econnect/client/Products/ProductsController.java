@@ -34,27 +34,41 @@ public class ProductsController {
     }
 
     private void updateTypesList() {
-        // Get types
-        ProductTypesService service = ServiceFactory.getInstance().getProductTypesService();
-        ProductType[] types = service.getProductTypes();
-        // Allocate space for items (with extra "Any" element)
-        ArrayList<String> items = new ArrayList<>(types.length + 1);
-        items.add(_ALL_TYPES);
-        for (ProductType t : types) items.add(t.getName());
+        try {
+            // Get types
+            ProductTypesService service = ServiceFactory.getInstance().getProductTypesService();
+            ProductType[] types = service.getProductTypes();
+            // Allocate space for items (with extra "Any" element)
+            ArrayList<String> items = new ArrayList<>(types.length + 1);
+            items.add(_ALL_TYPES);
+            for (ProductType t : types) items.add(t.getName());
 
-        ExecutionThread.UI(_fragment, ()->{
-            _fragment.setTypesDropdownElements(items);
-        });
+            ExecutionThread.UI(_fragment, () -> {
+                _fragment.setTypesDropdownElements(items);
+            });
+        }
+        catch (Exception e) {
+            ExecutionThread.UI(_fragment, ()->{
+                PopupMessage.warning(_fragment, "Could not fetch product types:\n" + e.getMessage());
+            });
+        }
     }
 
     private void updateProductsList() {
-        // Get products of all types
-        ProductService service = ServiceFactory.getInstance().getProductService();
-        ProductService.Product[] products = service.getProducts(null);
+        try {
+            // Get products of all types
+            ProductService service = ServiceFactory.getInstance().getProductService();
+            ProductService.Product[] products = service.getProducts(null);
 
-        ExecutionThread.UI(_fragment, ()->{
-            _fragment.setProductElements(products);
-        });
+            ExecutionThread.UI(_fragment, () -> {
+                _fragment.setProductElements(products);
+            });
+        }
+        catch (Exception e) {
+            ExecutionThread.UI(_fragment, ()->{
+                PopupMessage.warning(_fragment, "Could not fetch products:\n" + e.getMessage());
+            });
+        }
     }
 
     String getDefaultType() {

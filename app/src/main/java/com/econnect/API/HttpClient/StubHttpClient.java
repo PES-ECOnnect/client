@@ -81,7 +81,7 @@ public class StubHttpClient implements HttpClient {
                 }
                 else {
                     // For each company, return the id, name, avgRating, imageURL, lat and lon
-                    return "{\"result\":[{\"id\":1,\"name\":\"company1\",\"avgRating\":1.0,\"imageURL\":\"http://www.company1.com/image.png\",\"lat\":1.0,\"lon\":1.0},{\"id\":2,\"name\":\"company2\",\"avgRating\":2.0,\"imageURL\":\"http://www.company2.com/image.png\",\"lat\":2.0,\"lon\":2.0}]}";
+                    return "{\"result\":[{\"id\":1,\"name\":\"company1\",\"avgRating\":1.0,\"imageURL\":\"https://wallpapercave.com/wp/wp4676582.jpg\",\"lat\":1.0,\"lon\":1.0},{\"id\":2,\"name\":\"company2\",\"avgRating\":2.0,\"imageURL\":\"http://www.company2.com/image.png\",\"lat\":2.0,\"lon\":2.0}]}";
                 }
                 
             default:

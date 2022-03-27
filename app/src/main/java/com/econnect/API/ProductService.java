@@ -14,12 +14,12 @@ public class ProductService extends Service {
     
     public class Product implements IAbstractProduct {
         // Important: The name of these attributes must match the ones in the returned JSON
-        private int id;
-        private String name;
-        private float avgRating;
-        private String manufacturer;
-        private String imageURL;
-        private String type;
+        private final int id;
+        private final String name;
+        private final float avgRating;
+        private final String manufacturer;
+        private final String imageURL;
+        private final String type;
         private Bitmap imageBitmap = null;
         
         public Product(int id, String name, float avgRating, String manufacturer, String imageURL, String type) {
@@ -65,6 +65,55 @@ public class ProductService extends Service {
     }
 
 
+    public class ProductDetails {
+        public class Question {
+            private final int num_no;
+            private final int num_yes;
+            private final String text;
+
+            public Question(String text, int num_no, int num_yes) {
+                this.text = text;
+                this.num_no = num_no;
+                this.num_yes = num_yes;
+            }
+            public String getText() { return text; }
+            public int numNo() { return num_no; }
+            public int numYes() { return num_yes; }
+        }
+
+        // Important: The name of these attributes must match the ones in the returned JSON
+        private final String image;
+        private final String manufacturer;
+        private final String name;
+        private final Question[] questions;
+        private final Integer[] ratings;
+
+        public ProductDetails(String image, String manufacturer, String name, Question[] questions, Integer[] ratings) {
+            this.image = image;
+            this.manufacturer = manufacturer;
+            this.name = name;
+            this.questions = questions;
+            this.ratings = ratings;
+        }
+        
+        public String getImage() {
+            return image;
+        }
+        public String getManufacturer() {
+            return manufacturer;
+        }
+        public String getName() {
+            return name;
+        }
+        public Question[] getQuestions() {
+            return questions;
+        }
+        public Integer[] getRatings() {
+            return ratings;
+        }
+    }
+
+
 
     // Get product of specific type (or all products if type is null)
     public Product[] getProducts(String type) {
@@ -98,5 +147,32 @@ public class ProductService extends Service {
         }
         
         return products;
+    }
+    
+    // Get product details
+    public ProductDetails getProductDetails(int productId) {
+        JsonResult result = null;
+        try {
+            // Call API
+            super.needsToken = true;
+            result = get(ApiConstants.PRODUCTS_PATH + "/" + productId, null);
+        }
+        catch (ApiException e) {
+            switch (e.getErrorCode()) {
+                case ApiConstants.ERROR_PRODUCT_NOT_EXISTS:
+                    throw new RuntimeException("The product with id " + productId + " does not exist");
+                default:
+                    throw e;
+            }
+        }
+        
+        // Parse result
+        ProductDetails details = result.getObject(ApiConstants.RET_RESULT, ProductDetails.class);
+        if (details == null) {
+            // This should never happen, the API should always return an object or an error
+            throwInvalidResponseError(result, ApiConstants.RET_RESULT);
+        }
+        
+        return details;
     }
 }

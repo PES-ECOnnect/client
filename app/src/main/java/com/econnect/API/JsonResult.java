@@ -31,6 +31,12 @@ public class JsonResult {
         return new Gson().fromJson(array, arrayClass);
     }
 
+    public <T> T getObject(String attrName, Class<T> objectClass) {
+        JsonElement element = _jsonObject.get(attrName);
+        if (element == null) return null;
+        return new Gson().fromJson(element, objectClass);
+    }
+
     @Override
     public String toString() {
         return _jsonObject.toString();

@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import java.util.TreeMap;
 
 import com.econnect.API.Exceptions.ApiException;
+import com.econnect.Utilities.BitmapLoader;
 
 public class CompanyService extends Service {
     
@@ -13,12 +14,13 @@ public class CompanyService extends Service {
     
     public class Company implements IAbstractProduct {
         // Important: The name of these attributes must match the ones in the returned JSON
-        private int id;
-        private String name;
-        private float avgRating;
-        private String imageURL;
-        private double lat;
-        private double lon;
+        private final int id;
+        private final String name;
+        private final float avgRating;
+        private final String imageURL;
+        private final double lat;
+        private final double lon;
+        private Bitmap imageBitmap = null;
         
         public Company(int id, String name, float avgRating, String imageURL, double lat, double lon) {
             this.id = id;
@@ -52,7 +54,9 @@ public class CompanyService extends Service {
 
         @Override
         public Bitmap getImage(int height) {
-            return null;
+            if (imageBitmap == null)
+                imageBitmap = BitmapLoader.fromURL(imageURL, height);
+            return imageBitmap;
         }
 
         public int getId() {

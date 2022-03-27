@@ -37,7 +37,8 @@ public class ProfileController {
                 catch (Exception e) {
                     // Return to UI for showing errors
                     ExecutionThread.UI(fragment, ()->{
-                        PopupMessage.warning(fragment, "There has been an error: " + e.getMessage());
+                        // Even if there has been an error, return to login anyways
+                        fragment.getActivity().finish();
                     });
                 }
             });
