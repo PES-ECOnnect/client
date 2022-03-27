@@ -1,103 +1,40 @@
 package com.econnect.client.Products;
 
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Filter;
-import android.widget.Filterable;
-import android.widget.TextView;
+import android.graphics.drawable.Drawable;
 
+import androidx.fragment.app.Fragment;
+
+import com.econnect.API.IAbstractProduct;
 import com.econnect.API.ProductService.Product;
 import com.econnect.client.R;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+// An adapter converts from an object (ProductService.Product) to a view (R.layout.product_list_item).
+public class ProductListAdapter extends AbstractProductListAdapter {
+    private final Product[] _allProducts;
+    private String _type = null;
 
-public class ProductListAdapter extends BaseAdapter implements Filterable {
-    Context context;
-    Product[] allProducts;
-    List<Product> data;
-    private static LayoutInflater inflater = null;
+    public ProductListAdapter(Fragment owner, int highlightColor, Drawable defaultImage, Product[] allProducts) {
+        super(owner, highlightColor, defaultImage);
+        this._allProducts = allProducts;
+        super.setInitialValues(allProducts);
+    }
 
-    public ProductListAdapter(Context context, Product[] allProducts) {
-        this.context = context;
-        this.allProducts = allProducts;
-        data = Arrays.asList(allProducts);
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    // Select which type to filter. Null means all items
+    public void setFilterType(String type) {
+        this._type = type;
     }
 
     @Override
-    public int getCount() {
-        return data.size();
+    protected IAbstractProduct[] getAllProducts() {
+        return _allProducts;
     }
 
     @Override
-    public Object getItem(int position) {
-        return data.get(position);
-    }
+    protected boolean isSelectable(IAbstractProduct p) {
+        // null means all Product types
+        if (_type == null) return true;
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View vi = convertView;
-        if (vi == null) {
-            vi = inflater.inflate(R.layout.product_list_item, null);
-        }
-        Product p = data.get(position);
-
-        TextView name = vi.findViewById(R.id.product_item_name);
-        name.setText(p.getName());
-
-        TextView manufacturer = vi.findViewById(R.id.product_item_manufacturer);
-        manufacturer.setText(p.getManufacturer());
-
-        TextView rating = vi.findViewById(R.id.product_item_rating);
-        rating.setText(String.format("%.02f", p.getAvgRating()));
-
-        // TODO: Set image
-
-        return vi;
-    }
-
-    @Override
-    public Filter getFilter() {
-
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                FilterResults results = new FilterResults();
-
-                if (constraint == null || constraint.length() == 0) {
-                    results.values = Arrays.asList(allProducts);
-                    results.count = allProducts.length;
-                    return results;
-                }
-
-                ArrayList<Product> filteredResults = new ArrayList<>();
-                constraint = constraint.toString().toLowerCase();
-                for (Product p : allProducts) {
-                    if (p.getName().toLowerCase().contains(constraint))  {
-                        filteredResults.add(p);
-                    }
-                }
-                results.values = filteredResults;
-                results.count = filteredResults.size();
-                return results;
-            }
-
-            @Override
-            @SuppressWarnings("unchecked")
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-                data = (List<Product>) results.values;
-                notifyDataSetChanged();
-            }
-        };
+        Product pr = (Product) p;
+        return pr.getType().equals(_type);
     }
 }

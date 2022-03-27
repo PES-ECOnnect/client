@@ -66,14 +66,8 @@ public class StubHttpClient implements HttpClient {
                 }
                 // For each product of this type, return the id, name, avgRating, imageUrl, manufacturer and type
                 if (equals(params, "type", "")) {
-                    // For each product, return the id, name, avgRating, imageUrl, manufacturer and type
-                    return "{\"result\":[{\"id\":1,\"name\":\"product1\",\"avgRating\":1.0,\"imageUrl\":\"imageUrl1\",\"manufacturer\":\"manufacturer1\",\"type\":\"type1\"},{\"id\":2,\"name\":\"product2\",\"avgRating\":2.0,\"imageUrl\":\"imageUrl2\",\"manufacturer\":\"manufacturer2\",\"type\":\"type1\"},{\"id\":3,\"name\":\"product3\",\"avgRating\":3.0,\"imageUrl\":\"imageUrl3\",\"manufacturer\":\"manufacturer3\",\"type\":\"type2\"},{\"id\":4,\"name\":\"product4\",\"avgRating\":4.0,\"imageUrl\":\"imageUrl4\",\"manufacturer\":\"manufacturer4\",\"type\":\"type2\"}]}";
-                }
-                else if (equals(params, "type", "type1")) {
-                    return "{\"result\":[{\"id\":1,\"name\":\"product1\",\"avgRating\":1.0,\"imageUrl\":\"imageUrl1\",\"manufacturer\":\"manufacturer1\",\"type\":\"type1\"},{\"id\":2,\"name\":\"product2\",\"avgRating\":2.0,\"imageUrl\":\"imageUrl2\",\"manufacturer\":\"manufacturer2\",\"type\":\"type1\"}]}";
-                }
-                else if (equals(params, "type", "type2")) {
-                    return "{\"result\":[{\"id\":3,\"name\":\"product3\",\"avgRating\":3.0,\"imageUrl\":\"imageUrl3\",\"manufacturer\":\"manufacturer3\",\"type\":\"type2\"},{\"id\":4,\"name\":\"product4\",\"avgRating\":4.0,\"imageUrl\":\"imageUrl4\",\"manufacturer\":\"manufacturer4\",\"type\":\"type2\"}]}";
+                    // For each product, return the id, name, avgRating, imageURL, manufacturer and type
+                    return "{\"result\":[{\"id\":1,\"name\":\"product1\",\"avgRating\":1.0,\"imageURL\":\"https://miro.medium.com/max/500/0*-ouKIOsDCzVCTjK-.png\",\"manufacturer\":\"manufacturer1\",\"type\":\"type1\"},{\"id\":2,\"name\":\"product2\",\"avgRating\":2.0,\"imageURL\":\"https://wallpapercave.com/wp/wp4676582.jpg\",\"manufacturer\":\"manufacturer2\",\"type\":\"type1\"},{\"id\":3,\"name\":\"product3\",\"avgRating\":3.0,\"imageURL\":\"imageUrl3\",\"manufacturer\":\"manufacturer3\",\"type\":\"type2\"},{\"id\":4,\"name\":\"product4\",\"avgRating\":4.0,\"imageURL\":\"imageUrl4\",\"manufacturer\":\"manufacturer4\",\"type\":\"type2\"}, {\"id\":5,\"name\":\"during\",\"avgRating\":1.0,\"imageURL\":\"imageUrl1\",\"manufacturer\":\"manufacturer1\",\"type\":\"type1\"}]}";
                 }
                 else {
                     return "{\"error\":\"ERROR_TYPE_NOT_EXISTS\"}";
@@ -86,8 +80,8 @@ public class StubHttpClient implements HttpClient {
                     return "{\"error\":\"ERROR_INVALID_TOKEN\"}";
                 }
                 else {
-                    // For each company, return the id, name, avgRating, imageUrl, lat and lon
-                    return "{\"result\":[{\"id\":1,\"name\":\"company1\",\"avgRating\":1.0,\"imageUrl\":\"http://www.company1.com/image.png\",\"lat\":1.0,\"lon\":1.0},{\"id\":2,\"name\":\"company2\",\"avgRating\":2.0,\"imageUrl\":\"http://www.company2.com/image.png\",\"lat\":2.0,\"lon\":2.0}]}";
+                    // For each company, return the id, name, avgRating, imageURL, lat and lon
+                    return "{\"result\":[{\"id\":1,\"name\":\"company1\",\"avgRating\":1.0,\"imageURL\":\"http://www.company1.com/image.png\",\"lat\":1.0,\"lon\":1.0},{\"id\":2,\"name\":\"company2\",\"avgRating\":2.0,\"imageURL\":\"http://www.company2.com/image.png\",\"lat\":2.0,\"lon\":2.0}]}";
                 }
                 
             default:

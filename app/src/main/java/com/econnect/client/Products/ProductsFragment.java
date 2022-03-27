@@ -1,6 +1,9 @@
 package com.econnect.client.Products;
 
+import android.graphics.drawable.Drawable;
 import android.widget.ArrayAdapter;
+
+import androidx.core.content.ContextCompat;
 
 import com.econnect.API.ProductService;
 import com.econnect.Utilities.CustomFragment;
@@ -34,14 +37,17 @@ public class ProductsFragment extends CustomFragment<FragmentProductsBinding> {
     }
 
     void setProductElements(ProductService.Product[] products) {
-        _products_adapter = new ProductListAdapter(getContext(), products);
+        int highlightColor = ContextCompat.getColor(getContext(), R.color.green);
+        Drawable defaultImage = ContextCompat.getDrawable(getContext(), R.drawable.ic_products_24);
+        _products_adapter = new ProductListAdapter(this, highlightColor, defaultImage, products);
         binding.itemList.setAdapter(_products_adapter);
     }
 
-    void filterProductList(String filter) {
-        _products_adapter.getFilter().filter(filter);
-    }
     void filterProductList() {
-        filterProductList(binding.searchText.getText().toString());
+        String type = binding.filterDropdown.getText().toString();
+        if (type.equals(_ctrl.getDefaultType())) type = null;
+
+        _products_adapter.setFilterType(type);
+        _products_adapter.getFilter().filter(binding.searchText.getText());
     }
 }

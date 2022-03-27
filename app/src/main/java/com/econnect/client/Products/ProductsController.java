@@ -26,25 +26,11 @@ public class ProductsController {
 
     void updateLists() {
         ExecutionThread.nonUI(()-> {
+            // Populate types dropdown
             updateTypesList();
-            // null means all products
-            updateProductsList(null);
+            // Populate product list
+            updateProductsList();
         });
-    }
-
-    String getDefaultType() {
-        return _ALL_TYPES;
-    }
-
-    AdapterView.OnItemClickListener typesDropdown() {
-        return (parent, view, position, id) -> {
-            // Get type (if selected index is 0, null means all types)
-            String type;
-            if (position == 0) type = null;
-            else type = (String) parent.getItemAtPosition(position);
-            // Update list
-            updateProductsList(type);
-        };
     }
 
     private void updateTypesList() {
@@ -61,18 +47,31 @@ public class ProductsController {
         });
     }
 
-    private void updateProductsList(String type) {
-        // Get products of this type
+    private void updateProductsList() {
+        // Get products of all types
         ProductService service = ServiceFactory.getInstance().getProductService();
-        ProductService.Product[] products = service.getProducts(type);
+        ProductService.Product[] products = service.getProducts(null);
 
         ExecutionThread.UI(_fragment, ()->{
             _fragment.setProductElements(products);
-            _fragment.filterProductList();
         });
     }
 
-    public TextWatcher searchText() {
+    String getDefaultType() {
+        return _ALL_TYPES;
+    }
+    
+
+    // Update product list when dropdown or search text change
+
+    AdapterView.OnItemClickListener typesDropdown() {
+        return (parent, view, position, id) -> {
+            // Update list
+            _fragment.filterProductList();
+        };
+    }
+
+    TextWatcher searchText() {
         return new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {}
@@ -80,7 +79,7 @@ public class ProductsController {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                _fragment.filterProductList(s.toString());
+                _fragment.filterProductList();
             }
         };
     }

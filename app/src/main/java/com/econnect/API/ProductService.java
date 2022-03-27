@@ -1,15 +1,18 @@
 package com.econnect.API;
 
+import android.graphics.Bitmap;
+
 import java.util.TreeMap;
 
 import com.econnect.API.Exceptions.ApiException;
+import com.econnect.Utilities.BitmapLoader;
 
 public class ProductService extends Service {
     
     // Only allow instantiating from ServiceFactory
     ProductService() {}
     
-    public class Product {
+    public class Product implements IAbstractProduct {
         // Important: The name of these attributes must match the ones in the returned JSON
         private int id;
         private String name;
@@ -17,6 +20,7 @@ public class ProductService extends Service {
         private String manufacturer;
         private String imageURL;
         private String type;
+        private Bitmap imageBitmap = null;
         
         public Product(int id, String name, float avgRating, String manufacturer, String imageURL, String type) {
             this.id = id;
@@ -26,15 +30,28 @@ public class ProductService extends Service {
             this.imageURL = imageURL;
             this.type = type;
         }
-        
-        public int getId() {
-            return id;
-        }
+
+        @Override
         public String getName() {
             return name;
         }
+        @Override
+        public String getSecondaryText() {
+            return manufacturer;
+        }
+        @Override
         public float getAvgRating() {
             return avgRating;
+        }
+        @Override
+        public Bitmap getImage(int height) {
+            if (imageBitmap == null)
+                imageBitmap = BitmapLoader.fromURL(imageURL, height);
+            return imageBitmap;
+        }
+
+        public int getId() {
+            return id;
         }
         public String getManufacturer() {
             return manufacturer;
@@ -46,7 +63,9 @@ public class ProductService extends Service {
             return type;
         }
     }
-    
+
+
+
     // Get product of specific type (or all products if type is null)
     public Product[] getProducts(String type) {
         // Add parameters

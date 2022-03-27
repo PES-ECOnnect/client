@@ -1,5 +1,7 @@
 package com.econnect.API;
 
+import android.graphics.Bitmap;
+
 import java.util.TreeMap;
 
 import com.econnect.API.Exceptions.ApiException;
@@ -9,7 +11,7 @@ public class CompanyService extends Service {
     // Only allow instantiating from ServiceFactory
     CompanyService() {}
     
-    public class Company {
+    public class Company implements IAbstractProduct {
         // Important: The name of these attributes must match the ones in the returned JSON
         private int id;
         private String name;
@@ -26,15 +28,35 @@ public class CompanyService extends Service {
             this.lat = lat;
             this.lon = lon;
         }
-        
-        public int getId() {
-            return id;
-        }
+
+        @Override
         public String getName() {
             return name;
         }
+
+        @Override
+        public String getSecondaryText() {
+            // Display coordinates in format: "12.3456N 34.5678W"
+            String latStr, lonStr;
+            if (lat >= 0) latStr = String.format("%.04fN", lat);
+            else latStr = String.format("%.04fS", -lat);
+            if (lon >= 0) lonStr = String.format("%.04fE", lon);
+            else lonStr = String.format("%.04fW", -lon);
+
+            return latStr + ", " + lonStr;
+        }
+
         public float getAvgRating() {
             return avgRating;
+        }
+
+        @Override
+        public Bitmap getImage(int height) {
+            return null;
+        }
+
+        public int getId() {
+            return id;
         }
         public String getImageUrl() {
             return imageURL;
