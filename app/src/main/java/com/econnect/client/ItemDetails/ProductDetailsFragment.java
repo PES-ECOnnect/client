@@ -18,6 +18,8 @@ public class ProductDetailsFragment extends CustomFragment<FragmentProductDetail
 
     public ProductDetailsFragment() {
         super(FragmentProductDetailsBinding.class);
+        ctrl = new ProductDetailsController(this);
+        productId = 0; // Aqui añadiremos id del producto a valorar, preguntar, etc.
     }
 
     public void setController(IDetailsController ctrl) {
@@ -26,7 +28,12 @@ public class ProductDetailsFragment extends CustomFragment<FragmentProductDetail
 
     @Override
     protected void addListeners() {
-
+        binding.star1.setOnClickListener(view -> _ctrl.valorateProduct(1, productId));
+        binding.star2.setOnClickListener(view -> _ctrl.valorateProduct(2, productId));
+        binding.star3.setOnClickListener(view -> _ctrl.valorateProduct(3, productId));
+        binding.star4.setOnClickListener(view -> _ctrl.valorateProduct(4, productId));
+        binding.star5.setOnClickListener(view -> _ctrl.valorateProduct(5, productId));
+        
         _ctrl.updateUIElements();
     }
 

@@ -8,6 +8,9 @@ import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.BitmapLoader;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
+import com.econnect.API.QuestionService;
+import com.econnect.API.ReviewService;
+import com.econnect.API.ServiceFactory;
 
 public class ProductDetailsController implements IDetailsController {
 
@@ -44,5 +47,23 @@ public class ProductDetailsController implements IDetailsController {
                 });
             }
         });
+    }
+    
+    public void valorateProduct(int review, int pId) {
+        try{
+            ReviewService reviewService = ServiceFactory.getInstance().getReviewService();
+            reviewService.reviewProduct(pId, review);
+        } catch (Exception e){
+            throw e;
+        }
+    }
+
+    public void answerQuestion(int pId, int questionId, String answer){
+        try{
+            QuestionService questionService = ServiceFactory.getInstance().getQuestionService();
+            questionService.answerQuestionProduct(pId, questionId, answer);
+        } catch (Exception e){
+            throw e;
+        }
     }
 }

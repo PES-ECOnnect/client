@@ -64,4 +64,20 @@ public class ServiceFactory {
         }
         return _companyService;
     }
+
+    private static ReviewService reviewService = null;
+    public ReviewService getReviewService() {
+        if (reviewService == null) {
+            reviewService = new ReviewService();
+        }
+        return reviewService;
+    }
+
+    private static QuestionService questionService = null;
+    public QuestionService getQuestionService() {
+        if(questionService == null) {
+            questionService = new QuestionService();
+        }
+        return questionService;
+    }
 }
