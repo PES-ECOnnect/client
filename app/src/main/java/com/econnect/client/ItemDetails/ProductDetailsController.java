@@ -48,20 +48,22 @@ public class ProductDetailsController implements IDetailsController {
             }
         });
     }
-    
-    public void valorateProduct(int review, int pId) {
+
+    @Override
+    public void reviewProduct(int numStars) {
         try{
             ReviewService reviewService = ServiceFactory.getInstance().getReviewService();
-            reviewService.reviewProduct(pId, review);
+            reviewService.reviewProduct(_productId, numStars);
         } catch (Exception e){
             throw e;
         }
     }
 
-    public void answerQuestion(int pId, int questionId, String answer){
+    @Override
+    public void answerQuestion(int questionId, String answer){
         try{
             QuestionService questionService = ServiceFactory.getInstance().getQuestionService();
-            questionService.answerQuestionProduct(pId, questionId, answer);
+            questionService.answerQuestionProduct(_productId, questionId, answer);
         } catch (Exception e){
             throw e;
         }

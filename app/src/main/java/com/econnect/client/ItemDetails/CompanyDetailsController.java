@@ -14,4 +14,14 @@ public class CompanyDetailsController implements IDetailsController {
     public void updateUIElements() {
 
     }
+
+    @Override
+    public void reviewProduct(int numStars) {
+
+    }
+
+    @Override
+    public void answerQuestion(int questionId, String answer) {
+
+    }
 }

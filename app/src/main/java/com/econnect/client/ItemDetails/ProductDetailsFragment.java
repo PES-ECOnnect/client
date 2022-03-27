@@ -18,8 +18,6 @@ public class ProductDetailsFragment extends CustomFragment<FragmentProductDetail
 
     public ProductDetailsFragment() {
         super(FragmentProductDetailsBinding.class);
-        ctrl = new ProductDetailsController(this);
-        productId = 0; // Aqui añadiremos id del producto a valorar, preguntar, etc.
     }
 
     public void setController(IDetailsController ctrl) {
@@ -28,11 +26,12 @@ public class ProductDetailsFragment extends CustomFragment<FragmentProductDetail
 
     @Override
     protected void addListeners() {
-        binding.star1.setOnClickListener(view -> _ctrl.valorateProduct(1, productId));
-        binding.star2.setOnClickListener(view -> _ctrl.valorateProduct(2, productId));
-        binding.star3.setOnClickListener(view -> _ctrl.valorateProduct(3, productId));
-        binding.star4.setOnClickListener(view -> _ctrl.valorateProduct(4, productId));
-        binding.star5.setOnClickListener(view -> _ctrl.valorateProduct(5, productId));
+        // TODO: decide how many stars we can give (start at 0?)
+        binding.star1.setOnClickListener(view -> _ctrl.reviewProduct(1));
+        binding.star2.setOnClickListener(view -> _ctrl.reviewProduct(2));
+        binding.star3.setOnClickListener(view -> _ctrl.reviewProduct(3));
+        binding.star4.setOnClickListener(view -> _ctrl.reviewProduct(4));
+        binding.star5.setOnClickListener(view -> _ctrl.reviewProduct(5));
         
         _ctrl.updateUIElements();
     }
@@ -63,11 +62,11 @@ public class ProductDetailsFragment extends CustomFragment<FragmentProductDetail
                 stars[i] = 0;
             }
         }
-        binding.star0.setImageDrawable(starDrawables[stars[0]]);
-        binding.star1.setImageDrawable(starDrawables[stars[1]]);
-        binding.star2.setImageDrawable(starDrawables[stars[2]]);
-        binding.star3.setImageDrawable(starDrawables[stars[3]]);
-        binding.star4.setImageDrawable(starDrawables[stars[4]]);
+        binding.star1.setImageDrawable(starDrawables[stars[0]]);
+        binding.star2.setImageDrawable(starDrawables[stars[1]]);
+        binding.star3.setImageDrawable(starDrawables[stars[2]]);
+        binding.star4.setImageDrawable(starDrawables[stars[3]]);
+        binding.star5.setImageDrawable(starDrawables[stars[4]]);
 
         // Set text for number of votes
         if (numVotes == 1) {
