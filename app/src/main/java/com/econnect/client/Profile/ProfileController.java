@@ -19,13 +19,11 @@ public class ProfileController {
     }
 
     // Boilerplate for interfacing with the fragment
-    View.OnClickListener logoutButton() { return view -> logoutButtonClick(); }
 
-    private void logoutButtonClick() {
+    public void logoutButtonClick() {
         // Show dialog
         PopupMessage.yesNoDialog(fragment, "Log out", "Are you sure?", (dialog, id) -> {
             // If YES option is selected:
-            fragment.enableInput(false);
             ExecutionThread.nonUI(() -> {
                 // Logout
                 LoginService loginService = ServiceFactory.getInstance().getLoginService();
@@ -39,7 +37,6 @@ public class ProfileController {
                 catch (Exception e) {
                     // Return to UI for showing errors
                     ExecutionThread.UI(fragment, ()->{
-                        fragment.enableInput(true);
                         PopupMessage.warning(fragment, "There has been an error: " + e.getMessage());
                     });
                 }
