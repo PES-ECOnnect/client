@@ -33,6 +33,7 @@ public class ProductDetailsController implements IDetailsController {
 
                 ExecutionThread.UI(_fragment, () -> {
                     _fragment.setAverageRating(_product.getRatings());
+                    _fragment.setQuestionsElements(_product.getQuestions());
                 });
 
                 // Fetch image

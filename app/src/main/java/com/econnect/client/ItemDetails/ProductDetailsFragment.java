@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 
+import com.econnect.API.ProductService;
 import com.econnect.API.ProductService.ProductDetails.Question;
 import com.econnect.Utilities.CustomFragment;
 import com.econnect.client.Products.ProductListAdapter;

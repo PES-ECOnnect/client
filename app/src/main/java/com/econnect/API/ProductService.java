@@ -12,7 +12,7 @@ public class ProductService extends Service {
     // Only allow instantiating from ServiceFactory
     ProductService() {}
     
-    public class Product implements IAbstractProduct {
+    public static class Product implements IAbstractProduct {
         // Important: The name of these attributes must match the ones in the returned JSON
         private final int id;
         private final String name;

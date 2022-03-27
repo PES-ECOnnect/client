@@ -55,7 +55,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/yesPercentText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -63,7 +63,7 @@
             tools:text="16%" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/noPercentText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

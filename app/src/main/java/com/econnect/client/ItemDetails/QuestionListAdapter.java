@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -49,14 +50,29 @@ public class QuestionListAdapter extends BaseAdapter {
         // Initialize view and product
         View vi = convertView;
         if (vi == null) {
-            vi = inflater.inflate(R.layout.product_list_item, null);
+            vi = inflater.inflate(R.layout.question_list_item, null);
         }
         final Question q = _questions[position];
+        int totalVotes = q.numNo() + q.numYes();
+        int percentVotes;
+        if (totalVotes > 0) percentVotes = (100 * q.numYes()) / totalVotes;
+        else percentVotes = -1;
 
         // Set question text
         TextView questionText = vi.findViewById(R.id.questionText);
-        String text = vi.getResources().getString(R.string.question_text_and_votes, "aaa", 5);
+        String text = vi.getResources().getString(R.string.question_text_and_votes, q.getText(), totalVotes);
         questionText.setText(text);
+
+        // Set percent
+        if (percentVotes != -1) {
+            ProgressBar bar = vi.findViewById(R.id.questionPercentBar);
+            bar.setProgress(percentVotes);
+
+            TextView yesPercent = vi.findViewById(R.id.yesPercentText);
+            yesPercent.setText(percentVotes + "%");
+            TextView noPercent = vi.findViewById(R.id.noPercentText);
+            yesPercent.setText(100-percentVotes + "%");
+        }
 
         return vi;
     }

@@ -7,6 +7,21 @@
     tools:context=".ItemDetails.ProductDetailsFragment">
 
     <TextView
+        android:id="@+id/questionsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif"
+        android:text="@string/questions_text"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:typeface="normal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/productImage" />
+
+    <TextView
         android:id="@+id/productNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,6 +44,16 @@
         app:shapeAppearanceOverlay="@style/ShapeAppearance.MaterialComponents.MediumComponent"
         app:srcCompat="@drawable/ic_products_24"
         tools:ignore="ImageContrastCheck" />
+
+    <ListView
+        android:id="@+id/questionsList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/questionsText" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -117,28 +142,4 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/questionsText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="sans-serif"
-        android:text="@string/questions_text"
-        android:textAllCaps="false"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:typeface="normal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/productImage" />
-
-    <ListView
-        android:id="@+id/questionsList"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionsText" />
 </androidx.constraintlayout.widget.ConstraintLayout>
