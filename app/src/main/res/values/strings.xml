@@ -27,4 +27,8 @@
     <string name="filter_type_hint">Product Type</string>
     <string name="product_image_description">Product image</string>
     <string name="star_image_description">Star</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="questions_text">Questions</string>
+    <string name="add_rating_button_text">Add rating</string>
 </resources>
