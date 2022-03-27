@@ -27,8 +27,16 @@
     <string name="filter_type_hint">Product Type</string>
     <string name="product_image_description">Product image</string>
     <string name="star_image_description">Star</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="questions_text">Questions</string>
     <string name="add_rating_button_text">Add rating</string>
+    <string name="vote_option_yes">Yes</string>
+    <string name="vote_option_no">No</string>
+    <string name="vote_option_yes_description">Vote Yes</string>
+    <string name="vote_option_no_description">Vote No</string>
+
+    <string name="num_votes_text">%d votes</string>
+    <string name="num_votes_text_one">%d vote</string>
+    <string name="question_text_and_votes">%s - %d votes</string>
+    <string name="question_text_and_votes_one">%s - %d vote</string>
 </resources>

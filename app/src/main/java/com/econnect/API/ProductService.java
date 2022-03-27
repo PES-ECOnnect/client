@@ -82,22 +82,22 @@ public class ProductService extends Service {
         }
 
         // Important: The name of these attributes must match the ones in the returned JSON
-        private final String image;
+        private final String imageURL;
         private final String manufacturer;
         private final String name;
         private final Question[] questions;
         private final Integer[] ratings;
 
-        public ProductDetails(String image, String manufacturer, String name, Question[] questions, Integer[] ratings) {
-            this.image = image;
+        public ProductDetails(String imageURL, String manufacturer, String name, Question[] questions, Integer[] ratings) {
+            this.imageURL = imageURL;
             this.manufacturer = manufacturer;
             this.name = name;
             this.questions = questions;
             this.ratings = ratings;
         }
         
-        public String getImage() {
-            return image;
+        public String getImageURL() {
+            return imageURL;
         }
         public String getManufacturer() {
             return manufacturer;
@@ -167,7 +167,7 @@ public class ProductService extends Service {
         }
         
         // Parse result
-        ProductDetails details = result.getObject(ApiConstants.RET_RESULT, ProductDetails.class);
+        ProductDetails details = result.asObject(ProductDetails.class);
         if (details == null) {
             // This should never happen, the API should always return an object or an error
             throwInvalidResponseError(result, ApiConstants.RET_RESULT);

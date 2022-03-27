@@ -14,7 +14,7 @@ public class ServiceFactory {
             Service.injectHttpClient(new OkHttpAdapter());
             
             // TODO: Remove this once the backend works
-            Service.injectHttpClient(new StubHttpClient());
+            //Service.injectHttpClient(new StubHttpClient());
         }
         return instance;
     }

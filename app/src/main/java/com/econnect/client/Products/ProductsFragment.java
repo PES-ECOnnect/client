@@ -25,7 +25,7 @@ public class ProductsFragment extends CustomFragment<FragmentProductsBinding> {
     protected void addListeners() {
         binding.filterDropdown.setOnItemClickListener(_ctrl.typesDropdown());
         binding.searchText.addTextChangedListener(_ctrl.searchText());
-        //binding.itemList.setOnItemClickListener();
+        binding.itemList.setOnItemClickListener(_ctrl.productClick());
 
         _ctrl.updateLists();
     }

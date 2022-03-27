@@ -1,12 +1,15 @@
 package com.econnect.client.Companies;
 
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.widget.AdapterView;
 
 import com.econnect.API.CompanyService;
 import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
+import com.econnect.client.ItemDetails.DetailsActivity;
 
 public class CompaniesController {
     private final CompaniesFragment _fragment;
@@ -49,6 +52,21 @@ public class CompaniesController {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 _fragment.filterCompaniesList();
             }
+        };
+    }
+
+    AdapterView.OnItemClickListener companyClick() {
+        return (parent, view, position, id) -> {
+            // Launch new activity DetailsActivity
+            Intent intent = new Intent(_fragment.getContext(), DetailsActivity.class);
+
+            CompanyService.Company p = (CompanyService.Company) parent.getItemAtPosition(position);
+
+            // Pass parameters to activity
+            intent.putExtra("id", p.getId());
+            intent.putExtra("type", "company");
+
+            _fragment.getActivity().startActivity(intent);
         };
     }
 }

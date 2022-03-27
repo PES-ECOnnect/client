@@ -21,7 +21,7 @@ public class CompaniesFragment extends CustomFragment<FragmentCompaniesBinding> 
     @Override
     protected void addListeners() {
         binding.searchText.addTextChangedListener(_ctrl.searchText());
-        //binding.itemList.setOnItemClickListener();
+        binding.itemList.setOnItemClickListener(_ctrl.companyClick());
 
         _ctrl.updateList();
     }

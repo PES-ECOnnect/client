@@ -4,6 +4,7 @@ import com.google.gson.*;
 
 public class JsonResult {
     private final JsonObject _jsonObject;
+    private final static Gson GSON = new Gson();
 
     public JsonResult(JsonElement jsonElement) {
         this._jsonObject = jsonElement.getAsJsonObject();
@@ -28,13 +29,17 @@ public class JsonResult {
         JsonArray array = element.getAsJsonArray();
         if (array == null) return null;
 
-        return new Gson().fromJson(array, arrayClass);
+        return GSON.fromJson(array, arrayClass);
     }
 
     public <T> T getObject(String attrName, Class<T> objectClass) {
         JsonElement element = _jsonObject.get(attrName);
         if (element == null) return null;
-        return new Gson().fromJson(element, objectClass);
+        return GSON.fromJson(element, objectClass);
+    }
+
+    public <T> T asObject(Class<T> objectClass) {
+        return GSON.fromJson(_jsonObject, objectClass);
     }
 
     @Override

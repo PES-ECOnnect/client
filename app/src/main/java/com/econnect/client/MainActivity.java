@@ -17,8 +17,6 @@ import com.google.android.material.navigation.NavigationBarView.OnItemSelectedLi
 
 public class MainActivity extends AppCompatActivity {
 
-    private BottomNavigationView _bottomNavigationView;
-
     private final Fragment[] _fragments = {new ProductsFragment(), new CompaniesFragment(),
             new ForumFragment(), new ProfileFragment()};
 
@@ -30,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        _bottomNavigationView = findViewById(R.id.bottomNav);
-        _bottomNavigationView.setOnItemSelectedListener(bottomNavSelected);
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNav);
+        bottomNav.setOnItemSelectedListener(bottomNavSelected);
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 

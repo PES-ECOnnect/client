@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/product_item_image"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -14,6 +14,8 @@
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
         android:contentDescription="@string/product_image_description"
+        app:shapeAppearance="@style/ShapeAppearance.MaterialComponents.MediumComponent"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.MaterialComponents.MediumComponent"
         app:srcCompat="@drawable/ic_products_24"
         tools:ignore="ImageContrastCheck" />
 

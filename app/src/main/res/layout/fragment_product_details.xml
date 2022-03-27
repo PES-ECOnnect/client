@@ -17,16 +17,18 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Product Name" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/productImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/productNameText"
-        tools:ignore="ImageContrastCheck"
-        tools:src="@tools:sample/avatars" />
+        app:shapeAppearance="@style/ShapeAppearance.MaterialComponents.MediumComponent"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.MaterialComponents.MediumComponent"
+        app:srcCompat="@drawable/ic_products_24"
+        tools:ignore="ImageContrastCheck" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -95,7 +97,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/ratingsText"
+            android:id="@+id/numberOfRatingsText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

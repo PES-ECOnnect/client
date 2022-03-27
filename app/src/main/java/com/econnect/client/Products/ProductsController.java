@@ -1,5 +1,7 @@
 package com.econnect.client.Products;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -11,6 +13,7 @@ import com.econnect.API.ProductTypesService.ProductType;
 import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
+import com.econnect.client.ItemDetails.DetailsActivity;
 
 import java.util.ArrayList;
 
@@ -95,6 +98,22 @@ public class ProductsController {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 _fragment.filterProductList();
             }
+        };
+    }
+
+
+    AdapterView.OnItemClickListener productClick() {
+        return (parent, view, position, id) -> {
+            // Launch new activity DetailsActivity
+            Intent intent = new Intent(_fragment.getContext(), DetailsActivity.class);
+
+            ProductService.Product p = (ProductService.Product) parent.getItemAtPosition(position);
+
+            // Pass parameters to activity
+            intent.putExtra("id", p.getId());
+            intent.putExtra("type", "product");
+
+            _fragment.getActivity().startActivity(intent);
         };
     }
 }
