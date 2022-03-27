@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.econnect.Utilities.CustomFragment;
+import com.econnect.Utilities.ExecutionThread;
 import com.econnect.client.R;
 import com.econnect.client.databinding.FragmentProductsBinding;
 import com.econnect.client.databinding.FragmentProfileBinding;
@@ -43,6 +44,9 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> impl
         switch (menuItem.getItemId()){
             case R.id.profile_logout:
                 ctrl.logoutButtonClick();
+                break;
+            case R.id.profile_placeholder:
+
                 break;
             default:
                 break;

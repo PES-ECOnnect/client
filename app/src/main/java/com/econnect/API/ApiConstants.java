@@ -27,7 +27,17 @@ public interface ApiConstants {
 
     // Get/create products
     public final String PRODUCT_TYPE = "type";
-    
+
+    // Product
+    public final String PRODUCT_ID = "productId";
+
+    // Review
+    public final String REVIEW = "review";
+
+    // Question
+    public final String ANSWER = "answer";
+    public final String QUESTION_INDEX = "questionIndex";
+    public final String CHOSEN_OPTION = "chosenOption";
     
     // RETURN VALUES
     public final String RET_TOKEN = "token";

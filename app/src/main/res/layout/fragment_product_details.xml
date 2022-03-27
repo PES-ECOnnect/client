@@ -50,18 +50,9 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/star0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_star_24"
-                tools:layout_editor_absoluteX="296dp"
-                tools:layout_editor_absoluteY="215dp" />
-
-            <ImageView
                 android:id="@+id/star1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:src="@drawable/ic_star_24"
                 tools:layout_editor_absoluteX="296dp"
                 tools:layout_editor_absoluteY="215dp" />
@@ -86,6 +77,15 @@
 
             <ImageView
                 android:id="@+id/star4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/ic_star_24"
+                tools:layout_editor_absoluteX="296dp"
+                tools:layout_editor_absoluteY="215dp" />
+
+            <ImageView
+                android:id="@+id/star5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
