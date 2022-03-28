@@ -84,4 +84,8 @@ public class ProductDetailsFragment extends CustomFragment<FragmentProductDetail
     void setQuestionsElements(Question[] questions) {
         binding.questionsList.setAdapter(new QuestionListAdapter(this, questions));
     }
+
+    void setTitle(String name) {
+        binding.productNameText.setText(name);
+    }
 }

@@ -32,6 +32,7 @@ public class ProductDetailsController implements IDetailsController {
                 _product = service.getProductDetails(_productId);
 
                 ExecutionThread.UI(_fragment, () -> {
+                    _fragment.setTitle(_product.name);
                     _fragment.setAverageRating(_product.ratings);
                     _fragment.setQuestionsElements(_product.questions);
                 });

@@ -40,7 +40,9 @@ public class MainActivity extends AppCompatActivity {
         for (Fragment f : _fragments) {
             ft = ft.add(R.id.mainFrameLayout, f).hide(f);
         }
+        // Default screen is Products
         ft.show(_selectedFragment).commit();
+        setTitle(R.string.products_name);
 
 
         // Add callback for returning to login screen if the token expires

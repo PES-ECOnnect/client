@@ -2,7 +2,9 @@ package com.econnect.API;
 
 import android.graphics.Bitmap;
 
+import com.econnect.API.Exceptions.ApiException;
 import com.econnect.Utilities.BitmapLoader;
+import com.econnect.API.ProductService.ProductDetails.Question;
 
 public class CompanyService extends Service {
     
@@ -57,12 +59,6 @@ public class CompanyService extends Service {
     }
 
     public static class CompanyDetails {
-        public static class Question {
-            public final int num_no = 0;
-            public final int num_yes = 0;
-            public final String text = null;
-        }
-
         // Important: The name of these attributes must match the ones in the returned JSON
         // Gson will initialize these fields to the received values
         public final String imageURL = null;
@@ -105,5 +101,32 @@ public class CompanyService extends Service {
         }
         
         return questions;
+    }
+
+    // Get company details
+    public CompanyDetails getCompanyDetails(int companyId) {
+        JsonResult result = null;
+        try {
+            // Call API
+            super.needsToken = true;
+            result = get(ApiConstants.COMPANIES_PATH + "/" + companyId, null);
+        }
+        catch (ApiException e) {
+            switch (e.getErrorCode()) {
+                case ApiConstants.ERROR_PRODUCT_NOT_EXISTS:
+                    throw new RuntimeException("The company with id " + companyId + " does not exist");
+                default:
+                    throw e;
+            }
+        }
+
+        // Parse result
+        CompanyDetails details = result.asObject(CompanyDetails.class);
+        if (details == null) {
+            // This should never happen, the API should always return an object or an error
+            throwInvalidResponseError(result, ApiConstants.RET_RESULT);
+        }
+
+        return details;
     }
 }

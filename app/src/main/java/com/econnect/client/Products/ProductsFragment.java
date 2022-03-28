@@ -1,6 +1,7 @@
 package com.econnect.client.Products;
 
 import android.graphics.drawable.Drawable;
+import android.view.View;
 import android.widget.ArrayAdapter;
 
 import androidx.core.content.ContextCompat;
@@ -50,5 +51,11 @@ public class ProductsFragment extends CustomFragment<FragmentProductsBinding> {
 
         _products_adapter.setFilterType(type);
         _products_adapter.getFilter().filter(binding.searchText.getText());
+    }
+
+    void enableInput() {
+        binding.productsProgressBar.setVisibility(View.GONE);
+        binding.filterBox.setEnabled(true);
+        binding.searchBox.setEnabled(true);
     }
 }

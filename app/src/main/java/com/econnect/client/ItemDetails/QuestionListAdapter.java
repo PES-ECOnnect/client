@@ -60,7 +60,9 @@ public class QuestionListAdapter extends BaseAdapter {
 
         // Set question text
         TextView questionText = vi.findViewById(R.id.questionText);
-        String text = vi.getResources().getString(R.string.question_text_and_votes, q.text, totalVotes);
+        String text;
+        if (totalVotes != 1) text = vi.getResources().getString(R.string.question_text_and_votes, q.text, totalVotes);
+        else text = vi.getResources().getString(R.string.question_text_and_votes_one, q.text, totalVotes);
         questionText.setText(text);
 
         // Set percent

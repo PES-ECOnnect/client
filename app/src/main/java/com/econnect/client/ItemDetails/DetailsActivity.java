@@ -32,9 +32,11 @@ public class DetailsActivity extends AppCompatActivity {
         IDetailsController ctrl;
         switch (type) {
             case "product":
+                setTitle("Product details");
                 ctrl = new ProductDetailsController(fragment, itemId);
                 break;
             case "company":
+                setTitle("Company details");
                 ctrl = new CompanyDetailsController(fragment, itemId);
                 break;
             default:

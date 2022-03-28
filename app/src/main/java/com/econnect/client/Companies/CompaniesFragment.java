@@ -1,6 +1,7 @@
 package com.econnect.client.Companies;
 
 import android.graphics.drawable.Drawable;
+import android.view.View;
 
 import androidx.core.content.ContextCompat;
 
@@ -35,5 +36,10 @@ public class CompaniesFragment extends CustomFragment<FragmentCompaniesBinding> 
 
     void filterCompaniesList() {
         _companiesAdapter.getFilter().filter(binding.searchText.getText());
+    }
+
+    void enableInput() {
+        binding.companiesProgressBar.setVisibility(View.GONE);
+        binding.searchBox.setEnabled(true);
     }
 }

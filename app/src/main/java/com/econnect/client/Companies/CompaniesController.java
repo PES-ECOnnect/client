@@ -33,6 +33,7 @@ public class CompaniesController {
 
             ExecutionThread.UI(_fragment, () -> {
                 _fragment.setCompanyElements(companies);
+                _fragment.enableInput();
             });
         }
         catch (Exception e){

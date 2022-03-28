@@ -65,6 +65,7 @@ public class ProductsController {
 
             ExecutionThread.UI(_fragment, () -> {
                 _fragment.setProductElements(products);
+                _fragment.enableInput();
             });
         }
         catch (Exception e) {
