@@ -1,17 +1,6 @@
 package com.econnect.client.RegisterLogin;
 
-import android.app.AlertDialog;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
-
 import com.econnect.Utilities.CustomFragment;
-import com.econnect.client.R;
 import com.econnect.client.databinding.FragmentRegisterBinding;
 
 public class RegisterFragment extends CustomFragment<FragmentRegisterBinding> {
@@ -30,19 +19,19 @@ public class RegisterFragment extends CustomFragment<FragmentRegisterBinding> {
 
 
     String getUsernameText() {
-        return binding.editTextTextPersonName.getText().toString();
+        return binding.registerUsernameText.getText().toString();
     }
 
     String getPasswordText() {
-        return binding.editTextTextPassword3.getText().toString();
+        return binding.registerPasswordText.getText().toString();
     }
 
     String getEmailText() {
-        return binding.editTextTextEmailAddress.getText().toString();
+        return binding.registerEmailText.getText().toString();
     }
 
     String getPostalAddressText() {
-        return binding.editTextTextPostalAddress.getText().toString();
+        return binding.registerPostalCodeText.getText().toString();
     }
 
     public void enableInput(boolean b) {

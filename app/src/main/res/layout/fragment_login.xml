@@ -6,10 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".RegisterLogin.LoginFragment">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imageView2"
         android:layout_width="312dp"
-        android:layout_height="263dp"
+        android:layout_height="210dp"
+        android:background="#FFFFFF"
         android:contentDescription="@string/logo"
         android:src="@drawable/logo"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -18,10 +19,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.141"
+        app:shapeAppearance="@style/ShapeAppearance.MaterialComponents.MediumComponent"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.MaterialComponents.MediumComponent"
         tools:ignore="ImageContrastCheck" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/emailTextLayout"
+        android:id="@+id/loginEmailBox"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="250dp"
         android:layout_height="65dp"
@@ -34,7 +37,7 @@
         app:layout_constraintVertical_bias="0.13999999">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/emailTextInput"
+            android:id="@+id/loginEmailText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email_textbox_hint"
@@ -44,7 +47,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/passwordTextLayout"
+        android:id="@+id/loginPasswordBox"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="wrap_content"
         android:layout_height="65dp"
@@ -53,11 +56,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailTextLayout"
+        app:layout_constraintTop_toBottomOf="@+id/loginEmailBox"
         app:layout_constraintVertical_bias="0.01999998">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/passwordTextInput"
+            android:id="@+id/loginPasswordText"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -80,7 +83,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.31"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordTextLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/loginPasswordBox" />
 
     <Button
         android:id="@+id/button_login"
@@ -91,6 +94,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.761"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordTextLayout"
+        app:layout_constraintTop_toBottomOf="@+id/loginPasswordBox"
         tools:ignore="TextContrastCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>
