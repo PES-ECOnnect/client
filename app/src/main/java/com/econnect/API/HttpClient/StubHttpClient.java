@@ -73,13 +73,17 @@ public class StubHttpClient implements HttpClient {
                     return "{\"error\":\"ERROR_TYPE_NOT_EXISTS\"}";
                 }
 
-            // Get list of products
+            // Get detailed info about product
             case "/products/0":
                 expectParamsExclusive(params, "token");
                 if (equals(params, "token", "badToken")) {
                     return "{\"error\":\"ERROR_INVALID_TOKEN\"}";
                 }
-                return "{\"imageURL\":\"https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-product-6_large.png\",\"latitude\":10.040506,\"longitude\":5.050607,\"name\":\"test\",\"questions\":[{\"num_no\":0,\"num_yes\":0,\"text\":\"bon servei?\"}],\"ratings\":[0,0,0,1,0,1],\"type\":\"Company\"}";
+                return "{\"name\":\"product0\",\"imageURL\":\"imageUrl0\",\"manufacturer\":\"manufacturer0\",\"type\":\"type0\",\"questions\":[{\"text\":\"q0\",\"num_yes\":11,\"num_no\":12},{\"text\":\"q1\",\"num_yes\":21,\"num_no\":22},{\"text\":\"q2\",\"num_yes\":31,\"num_no\":32}],\"ratings\":[1,0,0,0,0,10]}";
+                
+            case "/products/2":
+                expectParams(params, "token");
+                return "{\"error\":\"ERROR_INCORRECT_ID_REVIEWABLE\"}";
                 
             // Get list of companies
             case "/companies":
@@ -91,6 +95,18 @@ public class StubHttpClient implements HttpClient {
                     // For each company, return the id, name, avgRating, imageURL, lat and lon
                     return "{\"result\":[{\"id\":1,\"name\":\"company1\",\"avgRating\":1.0,\"imageURL\":\"https://wallpapercave.com/wp/wp4676582.jpg\",\"lat\":1.0,\"lon\":1.0},{\"id\":2,\"name\":\"company2\",\"avgRating\":2.0,\"imageURL\":\"http://www.company2.com/image.png\",\"lat\":2.0,\"lon\":2.0}]}";
                 }
+
+            // Get detailed info about company
+            case "/companies/1":
+                expectParams(params, "token");
+                if (equals(params, "token", "badToken")) {
+                    return "{\"error\":\"ERROR_INVALID_TOKEN\"}";
+                }
+                return "{\"imageURL\":\"https://company.com/img.png\",\"latitude\":12,\"longitude\":34,\"name\":\"test\",\"questions\":[{\"num_no\":1,\"num_yes\":2,\"text\":\"bon servei?\"},{\"num_no\":3,\"num_yes\":4,\"text\":\"q2\"}],\"ratings\":[1,2,3,4,5,6],\"type\":\"Company\"}";
+                
+            case "/companies/2":
+                expectParams(params, "token");
+                return "{\"error\":\"ERROR_INCORRECT_ID_REVIEWABLE\"}";
                 
             default:
                 throw new RuntimeException("Invalid path: " + path);

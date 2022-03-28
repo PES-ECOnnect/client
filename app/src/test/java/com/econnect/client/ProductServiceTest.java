@@ -74,4 +74,57 @@ public class ProductServiceTest {
         );
     }
 
+
+    @Test
+    public void getProductDetailsOk() {
+        ProductService.ProductDetails productDetails = sv.getProductDetails(0);
+
+        assertNotNull(productDetails);
+
+        assertEquals("imageUrl0", productDetails.imageURL);
+        assertEquals("manufacturer0", productDetails.manufacturer);
+        assertEquals("product0", productDetails.name);
+
+        assertEquals(3, productDetails.questions.length);
+        assertEquals(12, productDetails.questions[0].num_no);
+        assertEquals(11, productDetails.questions[0].num_yes);
+        assertEquals("q0", productDetails.questions[0].text);
+        assertEquals(22, productDetails.questions[1].num_no);
+        assertEquals(21, productDetails.questions[1].num_yes);
+        assertEquals("q1", productDetails.questions[1].text);
+        assertEquals(32, productDetails.questions[2].num_no);
+        assertEquals(31, productDetails.questions[2].num_yes);
+        assertEquals("q2", productDetails.questions[2].text);
+
+        assertEquals(6, productDetails.ratings.length);
+        assertEquals(1, productDetails.ratings[0]);
+        assertEquals(0, productDetails.ratings[1]);
+        assertEquals(10, productDetails.ratings[5]);
+    }
+
+    @Test
+    public void testGetCompanyDetailsNotExists() {
+        expectException(() ->
+            sv.getProductDetails(2),
+            "The product with id 2 does not exist"
+        );
+    }
+
+    @Test
+    public void cannotGetCompanyDetailsWithInvalidToken() {
+        ServiceTestHelper.setToken("badToken");
+        expectException(() ->
+            sv.getProductDetails(0),
+            "This session has expired, please logout and try again"
+        );
+    }
+
+    @Test
+    public void cannotGetCompanyDetailsWithoutToken() {
+        ServiceTestHelper.clearToken();
+        expectException(() ->
+            sv.getProductDetails(0),
+            "Admin token not set"
+        );
+    }
 }

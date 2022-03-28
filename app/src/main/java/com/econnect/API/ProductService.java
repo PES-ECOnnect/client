@@ -71,9 +71,9 @@ public class ProductService extends Service {
         public final String manufacturer;
         public final String name;
         public final Question[] questions;
-        public final Integer[] ratings;
+        public final int[] ratings;
 
-        public ProductDetails(String imageURL, String manufacturer, String name, Question[] questions, Integer[] ratings) {
+        public ProductDetails(String imageURL, String manufacturer, String name, Question[] questions, int[] ratings) {
             this.imageURL = imageURL;
             this.manufacturer = manufacturer;
             this.name = name;

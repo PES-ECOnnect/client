@@ -61,12 +61,21 @@ public class CompanyService extends Service {
     public static class CompanyDetails {
         // Important: The name of these attributes must match the ones in the returned JSON
         // Gson will initialize these fields to the received values
-        public final String imageURL = null;
-        public final double latitude = 0;
-        public final double longitude = 0;
-        public final String name = null;
-        public final Question[] questions = null;
-        public final Integer[] ratings = null;
+        public final String imageURL;
+        public final double latitude;
+        public final double longitude;
+        public final String name;
+        public final Question[] questions;
+        public final int[] ratings;
+
+        public CompanyDetails(String imageURL, double latitude, double longitude, String name, Question[] questions, int[] ratings) {
+            this.imageURL = imageURL;
+            this.latitude = latitude;
+            this.longitude = longitude;
+            this.name = name;
+            this.questions = questions;
+            this.ratings = ratings;
+        }
     }
     
     // Get all companies
@@ -113,7 +122,7 @@ public class CompanyService extends Service {
         }
         catch (ApiException e) {
             switch (e.getErrorCode()) {
-                case ApiConstants.ERROR_PRODUCT_NOT_EXISTS:
+                case ApiConstants.ERROR_COMPANY_NOT_EXISTS:
                     throw new RuntimeException("The company with id " + companyId + " does not exist");
                 default:
                     throw e;

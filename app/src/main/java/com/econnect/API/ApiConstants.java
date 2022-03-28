@@ -59,7 +59,8 @@ public interface ApiConstants {
     public final String ERROR_USERNAME_EXISTS = "ERROR_USERNAME_EXISTS";
     public final String ERROR_EMAIL_EXISTS = "ERROR_EMAIL_EXISTS";
 
-    // Get products
+    // Get products/companies
     public final String ERROR_TYPE_NOT_EXISTS = "ERROR_TYPE_NOT_EXISTS";
-    public final String ERROR_PRODUCT_NOT_EXISTS = "ERROR_PRODUCT_NOT_EXISTS";
+    public final String ERROR_PRODUCT_NOT_EXISTS = "ERROR_INCORRECT_ID_REVIEWABLE";
+    public final String ERROR_COMPANY_NOT_EXISTS = "ERROR_INCORRECT_ID_REVIEWABLE";
 }

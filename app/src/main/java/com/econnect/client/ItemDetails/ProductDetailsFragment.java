@@ -38,7 +38,7 @@ public class ProductDetailsFragment extends CustomFragment<FragmentProductDetail
     }
 
 
-    void setAverageRating(Integer[] votes) {
+    void setAverageRating(int[] votes) {
         final Drawable fullStar = AppCompatResources.getDrawable(getContext(), R.drawable.ic_star_24);
         final Drawable halfStar = AppCompatResources.getDrawable(getContext(), R.drawable.ic_star_half_24);
         final Drawable emptyStar = AppCompatResources.getDrawable(getContext(), R.drawable.ic_star_empty_24);
