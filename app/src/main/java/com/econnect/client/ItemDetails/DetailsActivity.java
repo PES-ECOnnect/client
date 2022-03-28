@@ -1,14 +1,16 @@
 package com.econnect.client.ItemDetails;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
+
+import android.view.MenuItem;
+
 import com.econnect.client.R;
-import com.econnect.client.databinding.ActivityRegisterBinding;
+
 
 public class DetailsActivity extends AppCompatActivity {
 
@@ -17,6 +19,9 @@ public class DetailsActivity extends AppCompatActivity {
         // Init Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
+
+        // Enable back arrow in title bar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Get parameters
         Intent intent = getIntent();
@@ -48,4 +53,15 @@ public class DetailsActivity extends AppCompatActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.detailsMainLayout, fragment).commit();
     }
+
+    // If back arrow in title bar is pressed, finish activity
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            this.finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
+
