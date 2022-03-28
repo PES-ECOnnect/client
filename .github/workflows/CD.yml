@@ -6,7 +6,7 @@ on:
   pull_request:
   push:
     branches:
-      - master
+      - Pol_dev
       
 # Where will they run
 jobs:
@@ -46,12 +46,12 @@ jobs:
         wrapper-cache-enabled: true
         dependencies-cache-enabled: true
         configuration-cache-enabled: true
-        # Run ./gradlew test assembleRelease
+        # Run ./gradlew with targets: test, assembleRelease, bundleRelease
         # This runs unit tests and builds the app
-        arguments: test assembleRelease
+        arguments: test assembleRelease bundleRelease
       
     ## Sign artifact ##
-    - name: Sign artifact
+    - name: Sign APK
       id: signArtifact
       uses: r0adkll/sign-android-release@v1
       with:
@@ -63,12 +63,31 @@ jobs:
     - name: Rename signed APK
       id: renameArtifact
       run: cp ${{steps.signArtifact.outputs.signedReleaseFile}} ECOnnect.apk
+      
+    - name: Sign Bundle
+      id: signBundle
+      uses: r0adkll/sign-android-release@v1
+      with:
+        releaseDirectory: app/build/outputs/bundle/release
+        alias: ${{ secrets.KEYALIAS }}
+        signingKeyBase64: ${{ secrets.KEYSTORE }}
+        keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
+        keyPassword: ${{ secrets.KEY_PASSWORD }}
+    - name: Rename signed Bundle
+      id: renameBundle
+      run: cp ${{steps.signBundle.outputs.signedReleaseFile}} ECOnnect.aab
 
-    - name: Upload signed APK
+    - name: Upload signed APK to GitHub
       uses: actions/upload-artifact@v2.2.0
       with:
-        name: Release artifact
+        name: Release APK
         path: ECOnnect.apk
+        
+    - name: Upload signed Bundle to GitHub
+      uses: actions/upload-artifact@v2.2.0
+      with:
+        name: Release Bundle
+        path: ECOnnect.aab
 
     - uses: "marvinpinto/action-automatic-releases@latest"
       with:
