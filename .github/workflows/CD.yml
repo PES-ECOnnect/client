@@ -6,7 +6,7 @@ on:
   pull_request:
   push:
     branches:
-      - Pol_dev
+      - master
       
 # Where will they run
 jobs:
@@ -97,3 +97,16 @@ jobs:
         title: "Latest Build"
         files: |
           ECOnnect.apk
+    
+    - name: Create service_account.json
+      run: echo '${{ secrets.SERVICE_ACCOUNT_JSON }}' > service_account.json
+    - name: Upload Android Release to Play Store
+      id: uploadToPlayStore
+      uses: r0adkll/upload-google-play@v1
+      with:
+        serviceAccountJson: service_account.json
+        packageName: com.econnect.client
+        releaseFiles: ECOnnect.aab
+        track: beta
+        status: completed
+        whatsNewDirectory: playstore_notes/
