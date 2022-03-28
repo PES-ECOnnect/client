@@ -76,7 +76,7 @@ public class LoginServiceTest {
     @Test
     public void testLogoutOk() {
         ServiceTestHelper.setToken();
-        sv.logout(null);
+        sv.logout();
         // This should not throw an exception
     }
     
@@ -84,26 +84,25 @@ public class LoginServiceTest {
     public void testLogoutBadToken() {
         ServiceTestHelper.setToken("badToken");
         expectException(() ->
-            sv.logout(null),
-            // This error is not very friendly, but it should never happen
-            "The server responded with error code ERROR_INVALID_TOKEN"
+            sv.logout(),
+            "This session has expired, please logout and try again"
         );
     }
     
     @Test
     public void testLoginAndLogout() {
         sv.login("okEmail", "okPassword", null);
-        sv.logout(null);
+        sv.logout();
         // This should not throw an exception
     }
     
     @Test
     public void cannotLogoutTwice() {
         ServiceTestHelper.setToken();
-        sv.logout(null);
+        sv.logout();
         expectException(() ->
-            sv.logout(null),
-            "Session token was already deleted"
+            sv.logout(),
+            "Admin token not set"
         );
     }
 }

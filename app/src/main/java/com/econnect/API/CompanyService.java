@@ -2,9 +2,6 @@ package com.econnect.API;
 
 import android.graphics.Bitmap;
 
-import java.util.TreeMap;
-
-import com.econnect.API.Exceptions.ApiException;
 import com.econnect.Utilities.BitmapLoader;
 
 public class CompanyService extends Service {
@@ -12,16 +9,17 @@ public class CompanyService extends Service {
     // Only allow instantiating from ServiceFactory
     CompanyService() {}
     
-    public class Company implements IAbstractProduct {
+    public static class Company implements IAbstractProduct {
         // Important: The name of these attributes must match the ones in the returned JSON
-        private final int id;
-        private final String name;
-        private final float avgRating;
-        private final String imageURL;
-        private final double lat;
-        private final double lon;
+        // Gson will initialize these fields to the received values
+        public final int id;
+        public final String name;
+        public final float avgRating;
+        public final String imageURL;
+        public final double lat;
+        public final double lon;
         private Bitmap imageBitmap = null;
-        
+
         public Company(int id, String name, float avgRating, String imageURL, double lat, double lon) {
             this.id = id;
             this.name = name;
@@ -35,7 +33,6 @@ public class CompanyService extends Service {
         public String getName() {
             return name;
         }
-
         @Override
         public String getSecondaryText() {
             // Display coordinates in format: "12.3456N 34.5678W"
@@ -47,30 +44,33 @@ public class CompanyService extends Service {
 
             return latStr + ", " + lonStr;
         }
-
+        @Override
         public float getAvgRating() {
             return avgRating;
         }
-
         @Override
         public Bitmap getImage(int height) {
             if (imageBitmap == null)
                 imageBitmap = BitmapLoader.fromURL(imageURL, height);
             return imageBitmap;
         }
+    }
 
-        public int getId() {
-            return id;
+    public static class CompanyDetails {
+        public static class Question {
+            public final int num_no = 0;
+            public final int num_yes = 0;
+            public final String text = null;
         }
-        public String getImageUrl() {
-            return imageURL;
-        }
-        public double getLat() {
-            return lat;
-        }
-        public double getLon() {
-            return lon;
-        }
+
+        // Important: The name of these attributes must match the ones in the returned JSON
+        // Gson will initialize these fields to the received values
+        public final String imageURL = null;
+        public final double latitude = 0;
+        public final double longitude = 0;
+        public final String name = null;
+        public final Question[] questions = null;
+        public final Integer[] ratings = null;
     }
     
     // Get all companies

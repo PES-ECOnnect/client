@@ -72,6 +72,14 @@ public class StubHttpClient implements HttpClient {
                 else {
                     return "{\"error\":\"ERROR_TYPE_NOT_EXISTS\"}";
                 }
+
+            // Get list of products
+            case "/products/0":
+                expectParamsExclusive(params, "token");
+                if (equals(params, "token", "badToken")) {
+                    return "{\"error\":\"ERROR_INVALID_TOKEN\"}";
+                }
+                return "{\"imageURL\":\"https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-product-6_large.png\",\"latitude\":10.040506,\"longitude\":5.050607,\"name\":\"test\",\"questions\":[{\"num_no\":0,\"num_yes\":0,\"text\":\"bon servei?\"}],\"ratings\":[0,0,0,1,0,1],\"type\":\"Company\"}";
                 
             // Get list of companies
             case "/companies":

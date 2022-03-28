@@ -47,4 +47,17 @@ public class PopupMessage {
                                    DialogInterface.OnClickListener yesListener) {
         yesNoDialog(caller, title, message, yesListener, (dialog, id) -> dialog.cancel());
     }
+
+    public static void okDialog(Fragment caller, String title, String message,
+                                DialogInterface.OnClickListener okListener) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(caller.getContext());
+        alertDialogBuilder.setTitle(title);
+        alertDialogBuilder
+            .setMessage(message)
+            .setCancelable(false)
+            .setPositiveButton("OK", okListener);
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
 }

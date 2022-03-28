@@ -1,5 +1,7 @@
 package com.econnect.API;
 
+import android.os.SystemClock;
+
 import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
@@ -17,6 +19,8 @@ public abstract class Service {
     private static String _adminToken = null;
     // Gson object used to serialize and deserialize JSON
     private final Gson gson = new Gson();
+    // Called when ERROR_INVALID_TOKEN is received
+    private static ITokenInvalidCallback _tokenInvalidCallback;
     // Set by the subclass to indicate whether the request needs an adminToken
     protected boolean needsToken = true;
 
@@ -100,10 +104,15 @@ public abstract class Service {
         String error = json.getAttribute(ApiConstants.RET_ERROR);
 
         if (error != null) {
-            if (error == ApiConstants.ERROR_INVALID_TOKEN) {
-                deleteToken();
+            // Special treatment for ERROR_INVALID_TOKEN
+            if (error.equals(ApiConstants.ERROR_INVALID_TOKEN)) {
+                // Call the invalid token callback
+                if (_tokenInvalidCallback != null) {
+                    _tokenInvalidCallback.invalidToken();
+                }
                 throw new InvalidTokenApiException();
             }
+            // Generic API error
             throw new ApiException(error);
         }
         return json;
@@ -112,5 +121,14 @@ public abstract class Service {
     protected void throwInvalidResponseError(JsonResult result, String expectedAttr) {
         throw new RuntimeException("Invalid response from server: " + result.toString()
                 + "\nExpected " + ApiConstants.RET_ERROR + " or attribute '" + expectedAttr + "'");
+    }
+
+
+    // Callback for invalid token errors
+    public interface ITokenInvalidCallback {
+        void invalidToken();
+    }
+    public static void setInvalidTokenCallback(ITokenInvalidCallback callback) {
+        _tokenInvalidCallback = callback;
     }
 }

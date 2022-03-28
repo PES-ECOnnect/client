@@ -27,9 +27,8 @@ public class ProfileController {
             ExecutionThread.nonUI(() -> {
                 // Logout
                 LoginService loginService = ServiceFactory.getInstance().getLoginService();
-                SettingsFile file = new SettingsFile(fragment);
                 try {
-                    loginService.logout(file);
+                    loginService.logout();
                     ExecutionThread.UI(fragment, ()->{
                         fragment.getActivity().finish();
                     });

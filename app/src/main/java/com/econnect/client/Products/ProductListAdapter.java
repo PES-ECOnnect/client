@@ -35,6 +35,6 @@ public class ProductListAdapter extends AbstractProductListAdapter {
         if (_type == null) return true;
 
         Product pr = (Product) p;
-        return pr.getType().equals(_type);
+        return pr.type.equals(_type);
     }
 }

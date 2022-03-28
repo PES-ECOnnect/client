@@ -44,7 +44,7 @@ public class ProductsController {
             // Allocate space for items (with extra "Any" element)
             ArrayList<String> items = new ArrayList<>(types.length + 1);
             items.add(_ALL_TYPES);
-            for (ProductType t : types) items.add(t.getName());
+            for (ProductType t : types) items.add(t.name);
 
             ExecutionThread.UI(_fragment, () -> {
                 _fragment.setTypesDropdownElements(items);
@@ -110,7 +110,7 @@ public class ProductsController {
             ProductService.Product p = (ProductService.Product) parent.getItemAtPosition(position);
 
             // Pass parameters to activity
-            intent.putExtra("id", p.getId());
+            intent.putExtra("id", p.id);
             intent.putExtra("type", "product");
 
             _fragment.getActivity().startActivity(intent);

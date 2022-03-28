@@ -14,6 +14,18 @@ public class ExecutionThread {
         caller.getActivity().runOnUiThread(runnable);
     }
 
+    // Execute a runnable on the UI thread, wait for the runnable to call notify()
+    public static void UI_blocking(Fragment caller, Runnable runnable) {
+        synchronized( runnable ) {
+            caller.getActivity().runOnUiThread(runnable);
+            try {
+                runnable.wait();
+            } catch (InterruptedException e) {
+                // If the runnable is interrupted, terminate
+            }
+        }
+    }
+
     // Execute a runnable on a non-UI thread
     public static void nonUI(Runnable runnable) {
         new Thread(runnable).start();

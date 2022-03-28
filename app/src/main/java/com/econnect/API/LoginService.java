@@ -8,6 +8,7 @@ import com.econnect.Utilities.SettingsFile;
 public class LoginService extends Service {
 
     final static String STORED_TOKEN_KEY = "LOGIN_SERVICE_USER_TOKEN";
+    private static SettingsFile settingsFile = null;
     
     // Only allow instantiating from ServiceFactory
     LoginService() {}
@@ -15,7 +16,10 @@ public class LoginService extends Service {
     // Sets the user token, throws an exception if an error occurs
     // If file is not null, the token is stored for later
     public void login(String email, String password, SettingsFile file) {
-        
+
+        // Store file for logout
+        settingsFile = file;
+
         // Add parameters
         TreeMap<String, String> params = new TreeMap<>();
         params.put(ApiConstants.LOGIN_NAME, email);
@@ -52,21 +56,35 @@ public class LoginService extends Service {
     }
     
     // Invalidates the user token, throws an exception if an error occurs
-    public void logout(SettingsFile file) {
+    public void logout() {
         try {
             // Call API to invalidate in server
             super.needsToken = true;
             get(ApiConstants.LOGOUT_PATH, null);
         }
         finally {
-            // Delete local token whether or not the API call succeeded
-            if (file != null) file.remove(STORED_TOKEN_KEY);
+            // Delete local token whether or not the API call succeeded. Ignore errors
+            localLogout();
+        }
+    }
+
+    // Logout without calling API. Ignore errors
+    public void localLogout() {
+        if (settingsFile != null) settingsFile.remove(STORED_TOKEN_KEY);
+        try {
             super.deleteToken();
+        }
+        catch (IllegalStateException e) {
+            // Do nothing
         }
     }
 
     // Attempt to login automatically. Return true if it succeeded
     public boolean autoLogin(SettingsFile file) {
+
+        // Store file for logout
+        settingsFile = file;
+
         String token = file.getString(STORED_TOKEN_KEY);
 
         if (token == null) return false;

@@ -5,6 +5,7 @@ public class CompanyDetailsController implements IDetailsController {
     private final ProductDetailsFragment _fragment;
     private final int _companyId;
 
+
     public CompanyDetailsController(ProductDetailsFragment fragment, int companyId) {
         this._fragment = fragment;
         this._companyId = companyId;

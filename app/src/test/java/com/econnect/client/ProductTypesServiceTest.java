@@ -34,12 +34,12 @@ public class ProductTypesServiceTest {
         assertNotNull(types);
         assert(types.length == 2);
         
-        assertEquals("type1", types[0].getName());
-        assertEquals("type2", types[1].getName());
+        assertEquals("type1", types[0].name);
+        assertEquals("type2", types[1].name);
         
-        assertEquals("q1", types[0].getQuestions()[0]);
-        assertEquals("q2", types[0].getQuestions()[1]);
-        assertEquals("q6", types[1].getQuestions()[2]);
+        assertEquals("q1", types[0].questions[0]);
+        assertEquals("q2", types[0].questions[1]);
+        assertEquals("q6", types[1].questions[2]);
     }
     
     @Test
@@ -56,8 +56,7 @@ public class ProductTypesServiceTest {
         ServiceTestHelper.setToken("badToken");
         expectException(()->
             sv.getProductTypes(),
-            // This error is not very friendly, but it should never happen
-            "The server responded with error code ERROR_INVALID_TOKEN"
+            "This session has expired, please logout and try again"
         );
     }
 

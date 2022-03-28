@@ -9,8 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewbinding.ViewBinding;
 
-import com.econnect.client.databinding.FragmentProfileBinding;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -23,11 +21,11 @@ public abstract class CustomFragment<T extends ViewBinding> extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment using Java reflection
 
         // Get method "T.inflate(LayoutInflater inflater)"
-        Method m = null;
+        Method m;
         try {
             m = _tClass.getMethod("inflate", LayoutInflater.class);
         } catch (NoSuchMethodException e) {
@@ -42,6 +40,7 @@ public abstract class CustomFragment<T extends ViewBinding> extends Fragment {
         }
 
         // Return view as usual
+        assert binding != null;
         return binding.getRoot();
     }
 

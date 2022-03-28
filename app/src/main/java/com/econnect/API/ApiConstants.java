@@ -49,7 +49,7 @@ public interface ApiConstants {
     
     // ERRORS
     // General
-    public final String ERROR_INVALID_TOKEN = "ERROR_INVALID_USER_TOKEN";
+    public final String ERROR_INVALID_TOKEN = "ERROR_INVALID_TOKEN";
 
     // Login
     public final String ERROR_USER_NOT_FOUND = "ERROR_USER_NOT_FOUND";

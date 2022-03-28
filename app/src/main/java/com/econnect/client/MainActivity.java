@@ -7,6 +7,9 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.os.Looper;
 
+import com.econnect.API.Service;
+import com.econnect.API.ServiceFactory;
+import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
 import com.econnect.client.Companies.CompaniesFragment;
 import com.econnect.client.Forum.ForumFragment;
@@ -38,6 +41,23 @@ public class MainActivity extends AppCompatActivity {
             ft = ft.add(R.id.mainFrameLayout, f).hide(f);
         }
         ft.show(_selectedFragment).commit();
+
+
+        // Add callback for returning to login screen if the token expires
+        Service.setInvalidTokenCallback(() -> {
+            // Remove token from disk
+            ServiceFactory.getInstance().getLoginService().localLogout();
+
+            // Display error message. Block this thread until the user selects OK
+            ExecutionThread.UI_blocking(_selectedFragment, ()->{
+                PopupMessage.okDialog(_selectedFragment, "Session expired", "Please login again", (dialog, id)->{
+                    // Return to login screen
+                    this.finish();
+                    // User selected OK, unblock thread
+                    synchronized (this) { notify(); }
+                });
+            });
+        });
     }
 
     private OnItemSelectedListener bottomNavSelected = item -> {

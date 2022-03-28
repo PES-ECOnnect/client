@@ -53,14 +53,14 @@ public class QuestionListAdapter extends BaseAdapter {
             vi = inflater.inflate(R.layout.question_list_item, null);
         }
         final Question q = _questions[position];
-        int totalVotes = q.numNo() + q.numYes();
+        int totalVotes = q.num_no + q.num_yes;
         int percentVotes;
-        if (totalVotes > 0) percentVotes = (100 * q.numYes()) / totalVotes;
+        if (totalVotes > 0) percentVotes = (100 * q.num_yes) / totalVotes;
         else percentVotes = -1;
 
         // Set question text
         TextView questionText = vi.findViewById(R.id.questionText);
-        String text = vi.getResources().getString(R.string.question_text_and_votes, q.getText(), totalVotes);
+        String text = vi.getResources().getString(R.string.question_text_and_votes, q.text, totalVotes);
         questionText.setText(text);
 
         // Set percent

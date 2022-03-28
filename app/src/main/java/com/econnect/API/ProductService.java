@@ -14,14 +14,15 @@ public class ProductService extends Service {
     
     public static class Product implements IAbstractProduct {
         // Important: The name of these attributes must match the ones in the returned JSON
-        private final int id;
-        private final String name;
-        private final float avgRating;
-        private final String manufacturer;
-        private final String imageURL;
-        private final String type;
+        // Gson will initialize these fields to the received values
+        public final int id;
+        public final String name;
+        public final float avgRating;
+        public final String manufacturer;
+        public final String imageURL;
+        public final String type ;
         private Bitmap imageBitmap = null;
-        
+
         public Product(int id, String name, float avgRating, String manufacturer, String imageURL, String type) {
             this.id = id;
             this.name = name;
@@ -49,44 +50,28 @@ public class ProductService extends Service {
                 imageBitmap = BitmapLoader.fromURL(imageURL, height);
             return imageBitmap;
         }
-
-        public int getId() {
-            return id;
-        }
-        public String getManufacturer() {
-            return manufacturer;
-        }
-        public String getImageUrl() {
-            return imageURL;
-        }
-        public String getType() {
-            return type;
-        }
     }
 
+    public static class ProductDetails {
+        public static class Question {
+            public final int num_no;
+            public final int num_yes;
+            public final String text;
 
-    public class ProductDetails {
-        public class Question {
-            private final int num_no;
-            private final int num_yes;
-            private final String text;
-
-            public Question(String text, int num_no, int num_yes) {
-                this.text = text;
+            public Question(int num_no, int num_yes, String text) {
                 this.num_no = num_no;
                 this.num_yes = num_yes;
+                this.text = text;
             }
-            public String getText() { return text; }
-            public int numNo() { return num_no; }
-            public int numYes() { return num_yes; }
         }
 
         // Important: The name of these attributes must match the ones in the returned JSON
-        private final String imageURL;
-        private final String manufacturer;
-        private final String name;
-        private final Question[] questions;
-        private final Integer[] ratings;
+        // Gson will initialize these fields to the received values
+        public final String imageURL;
+        public final String manufacturer;
+        public final String name;
+        public final Question[] questions;
+        public final Integer[] ratings;
 
         public ProductDetails(String imageURL, String manufacturer, String name, Question[] questions, Integer[] ratings) {
             this.imageURL = imageURL;
@@ -94,22 +79,6 @@ public class ProductService extends Service {
             this.name = name;
             this.questions = questions;
             this.ratings = ratings;
-        }
-        
-        public String getImageURL() {
-            return imageURL;
-        }
-        public String getManufacturer() {
-            return manufacturer;
-        }
-        public String getName() {
-            return name;
-        }
-        public Question[] getQuestions() {
-            return questions;
-        }
-        public Integer[] getRatings() {
-            return ratings;
         }
     }
 

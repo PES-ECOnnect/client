@@ -35,11 +35,11 @@ public class ProductServiceTest {
         assertNotNull(products);
         assert(products.length == 5);
         
-        assertEquals(1, products[0].getId());
-        assertEquals(2, products[1].getId());
-        assertEquals(3, products[2].getId());
-        assertEquals(4, products[3].getId());
-        assertEquals(5, products[4].getId());
+        assertEquals(1, products[0].id);
+        assertEquals(2, products[1].id);
+        assertEquals(3, products[2].id);
+        assertEquals(4, products[3].id);
+        assertEquals(5, products[4].id);
         
         assertEquals("product1", products[0].getName());
         assertEquals("product2", products[1].getName());
@@ -47,14 +47,14 @@ public class ProductServiceTest {
         assertEquals("product4", products[3].getName());
         assertEquals("during", products[4].getName());
         
-        assertEquals("manufacturer2", products[1].getManufacturer());
-        assertEquals("manufacturer3", products[2].getManufacturer());
+        assertEquals("manufacturer2", products[1].manufacturer);
+        assertEquals("manufacturer3", products[2].manufacturer);
         
-        assertEquals("imageUrl3", products[2].getImageUrl());
-        assertEquals("imageUrl4", products[3].getImageUrl());
+        assertEquals("imageUrl3", products[2].imageURL);
+        assertEquals("imageUrl4", products[3].imageURL);
         
-        assertEquals("type1", products[0].getType());
-        assertEquals("type2", products[2].getType());
+        assertEquals("type1", products[0].type);
+        assertEquals("type2", products[2].type);
     }
     
     @Test

@@ -1,30 +1,19 @@
 package com.econnect.API;
 
-import java.util.TreeMap;
-
-import com.econnect.API.Exceptions.ApiException;
-
 public class ProductTypesService extends Service {
     
     // Only allow instantiating from ServiceFactory
     ProductTypesService() {}
     
-    public class ProductType {
+    public static class ProductType {
         // Important: The name of these attributes must match the ones in the returned JSON
-        private String name;
-        private String[] questions;
-        
+        // Gson will initialize these fields to the received values
+        public final String name;
+        public final String[] questions;
+
         public ProductType(String name, String[] questions) {
             this.name = name;
             this.questions = questions;
-        }
-        
-        public String getName() {
-            return name;
-        }
-        
-        public String[] getQuestions() {
-            return questions;
         }
     }
     

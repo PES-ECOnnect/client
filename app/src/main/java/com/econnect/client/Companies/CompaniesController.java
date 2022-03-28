@@ -63,7 +63,7 @@ public class CompaniesController {
             CompanyService.Company p = (CompanyService.Company) parent.getItemAtPosition(position);
 
             // Pass parameters to activity
-            intent.putExtra("id", p.getId());
+            intent.putExtra("id", p.id);
             intent.putExtra("type", "company");
 
             _fragment.getActivity().startActivity(intent);

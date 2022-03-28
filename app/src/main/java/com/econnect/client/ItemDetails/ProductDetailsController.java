@@ -32,12 +32,12 @@ public class ProductDetailsController implements IDetailsController {
                 _product = service.getProductDetails(_productId);
 
                 ExecutionThread.UI(_fragment, () -> {
-                    _fragment.setAverageRating(_product.getRatings());
-                    _fragment.setQuestionsElements(_product.getQuestions());
+                    _fragment.setAverageRating(_product.ratings);
+                    _fragment.setQuestionsElements(_product.questions);
                 });
 
                 // Fetch image
-                Bitmap bmp = BitmapLoader.fromURL(_product.getImageURL(), 128);
+                Bitmap bmp = BitmapLoader.fromURL(_product.imageURL, 128);
                 ExecutionThread.UI(_fragment, () -> {
                     if (bmp != null) _fragment.setImage(bmp);
                 });
