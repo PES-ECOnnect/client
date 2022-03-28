@@ -1,6 +1,7 @@
 package com.econnect.API;
 
 import com.econnect.API.Exceptions.ApiException;
+import com.econnect.Utilities.ExecutionThread;
 
 import java.util.TreeMap;
 
@@ -9,14 +10,15 @@ public class QuestionService extends Service{
     QuestionService(){}
 
     // this works for products and companies
-    public void answerQuestionProduct(int productId, int questionID, String answer ) {
+    public void answerQuestionProduct(int productId, String questionID, String answer ) {
         TreeMap<String, String> params = new TreeMap<>();
         // Empty string means all products
 
-        params.put(ApiConstants.PRODUCT_ID, String.valueOf(productId));
-        params.put(ApiConstants.QUESTION_INDEX, String.valueOf(questionID));
+        params.put(ApiConstants.QUESTION_INDEX, questionID);
         params.put(ApiConstants.CHOSEN_OPTION, answer);
         super.needsToken = true;
+
+        ExecutionThread.nonUI(()->{
 
 
         JsonResult result = null;
@@ -34,11 +36,12 @@ public class QuestionService extends Service{
         }
 
         // Parse result
-        ProductService.ProductDetails details = result.getObject(ApiConstants.RET_RESULT, ProductService.ProductDetails.class);
+        /*ProductService.ProductDetails details = result.getObject(ApiConstants.RET_RESULT, ProductService.ProductDetails.class);
         if (details == null) {
             // This should never happen, the API should always return an object or an error
             throwInvalidResponseError(result, ApiConstants.RET_RESULT);
-        }
+        }*/
+        });
 
     }
 

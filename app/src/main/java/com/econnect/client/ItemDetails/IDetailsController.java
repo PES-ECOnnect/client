@@ -4,7 +4,9 @@ public interface IDetailsController {
 
     void updateUIElements();
 
-    void reviewProduct(int numStars);
+    void reviewProduct();
 
-    void answerQuestion(int questionId, String answer);
+    void setStars(int i);
+
+    void answerQuestion(String questionId, String answer);
 }

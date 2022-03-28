@@ -10,19 +10,24 @@ import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
 import com.econnect.API.QuestionService;
 import com.econnect.API.ReviewService;
-import com.econnect.API.ServiceFactory;
 
 public class ProductDetailsController implements IDetailsController {
 
     private final ProductDetailsFragment _fragment;
     private final int _productId;
     private ProductDetails _product;
+    private int stars;
 
     public ProductDetailsController(ProductDetailsFragment fragment, int productId) {
         this._fragment = fragment;
         this._productId = productId;
+        stars = 0;
     }
 
+    public void setStars(int i){
+        stars = i;
+        _fragment.updateStars(stars);
+    }
     @Override
     public void updateUIElements() {
         ExecutionThread.nonUI(() -> {
@@ -52,20 +57,25 @@ public class ProductDetailsController implements IDetailsController {
     }
 
     @Override
-    public void reviewProduct(int numStars) {
+    public void reviewProduct() {
+        if(stars == 0) {
+            PopupMessage.warning(_fragment, "You need to select some stars to review");
+            return;
+        }
         try{
             ReviewService reviewService = ServiceFactory.getInstance().getReviewService();
-            reviewService.reviewProduct(_productId, numStars);
+            reviewService.reviewProduct(_productId, stars);
         } catch (Exception e){
             throw e;
         }
     }
 
     @Override
-    public void answerQuestion(int questionId, String answer){
+    public void answerQuestion(String questionId, String answer){
         try{
             QuestionService questionService = ServiceFactory.getInstance().getQuestionService();
             questionService.answerQuestionProduct(_productId, questionId, answer);
+            updateUIElements();
         } catch (Exception e){
             throw e;
         }

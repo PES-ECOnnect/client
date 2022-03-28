@@ -1,7 +1,12 @@
 package com.econnect.client.ItemDetails;
 
+import static android.view.ViewGroup.FOCUS_BLOCK_DESCENDANTS;
+
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.PopupMenu;
 
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
@@ -9,6 +14,7 @@ import androidx.core.content.ContextCompat;
 import com.econnect.API.ProductService;
 import com.econnect.API.ProductService.ProductDetails.Question;
 import com.econnect.Utilities.CustomFragment;
+import com.econnect.Utilities.PopupMessage;
 import com.econnect.client.Products.ProductListAdapter;
 import com.econnect.client.R;
 import com.econnect.client.databinding.FragmentProductDetailsBinding;
@@ -28,15 +34,69 @@ public class ProductDetailsFragment extends CustomFragment<FragmentProductDetail
     @Override
     protected void addListeners() {
         // TODO: decide how many stars we can give (start at 0?)
-        binding.star1.setOnClickListener(view -> _ctrl.reviewProduct(1));
-        binding.star2.setOnClickListener(view -> _ctrl.reviewProduct(2));
-        binding.star3.setOnClickListener(view -> _ctrl.reviewProduct(3));
-        binding.star4.setOnClickListener(view -> _ctrl.reviewProduct(4));
-        binding.star5.setOnClickListener(view -> _ctrl.reviewProduct(5));
-        
+        binding.star1.setOnClickListener(view -> _ctrl.setStars(1));
+        binding.star2.setOnClickListener(view -> _ctrl.setStars(2));
+        binding.star3.setOnClickListener(view -> _ctrl.setStars(3));
+        binding.star4.setOnClickListener(view -> _ctrl.setStars(4));
+        binding.star5.setOnClickListener(view -> _ctrl.setStars(5));
+        binding.addRatingButton.setOnClickListener(view -> _ctrl.reviewProduct());
         _ctrl.updateUIElements();
     }
 
+    public void question(String text, String qId) {
+        final String[] answer = {new String()};
+        PopupMessage.yesNoDialog(this, "QUESTION", text, ((dialogInterface, i) -> {
+            // IF YES IS CHOSEN
+            _ctrl.answerQuestion(qId, "1");
+        }),((dialogInterface, i) -> {
+            // IF NO IS CHOSEN
+            _ctrl.answerQuestion(qId, "0");
+        } ));
+        //_ctrl.answerQuestion(qId, answer[0]);
+    }
+
+
+    public void updateStars(int i){
+        final Drawable fullStar = AppCompatResources.getDrawable(getContext(), R.drawable.ic_star_24);
+        final Drawable emptyStar = AppCompatResources.getDrawable(getContext(), R.drawable.ic_star_empty_24);
+        switch (i){
+            case 1:
+                binding.star1.setImageDrawable(fullStar);
+                binding.star2.setImageDrawable(emptyStar);
+                binding.star3.setImageDrawable(emptyStar);
+                binding.star4.setImageDrawable(emptyStar);
+                binding.star5.setImageDrawable(emptyStar);
+                break;
+            case 2:
+                binding.star1.setImageDrawable(fullStar);
+                binding.star2.setImageDrawable(fullStar);
+                binding.star3.setImageDrawable(emptyStar);
+                binding.star4.setImageDrawable(emptyStar);
+                binding.star5.setImageDrawable(emptyStar);
+                break;
+            case 3:
+                binding.star1.setImageDrawable(fullStar);
+                binding.star2.setImageDrawable(fullStar);
+                binding.star3.setImageDrawable(fullStar);
+                binding.star4.setImageDrawable(emptyStar);
+                binding.star5.setImageDrawable(emptyStar);
+                break;
+            case 4:
+                binding.star1.setImageDrawable(fullStar);
+                binding.star2.setImageDrawable(fullStar);
+                binding.star3.setImageDrawable(fullStar);
+                binding.star4.setImageDrawable(fullStar);
+                binding.star5.setImageDrawable(emptyStar);
+                break;
+            case 5:
+                binding.star1.setImageDrawable(fullStar);
+                binding.star2.setImageDrawable(fullStar);
+                binding.star3.setImageDrawable(fullStar);
+                binding.star4.setImageDrawable(fullStar);
+                binding.star5.setImageDrawable(fullStar);
+                break;
+        }
+    }
 
     void setAverageRating(int[] votes) {
         final Drawable fullStar = AppCompatResources.getDrawable(getContext(), R.drawable.ic_star_24);
@@ -88,4 +148,6 @@ public class ProductDetailsFragment extends CustomFragment<FragmentProductDetail
     void setTitle(String name) {
         binding.productNameText.setText(name);
     }
+
+
 }

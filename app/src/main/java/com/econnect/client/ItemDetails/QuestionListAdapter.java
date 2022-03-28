@@ -18,15 +18,18 @@ import androidx.fragment.app.Fragment;
 import com.econnect.API.IAbstractProduct;
 import com.econnect.API.ProductService.ProductDetails.Question;
 import com.econnect.Utilities.ExecutionThread;
+import com.econnect.Utilities.PopupMessage;
 import com.econnect.client.R;
 
 public class QuestionListAdapter extends BaseAdapter {
 
     private final Question[] _questions;
+    private final ProductDetailsFragment _fragment;
     private static LayoutInflater inflater = null;
 
-    public QuestionListAdapter(Fragment owner, Question[] questions) {
+    public QuestionListAdapter(ProductDetailsFragment owner, Question[] questions) {
         this._questions = questions;
+        this._fragment = owner;
         inflater = (LayoutInflater) owner.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -36,7 +39,7 @@ public class QuestionListAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int i) {
+    public Question getItem(int i) {
         return _questions[i];
     }
 
@@ -75,6 +78,12 @@ public class QuestionListAdapter extends BaseAdapter {
             TextView noPercent = vi.findViewById(R.id.noPercentText);
             noPercent.setText(100-percentVotes + "%");
         }
+        vi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                _fragment.question(q.text, String.valueOf(position));
+            }
+        });
 
         return vi;
     }

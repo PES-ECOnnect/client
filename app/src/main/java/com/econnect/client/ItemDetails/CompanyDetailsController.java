@@ -16,11 +16,18 @@ public class CompanyDetailsController implements IDetailsController {
     private final ProductDetailsFragment _fragment;
     private final int _companyId;
     private CompanyDetails _company;
+    private int stars;
 
 
     public CompanyDetailsController(ProductDetailsFragment fragment, int companyId) {
         this._fragment = fragment;
         this._companyId = companyId;
+        stars = 0;
+    }
+
+    public void setStars(int i){
+        stars = i;
+        _fragment.updateStars(stars);
     }
 
     @Override
@@ -52,17 +59,21 @@ public class CompanyDetailsController implements IDetailsController {
     }
 
     @Override
-    public void reviewProduct(int numStars) {
+    public void reviewProduct() {
+        if(stars == 0) {
+            PopupMessage.warning(_fragment, "You need to select some stars to review");
+            return;
+        }
         try{
             ReviewService reviewService = ServiceFactory.getInstance().getReviewService();
-            reviewService.reviewProduct(_companyId, numStars);
+            reviewService.reviewProduct(_companyId, stars);
         } catch (Exception e){
             throw e;
         }
     }
 
     @Override
-    public void answerQuestion(int questionId, String answer){
+    public void answerQuestion(String questionId, String answer){
         try{
             QuestionService questionService = ServiceFactory.getInstance().getQuestionService();
             questionService.answerQuestionProduct(_companyId, questionId, answer);
