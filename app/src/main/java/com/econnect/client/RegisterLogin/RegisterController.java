@@ -31,7 +31,7 @@ public class RegisterController {
         String user_address = fragment.getPostalAddressText();
 
         // Local validation
-        if (user_address.isEmpty() || user_email.isEmpty() || user_name.isEmpty() || user_pass.isEmpty()) {
+        if (user_email.isEmpty() || user_name.isEmpty() || user_pass.isEmpty()) {
             PopupMessage.warning(fragment, "You have to fill all the fields");
             return;
         }
