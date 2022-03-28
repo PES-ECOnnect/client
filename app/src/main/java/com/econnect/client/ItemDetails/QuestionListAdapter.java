@@ -71,7 +71,7 @@ public class QuestionListAdapter extends BaseAdapter {
             TextView yesPercent = vi.findViewById(R.id.yesPercentText);
             yesPercent.setText(percentVotes + "%");
             TextView noPercent = vi.findViewById(R.id.noPercentText);
-            yesPercent.setText(100-percentVotes + "%");
+            noPercent.setText(100-percentVotes + "%");
         }
 
         return vi;
