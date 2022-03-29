@@ -81,7 +81,7 @@ public class QuestionListAdapter extends BaseAdapter {
         vi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                _fragment.question(q.text, String.valueOf(position));
+                _fragment.question(q.text, String.valueOf(position + 1));
             }
         });
 

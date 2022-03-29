@@ -20,7 +20,7 @@ public class ReviewService extends Service{
 
 
 
-        ExecutionThread.nonUI(() -> {
+
             JsonResult result = null;
                         try {
                             // Call API
@@ -41,6 +41,6 @@ public class ReviewService extends Service{
                 // This should never happen, the API should always return an object or an error
                 throwInvalidResponseError(result, ApiConstants.RET_RESULT);
             }*/
-        });
+
     }
 }

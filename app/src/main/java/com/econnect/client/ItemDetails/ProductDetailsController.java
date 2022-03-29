@@ -62,22 +62,29 @@ public class ProductDetailsController implements IDetailsController {
             PopupMessage.warning(_fragment, "You need to select some stars to review");
             return;
         }
-        try{
-            ReviewService reviewService = ServiceFactory.getInstance().getReviewService();
-            reviewService.reviewProduct(_productId, stars);
-        } catch (Exception e){
-            throw e;
-        }
+        ExecutionThread.nonUI(() -> {
+            try {
+                ReviewService reviewService = ServiceFactory.getInstance().getReviewService();
+                reviewService.reviewProduct(_productId, stars);
+                updateUIElements();
+
+            } catch (Exception e) {
+                throw e;
+            }
+        });
     }
 
     @Override
     public void answerQuestion(String questionId, String answer){
-        try{
-            QuestionService questionService = ServiceFactory.getInstance().getQuestionService();
-            questionService.answerQuestionProduct(_productId, questionId, answer);
-            updateUIElements();
-        } catch (Exception e){
-            throw e;
-        }
+        ExecutionThread.nonUI(()->{
+            try{
+                QuestionService questionService = ServiceFactory.getInstance().getQuestionService();
+                questionService.answerQuestionProduct(_productId, questionId, answer);
+                updateUIElements();
+            } catch (Exception e){
+                throw e;
+            }
+        });
+
     }
 }
