@@ -36,12 +36,12 @@ public class QuestionService extends Service{
         }
 
         // Parse result
-        //if(! result.getAttribute(ApiConstants.RET_STATUS).equals(ApiConstants.STATUS_OK));
-        /*ProductService.ProductDetails details = result.getObject(ApiConstants.RET_RESULT, ProductService.ProductDetails.class);
-        if (details == null) {
+        String status = result.getAttribute(ApiConstants.RET_STATUS);
+
+        if (status == null || ! status.equals(ApiConstants.STATUS_OK)) {
             // This should never happen, the API should always return an object or an error
-            throwInvalidResponseError(result, ApiConstants.RET_RESULT);
-        }*/
+            throwInvalidResponseError(result, ApiConstants.RET_STATUS);
+        }
 
 
     }

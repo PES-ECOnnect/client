@@ -89,7 +89,8 @@ public abstract class AbstractProductListAdapter extends BaseAdapter implements 
 
         // Set item rating
         TextView rating = vi.findViewById(R.id.product_item_rating);
-        rating.setText(String.format("%.02f", p.getAvgRating()));
+        if(p.getAvgRating() == 0.0f) rating.setText("-");
+        else rating.setText(String.format("%.02f", p.getAvgRating()));
 
         // Set item image
         ImageView image = vi.findViewById(R.id.product_item_image);
