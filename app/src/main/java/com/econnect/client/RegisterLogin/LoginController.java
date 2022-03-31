@@ -3,6 +3,7 @@ package com.econnect.client.RegisterLogin;
 import android.view.View;
 
 import com.econnect.API.LoginService;
+import com.econnect.API.RegisterService;
 import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
@@ -12,6 +13,7 @@ import com.econnect.client.R;
 public class LoginController {
 
     private final LoginFragment fragment;
+    private final IThirdPartyLogin googleLogin = new GoogleLogin();
 
     LoginController(LoginFragment fragment) {
         this.fragment = fragment;
@@ -20,6 +22,7 @@ public class LoginController {
     // Boilerplate for interfacing with the fragment
     View.OnClickListener loginButton() { return view -> loginButtonClick(); }
     View.OnClickListener toRegisterButton() { return view -> registerButtonClick(); }
+    View.OnClickListener googleLogin() { return view -> ExecutionThread.nonUI(googleLogin::buttonPressed); }
 
 
     private void loginButtonClick() {
@@ -36,16 +39,8 @@ public class LoginController {
 
         // This could take some time (and accesses the internet), run on non-UI thread
         ExecutionThread.nonUI(() -> {
-            // Login and store token
-            LoginService loginService = ServiceFactory.getInstance().getLoginService();
-            SettingsFile file = new SettingsFile(fragment);
             try {
-                loginService.login(user_email, user_pass, file);
-                ExecutionThread.UI(fragment, ()->{
-                    fragment.enableInput(true);
-                    ExecutionThread.navigate(fragment, R.id.action_successful_login);
-                });
-
+                attemptLogin(user_email, user_pass);
             }
             catch (Exception e) {
                 // Return to UI for showing errors
@@ -55,7 +50,6 @@ public class LoginController {
                 });
             }
         });
-
     }
 
     private void registerButtonClick() {
@@ -68,7 +62,54 @@ public class LoginController {
         SettingsFile file = new SettingsFile(fragment);
         boolean success = loginService.autoLogin(file);
         if (success) {
-            ExecutionThread.navigate(fragment, R.id.action_successful_login);
+            navigateToMainMenu();
         }
+    }
+
+    void initializeThirdPartyLogins() {
+        googleLogin.initialize(fragment, this::thirdPartyloginCallback);
+    }
+
+    private void thirdPartyloginCallback(String email, String name, String password) {
+        // Try to login. If the user does not exist, sign up
+
+        // This could take some time (and accesses the internet), run on non-UI thread
+        ExecutionThread.nonUI(() -> {
+            try {
+                attemptLogin(email, password);
+            }
+            catch (Exception e) {
+                // No account found, create account
+                if (e.getMessage().equals("No account found for this email")) {
+                    SettingsFile file = new SettingsFile(fragment);
+                    ServiceFactory.getInstance().getRegisterService().register(email, password, name, file);
+
+                    navigateToMainMenu();
+                    return;
+                }
+
+                // Generic error
+                ExecutionThread.UI(fragment, ()->{
+                    fragment.enableInput(true);
+                    PopupMessage.warning(fragment, "There has been an error: " + e.getMessage());
+                });
+            }
+        });
+    }
+
+    private void attemptLogin(String email, String password) {
+        // Login and store token
+        LoginService loginService = ServiceFactory.getInstance().getLoginService();
+        SettingsFile file = new SettingsFile(fragment);
+        loginService.login(email, password, file);
+        // Success
+        navigateToMainMenu();
+    }
+
+    private void navigateToMainMenu() {
+        ExecutionThread.UI(fragment, ()->{
+            fragment.enableInput(true);
+            ExecutionThread.navigate(fragment, R.id.action_successful_login);
+        });
     }
 }

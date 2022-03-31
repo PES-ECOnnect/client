@@ -5,6 +5,7 @@
     <string name="forum_name">Forum</string>
     <string name="profile_name">Profile</string>
     <string name="title_activity_register">RegisterActivity</string>
+    <string name="google_client_id">143740353566-ork4rg1f38a7pqv0shd6kebk7oshbnj6.apps.googleusercontent.com</string>
     <!-- Strings used for fragments for navigation -->
     <string name="register_fragment_label">Join ECOnnect</string>
     <string name="login_fragment_label">Login</string>

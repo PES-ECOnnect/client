@@ -15,13 +15,16 @@ public class LoginFragment extends CustomFragment<FragmentLoginBinding> {
     protected void addListeners() {
         binding.buttonLogin.setOnClickListener(ctrl.loginButton());
         binding.textLoginToRegister.setOnClickListener(ctrl.toRegisterButton());
+        binding.googleLoginButton.setOnClickListener(ctrl.googleLogin());
 
         ctrl.attemptAutoLogin();
+        ctrl.initializeThirdPartyLogins();
     }
 
     void enableInput(boolean enabled) {
         binding.textLoginToRegister.setEnabled(enabled);
         binding.buttonLogin.setEnabled(enabled);
+        binding.googleLoginButton.setEnabled(enabled);
     }
 
     String getEmailText() {
