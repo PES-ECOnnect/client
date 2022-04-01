@@ -7,6 +7,10 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+
 import com.econnect.API.ProductService;
 import com.econnect.API.ProductTypesService;
 import com.econnect.API.ProductTypesService.ProductType;
@@ -14,16 +18,25 @@ import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
 import com.econnect.client.ItemDetails.DetailsActivity;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 
 public class ProductsController {
 
     private final ProductsFragment _fragment;
-    private final String _ALL_TYPES = "Any";
+    private static final String _ALL_TYPES = "Any";
+    private final ActivityResultLauncher<Intent> _activityLauncher;
 
     public ProductsController(ProductsFragment fragment) {
         this._fragment = fragment;
+        _activityLauncher = fragment.registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            this::launchDetailsCallback
+        );
     }
 
 
@@ -65,6 +78,7 @@ public class ProductsController {
 
             ExecutionThread.UI(_fragment, () -> {
                 _fragment.setProductElements(products);
+                _fragment.filterProductList();
                 _fragment.enableInput();
             });
         }
@@ -74,6 +88,13 @@ public class ProductsController {
             });
         }
     }
+
+    private void launchDetailsCallback(ActivityResult result) {
+        // Called once the user returns from details screen
+        ExecutionThread.nonUI(this::updateProductsList);
+    }
+
+
 
     String getDefaultType() {
         return _ALL_TYPES;
@@ -114,7 +135,7 @@ public class ProductsController {
             intent.putExtra("id", p.id);
             intent.putExtra("type", "product");
 
-            _fragment.getActivity().startActivity(intent);
+            _activityLauncher.launch(intent);
         };
     }
 }

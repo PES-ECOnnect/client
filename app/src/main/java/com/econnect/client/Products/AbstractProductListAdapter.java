@@ -79,7 +79,10 @@ public abstract class AbstractProductListAdapter extends BaseAdapter implements 
             String nameLower = p.getName().toLowerCase();
             int indexStart = nameLower.indexOf(lastQueryLower);
             int indexEnd = indexStart + lastQueryLower.length();
-            spannable.setSpan(new ForegroundColorSpan(highlightColor), indexStart, indexEnd, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+            if (indexStart != -1) {
+                spannable.setSpan(new ForegroundColorSpan(highlightColor),
+                        indexStart, indexEnd, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+            }
         }
         name.setText(spannable, TextView.BufferType.SPANNABLE);
 

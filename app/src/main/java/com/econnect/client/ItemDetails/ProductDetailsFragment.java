@@ -43,16 +43,8 @@ public class ProductDetailsFragment extends CustomFragment<FragmentProductDetail
         _ctrl.updateUIElements();
     }
 
-    public void question(String text, String qId) {
-        final String[] answer = {new String()};
-        PopupMessage.yesNoDialog(this, "QUESTION", text, ((dialogInterface, i) -> {
-            // IF YES IS CHOSEN
-            _ctrl.answerQuestion(qId, "1");
-        }),((dialogInterface, i) -> {
-            // IF NO IS CHOSEN
-            _ctrl.answerQuestion(qId, "0");
-        } ));
-        //_ctrl.answerQuestion(qId, answer[0]);
+    void question(int qId, boolean answer) {
+        _ctrl.answerQuestion(qId, answer);
     }
 
 

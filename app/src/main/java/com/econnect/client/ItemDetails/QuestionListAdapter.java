@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -78,12 +79,12 @@ public class QuestionListAdapter extends BaseAdapter {
             TextView noPercent = vi.findViewById(R.id.noPercentText);
             noPercent.setText(100-percentVotes + "%");
         }
-        vi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                _fragment.question(q.text, String.valueOf(position));
-            }
-        });
+
+        // Set listeners
+        Button voteYesButton = vi.findViewById(R.id.voteYesButton);
+        voteYesButton.setOnClickListener(view -> _fragment.question(position, true));
+        Button voteNoButton = vi.findViewById(R.id.voteNoButton);
+        voteNoButton.setOnClickListener(view -> _fragment.question(position, false));
 
         return vi;
     }

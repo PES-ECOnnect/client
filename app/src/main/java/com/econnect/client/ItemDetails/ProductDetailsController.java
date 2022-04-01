@@ -75,7 +75,7 @@ public class ProductDetailsController implements IDetailsController {
     }
 
     @Override
-    public void answerQuestion(String questionId, String answer){
+    public void answerQuestion(int questionId, boolean answer){
         ExecutionThread.nonUI(()->{
             try{
                 QuestionService questionService = ServiceFactory.getInstance().getQuestionService();

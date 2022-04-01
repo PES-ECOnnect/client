@@ -10,15 +10,13 @@ public class QuestionService extends Service{
     QuestionService(){}
 
     // this works for products and companies
-    public void answerQuestionProduct(int productId, String questionID, String answer ) {
+    public void answerQuestionProduct(int productId, int questionId, boolean answer ) {
         TreeMap<String, String> params = new TreeMap<>();
         // Empty string means all products
 
-        params.put(ApiConstants.QUESTION_INDEX, questionID);
-        params.put(ApiConstants.CHOSEN_OPTION, answer);
+        params.put(ApiConstants.QUESTION_INDEX, Integer.toString(questionId));
+        params.put(ApiConstants.CHOSEN_OPTION, answer ? "1" : "0");
         super.needsToken = true;
-
-
 
 
         JsonResult result = null;

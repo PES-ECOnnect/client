@@ -43,7 +43,9 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@drawable/ic_like_24"
-            android:contentDescription="@string/vote_option_yes_description" />
+            android:contentDescription="@string/vote_option_yes_description"
+            android:hapticFeedbackEnabled="true"
+            android:soundEffectsEnabled="true" />
 
         <TextView
             android:id="@+id/textView2"
@@ -89,6 +91,8 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@drawable/ic_dislike_24"
-            android:contentDescription="@string/vote_option_no_description" />
+            android:contentDescription="@string/vote_option_no_description"
+            android:hapticFeedbackEnabled="true"
+            android:soundEffectsEnabled="true" />
     </LinearLayout>
 </LinearLayout>

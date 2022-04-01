@@ -8,5 +8,5 @@ public interface IDetailsController {
 
     void setStars(int i);
 
-    void answerQuestion(String questionId, String answer);
+    void answerQuestion(int questionId, boolean answer);
 }
