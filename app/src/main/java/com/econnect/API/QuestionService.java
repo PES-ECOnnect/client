@@ -10,19 +10,19 @@ public class QuestionService extends Service{
     QuestionService(){}
 
     // this works for products and companies
-    public void answerQuestionProduct(int productId, int questionId, boolean answer ) {
+    private void answerQuestionProduct(String path, int productId, int questionId, String answer) {
         TreeMap<String, String> params = new TreeMap<>();
         // Empty string means all products
 
         params.put(ApiConstants.QUESTION_INDEX, Integer.toString(questionId));
-        params.put(ApiConstants.CHOSEN_OPTION, answer ? "1" : "0");
+        params.put(ApiConstants.CHOSEN_OPTION, answer);
         super.needsToken = true;
 
 
         JsonResult result = null;
         try {
             // Call API
-            result = post(ApiConstants.PRODUCTS_PATH + "/" + productId + "/" + ApiConstants.ANSWER, params, null);
+            result = post(path + "/" + productId + "/" + ApiConstants.ANSWER, params, null);
         }
         catch (ApiException e) {
             switch (e.getErrorCode()) {
@@ -40,8 +40,21 @@ public class QuestionService extends Service{
             // This should never happen, the API should always return an object or an error
             throwInvalidResponseError(result, ApiConstants.RET_STATUS);
         }
-
-
     }
 
+    public void answerQuestionProduct(int productId, int questionId, boolean answer ) {
+        answerQuestionProduct(ApiConstants.PRODUCTS_PATH, productId, questionId, answer ? "1" : "0" );
+    }
+
+    public void removeQuestionProduct(int productId, int questionId ) {
+        answerQuestionProduct(ApiConstants.PRODUCTS_PATH, productId, questionId, "none" );
+    }
+
+    public void answerQuestionCompany(int productId, int questionId, boolean answer ) {
+        answerQuestionProduct(ApiConstants.COMPANIES_PATH, productId, questionId, answer ? "1" : "0" );
+    }
+
+    public void removeQuestionCompany(int productId, int questionId ) {
+        answerQuestionProduct(ApiConstants.COMPANIES_PATH, productId, questionId, "none" );
+    }
 }

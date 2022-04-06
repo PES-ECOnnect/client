@@ -57,11 +57,13 @@ public class ProductService extends Service {
             public final int num_no;
             public final int num_yes;
             public final String text;
+            public final String user_answer;
 
-            public Question(int num_no, int num_yes, String text) {
+            public Question(int num_no, int num_yes, String text, String user_answer) {
                 this.num_no = num_no;
                 this.num_yes = num_yes;
                 this.text = text;
+                this.user_answer = user_answer;
             }
         }
 
@@ -140,12 +142,6 @@ public class ProductService extends Service {
         if (details == null) {
             // This should never happen, the API should always return an object or an error
             throwInvalidResponseError(result, ApiConstants.RET_RESULT);
-        }
-
-        // Trim spaces in questions
-        for (int i = 0; i < details.questions.length; i++) {
-            ProductDetails.Question q = details.questions[i];
-            details.questions[i] = new ProductDetails.Question(q.num_no, q.num_yes, q.text.trim());
         }
 
         return details;

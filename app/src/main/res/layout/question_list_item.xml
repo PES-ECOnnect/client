@@ -32,20 +32,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:paddingBottom="4dp">
 
-        <Button
+        <ImageButton
             android:id="@+id/voteYesButton"
-            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="@drawable/ic_like_24"
+            android:background="#00FFFFFF"
             android:contentDescription="@string/vote_option_yes_description"
             android:hapticFeedbackEnabled="true"
-            android:soundEffectsEnabled="true" />
+            android:scaleType="fitCenter"
+            android:soundEffectsEnabled="true"
+            app:srcCompat="@drawable/ic_like_24" />
 
         <TextView
             android:id="@+id/textView2"
@@ -85,14 +87,16 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <Button
+        <ImageButton
             android:id="@+id/voteNoButton"
-            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="@drawable/ic_dislike_24"
+            android:background="#00FFFFFF"
             android:contentDescription="@string/vote_option_no_description"
             android:hapticFeedbackEnabled="true"
-            android:soundEffectsEnabled="true" />
+            android:scaleType="fitCenter"
+            android:soundEffectsEnabled="true"
+            app:srcCompat="@drawable/ic_dislike_24" />
     </LinearLayout>
+
 </LinearLayout>

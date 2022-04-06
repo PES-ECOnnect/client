@@ -1,36 +1,29 @@
 package com.econnect.client.ItemDetails;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
-
-import com.econnect.API.IAbstractProduct;
 import com.econnect.API.ProductService.ProductDetails.Question;
-import com.econnect.Utilities.ExecutionThread;
-import com.econnect.Utilities.PopupMessage;
 import com.econnect.client.R;
 
 public class QuestionListAdapter extends BaseAdapter {
 
     private final Question[] _questions;
     private final ProductDetailsFragment _fragment;
+    private final int _highlightColor;
     private static LayoutInflater inflater = null;
 
-    public QuestionListAdapter(ProductDetailsFragment owner, Question[] questions) {
+    public QuestionListAdapter(ProductDetailsFragment owner, Question[] questions, int highlightColor) {
         this._questions = questions;
         this._fragment = owner;
+        this._highlightColor = highlightColor;
         inflater = (LayoutInflater) owner.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -80,12 +73,28 @@ public class QuestionListAdapter extends BaseAdapter {
             noPercent.setText(100-percentVotes + "%");
         }
 
-        // Set listeners
-        Button voteYesButton = vi.findViewById(R.id.voteYesButton);
-        voteYesButton.setOnClickListener(view -> _fragment.question(position, true));
-        Button voteNoButton = vi.findViewById(R.id.voteNoButton);
-        voteNoButton.setOnClickListener(view -> _fragment.question(position, false));
+        ImageButton voteYesButton = vi.findViewById(R.id.voteYesButton);
+        ImageButton voteNoButton = vi.findViewById(R.id.voteNoButton);
+
+        // Highlight previous user choice and set listeners
+        setVoteButtonListener(position, voteYesButton, IDetailsController.QuestionAnswer.yes);
+        setVoteButtonListener(position, voteNoButton, IDetailsController.QuestionAnswer.no);
+        if (q.user_answer.equals("yes")) {
+            voteYesButton.setColorFilter(_highlightColor);
+            setVoteButtonListener(position, voteYesButton, IDetailsController.QuestionAnswer.none);
+        }
+        else if (q.user_answer.equals("no")) {
+            voteNoButton.setColorFilter(_highlightColor);
+            setVoteButtonListener(position, voteNoButton, IDetailsController.QuestionAnswer.none);
+        }
+        else if (!q.user_answer.equals("none")) {
+            throw new RuntimeException("Invalid user answer: " + q.user_answer);
+        }
 
         return vi;
+    }
+
+    private void setVoteButtonListener(int position, ImageButton voteButton, IDetailsController.QuestionAnswer answer) {
+        voteButton.setOnClickListener(view -> _fragment.question(position, answer));
     }
 }

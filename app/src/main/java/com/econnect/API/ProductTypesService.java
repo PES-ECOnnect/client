@@ -29,13 +29,6 @@ public class ProductTypesService extends Service {
             // This should never happen, the API should always return an array or an error
             throwInvalidResponseError(result, ApiConstants.RET_RESULT);
         }
-
-        // Trim spaces in questions
-        for (ProductType productType : productTypes) {
-            for (int i = 0; i < productType.questions.length; i++) {
-                productType.questions[i] = productType.questions[i].trim();
-            }
-        }
         
         return productTypes;
     }

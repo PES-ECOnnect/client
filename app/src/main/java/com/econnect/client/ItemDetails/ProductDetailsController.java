@@ -77,18 +77,26 @@ public class ProductDetailsController implements IDetailsController {
     }
 
     @Override
-    public void answerQuestion(int questionId, boolean answer){
+    public void answerQuestion(int questionId, QuestionAnswer answer){
         ExecutionThread.nonUI(()->{
-            try {
+            try{
                 QuestionService questionService = ServiceFactory.getInstance().getQuestionService();
-                questionService.answerQuestionProduct(_productId, questionId, answer);
+                if (answer == QuestionAnswer.yes) {
+                    questionService.answerQuestionProduct(_productId, questionId, true);
+                }
+                else if (answer == QuestionAnswer.no) {
+                    questionService.answerQuestionProduct(_productId, questionId, false);
+                }
+                else {
+                    questionService.removeQuestionProduct(_productId, questionId);
+                }
                 updateUIElements();
-            } catch (Exception e){
+            }
+            catch (Exception e){
                 ExecutionThread.UI(_fragment, () -> {
                     PopupMessage.warning(_fragment, "Could not cast vote:\n" + e.getMessage());
                 });
             }
         });
-
     }
 }

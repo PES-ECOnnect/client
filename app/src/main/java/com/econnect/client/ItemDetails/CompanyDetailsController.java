@@ -34,7 +34,7 @@ public class CompanyDetailsController implements IDetailsController {
     public void updateUIElements() {
         ExecutionThread.nonUI(() -> {
             try {
-                // Get product
+                // Get company
                 CompanyService service = ServiceFactory.getInstance().getCompanyService();
                 _company = service.getCompanyDetails(_companyId);
 
@@ -52,7 +52,7 @@ public class CompanyDetailsController implements IDetailsController {
             }
             catch (Exception e) {
                 ExecutionThread.UI(_fragment, () -> {
-                    PopupMessage.warning(_fragment, "Could not get product info:\n" + e.getMessage());
+                    PopupMessage.warning(_fragment, "Could not get company info:\n" + e.getMessage());
                 });
             }
         });
@@ -77,16 +77,26 @@ public class CompanyDetailsController implements IDetailsController {
     }
 
     @Override
-    public void answerQuestion(int questionId, boolean answer){
+    public void answerQuestion(int questionId, QuestionAnswer answer){
         ExecutionThread.nonUI(()->{
             try{
                 QuestionService questionService = ServiceFactory.getInstance().getQuestionService();
-                questionService.answerQuestionProduct(_companyId, questionId, answer);
+                if (answer == QuestionAnswer.yes) {
+                    questionService.answerQuestionCompany(_companyId, questionId, true);
+                }
+                else if (answer == QuestionAnswer.no) {
+                    questionService.answerQuestionCompany(_companyId, questionId, false);
+                }
+                else {
+                    questionService.removeQuestionCompany(_companyId, questionId);
+                }
                 updateUIElements();
-            } catch (Exception e){
-                throw e;
+            }
+            catch (Exception e){
+                ExecutionThread.UI(_fragment, () -> {
+                    PopupMessage.warning(_fragment, "Could not cast vote:\n" + e.getMessage());
+                });
             }
         });
-
     }
 }

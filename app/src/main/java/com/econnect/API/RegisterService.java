@@ -29,9 +29,9 @@ public class RegisterService extends Service{
         catch (ApiException e) {
             switch (e.getErrorCode()) {
                 case ApiConstants.ERROR_USERNAME_EXISTS:
-                    throw new RuntimeException("Username is taken");
+                    throw new RuntimeException("This username has already been taken");
                 case ApiConstants.ERROR_EMAIL_EXISTS:
-                    throw new RuntimeException("Email is taken");
+                    throw new RuntimeException("This email already has an account");
                 default:
                     throw e;
             }

@@ -43,7 +43,7 @@ public class ProductDetailsFragment extends CustomFragment<FragmentProductDetail
         _ctrl.updateUIElements();
     }
 
-    void question(int qId, boolean answer) {
+    void question(int qId, IDetailsController.QuestionAnswer answer) {
         _ctrl.answerQuestion(qId, answer);
     }
 
@@ -134,7 +134,8 @@ public class ProductDetailsFragment extends CustomFragment<FragmentProductDetail
     }
 
     void setQuestionsElements(Question[] questions) {
-        binding.questionsList.setAdapter(new QuestionListAdapter(this, questions));
+        int highlightColor = ContextCompat.getColor(getContext(), R.color.green);
+        binding.questionsList.setAdapter(new QuestionListAdapter(this, questions, highlightColor));
     }
 
     void setTitle(String name) {

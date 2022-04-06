@@ -136,12 +136,6 @@ public class CompanyService extends Service {
             throwInvalidResponseError(result, ApiConstants.RET_RESULT);
         }
 
-        // Trim spaces in questions
-        for (int i = 0; i < details.questions.length; i++) {
-            ProductService.ProductDetails.Question q = details.questions[i];
-            details.questions[i] = new ProductService.ProductDetails.Question(q.num_no, q.num_yes, q.text.trim());
-        }
-
         return details;
     }
 }

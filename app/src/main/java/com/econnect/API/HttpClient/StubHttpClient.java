@@ -57,7 +57,7 @@ public class StubHttpClient implements HttpClient {
                 }
                 else {
                     // For each type, return the name and an array of questions
-                    return "{\"result\":[{\"name\":\"type1\",\"questions\":[\"q1   \",\"q2\",\"q3\"]},{\"name\":\"type2\",\"questions\":[\"q4  \",\"q5\",\"q6\"]}]}";
+                    return "{\"result\":[{\"name\":\"type1\",\"questions\":[\"q1\",\"q2\",\"q3\"]},{\"name\":\"type2\",\"questions\":[\"q4\",\"q5\",\"q6\"]}]}";
                 }
                 
             // Get list of products
@@ -81,7 +81,7 @@ public class StubHttpClient implements HttpClient {
                 if (equals(params, "token", "badToken")) {
                     return "{\"error\":\"ERROR_INVALID_TOKEN\"}";
                 }
-                return "{\"name\":\"product0\",\"imageURL\":\"imageUrl0\",\"manufacturer\":\"manufacturer0\",\"type\":\"type0\",\"questions\":[{\"text\":\"q0    \",\"num_yes\":11,\"num_no\":12},{\"text\":\"q1\",\"num_yes\":21,\"num_no\":22},{\"text\":\"q2 \",\"num_yes\":31,\"num_no\":32}],\"ratings\":[1,0,0,0,0,10]}";
+                return "{\"name\":\"product0\",\"imageURL\":\"imageUrl0\",\"manufacturer\":\"manufacturer0\",\"type\":\"type0\",\"questions\":[{\"text\":\"q0\",\"num_yes\":11,\"num_no\":12},{\"text\":\"q1\",\"num_yes\":21,\"num_no\":22},{\"text\":\"q2\",\"num_yes\":31,\"num_no\":32}],\"ratings\":[1,0,0,0,0,10]}";
                 
             case "/products/2":
                 expectParams(params, "token");
@@ -104,7 +104,7 @@ public class StubHttpClient implements HttpClient {
                 if (equals(params, "token", "badToken")) {
                     return "{\"error\":\"ERROR_INVALID_TOKEN\"}";
                 }
-                return "{\"imageURL\":\"https://company.com/img.png\",\"latitude\":12,\"longitude\":34,\"name\":\"test\",\"questions\":[{\"num_no\":1,\"num_yes\":2,\"text\":\"bon servei?    \"},{\"num_no\":3,\"num_yes\":4,\"text\":\"q2 \"}],\"ratings\":[1,2,3,4,5,6],\"type\":\"Company\"}";
+                return "{\"imageURL\":\"https://company.com/img.png\",\"latitude\":12,\"longitude\":34,\"name\":\"test\",\"questions\":[{\"num_no\":1,\"num_yes\":2,\"text\":\"bon servei?\"},{\"num_no\":3,\"num_yes\":4,\"text\":\"q2\"}],\"ratings\":[1,2,3,4,5,6],\"type\":\"Company\"}";
                 
             case "/companies/2":
                 expectParams(params, "token");
