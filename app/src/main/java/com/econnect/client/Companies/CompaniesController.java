@@ -5,6 +5,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.AdapterView;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+
 import com.econnect.API.CompanyService;
 import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
@@ -13,9 +17,14 @@ import com.econnect.client.ItemDetails.DetailsActivity;
 
 public class CompaniesController {
     private final CompaniesFragment _fragment;
+    private final ActivityResultLauncher<Intent> _activityLauncher;
 
     public CompaniesController(CompaniesFragment fragment) {
         this._fragment = fragment;
+        _activityLauncher = fragment.registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                this::launchDetailsCallback
+        );
     }
 
     void updateList() {
@@ -43,6 +52,13 @@ public class CompaniesController {
         }
     }
 
+    private void launchDetailsCallback(ActivityResult result) {
+        // Called once the user returns from details screen
+        ExecutionThread.nonUI(this::updateCompaniesList);
+    }
+
+
+
     TextWatcher searchText() {
         return new TextWatcher() {
             @Override
@@ -67,7 +83,7 @@ public class CompaniesController {
             intent.putExtra("id", p.id);
             intent.putExtra("type", "company");
 
-            _fragment.getActivity().startActivity(intent);
+            _activityLauncher.launch(intent);
         };
     }
 }

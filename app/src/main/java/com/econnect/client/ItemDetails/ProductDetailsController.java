@@ -69,7 +69,9 @@ public class ProductDetailsController implements IDetailsController {
                 updateUIElements();
 
             } catch (Exception e) {
-                throw e;
+                ExecutionThread.UI(_fragment, () -> {
+                    PopupMessage.warning(_fragment, "Could not add review:\n" + e.getMessage());
+                });
             }
         });
     }
@@ -77,12 +79,14 @@ public class ProductDetailsController implements IDetailsController {
     @Override
     public void answerQuestion(int questionId, boolean answer){
         ExecutionThread.nonUI(()->{
-            try{
+            try {
                 QuestionService questionService = ServiceFactory.getInstance().getQuestionService();
                 questionService.answerQuestionProduct(_productId, questionId, answer);
                 updateUIElements();
             } catch (Exception e){
-                throw e;
+                ExecutionThread.UI(_fragment, () -> {
+                    PopupMessage.warning(_fragment, "Could not cast vote:\n" + e.getMessage());
+                });
             }
         });
 

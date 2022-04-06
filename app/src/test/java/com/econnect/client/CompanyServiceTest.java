@@ -40,14 +40,14 @@ public class CompanyServiceTest {
         assertEquals(1, companies[0].id);
         assertEquals("company1", companies[0].getName());
         assertEquals(1.0f, companies[0].getAvgRating(), 0.0f);
-        assertEquals("https://wallpapercave.com/wp/wp4676582.jpg", companies[0].imageURL);
+        assertEquals("https://wallpapercave.com/wp/wp4676582.jpg", companies[0].imageurl);
         assertEquals(1.0, companies[0].lat, 0.0);
         assertEquals(1.0, companies[0].lon, 0.0);
         
         assertEquals(2, companies[1].id);
         assertEquals("company2", companies[1].getName());
         assertEquals(2.0f, companies[1].getAvgRating(), 0.0f);
-        assertEquals("http://www.company2.com/image.png", companies[1].imageURL);
+        assertEquals("http://www.company2.com/image.png", companies[1].imageurl);
         assertEquals(2.0, companies[1].lat, 0.0);
         assertEquals(2.0, companies[1].lon, 0.0);
     }

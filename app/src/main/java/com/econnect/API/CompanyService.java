@@ -16,8 +16,8 @@ public class CompanyService extends Service {
         // Gson will initialize these fields to the received values
         public final int id;
         public final String name;
-        public final float avgRating;
-        public final String imageURL;
+        public final float avgrating;
+        public final String imageurl;
         public final double lat;
         public final double lon;
         private Bitmap imageBitmap = null;
@@ -25,8 +25,8 @@ public class CompanyService extends Service {
         public Company(int id, String name, float avgRating, String imageURL, double lat, double lon) {
             this.id = id;
             this.name = name;
-            this.avgRating = avgRating;
-            this.imageURL = imageURL;
+            this.avgrating = avgRating;
+            this.imageurl = imageURL;
             this.lat = lat;
             this.lon = lon;
         }
@@ -48,12 +48,12 @@ public class CompanyService extends Service {
         }
         @Override
         public float getAvgRating() {
-            return avgRating;
+            return avgrating;
         }
         @Override
         public Bitmap getImage(int height) {
             if (imageBitmap == null)
-                imageBitmap = BitmapLoader.fromURL(imageURL, height);
+                imageBitmap = BitmapLoader.fromURL(imageurl, height);
             return imageBitmap;
         }
     }
@@ -134,6 +134,12 @@ public class CompanyService extends Service {
         if (details == null) {
             // This should never happen, the API should always return an object or an error
             throwInvalidResponseError(result, ApiConstants.RET_RESULT);
+        }
+
+        // Trim spaces in questions
+        for (int i = 0; i < details.questions.length; i++) {
+            ProductService.ProductDetails.Question q = details.questions[i];
+            details.questions[i] = new ProductService.ProductDetails.Question(q.num_no, q.num_yes, q.text.trim());
         }
 
         return details;

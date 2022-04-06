@@ -1,10 +1,12 @@
 package com.econnect.API.HttpClient;
 
+import com.econnect.API.ApiConstants;
+
 import java.util.Map;
 import java.util.TreeMap;
 
 public class StubHttpClient implements HttpClient {
-    private static final String EXPECTED_DOMAIN = "https://pes-econnect.herokuapp.com"; 
+    private static final String EXPECTED_DOMAIN = ApiConstants.BASE_URL;
     
     @Override
     public String get(String path, Map<String, String> params) {
@@ -55,7 +57,7 @@ public class StubHttpClient implements HttpClient {
                 }
                 else {
                     // For each type, return the name and an array of questions
-                    return "{\"result\":[{\"name\":\"type1\",\"questions\":[\"q1\",\"q2\",\"q3\"]},{\"name\":\"type2\",\"questions\":[\"q4\",\"q5\",\"q6\"]}]}";
+                    return "{\"result\":[{\"name\":\"type1\",\"questions\":[\"q1   \",\"q2\",\"q3\"]},{\"name\":\"type2\",\"questions\":[\"q4  \",\"q5\",\"q6\"]}]}";
                 }
                 
             // Get list of products
@@ -67,7 +69,7 @@ public class StubHttpClient implements HttpClient {
                 // For each product of this type, return the id, name, avgRating, imageUrl, manufacturer and type
                 if (equals(params, "type", "")) {
                     // For each product, return the id, name, avgRating, imageURL, manufacturer and type
-                    return "{\"result\":[{\"id\":1,\"name\":\"product1\",\"avgRating\":1.0,\"imageURL\":\"https://miro.medium.com/max/500/0*-ouKIOsDCzVCTjK-.png\",\"manufacturer\":\"manufacturer1\",\"type\":\"type1\"},{\"id\":2,\"name\":\"product2\",\"avgRating\":2.0,\"imageURL\":\"https://wallpapercave.com/wp/wp4676582.jpg\",\"manufacturer\":\"manufacturer2\",\"type\":\"type1\"},{\"id\":3,\"name\":\"product3\",\"avgRating\":3.0,\"imageURL\":\"imageUrl3\",\"manufacturer\":\"manufacturer3\",\"type\":\"type2\"},{\"id\":4,\"name\":\"product4\",\"avgRating\":4.0,\"imageURL\":\"imageUrl4\",\"manufacturer\":\"manufacturer4\",\"type\":\"type2\"}, {\"id\":5,\"name\":\"during\",\"avgRating\":1.0,\"imageURL\":\"imageUrl1\",\"manufacturer\":\"manufacturer1\",\"type\":\"type1\"}]}";
+                    return "{\"result\":[{\"id\":1,\"name\":\"product1\",\"avgrating\":1.0,\"imageurl\":\"https://miro.medium.com/max/500/0*-ouKIOsDCzVCTjK-.png\",\"manufacturer\":\"manufacturer1\",\"type\":\"type1\"},{\"id\":2,\"name\":\"product2\",\"avgrating\":2.0,\"imageurl\":\"https://wallpapercave.com/wp/wp4676582.jpg\",\"manufacturer\":\"manufacturer2\",\"type\":\"type1\"},{\"id\":3,\"name\":\"product3\",\"avgRating\":3.0,\"imageurl\":\"imageUrl3\",\"manufacturer\":\"manufacturer3\",\"type\":\"type2\"},{\"id\":4,\"name\":\"product4\",\"avgRating\":4.0,\"imageurl\":\"imageUrl4\",\"manufacturer\":\"manufacturer4\",\"type\":\"type2\"}, {\"id\":5,\"name\":\"during\",\"avgRating\":1.0,\"imageurl\":\"imageUrl1\",\"manufacturer\":\"manufacturer1\",\"type\":\"type1\"}]}";
                 }
                 else {
                     return "{\"error\":\"ERROR_TYPE_NOT_EXISTS\"}";
@@ -79,7 +81,7 @@ public class StubHttpClient implements HttpClient {
                 if (equals(params, "token", "badToken")) {
                     return "{\"error\":\"ERROR_INVALID_TOKEN\"}";
                 }
-                return "{\"name\":\"product0\",\"imageURL\":\"imageUrl0\",\"manufacturer\":\"manufacturer0\",\"type\":\"type0\",\"questions\":[{\"text\":\"q0\",\"num_yes\":11,\"num_no\":12},{\"text\":\"q1\",\"num_yes\":21,\"num_no\":22},{\"text\":\"q2\",\"num_yes\":31,\"num_no\":32}],\"ratings\":[1,0,0,0,0,10]}";
+                return "{\"name\":\"product0\",\"imageURL\":\"imageUrl0\",\"manufacturer\":\"manufacturer0\",\"type\":\"type0\",\"questions\":[{\"text\":\"q0    \",\"num_yes\":11,\"num_no\":12},{\"text\":\"q1\",\"num_yes\":21,\"num_no\":22},{\"text\":\"q2 \",\"num_yes\":31,\"num_no\":32}],\"ratings\":[1,0,0,0,0,10]}";
                 
             case "/products/2":
                 expectParams(params, "token");
@@ -93,7 +95,7 @@ public class StubHttpClient implements HttpClient {
                 }
                 else {
                     // For each company, return the id, name, avgRating, imageURL, lat and lon
-                    return "{\"result\":[{\"id\":1,\"name\":\"company1\",\"avgRating\":1.0,\"imageURL\":\"https://wallpapercave.com/wp/wp4676582.jpg\",\"lat\":1.0,\"lon\":1.0},{\"id\":2,\"name\":\"company2\",\"avgRating\":2.0,\"imageURL\":\"http://www.company2.com/image.png\",\"lat\":2.0,\"lon\":2.0}]}";
+                    return "{\"result\":[{\"id\":1,\"name\":\"company1\",\"avgrating\":1.0,\"imageurl\":\"https://wallpapercave.com/wp/wp4676582.jpg\",\"lat\":1.0,\"lon\":1.0},{\"id\":2,\"name\":\"company2\",\"avgrating\":2.0,\"imageurl\":\"http://www.company2.com/image.png\",\"lat\":2.0,\"lon\":2.0}]}";
                 }
 
             // Get detailed info about company
@@ -102,7 +104,7 @@ public class StubHttpClient implements HttpClient {
                 if (equals(params, "token", "badToken")) {
                     return "{\"error\":\"ERROR_INVALID_TOKEN\"}";
                 }
-                return "{\"imageURL\":\"https://company.com/img.png\",\"latitude\":12,\"longitude\":34,\"name\":\"test\",\"questions\":[{\"num_no\":1,\"num_yes\":2,\"text\":\"bon servei?\"},{\"num_no\":3,\"num_yes\":4,\"text\":\"q2\"}],\"ratings\":[1,2,3,4,5,6],\"type\":\"Company\"}";
+                return "{\"imageURL\":\"https://company.com/img.png\",\"latitude\":12,\"longitude\":34,\"name\":\"test\",\"questions\":[{\"num_no\":1,\"num_yes\":2,\"text\":\"bon servei?    \"},{\"num_no\":3,\"num_yes\":4,\"text\":\"q2 \"}],\"ratings\":[1,2,3,4,5,6],\"type\":\"Company\"}";
                 
             case "/companies/2":
                 expectParams(params, "token");

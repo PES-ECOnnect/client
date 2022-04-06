@@ -3,7 +3,10 @@ package com.econnect.API;
 // Namespace for storing all the API constants together.
 public interface ApiConstants {
     // PATHS
-    public final String BASE_URL = "https://pes-econnect.herokuapp.com";
+    public final String BASE_URL_DEV = "http://10.0.2.2:5000";
+    public final String BASE_URL_DEPLOY = "https://pes-econnect.herokuapp.com";
+    public final String BASE_URL = BASE_URL_DEPLOY;
+
     public final String LOGIN_PATH = "/account/login";
     public final String LOGOUT_PATH = "/account/logout";
     public final String REGISTER_PATH = "/account";
@@ -11,7 +14,8 @@ public interface ApiConstants {
     public final String PRODUCTS_PATH = "/products";
     public final String COMPANIES_PATH = "/companies";
     public final String COMPANY_QUESTIONS_PATH = "/companies/questions";
-    
+
+
     // PARAMETERS
     // General
     public final String TOKEN = "token";
