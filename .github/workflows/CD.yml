@@ -107,6 +107,6 @@ jobs:
         serviceAccountJson: service_account.json
         packageName: com.econnect.client
         releaseFiles: ECOnnect.aab
-        track: beta
+        track: production
         status: completed
         whatsNewDirectory: playstore_notes/
