@@ -26,7 +26,7 @@ public class ForumFragment extends CustomFragment<FragmentForumBinding> {
     @Override
     protected void addListeners() {
         // TODO
-
+        binding.addPostButton.setOnClickListener(_ctrl.addPost());
         _ctrl.updateLists();
     }
 

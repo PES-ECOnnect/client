@@ -2,12 +2,14 @@ package com.econnect.client.Forum;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.AdapterView;
 
 import com.econnect.API.ForumService;
 import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
+import com.econnect.client.R;
 
 public class ForumController {
 
@@ -18,6 +20,14 @@ public class ForumController {
         this._fragment = fragment;
     }
 
+    View.OnClickListener addPost() { return view -> addPostClick(); }
+
+
+    private void addPostClick() {
+        ExecutionThread.UI(_fragment, ()->{
+           // ExecutionThread.navigate(_fragment, );
+        });
+    }
 
     void updateLists() {
         ExecutionThread.nonUI(()-> {

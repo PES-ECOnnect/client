@@ -45,6 +45,9 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> impl
             case R.id.profile_logout:
                 ctrl.logoutButtonClick();
                 break;
+            case R.id.profile_edit:
+                ctrl.editButtonClick();
+                break;
             case R.id.profile_placeholder:
 
                 break;

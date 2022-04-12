@@ -9,6 +9,7 @@ import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
 import com.econnect.Utilities.SettingsFile;
+import com.econnect.client.R;
 
 public class ProfileController {
 
@@ -42,6 +43,13 @@ public class ProfileController {
                 }
             });
         });
+    }
+
+    public void editButtonClick() {
+        ExecutionThread.UI(fragment, ()->{
+            ExecutionThread.navigate(fragment, R.id.action_successful_edit_profile);
+        });
+        //ExecutionThread.navigate(fragment, R.id.action_successful_edit_profile);
     }
 
 }
