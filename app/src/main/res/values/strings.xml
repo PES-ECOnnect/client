@@ -40,4 +40,8 @@
     <string name="num_votes_text_one">%d vote</string>
     <string name="question_text_and_votes">%s - %d votes</string>
     <string name="question_text_and_votes_one">%s - %d vote</string>
+    <string name="filter_tag_hint">Search by tag</string>
+
+    <string name="tag_posts_count">%d posts</string>
+    <string name="tag_posts_count_one">%d post</string>
 </resources>

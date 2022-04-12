@@ -65,19 +65,27 @@ public class ServiceFactory {
         return _companyService;
     }
 
-    private static ReviewService reviewService = null;
+    private static ReviewService _reviewService = null;
     public ReviewService getReviewService() {
-        if (reviewService == null) {
-            reviewService = new ReviewService();
+        if (_reviewService == null) {
+            _reviewService = new ReviewService();
         }
-        return reviewService;
+        return _reviewService;
     }
 
-    private static QuestionService questionService = null;
+    private static QuestionService _questionService = null;
     public QuestionService getQuestionService() {
-        if(questionService == null) {
-            questionService = new QuestionService();
+        if(_questionService == null) {
+            _questionService = new QuestionService();
         }
-        return questionService;
+        return _questionService;
+    }
+
+    private static ForumService _forumService = null;
+    public ForumService getForumService() {
+        if(_forumService == null) {
+            _forumService = new ForumService();
+        }
+        return _forumService;
     }
 }

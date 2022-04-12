@@ -102,7 +102,7 @@ public class LoginServiceTest {
         sv.logout();
         expectException(() ->
             sv.logout(),
-            "Admin token not set"
+            "User token not set"
         );
     }
 }

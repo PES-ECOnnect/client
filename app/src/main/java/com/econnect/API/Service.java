@@ -35,13 +35,13 @@ public abstract class Service {
         }
     }
 
-    // Update the admin token, called from AdminLoginService
+    // Update the User token, called from LoginService
     protected static void setToken(String token) {
         if (token == null) throw new IllegalArgumentException("Token cannot be null");
         if (_adminToken != null) throw new IllegalStateException("Token already set");
         _adminToken = token;
     }
-    // Invalidate the admin token, called from AdminLogoutService
+    // Invalidate the User token, called from LogoutService
     protected static void deleteToken() {
         if (_adminToken == null) throw new IllegalStateException("Session token was already deleted");
         _adminToken = null;
@@ -65,7 +65,7 @@ public abstract class Service {
     // Generic POST request
     protected JsonResult post(String path, Map<String,String> params, Object content) throws ApiException {
         String url = ApiConstants.BASE_URL + path;
-        addTokenToRequest(params);
+        params = addTokenToRequest(params);
 
         String result = null;
         try {
@@ -77,11 +77,26 @@ public abstract class Service {
         return parseResult(result);
     }
 
+    // Generic DELETE request
+    protected JsonResult delete(String path, Map<String,String> params) throws ApiException {
+        String url = ApiConstants.BASE_URL + path;
+        params = addTokenToRequest(params);
+
+        String result = null;
+        try {
+            result = _httpClient.delete(url, params);
+        }
+        catch (IOException e) {
+            throw new RuntimeException("Error executing DELETE on " + url + ": " + e.getMessage());
+        }
+        return parseResult(result);
+    }
+
 
     private Map<String,String> addTokenToRequest(Map<String,String> params) {
         if (!needsToken) return params;
         if (_adminToken == null) {
-            throw new IllegalStateException("Admin token not set");
+            throw new IllegalStateException("User token not set");
         }
         if (params == null) {
             params = new TreeMap<>();

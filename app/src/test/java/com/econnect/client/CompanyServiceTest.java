@@ -66,7 +66,7 @@ public class CompanyServiceTest {
         ServiceTestHelper.clearToken();
         expectException(() ->
             sv.getCompanies(),
-            "Admin token not set"
+            "User token not set"
         );
     }
 
@@ -118,7 +118,7 @@ public class CompanyServiceTest {
         ServiceTestHelper.clearToken();
         expectException(() ->
             sv.getCompanyDetails(1),
-            "Admin token not set"
+            "User token not set"
         );
     }
 }

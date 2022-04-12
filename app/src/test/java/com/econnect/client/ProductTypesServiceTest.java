@@ -47,7 +47,7 @@ public class ProductTypesServiceTest {
         ServiceTestHelper.clearToken();
         expectException(()->
             sv.getProductTypes(),
-            "Admin token not set"
+            "User token not set"
         );
     }
     

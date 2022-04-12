@@ -70,7 +70,7 @@ public class ProductServiceTest {
         ServiceTestHelper.clearToken();
         expectException(()->
             sv.getProducts(null),
-            "Admin token not set"
+            "User token not set"
         );
     }
 
@@ -124,7 +124,7 @@ public class ProductServiceTest {
         ServiceTestHelper.clearToken();
         expectException(() ->
             sv.getProductDetails(0),
-            "Admin token not set"
+            "User token not set"
         );
     }
 }

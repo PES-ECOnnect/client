@@ -14,6 +14,8 @@ public interface ApiConstants {
     String PRODUCTS_PATH = "/products";
     String COMPANIES_PATH = "/companies";
     String COMPANY_QUESTIONS_PATH = "/companies/questions";
+    String POSTS_PATH = "/posts";
+    String TAGS_PATH = "/posts/tags";
 
 
     // PARAMETERS
@@ -42,7 +44,13 @@ public interface ApiConstants {
     String ANSWER = "answer";
     String QUESTION_INDEX = "questionIndex";
     String CHOSEN_OPTION = "chosenOption";
-    
+
+    // Get/delete posts
+    String POST_AMOUNT = "n";
+    String POST_TAG = "tag";
+    String POST_ID = "id";
+
+
     // RETURN VALUES
     String RET_TOKEN = "token";
     String RET_STATUS = "status";
@@ -67,4 +75,8 @@ public interface ApiConstants {
     String ERROR_TYPE_NOT_EXISTS = "ERROR_TYPE_NOT_EXISTS";
     String ERROR_PRODUCT_NOT_EXISTS = "ERROR_INCORRECT_ID_REVIEWABLE";
     String ERROR_COMPANY_NOT_EXISTS = "ERROR_INCORRECT_ID_REVIEWABLE";
+
+    // Delete posts
+    String ERROR_POST_NOT_EXISTS = "ERROR_POST_NOT_EXISTS";
+    String ERROR_USER_NOT_POST_OWNER = "ERROR_USER_NOT_POST_OWNER";
 }

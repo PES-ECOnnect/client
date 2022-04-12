@@ -109,6 +109,44 @@ public class StubHttpClient implements HttpClient {
             case "/companies/2":
                 expectParams(params, "token");
                 return "{\"error\":\"ERROR_INCORRECT_ID_REVIEWABLE\"}";
+
+
+
+            // Get list of posts on the forum
+            case "/posts":
+                expectParams(params, "token", "n", "tag");
+                int n = toInt(params, "n");
+                if (n <= 0) {
+                    return "{\"error\":\"invalid value of n\"}";
+                }
+
+                if (equals(params, "token", "badToken")) {
+                    return "{\"error\":\"ERROR_INVALID_TOKEN\"}";
+                }
+                else if (equals(params, "tag", "")) {
+                    // For each post, return: postId, username, userId, medal, text, imageURL, likes, dislikes, userOption (1 or 0) and timestamp
+                    return "{\"result\":[{\"postid\":1,\"username\":\"user1\",\"userid\":1,\"medal\":\"m1\",\"text\":\"text1\",\"imageurl\":\"image1\",\"likes\":1,\"dislikes\":2,\"useroption\":1,\"timestamp\":\"1649663866\"},{\"postid\":2,\"username\":\"user2\",\"userid\":2,\"medal\":\"m2\",\"text\":\"text2\",\"imageurl\":\"image2\",\"likes\":3,\"dislikes\":4,\"useroption\":0,\"timestamp\":\"1649663810\"}]}";
+                }
+                else if (equals(params, "tag", "tag1")) {
+                    return "{\"result\":[{\"postid\":1,\"username\":\"user1\",\"userid\":1,\"medal\":\"m1\",\"text\":\"text1\",\"imageurl\":\"image1\",\"likes\":1,\"dislikes\":2,\"useroption\":1,\"timestamp\":\"1649663866\"}]}";
+                }
+                else if (equals(params, "tag", "tag2")) {
+                    return "{\"result\":[{\"postid\":2,\"username\":\"user2\",\"userid\":2,\"medal\":\"m2\",\"text\":\"text2\",\"imageurl\":\"image2\",\"likes\":3,\"dislikes\":4,\"useroption\":0,\"timestamp\":\"1649663810\"}]}";
+                }
+                else {
+                    return "{\"result\":[]}";
+                }
+
+            // Get list of tags
+            case "/posts/tags":
+                expectParams(params, "token");
+                if (equals(params, "token", "badToken")) {
+                    return "{\"error\":\"ERROR_INVALID_TOKEN\"}";
+                }
+                else {
+                    // For each tag, return: tag, count
+                    return "{\"result\": [{\"tag\":\"tag1\",\"count\":15},{\"tag\":\"tag2\",\"count\":2},{\"tag\":\"abc\",\"count\":1}]}";
+                }
                 
             default:
                 throw new RuntimeException("Invalid path: " + path);
@@ -141,6 +179,47 @@ public class StubHttpClient implements HttpClient {
                 throw new RuntimeException("Invalid path: " + path);
         }
         
+    }
+
+
+    @Override
+    public String delete(String path, Map<String, String> params) {
+        path = checkDomain(path);
+        if (params == null) {
+            params = new TreeMap<String, String>();
+        }
+        checkNullParams(params);
+
+        switch (path) {
+            // Delete a post
+            case "/posts/1":
+                expectParams(params, "token");
+                if (equals(params, "token", "badToken")) {
+                    return "{\"error\":\"ERROR_INVALID_TOKEN\"}";
+                }
+                else {
+                    return "{status: 'success'}";
+                }
+            case "/posts/2":
+                expectParams(params, "token");
+                if (equals(params, "token", "badToken")) {
+                    return "{\"error\":\"ERROR_INVALID_TOKEN\"}";
+                }
+                else {
+                    return "{\"error\":\"ERROR_USER_NOT_POST_OWNER\"}";
+                }
+            case "/posts/3":
+                expectParams(params, "token");
+                if (equals(params, "token", "badToken")) {
+                    return "{\"error\":\"ERROR_INVALID_TOKEN\"}";
+                }
+                else {
+                    return "{\"error\":\"ERROR_POST_NOT_EXISTS\"}";
+                }
+
+            default:
+                throw new RuntimeException("Invalid path: " + path);
+        }
     }
     
     
@@ -186,5 +265,12 @@ public class StubHttpClient implements HttpClient {
             throw new IllegalArgumentException("Missing parameter: " + param);
         }
         return params.get(param).equals(value);
+    }
+
+    int toInt(Map<String, String> params, String param) {
+        if (!params.containsKey(param)) {
+            throw new IllegalArgumentException("Missing parameter: " + param);
+        }
+        return Integer.parseInt(params.get(param));
     }
 }
