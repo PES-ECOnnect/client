@@ -44,4 +44,11 @@
 
     <string name="tag_posts_count">%d posts</string>
     <string name="tag_posts_count_one">%d post</string>
+    <string name="like_post_description">Like post</string>
+    <string name="dislike_post_description">Dislike post</string>
+    <string name="post_image_description">Image attached to post</string>
+    <string name="user_medal_description">User medal</string>
+
+    <string name="check_out_econnect">Check out ECOnnect at</string>
+    <string name="on_econnect">%s on ECOnnect:</string>
 </resources>

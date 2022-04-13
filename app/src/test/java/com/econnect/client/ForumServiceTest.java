@@ -39,8 +39,8 @@ public class ForumServiceTest {
         assertEquals("user1", posts[0].username);
         assertEquals(1, posts[0].userid);
         assertEquals("m1", posts[0].medal);
-        assertEquals("text1", posts[0].text);
-        assertEquals("image1", posts[0].imageurl);
+        assertEquals("#tag1 text1", posts[0].text);
+        assertEquals("https://wallpapercave.com/wp/wp4676582.jpg", posts[0].imageurl);
         assertEquals(1, posts[0].likes);
         assertEquals(2, posts[0].dislikes);
         assertEquals(1, posts[0].useroption);
@@ -50,7 +50,7 @@ public class ForumServiceTest {
         assertEquals("user2", posts[1].username);
         assertEquals(2, posts[1].userid);
         assertEquals("m2", posts[1].medal);
-        assertEquals("text2", posts[1].text);
+        assertEquals("text2 #another . #tag2", posts[1].text);
         assertEquals("image2", posts[1].imageurl);
         assertEquals(3, posts[1].likes);
         assertEquals(4, posts[1].dislikes);
@@ -68,8 +68,8 @@ public class ForumServiceTest {
         assertEquals("user1", posts[0].username);
         assertEquals(1, posts[0].userid);
         assertEquals("m1", posts[0].medal);
-        assertEquals("text1", posts[0].text);
-        assertEquals("image1", posts[0].imageurl);
+        assertEquals("#tag1 text1", posts[0].text);
+        assertEquals("https://wallpapercave.com/wp/wp4676582.jpg", posts[0].imageurl);
         assertEquals(1, posts[0].likes);
         assertEquals(2, posts[0].dislikes);
         assertEquals(1, posts[0].useroption);

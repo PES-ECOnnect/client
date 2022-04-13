@@ -45,7 +45,7 @@ public class CompanyDetailsController implements IDetailsController {
                 });
 
                 // Fetch image
-                Bitmap bmp = BitmapLoader.fromURL(_company.imageURL, 128);
+                Bitmap bmp = BitmapLoader.fromURLResizeHeight(_company.imageURL, 128);
                 ExecutionThread.UI(_fragment, () -> {
                     if (bmp != null) _fragment.setImage(bmp);
                 });

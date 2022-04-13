@@ -2,56 +2,57 @@ package com.econnect.client.Forum;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Filter;
-import android.widget.Filterable;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.econnect.API.ForumService.Post;
-import com.econnect.API.IAbstractProduct;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.client.R;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.Locale;
 
-public class PostListAdapter extends BaseAdapter implements Filterable {
+public class PostListAdapter extends BaseAdapter {
     private final Fragment _owner;
     private final int _highlightColor;
-    private final Drawable _defaultImage;
+    private final IPostCallback _callback;
 
     private static LayoutInflater _inflater = null;
-    private List<Post> data;
+    private final Post[] _data;
 
-    private String lastQueryLower = null; // Store last query (in lowercase)
-
-    public PostListAdapter(Fragment owner, int highlightColor, Drawable defaultImage, Post[] posts) {
+    public PostListAdapter(Fragment owner, IPostCallback callback, int highlightColor, Post[] posts) {
         this._owner = owner;
         this._highlightColor = highlightColor;
-        this._defaultImage = defaultImage;
-        data = Arrays.asList(posts);
+        this._data = posts;
+        this._callback = callback;
         _inflater = (LayoutInflater) owner.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return data.size();
+        return _data.length;
     }
 
     @Override
     public Object getItem(int position) {
-        return data.get(position);
+        return _data[position];
     }
 
     @Override
@@ -64,114 +65,119 @@ public class PostListAdapter extends BaseAdapter implements Filterable {
         // Initialize view and product
         View vi = convertView;
         if (vi == null) {
-            vi = _inflater.inflate(R.layout.product_list_item, null);
+            vi = _inflater.inflate(R.layout.post_list_item, null);
         }
-        final Post p = data.get(position);
+        final Post p = _data[position];
 
-//        // Set item name
-//        TextView name = vi.findViewById(R.id.product_item_name);
-//        Spannable spannable = new SpannableString(p.getName());
-//        if (lastQueryLower != null) {
-//            // Highlight search substring (ignore case)
-//            String nameLower = p.getName().toLowerCase();
-//            int indexStart = nameLower.indexOf(lastQueryLower);
-//            int indexEnd = indexStart + lastQueryLower.length();
-//            if (indexStart != -1) {
-//                spannable.setSpan(new ForegroundColorSpan(_highlightColor),
-//                        indexStart, indexEnd, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-//            }
-//        }
-//        name.setText(spannable, TextView.BufferType.SPANNABLE);
-//
-//        // Set item manufacturer
-//        TextView manufacturer = vi.findViewById(R.id.product_item_manufacturer);
-//        manufacturer.setText(p.getSecondaryText());
-//
-//        // Set item rating
-//        TextView rating = vi.findViewById(R.id.product_item_rating);
-//        if(p.getAvgRating() == 0.0f) rating.setText("-");
-//        else rating.setText(String.format("%.02f", p.getAvgRating()));
-//
-//        // Set item image
-//        ImageView image = vi.findViewById(R.id.product_item_image);
-//        ExecutionThread.nonUI(()->{
-//            Bitmap bmp = p.getImage(image.getHeight());
-//            ExecutionThread.UI(_owner, ()-> {
-//                if (bmp == null) image.setImageDrawable(_defaultImage);
-//                else image.setImageBitmap(bmp);
-//            });
-//        });
+        // Set author name
+        TextView authorName = vi.findViewById(R.id.postUsernameText);
+        authorName.setText(p.username);
+
+        // TODO: Set medal
+
+        // Set time text
+        TextView timeText = vi.findViewById(R.id.postTimeText);
+        timeText.setText(timestampToString(p.timestamp));
+
+        // Set post body
+        TextView textBody = vi.findViewById(R.id.postContentText);
+        // Required for clickable tags to work
+        textBody.setMovementMethod(LinkMovementMethod.getInstance());
+        Spannable spannable = new SpannableString(p.text);
+        // Iterate for all instances of '#'
+        for (int index = p.text.indexOf('#'); index >= 0; index = p.text.indexOf('#', index + 1)) {
+            // Skip # symbols in the middle of a word
+            if (index > 0 && p.text.charAt(index-1) != ' ')
+                continue;
+            int end = p.text.indexOf(' ', index + 1);
+            if (end == -1) end = p.text.length();
+            // Set color and make bold, also make clickable
+            String tag = p.text.substring(index+1, end); // Skip '#'
+            spannable.setSpan(new TagClickableSpan(tag), index, end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        }
+        textBody.setText(spannable, TextView.BufferType.SPANNABLE);
+
+        // Set likes and dislikes
+        TextView likes = vi.findViewById(R.id.likesAmountText);
+        likes.setText(String.format(Locale.getDefault(), "%d", p.likes));
+        TextView dislikes = vi.findViewById(R.id.dislikesAmountText);
+        dislikes.setText(String.format(Locale.getDefault(), "%d", p.dislikes));
+
+        // Set item image
+        ImageView image = vi.findViewById(R.id.postImage);
+        image.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
+            // This is called once the layout is inflated, so that image.getWidth() returns a valid value
+            ExecutionThread.nonUI(()->{
+                // The post caches the bitmap, so subsequent redraws are faster and the returned pointer is always the same
+                Bitmap bmp = p.getImage(image.getWidth());
+                // If the bitmap has not changed, skip
+                Drawable d = image.getDrawable();
+                if (d != null && ((BitmapDrawable) d).getBitmap() == bmp)
+                    return;
+                // Else, set image
+                ExecutionThread.UI(_owner, ()-> {
+                    if (bmp == null) image.setVisibility(View.GONE);
+                    else {
+                        image.setImageBitmap(bmp);
+                        image.setVisibility(View.VISIBLE);
+                    }
+                });
+            });
+        });
+
+
+        // Set listeners
+        ImageButton shareButton = vi.findViewById(R.id.sharePostButton);
+        shareButton.setOnClickListener(view -> _callback.share(p));
+
+        ImageButton likeButton = vi.findViewById(R.id.likePostButton);
+        likeButton.setOnClickListener(view -> _callback.like(position));
+
+        ImageButton dislikeButton = vi.findViewById(R.id.dislikePostButton);
+        dislikeButton.setOnClickListener(view -> _callback.dislike(position));
 
         return vi;
     }
 
+    private String timestampToString(long date) {
+        long time = System.currentTimeMillis() / 1000;
 
+        // Difference between dates, in seconds
+        long mills = time - date;
+        // Convert to hours + minutes
+        int hours = (int) (mills / (60 * 60));
+        int mins = (int) ((mills - (hours * 3600) / 60) % 60);
 
-    // Implement search
-
-    @Override
-    public Filter getFilter() {
-
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                FilterResults results = new FilterResults();
-                // Store query for highlighting the item names
-                if (constraint.length() == 0) constraint = null;
-
-                // If filter is empty, return all selectable products
-                if (constraint == null) {
-                    ArrayList<IAbstractProduct> res = new ArrayList<>();
-                    for (IAbstractProduct p : getAllProducts()) {
-                        if (isSelectable(p)) res.add(p);
-                    }
-                    results.values = res;
-                    results.count = res.size();
-                    lastQueryLower = null;
-                    return results;
-                }
-
-                // Ignore case and trim
-                String queryLower = constraint.toString().toLowerCase().trim();
-                // Get only the products that contain (or begin with) the query
-                ArrayList<IAbstractProduct> containQuery = new ArrayList<>();
-                ArrayList<IAbstractProduct> beginWithQuery = new ArrayList<>();
-                for (IAbstractProduct p : getAllProducts()) {
-                    // Skip all non-selectable products
-                    if (!isSelectable(p)) continue;
-                    // Add type to the corresponding list
-                    String name = p.getName().toLowerCase();
-                    if (name.startsWith(queryLower)) {
-                        beginWithQuery.add(p);
-                    }
-                    else if (name.contains(queryLower)) {
-                        containQuery.add(p);
-                    }
-                }
-
-                // Combine the two lists (beginWithQuery is preferred)
-                beginWithQuery.addAll(containQuery);
-                results.values = beginWithQuery;
-                results.count = beginWithQuery.size();
-                lastQueryLower = queryLower;
-
-                return results;
-            }
-
-            @Override
-            @SuppressWarnings("unchecked")
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-//                data = (List<IAbstractProduct>) results.values;
-                notifyDataSetChanged();
-            }
-        };
+        if (hours == 0) {
+            return mins + " minutes ago";
+        }
+        else if (hours < 24) {
+            return hours + " hours ago";
+        }
+        else {
+            Date dateTemp = new Date(date * 1000L);
+            DateFormat dateFormat = DateFormat.getDateInstance();
+            return dateFormat.format(dateTemp);
+        }
     }
 
+    private class TagClickableSpan extends ClickableSpan {
+        String _tag;
+        public TagClickableSpan(String tag) {
+            _tag = tag;
+        }
 
-    protected IAbstractProduct[] getAllProducts() {
-        return null;
-    }
-    protected boolean isSelectable(IAbstractProduct p) {
-        return true;
+        @Override
+        public void onClick(@NonNull View view) {
+            _callback.tagClicked(_tag);
+        }
+        @Override
+        public void updateDrawState(TextPaint ds) {
+            super.updateDrawState(ds);
+            // No underline, set color and make bold
+            ds.setUnderlineText(false);
+            ds.setColor(_highlightColor);
+            ds.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        }
     }
 }

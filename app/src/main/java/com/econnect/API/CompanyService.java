@@ -53,7 +53,7 @@ public class CompanyService extends Service {
         @Override
         public Bitmap getImage(int height) {
             if (imageBitmap == null)
-                imageBitmap = BitmapLoader.fromURL(imageurl, height);
+                imageBitmap = BitmapLoader.fromURLResizeHeight(imageurl, height);
             return imageBitmap;
         }
     }

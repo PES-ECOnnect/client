@@ -1,6 +1,9 @@
 package com.econnect.API;
 
+import android.graphics.Bitmap;
+
 import com.econnect.API.Exceptions.ApiException;
+import com.econnect.Utilities.BitmapLoader;
 
 import java.util.TreeMap;
 
@@ -20,6 +23,8 @@ public class ForumService extends Service {
         public final int dislikes;
         public final int useroption;
         public final long timestamp;
+
+        private Bitmap imageBitmap = null;
         
         public Post(int postId, String username, int userId, String medal, String text, String imageURL, int likes, int dislikes, int userOption, long timestamp) {
             this.postid = postId;
@@ -32,6 +37,12 @@ public class ForumService extends Service {
             this.dislikes = dislikes;
             this.useroption = userOption;
             this.timestamp = timestamp;
+        }
+
+        public Bitmap getImage(int width) {
+            if (imageBitmap == null)
+                imageBitmap = BitmapLoader.fromURLResizeWidth(imageurl, width);
+            return imageBitmap;
         }
     }
 
