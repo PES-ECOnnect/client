@@ -23,7 +23,15 @@ public class ForumController {
         this._fragment = fragment;
     }
 
-    void updateTagList() {
+    public void updateData() {
+        // Populate tag dropdown
+        updateTagList();
+        // Populate post list (no tag)
+        updatePostsList("");
+        _fragment.setTagsDropdownText("");
+    }
+
+    private void updateTagList() {
         ExecutionThread.nonUI(()-> {
             try {
                 // Get types
@@ -42,7 +50,7 @@ public class ForumController {
         });
     }
 
-    void updatePostsList(String tag) {
+    private void updatePostsList(String tag) {
         ExecutionThread.nonUI(()-> {
             // Keep track of whether the list is dirty (skip unnecessary calls to backend)
             _listContainsAllTags = tag.isEmpty();
@@ -113,14 +121,11 @@ public class ForumController {
         }
 
         @Override
-        public void like(int index) {
-            PopupMessage.warning(_fragment, "liked post " + index);
+        public void vote(int id, boolean isLike, boolean remove) {
+            String text = (remove?"remove ":"") + (isLike?"like":"dislike") + " of post " + id;
+            PopupMessage.warning(_fragment, text);
         }
 
-        @Override
-        public void dislike(int index) {
-            PopupMessage.warning(_fragment, "disliked post " + index);
-        }
     };
 
 }

@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import com.econnect.API.Exceptions.ApiException;
 import com.econnect.Utilities.BitmapLoader;
 
+import java.util.Locale;
 import java.util.TreeMap;
 
 public class ForumService extends Service {
@@ -12,6 +13,10 @@ public class ForumService extends Service {
     ForumService() {}
 
     public static class Post {
+        public static final int OPT_LIKE = 2;
+        public static final int OPT_DISLIKE = 1;
+        public static final int OPT_NONE = 0;
+
         // Important: The name of these attributes must match the ones in the returned JSON
         public final int postid;
         public final String username;
@@ -19,9 +24,9 @@ public class ForumService extends Service {
         public final String medal;
         public final String text;
         public final String imageurl;
-        public final int likes;
-        public final int dislikes;
-        public final int useroption;
+        public int likes;
+        public int dislikes;
+        public int useroption;
         public final long timestamp;
 
         private Bitmap imageBitmap = null;
@@ -102,7 +107,7 @@ public class ForumService extends Service {
         catch (ApiException e) {
             switch (e.getErrorCode()) {
                 case ApiConstants.ERROR_POST_NOT_EXISTS:
-                    throw new RuntimeException("The post with id=" + postId + " does not exist");
+                    throw new RuntimeException("The post with id " + postId + " does not exist");
                 case ApiConstants.ERROR_USER_NOT_POST_OWNER:
                     throw new RuntimeException("You don't have permission to delete this post");
                 default:
@@ -142,5 +147,33 @@ public class ForumService extends Service {
         }
 
         return tags;
+    }
+
+    public void likePost(int id, boolean isLike, boolean remove) {
+        TreeMap<String, String> params = new TreeMap<>();
+        params.put(ApiConstants.POST_IS_LIKE, Boolean.toString(isLike));
+        params.put(ApiConstants.POST_REMOVE, Boolean.toString(remove));
+
+        JsonResult result = null;
+        try {
+            // Call API
+            super.needsToken = true;
+            result = post(String.format(ApiConstants.POST_LIKE_PATH, id), params, null);
+        }
+        catch (ApiException e) {
+            switch (e.getErrorCode()) {
+                case ApiConstants.ERROR_POST_NOT_EXISTS:
+                    throw new RuntimeException("The post with id " + id + " does not exist");
+                default:
+                    throw e;
+            }
+        }
+
+        // Parse result
+        String status = result.getAttribute(ApiConstants.RET_STATUS);
+        if (status == null || !status.equals(ApiConstants.STATUS_OK)) {
+            // This should never happen, the API should always return an array or an error
+            throwInvalidResponseError(result, ApiConstants.RET_STATUS);
+        }
     }
 }

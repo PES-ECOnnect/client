@@ -33,7 +33,7 @@ public class ForumServiceTest {
     public void testGetPostsOk() {
         Post[] posts = sv.getPosts(3, "");
         assertNotNull(posts);
-        assertEquals(2, posts.length);
+        assertEquals(3, posts.length);
         
         assertEquals(1, posts[0].postid);
         assertEquals("user1", posts[0].username);
@@ -148,4 +148,101 @@ public class ForumServiceTest {
         );
     }
     
+    
+    @Test
+    public void testDeletePostOk() {
+        sv.deletePost(1);
+        // This should not throw an exception
+    }
+    
+    @Test
+    public void testDeletePostNotExists() {
+        expectException(()->
+            sv.deletePost(3),
+            "The post with id 3 does not exist"
+        );
+    }
+    
+    @Test
+    public void testDeletePostFromOtherUser() {
+        expectException(()->
+            sv.deletePost(2),
+            "You don't have permission to delete this post"
+        );
+    }
+    
+    @Test
+    public void cannotDeletePostWithoutToken() {
+        ServiceTestHelper.clearToken();
+        expectException(()->
+            sv.deletePost(1),
+            "User token not set"
+        );
+    }
+    
+    @Test
+    public void cannotDeletePostWithWrongToken() {
+        ServiceTestHelper.setToken("badToken");
+        expectException(()->
+            sv.deletePost(1),
+            "This session has expired, please logout and try again"
+        );
+    }
+    
+    
+    @Test
+    public void testLikePostOk() {
+        sv.likePost(1, true, false);
+        // This should not throw an exception
+    }
+    
+    @Test
+    public void testDislikePostOk() {
+        sv.likePost(1, false, false);
+        // This should not throw an exception
+    }
+    
+    @Test
+    public void testUnlikePostOk() {
+        sv.likePost(1, true, true);
+        // This should not throw an exception
+    }
+    
+    @Test
+    public void testUndislikePostOk() {
+        sv.likePost(1, false, true);
+        // This should not throw an exception
+    }
+    
+    @Test
+    public void testLikePostNotExists() {
+        expectException(()->
+            sv.likePost(3, true, false),
+            "The post with id 3 does not exist"
+        );
+    }
+    
+    @Test
+    public void testLikePostFromOtherUser() {
+        sv.likePost(2, true, false);
+        // This should not throw an exception
+    }
+    
+    @Test
+    public void cannotLikePostWithoutToken() {
+        ServiceTestHelper.clearToken();
+        expectException(()->
+            sv.likePost(1, true, false),
+            "User token not set"
+        );
+    }
+    
+    @Test
+    public void cannotLikePostWithWrongToken() {
+        ServiceTestHelper.setToken("badToken");
+        expectException(()->
+            sv.likePost(1, true, false),
+            "This session has expired, please logout and try again"
+        );
+    }
 }

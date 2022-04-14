@@ -63,11 +63,10 @@ public class PostListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Initialize view and product
-        View vi = convertView;
-        if (vi == null) {
-            vi = _inflater.inflate(R.layout.post_list_item, null);
-        }
         final Post p = _data[position];
+        final View vi;
+        if (convertView != null) vi = convertView;
+        else vi = _inflater.inflate(R.layout.post_list_item, null);
 
         // Set author name
         TextView authorName = vi.findViewById(R.id.postUsernameText);
@@ -131,10 +130,21 @@ public class PostListAdapter extends BaseAdapter {
         shareButton.setOnClickListener(view -> _callback.share(p));
 
         ImageButton likeButton = vi.findViewById(R.id.likePostButton);
-        likeButton.setOnClickListener(view -> _callback.like(position));
+        likeButton.setOnClickListener(view -> voteButtonListener(vi, true, p));
 
         ImageButton dislikeButton = vi.findViewById(R.id.dislikePostButton);
-        dislikeButton.setOnClickListener(view -> _callback.dislike(position));
+        dislikeButton.setOnClickListener(view -> voteButtonListener(vi, false, p));
+
+        // Highlight previous user choice
+        if (p.useroption == Post.OPT_LIKE) {
+            likeButton.setColorFilter(_highlightColor);
+        }
+        else if (p.useroption == Post.OPT_DISLIKE) {
+            dislikeButton.setColorFilter(_highlightColor);
+        }
+        else if (p.useroption != Post.OPT_NONE) {
+            throw new RuntimeException("Invalid user option: " + p.useroption);
+        }
 
         return vi;
     }
@@ -179,5 +189,46 @@ public class PostListAdapter extends BaseAdapter {
             ds.setColor(_highlightColor);
             ds.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         }
+    }
+
+    private void voteButtonListener(View vi, boolean like, Post p) {
+        final ImageButton button;
+        final TextView text;
+        final boolean removeThis, removeTwin;
+        if (like) {
+            button = vi.findViewById(R.id.likePostButton);
+            text = vi.findViewById(R.id.likesAmountText);
+            removeThis = (p.useroption == Post.OPT_LIKE);
+            removeTwin = (p.useroption == Post.OPT_DISLIKE);
+        }
+        else {
+            button = vi.findViewById(R.id.dislikePostButton);
+            text = vi.findViewById(R.id.dislikesAmountText);
+            removeThis = (p.useroption == Post.OPT_DISLIKE);
+            removeTwin = (p.useroption == Post.OPT_LIKE);
+        }
+
+        // Decrement twin counter, emulate click on other counter
+        if (removeTwin) {
+            voteButtonListener(vi, !like, p);
+        }
+
+        // Update button color
+        if (removeThis) button.clearColorFilter();
+        else button.setColorFilter(_highlightColor);
+
+        // Update text
+        final int increment = removeThis ? -1 : 1;
+        final int newCount;
+        if (like) newCount = (p.likes += increment);
+        else newCount = (p.dislikes += increment);
+        text.setText(String.format(Locale.getDefault(), "%d", newCount));
+
+        // Update user option
+        if (removeThis) p.useroption = Post.OPT_NONE;
+        else p.useroption = like ? Post.OPT_LIKE : Post.OPT_DISLIKE;
+
+        // Call API
+        _callback.vote(p.postid, like, removeThis);
     }
 }

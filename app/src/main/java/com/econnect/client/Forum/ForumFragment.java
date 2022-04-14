@@ -1,7 +1,5 @@
 package com.econnect.client.Forum;
 
-import android.view.View;
-
 import androidx.core.content.ContextCompat;
 
 import com.econnect.API.ForumService;
@@ -19,14 +17,11 @@ public class ForumFragment extends CustomFragment<FragmentForumBinding> {
 
     @Override
     protected void addListeners() {
-        // TODO
         binding.tagDropdown.setOnItemClickListener(_ctrl.tagsDropdown());
         binding.tagDropdown.addTextChangedListener(_ctrl.tagFilterText());
+        binding.pullToRefresh.setOnRefreshListener(_ctrl::updateData);
 
-        // Populate tag dropdown
-        _ctrl.updateTagList();
-        // Populate post list (no tag)
-        _ctrl.updatePostsList("");
+        _ctrl.updateData();
     }
 
     void setTagsDropdownElements(ForumService.Tag[] allTags) {
@@ -46,7 +41,7 @@ public class ForumFragment extends CustomFragment<FragmentForumBinding> {
     }
 
     void enableInput(boolean enabled) {
-        binding.forumProgressBar.setVisibility(enabled ? View.GONE : View.VISIBLE);
+        binding.pullToRefresh.setRefreshing(!enabled);
         binding.postList.setEnabled(enabled);
         binding.tagBox.setEnabled(enabled);
     }
