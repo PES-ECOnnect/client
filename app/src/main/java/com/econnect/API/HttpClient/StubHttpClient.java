@@ -114,7 +114,7 @@ public class StubHttpClient implements HttpClient {
 
             // Get list of posts on the forum
             case "/posts":
-                expectParamsExclusive(params, "token", "n", "tag");
+                expectParams(params, "token", "n");
                 int n = toInt(params, "n");
                 if (n <= 0) {
                     return "{\"error\":\"invalid value of n\"}";
@@ -123,7 +123,7 @@ public class StubHttpClient implements HttpClient {
                 if (equals(params, "token", "badToken")) {
                     return "{\"error\":\"ERROR_INVALID_TOKEN\"}";
                 }
-                else if (equals(params, "tag", "")) {
+                else if (!params.containsKey("tag")) {
                     // For each post, return: postId, username, userId, medal, text, imageURL, likes, dislikes, userOption (1 or 0) and timestamp
                     return "{\"result\":[{\"postid\":1,\"username\":\"user1\",\"userid\":1,\"medal\":\"m1\",\"text\":\"#tag1 text1\",\"imageurl\":\"https://wallpapercave.com/wp/wp4676582.jpg\",\"likes\":1,\"dislikes\":2,\"useroption\":1,\"timestamp\":\"1649663866\"}," +
                             "{\"postid\":2,\"username\":\"user2\",\"userid\":2,\"medal\":\"m2\",\"text\":\"text2 #another . #tag2\",\"imageurl\":\"image2\",\"likes\":3,\"dislikes\":4,\"useroption\":0,\"timestamp\":\"1649663810\"}," +

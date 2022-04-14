@@ -31,7 +31,7 @@ public class ForumServiceTest {
     
     @Test
     public void testGetPostsOk() {
-        Post[] posts = sv.getPosts(3, "");
+        Post[] posts = sv.getPosts(3, null);
         assertNotNull(posts);
         assertEquals(3, posts.length);
         

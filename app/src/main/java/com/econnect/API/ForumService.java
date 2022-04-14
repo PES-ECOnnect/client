@@ -68,8 +68,7 @@ public class ForumService extends Service {
         TreeMap<String, String> params = new TreeMap<>();
         params.put(ApiConstants.POST_AMOUNT, Integer.toString(numPosts));
         // No tag means all posts
-        if (tag == null) tag = "";
-        params.put(ApiConstants.POST_TAG, tag);
+        if (tag != null) params.put(ApiConstants.POST_TAG, tag);
         
         JsonResult result = null;
         try {

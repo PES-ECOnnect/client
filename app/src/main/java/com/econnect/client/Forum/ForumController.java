@@ -27,7 +27,7 @@ public class ForumController {
         // Populate tag dropdown
         updateTagList();
         // Populate post list (no tag)
-        updatePostsList("");
+        updatePostsList(null);
         _fragment.setTagsDropdownText("");
     }
 
@@ -53,7 +53,7 @@ public class ForumController {
     private void updatePostsList(String tag) {
         ExecutionThread.nonUI(()-> {
             // Keep track of whether the list is dirty (skip unnecessary calls to backend)
-            _listContainsAllTags = tag.isEmpty();
+            _listContainsAllTags = (tag == null);
             try {
                 // Get products of all types
                 ForumService service = ServiceFactory.getInstance().getForumService();
@@ -65,7 +65,8 @@ public class ForumController {
                 });
             } catch (Exception e) {
                 ExecutionThread.UI(_fragment, () -> {
-                    PopupMessage.warning(_fragment, "Could not fetch products:\n" + e.getMessage());
+                    PopupMessage.warning(_fragment, "Could not fetch posts:\n" + e.getMessage());
+                    _fragment.enableInput(true);
                 });
             }
         });
@@ -92,7 +93,7 @@ public class ForumController {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // If the list is dirty and the new text is blank, delete filter
                 if (!_listContainsAllTags && s.toString().trim().isEmpty())
-                    updatePostsList("");
+                    updatePostsList(null);
             }
         };
     }
