@@ -20,6 +20,7 @@ public class ForumFragment extends CustomFragment<FragmentForumBinding> {
         binding.tagDropdown.setOnItemClickListener(_ctrl.tagsDropdown());
         binding.tagDropdown.addTextChangedListener(_ctrl.tagFilterText());
         binding.pullToRefresh.setOnRefreshListener(_ctrl::updateData);
+        binding.addPostButton.setOnClickListener(_ctrl.addPostOnClick());
 
         _ctrl.updateData();
     }

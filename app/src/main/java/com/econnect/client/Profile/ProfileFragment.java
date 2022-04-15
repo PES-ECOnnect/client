@@ -30,6 +30,18 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> impl
         binding.profileMenuButton.setOnClickListener( view -> showProfileMenu(view));
     }
 
+    void enableInput() {
+        binding.profileMenuButton.setEnabled(true);
+    }
+
+    void setActiveMedal() {
+        //Change the active medal
+    }
+
+    void setUsername() {
+        //Change the username
+    }
+
 
     void showProfileMenu(View v){
         PopupMenu popupMenu = new PopupMenu(this.getContext(), v);

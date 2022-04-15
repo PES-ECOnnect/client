@@ -51,4 +51,8 @@
 
     <string name="check_out_econnect">Check out ECOnnect at</string>
     <string name="on_econnect">%s on ECOnnect:</string>
+    <string name="medals">Medals</string>
+    <string name="username">Username</string>
+    <string name="active_medal">Active Medal</string>
+    <string name="medal_name">Medal Name</string>
 </resources>
