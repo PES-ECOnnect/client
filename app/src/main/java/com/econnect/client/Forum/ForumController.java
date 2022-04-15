@@ -149,8 +149,7 @@ public class ForumController {
     View.OnClickListener addPostOnClick() {
         return (view) -> {
             // Launch new activity DetailsActivity
-
-            Intent intent = new Intent(_fragment.getContext(), DetailsActivity.class);
+            Intent intent = new Intent(_fragment.getContext(), PostActivity.class);
             _activityLauncher.launch(intent);
         };
     }
