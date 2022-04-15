@@ -98,7 +98,7 @@ public abstract class AbstractProductListAdapter extends BaseAdapter implements 
         // Set item image
         ImageView image = vi.findViewById(R.id.product_item_image);
         ExecutionThread.nonUI(()->{
-            Bitmap bmp = p.getImage(image.getHeight());
+            Bitmap bmp = p.getImage(64);
             ExecutionThread.UI(owner, ()-> {
                 if (bmp == null) image.setImageDrawable(defaultImage);
                 else image.setImageBitmap(bmp);

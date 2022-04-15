@@ -45,6 +45,7 @@
             android:background="#00FFFFFF"
             android:contentDescription="@string/vote_option_yes_description"
             android:hapticFeedbackEnabled="true"
+            android:padding="4dp"
             android:scaleType="fitCenter"
             android:soundEffectsEnabled="true"
             app:srcCompat="@drawable/ic_like_24" />
@@ -94,6 +95,7 @@
             android:background="#00FFFFFF"
             android:contentDescription="@string/vote_option_no_description"
             android:hapticFeedbackEnabled="true"
+            android:padding="4dp"
             android:scaleType="fitCenter"
             android:soundEffectsEnabled="true"
             app:srcCompat="@drawable/ic_dislike_24" />

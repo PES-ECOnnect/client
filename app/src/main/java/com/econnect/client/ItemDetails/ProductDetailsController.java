@@ -43,7 +43,7 @@ public class ProductDetailsController implements IDetailsController {
                 });
 
                 // Fetch image
-                Bitmap bmp = BitmapLoader.fromURL(_product.imageURL, 128);
+                Bitmap bmp = BitmapLoader.fromURLResizeHeight(_product.imageURL, 128);
                 ExecutionThread.UI(_fragment, () -> {
                     if (bmp != null) _fragment.setImage(bmp);
                 });

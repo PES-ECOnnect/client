@@ -16,6 +16,7 @@ public interface ApiConstants {
     String COMPANY_QUESTIONS_PATH = "/companies/questions";
     String POSTS_PATH = "/posts";
     String TAGS_PATH = "/posts/tags";
+    String POST_LIKE_PATH = "/posts/%d/like";
 
 
     // PARAMETERS
@@ -45,10 +46,11 @@ public interface ApiConstants {
     String QUESTION_INDEX = "questionIndex";
     String CHOSEN_OPTION = "chosenOption";
 
-    // Get/delete posts
+    // Get/like/delete posts
     String POST_AMOUNT = "n";
     String POST_TAG = "tag";
-    String POST_ID = "id";
+    String POST_IS_LIKE = "isLike";
+    String POST_REMOVE = "remove";
 
 
     // RETURN VALUES

@@ -1,91 +1,89 @@
 package com.econnect.client.Forum;
 
+import android.graphics.Bitmap;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.AdapterView;
 
 import com.econnect.API.ForumService;
 import com.econnect.API.ServiceFactory;
+import com.econnect.Utilities.BitmapLoader;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
+import com.econnect.Utilities.ShareManager;
+import com.econnect.client.BuildConfig;
 import com.econnect.client.R;
 
 public class ForumController {
 
     private final ForumFragment _fragment;
-    private String _selectedTag = "";
+    private boolean _listContainsAllTags = true;
 
     public ForumController(ForumFragment fragment) {
         this._fragment = fragment;
     }
 
-    View.OnClickListener addPost() { return view -> addPostClick(); }
-
-
-    private void addPostClick() {
-        ExecutionThread.UI(_fragment, ()->{
-           // ExecutionThread.navigate(_fragment, );
-        });
-    }
-
-    void updateLists() {
-        ExecutionThread.nonUI(()-> {
-            // Populate tag dropdown
-            updateTagList();
-            // Populate post list
-            updatePostsList();
-        });
+    public void updateData() {
+        // Populate tag dropdown
+        updateTagList();
+        // Populate post list (no tag)
+        updatePostsList(null);
+        _fragment.setTagsDropdownText("");
     }
 
     private void updateTagList() {
-        try {
-            // Get types
-            ForumService service = ServiceFactory.getInstance().getForumService();
-            ForumService.Tag[] tags = service.getAllTags();
+        ExecutionThread.nonUI(()-> {
+            try {
+                // Get types
+                ForumService service = ServiceFactory.getInstance().getForumService();
+                ForumService.Tag[] tags = service.getAllTags();
 
-            ExecutionThread.UI(_fragment, () -> {
-                _fragment.setTagsDropdownElements(tags);
-            });
-        }
-        catch (Exception e) {
-            ExecutionThread.UI(_fragment, ()->{
-                PopupMessage.warning(_fragment, "Could not fetch tags:\n" + e.getMessage());
-            });
-        }
+                ExecutionThread.UI(_fragment, () -> {
+                    _fragment.setTagsDropdownElements(tags);
+                });
+            }
+            catch (Exception e) {
+                ExecutionThread.UI(_fragment, ()->{
+                    PopupMessage.warning(_fragment, "Could not fetch tags:\n" + e.getMessage());
+                });
+            }
+        });
     }
 
-    private void updatePostsList() {
-        try {
-            // Get products of all types
-            ForumService service = ServiceFactory.getInstance().getForumService();
-            ForumService.Post[] posts = service.getPosts(1000, _selectedTag);
+    private void updatePostsList(String tag) {
+        ExecutionThread.nonUI(()-> {
+            // Keep track of whether the list is dirty (skip unnecessary calls to backend)
+            _listContainsAllTags = (tag == null);
+            try {
+                // Get products of all types
+                ForumService service = ServiceFactory.getInstance().getForumService();
+                ForumService.Post[] posts = service.getPosts(1000, tag);
 
-            ExecutionThread.UI(_fragment, () -> {
-                _fragment.setPostElements(posts);
-                _fragment.filterProductList();
-                _fragment.enableInput();
-            });
-        }
-        catch (Exception e) {
-            ExecutionThread.UI(_fragment, ()->{
-                PopupMessage.warning(_fragment, "Could not fetch products:\n" + e.getMessage());
-            });
-        }
+                ExecutionThread.UI(_fragment, () -> {
+                    _fragment.setPostElements(posts);
+                    _fragment.enableInput(true);
+                });
+            } catch (Exception e) {
+                ExecutionThread.UI(_fragment, () -> {
+                    PopupMessage.warning(_fragment, "Could not fetch posts:\n" + e.getMessage());
+                    _fragment.enableInput(true);
+                });
+            }
+        });
     }
 
 
 
     // Update product list when dropdown or search text change
 
-    AdapterView.OnItemClickListener typesDropdown() {
+    AdapterView.OnItemClickListener tagsDropdown() {
         return (parent, view, position, id) -> {
             // Update list
-            _fragment.filterProductList();
+            updatePostsList((String) parent.getItemAtPosition(position));
         };
     }
 
-    TextWatcher searchText() {
+    TextWatcher tagFilterText() {
         return new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {}
@@ -93,24 +91,42 @@ public class ForumController {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                _fragment.filterProductList();
+                // If the list is dirty and the new text is blank, delete filter
+                if (!_listContainsAllTags && s.toString().trim().isEmpty())
+                    updatePostsList(null);
             }
         };
     }
 
+    final IPostCallback postCallback = new IPostCallback() {
+        @Override
+        public void tagClicked(String tag) {
+            // Called when a tag from the post body is clicked. Update the search bar and the post list
+            _fragment.setTagsDropdownText(tag);
+            updatePostsList(tag);
+        }
 
-//    AdapterView.OnItemClickListener productClick() {
-//        return (parent, view, position, id) -> {
-//            // Launch new activity DetailsActivity
-//            Intent intent = new Intent(_fragment.getContext(), DetailsActivity.class);
-//
-//            ProductService.Product p = (ProductService.Product) parent.getItemAtPosition(position);
-//
-//            // Pass parameters to activity
-//            intent.putExtra("id", p.id);
-//            intent.putExtra("type", "product");
-//
-//            _activityLauncher.launch(intent);
-//        };
-//    }
+        @Override
+        public void share(ForumService.Post post) {
+            _fragment.enableInput(false);
+            ExecutionThread.nonUI(()->{
+                // [username] on ECOnnect: [text]  Check out ECOnnect at ...
+                String text = _fragment.getString(R.string.on_econnect, post.username) + "\n" + post.text + "\n\n" +
+                        _fragment.getString(R.string.check_out_econnect) +
+                        " https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID;
+                Bitmap bmp = BitmapLoader.fromURL(post.imageurl);
+                if (bmp != null) ShareManager.shareTextAndImage(text, bmp, _fragment.requireContext());
+                else ShareManager.shareText(text, _fragment.requireContext());
+                ExecutionThread.UI(_fragment, ()-> _fragment.enableInput(true));
+            });
+        }
+
+        @Override
+        public void vote(int id, boolean isLike, boolean remove) {
+            String text = (remove?"remove ":"") + (isLike?"like":"dislike") + " of post " + id;
+            PopupMessage.warning(_fragment, text);
+        }
+
+    };
+
 }

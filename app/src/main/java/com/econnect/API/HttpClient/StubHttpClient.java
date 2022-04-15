@@ -84,12 +84,12 @@ public class StubHttpClient implements HttpClient {
                 return "{\"name\":\"product0\",\"imageURL\":\"imageUrl0\",\"manufacturer\":\"manufacturer0\",\"type\":\"type0\",\"questions\":[{\"text\":\"q0\",\"num_yes\":11,\"num_no\":12},{\"text\":\"q1\",\"num_yes\":21,\"num_no\":22},{\"text\":\"q2\",\"num_yes\":31,\"num_no\":32}],\"ratings\":[1,0,0,0,0,10]}";
                 
             case "/products/2":
-                expectParams(params, "token");
+                expectParamsExclusive(params, "token");
                 return "{\"error\":\"ERROR_INCORRECT_ID_REVIEWABLE\"}";
                 
             // Get list of companies
             case "/companies":
-                expectParams(params, "token");
+                expectParamsExclusive(params, "token");
                 if (equals(params, "token", "badToken")) {
                     return "{\"error\":\"ERROR_INVALID_TOKEN\"}";
                 }
@@ -100,21 +100,21 @@ public class StubHttpClient implements HttpClient {
 
             // Get detailed info about company
             case "/companies/1":
-                expectParams(params, "token");
+                expectParamsExclusive(params, "token");
                 if (equals(params, "token", "badToken")) {
                     return "{\"error\":\"ERROR_INVALID_TOKEN\"}";
                 }
                 return "{\"imageURL\":\"https://company.com/img.png\",\"latitude\":12,\"longitude\":34,\"name\":\"test\",\"questions\":[{\"num_no\":1,\"num_yes\":2,\"text\":\"bon servei?\"},{\"num_no\":3,\"num_yes\":4,\"text\":\"q2\"}],\"ratings\":[1,2,3,4,5,6],\"type\":\"Company\"}";
                 
             case "/companies/2":
-                expectParams(params, "token");
+                expectParamsExclusive(params, "token");
                 return "{\"error\":\"ERROR_INCORRECT_ID_REVIEWABLE\"}";
 
 
 
             // Get list of posts on the forum
             case "/posts":
-                expectParams(params, "token", "n", "tag");
+                expectParams(params, "token", "n");
                 int n = toInt(params, "n");
                 if (n <= 0) {
                     return "{\"error\":\"invalid value of n\"}";
@@ -123,15 +123,17 @@ public class StubHttpClient implements HttpClient {
                 if (equals(params, "token", "badToken")) {
                     return "{\"error\":\"ERROR_INVALID_TOKEN\"}";
                 }
-                else if (equals(params, "tag", "")) {
+                else if (!params.containsKey("tag")) {
                     // For each post, return: postId, username, userId, medal, text, imageURL, likes, dislikes, userOption (1 or 0) and timestamp
-                    return "{\"result\":[{\"postid\":1,\"username\":\"user1\",\"userid\":1,\"medal\":\"m1\",\"text\":\"text1\",\"imageurl\":\"image1\",\"likes\":1,\"dislikes\":2,\"useroption\":1,\"timestamp\":\"1649663866\"},{\"postid\":2,\"username\":\"user2\",\"userid\":2,\"medal\":\"m2\",\"text\":\"text2\",\"imageurl\":\"image2\",\"likes\":3,\"dislikes\":4,\"useroption\":0,\"timestamp\":\"1649663810\"}]}";
+                    return "{\"result\":[{\"postid\":1,\"username\":\"user1\",\"userid\":1,\"medal\":\"m1\",\"text\":\"#tag1 text1\",\"imageurl\":\"https://wallpapercave.com/wp/wp4676582.jpg\",\"likes\":1,\"dislikes\":2,\"useroption\":1,\"timestamp\":\"1649663866\"}," +
+                            "{\"postid\":2,\"username\":\"user2\",\"userid\":2,\"medal\":\"m2\",\"text\":\"text2 #another . #tag2\",\"imageurl\":\"image2\",\"likes\":3,\"dislikes\":4,\"useroption\":0,\"timestamp\":\"1649663810\"}," +
+                            "{\"postid\":3,\"username\":\"Another User\",\"userid\":3,\"medal\":\"m3\",\"text\":\"Post without tags.\",\"imageurl\":\"https://images.unsplash.com/photo-1559583985-c80d8ad9b29f\",\"likes\":1234,\"dislikes\":1234,\"useroption\":2,\"timestamp\":\"1649836904\"}]}";
                 }
                 else if (equals(params, "tag", "tag1")) {
-                    return "{\"result\":[{\"postid\":1,\"username\":\"user1\",\"userid\":1,\"medal\":\"m1\",\"text\":\"text1\",\"imageurl\":\"image1\",\"likes\":1,\"dislikes\":2,\"useroption\":1,\"timestamp\":\"1649663866\"}]}";
+                    return "{\"result\":[{\"postid\":1,\"username\":\"user1\",\"userid\":1,\"medal\":\"m1\",\"text\":\"#tag1 text1\",\"imageurl\":\"https://wallpapercave.com/wp/wp4676582.jpg\",\"likes\":1,\"dislikes\":2,\"useroption\":1,\"timestamp\":\"1649663866\"}]}";
                 }
                 else if (equals(params, "tag", "tag2")) {
-                    return "{\"result\":[{\"postid\":2,\"username\":\"user2\",\"userid\":2,\"medal\":\"m2\",\"text\":\"text2\",\"imageurl\":\"image2\",\"likes\":3,\"dislikes\":4,\"useroption\":0,\"timestamp\":\"1649663810\"}]}";
+                    return "{\"result\":[{\"postid\":2,\"username\":\"user2\",\"userid\":2,\"medal\":\"m2\",\"text\":\"text2 #another . #tag2\",\"imageurl\":\"image2\",\"likes\":3,\"dislikes\":4,\"useroption\":0,\"timestamp\":\"1649663810\"}]}";
                 }
                 else {
                     return "{\"result\":[]}";
@@ -139,7 +141,7 @@ public class StubHttpClient implements HttpClient {
 
             // Get list of tags
             case "/posts/tags":
-                expectParams(params, "token");
+                expectParamsExclusive(params, "token");
                 if (equals(params, "token", "badToken")) {
                     return "{\"error\":\"ERROR_INVALID_TOKEN\"}";
                 }
@@ -174,6 +176,24 @@ public class StubHttpClient implements HttpClient {
                 else {
                     return "{\"token\":\"okToken\"}";
                 }
+                
+            case "/posts/1/like":
+            case "/posts/2/like":
+                expectParamsExclusive(params, "token", "isLike", "remove");
+                if (equals(params, "token", "badToken")) {
+                    return "{\"error\":\"ERROR_INVALID_TOKEN\"}";
+                }
+                else {
+                    return "{\"status\":\"success\"}";
+                }
+            case "/posts/3/like":
+                expectParamsExclusive(params, "token", "isLike", "remove");
+                if (equals(params, "token", "badToken")) {
+                    return "{\"error\":\"ERROR_INVALID_TOKEN\"}";
+                }
+                else {
+                    return "{\"error\":\"ERROR_POST_NOT_EXISTS\"}";
+                }
             
             default:
                 throw new RuntimeException("Invalid path: " + path);
@@ -193,7 +213,7 @@ public class StubHttpClient implements HttpClient {
         switch (path) {
             // Delete a post
             case "/posts/1":
-                expectParams(params, "token");
+                expectParamsExclusive(params, "token");
                 if (equals(params, "token", "badToken")) {
                     return "{\"error\":\"ERROR_INVALID_TOKEN\"}";
                 }
@@ -201,7 +221,7 @@ public class StubHttpClient implements HttpClient {
                     return "{status: 'success'}";
                 }
             case "/posts/2":
-                expectParams(params, "token");
+                expectParamsExclusive(params, "token");
                 if (equals(params, "token", "badToken")) {
                     return "{\"error\":\"ERROR_INVALID_TOKEN\"}";
                 }
@@ -209,7 +229,7 @@ public class StubHttpClient implements HttpClient {
                     return "{\"error\":\"ERROR_USER_NOT_POST_OWNER\"}";
                 }
             case "/posts/3":
-                expectParams(params, "token");
+                expectParamsExclusive(params, "token");
                 if (equals(params, "token", "badToken")) {
                     return "{\"error\":\"ERROR_INVALID_TOKEN\"}";
                 }
