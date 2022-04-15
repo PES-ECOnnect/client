@@ -2,10 +2,15 @@ package com.econnect.client.ItemDetails;
 
 import static android.view.ViewGroup.FOCUS_BLOCK_DESCENDANTS;
 
+import static java.security.AccessController.getContext;
+
+import android.app.AlertDialog;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 
 import androidx.appcompat.content.res.AppCompatResources;
@@ -22,6 +27,11 @@ import com.econnect.client.databinding.FragmentProductDetailsBinding;
 public class ProductDetailsFragment extends CustomFragment<FragmentProductDetailsBinding> {
 
     private IDetailsController _ctrl;
+    private AlertDialog.Builder reviewBuilder;
+    private AlertDialog review;
+    private ImageView star1Rpopup, star2Rpopup, star3Rpopup, star4Rpopup, star5Rpopup;
+    private Button reviewpopup_cancel, reviewpopup_submit;
+
 
     public ProductDetailsFragment() {
         super(FragmentProductDetailsBinding.class);
@@ -34,12 +44,7 @@ public class ProductDetailsFragment extends CustomFragment<FragmentProductDetail
     @Override
     protected void addListeners() {
         // TODO: decide how many stars we can give (start at 0?)
-        binding.star1.setOnClickListener(view -> _ctrl.setStars(1));
-        binding.star2.setOnClickListener(view -> _ctrl.setStars(2));
-        binding.star3.setOnClickListener(view -> _ctrl.setStars(3));
-        binding.star4.setOnClickListener(view -> _ctrl.setStars(4));
-        binding.star5.setOnClickListener(view -> _ctrl.setStars(5));
-        binding.addRatingButton.setOnClickListener(view -> _ctrl.reviewProduct());
+        binding.addRatingButton.setOnClickListener(view -> createReviewDialog());
         _ctrl.updateUIElements();
     }
 
@@ -53,39 +58,39 @@ public class ProductDetailsFragment extends CustomFragment<FragmentProductDetail
         final Drawable emptyStar = AppCompatResources.getDrawable(getContext(), R.drawable.ic_star_empty_24);
         switch (i){
             case 1:
-                binding.star1.setImageDrawable(fullStar);
-                binding.star2.setImageDrawable(emptyStar);
-                binding.star3.setImageDrawable(emptyStar);
-                binding.star4.setImageDrawable(emptyStar);
-                binding.star5.setImageDrawable(emptyStar);
+                star1Rpopup.setImageDrawable(fullStar);
+                star2Rpopup.setImageDrawable(emptyStar);
+                star3Rpopup.setImageDrawable(emptyStar);
+                star4Rpopup.setImageDrawable(emptyStar);
+                star5Rpopup.setImageDrawable(emptyStar);
                 break;
             case 2:
-                binding.star1.setImageDrawable(fullStar);
-                binding.star2.setImageDrawable(fullStar);
-                binding.star3.setImageDrawable(emptyStar);
-                binding.star4.setImageDrawable(emptyStar);
-                binding.star5.setImageDrawable(emptyStar);
+                star1Rpopup.setImageDrawable(fullStar);
+                star2Rpopup.setImageDrawable(fullStar);
+                star3Rpopup.setImageDrawable(emptyStar);
+                star4Rpopup.setImageDrawable(emptyStar);
+                star5Rpopup.setImageDrawable(emptyStar);
                 break;
             case 3:
-                binding.star1.setImageDrawable(fullStar);
-                binding.star2.setImageDrawable(fullStar);
-                binding.star3.setImageDrawable(fullStar);
-                binding.star4.setImageDrawable(emptyStar);
-                binding.star5.setImageDrawable(emptyStar);
+                star1Rpopup.setImageDrawable(fullStar);
+                star2Rpopup.setImageDrawable(fullStar);
+                star3Rpopup.setImageDrawable(fullStar);
+                star4Rpopup.setImageDrawable(emptyStar);
+                star5Rpopup.setImageDrawable(emptyStar);
                 break;
             case 4:
-                binding.star1.setImageDrawable(fullStar);
-                binding.star2.setImageDrawable(fullStar);
-                binding.star3.setImageDrawable(fullStar);
-                binding.star4.setImageDrawable(fullStar);
-                binding.star5.setImageDrawable(emptyStar);
+                star1Rpopup.setImageDrawable(fullStar);
+                star2Rpopup.setImageDrawable(fullStar);
+                star3Rpopup.setImageDrawable(fullStar);
+                star4Rpopup.setImageDrawable(fullStar);
+                star5Rpopup.setImageDrawable(emptyStar);
                 break;
             case 5:
-                binding.star1.setImageDrawable(fullStar);
-                binding.star2.setImageDrawable(fullStar);
-                binding.star3.setImageDrawable(fullStar);
-                binding.star4.setImageDrawable(fullStar);
-                binding.star5.setImageDrawable(fullStar);
+                star1Rpopup.setImageDrawable(fullStar);
+                star2Rpopup.setImageDrawable(fullStar);
+                star3Rpopup.setImageDrawable(fullStar);
+                star4Rpopup.setImageDrawable(fullStar);
+                star5Rpopup.setImageDrawable(fullStar);
                 break;
         }
     }
@@ -140,6 +145,45 @@ public class ProductDetailsFragment extends CustomFragment<FragmentProductDetail
 
     void setTitle(String name) {
         binding.productNameText.setText(name);
+    }
+
+    public void createReviewDialog(){
+        reviewBuilder = new AlertDialog.Builder(getContext());
+        final View reviewPopupView = getLayoutInflater().inflate(R.layout.reviewpopup, null);
+
+        star1Rpopup = (ImageView) reviewPopupView.findViewById(R.id.star1Rpopup);
+        star2Rpopup = (ImageView) reviewPopupView.findViewById(R.id.star2Rpopup);
+        star3Rpopup = (ImageView) reviewPopupView.findViewById(R.id.star3Rpopup);
+        star4Rpopup = (ImageView) reviewPopupView.findViewById(R.id.star4Rpopup);
+        star5Rpopup = (ImageView) reviewPopupView.findViewById(R.id.star5Rpopup);
+
+        reviewpopup_cancel = (Button) reviewPopupView.findViewById(R.id.reviewpopup_cancel);
+        reviewpopup_submit = (Button) reviewPopupView.findViewById(R.id.reviewpopup_submit);
+
+        reviewBuilder.setView(reviewPopupView);
+        review = reviewBuilder.create();
+        review.show();
+
+        star1Rpopup.setOnClickListener(view -> _ctrl.setStars(1));
+        star2Rpopup.setOnClickListener(view -> _ctrl.setStars(2));
+        star3Rpopup.setOnClickListener(view -> _ctrl.setStars(3));
+        star4Rpopup.setOnClickListener(view -> _ctrl.setStars(4));
+        star5Rpopup.setOnClickListener(view -> _ctrl.setStars(5));
+
+        reviewpopup_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                review.dismiss();
+            }
+        });
+
+        reviewpopup_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                _ctrl.reviewProduct();
+                review.dismiss();
+            }
+        });
     }
 
 

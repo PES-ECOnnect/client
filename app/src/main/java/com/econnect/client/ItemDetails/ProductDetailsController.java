@@ -58,7 +58,9 @@ public class ProductDetailsController implements IDetailsController {
 
     @Override
     public void reviewProduct() {
-        if(stars == 0) {
+
+
+        /*if(stars == 0) {
             PopupMessage.warning(_fragment, "You need to select some stars to review");
             return;
         }
@@ -73,7 +75,7 @@ public class ProductDetailsController implements IDetailsController {
                     PopupMessage.warning(_fragment, "Could not add review:\n" + e.getMessage());
                 });
             }
-        });
+        });*/
     }
 
     @Override
