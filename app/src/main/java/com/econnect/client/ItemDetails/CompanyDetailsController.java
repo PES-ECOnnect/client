@@ -90,7 +90,7 @@ public class CompanyDetailsController implements IDetailsController {
                 else {
                     questionService.removeQuestionCompany(_companyId, questionId);
                 }
-                updateUIElements();
+                updateQuestions(questionId, answer == QuestionAnswer.yes);
             }
             catch (Exception e){
                 ExecutionThread.UI(_fragment, () -> {
@@ -98,5 +98,32 @@ public class CompanyDetailsController implements IDetailsController {
                 });
             }
         });
+    }
+
+    // answer = true => yes // false otherwise
+    public void updateQuestions(int idQuestionUpdated, boolean answer){
+        if(_company.questions[idQuestionUpdated].user_answer != "none"){
+            if(answer && _company.questions[idQuestionUpdated].user_answer != "no"){
+                _company.questions[idQuestionUpdated].user_answer = "yes";
+                _company.questions[idQuestionUpdated].num_no -= 1;
+                _company.questions[idQuestionUpdated].num_yes += 1;
+            }
+            else if(!answer && _company.questions[idQuestionUpdated].user_answer != "yes"){
+                _company.questions[idQuestionUpdated].user_answer = "no";
+                _company.questions[idQuestionUpdated].num_no += 1;
+                _company.questions[idQuestionUpdated].num_yes -= 1;
+            }
+        }
+        else{
+            if(_company.questions[idQuestionUpdated].user_answer != "no"){
+                _company.questions[idQuestionUpdated].user_answer = "no";
+                _company.questions[idQuestionUpdated].num_no += 1;
+            }
+            else{
+                _company.questions[idQuestionUpdated].user_answer = "yes";
+                _company.questions[idQuestionUpdated].num_yes += 1;
+            }
+        }
+        _fragment.setQuestionsElements(_company.questions);
     }
 }

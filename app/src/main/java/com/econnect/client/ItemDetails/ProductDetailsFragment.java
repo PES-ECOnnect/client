@@ -8,12 +8,15 @@ import android.app.AlertDialog;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
 
 import com.econnect.API.ProductService;
@@ -149,7 +152,9 @@ public class ProductDetailsFragment extends CustomFragment<FragmentProductDetail
 
     public void createReviewDialog(){
         reviewBuilder = new AlertDialog.Builder(getContext());
+
         final View reviewPopupView = getLayoutInflater().inflate(R.layout.reviewpopup, null);
+
 
         star1Rpopup = (ImageView) reviewPopupView.findViewById(R.id.star1Rpopup);
         star2Rpopup = (ImageView) reviewPopupView.findViewById(R.id.star2Rpopup);
