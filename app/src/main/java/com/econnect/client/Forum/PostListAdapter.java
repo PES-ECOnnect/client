@@ -26,6 +26,9 @@ import com.econnect.Utilities.ExecutionThread;
 import com.econnect.client.R;
 
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 
@@ -35,24 +38,24 @@ public class PostListAdapter extends BaseAdapter {
     private final IPostCallback _callback;
 
     private static LayoutInflater _inflater = null;
-    private final Post[] _data;
+    private final ArrayList<Post> _data;
 
     public PostListAdapter(Fragment owner, IPostCallback callback, int highlightColor, Post[] posts) {
         this._owner = owner;
         this._highlightColor = highlightColor;
-        this._data = posts;
+        this._data = new ArrayList<>(Arrays.asList(posts));
         this._callback = callback;
         _inflater = (LayoutInflater) owner.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return _data.length;
+        return _data.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return _data[position];
+        return _data.get(position);
     }
 
     @Override
@@ -63,7 +66,7 @@ public class PostListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Initialize view and product
-        final Post p = _data[position];
+        final Post p = _data.get(position);
         final View vi;
         if (convertView != null) vi = convertView;
         else vi = _inflater.inflate(R.layout.post_list_item, null);
@@ -76,7 +79,7 @@ public class PostListAdapter extends BaseAdapter {
 
         // Set time text
         TextView timeText = vi.findViewById(R.id.postTimeText);
-        timeText.setText(timestampToString(p.timestamp));
+        timeText.setText(timestampToString((long) p.timestamp));
 
         // Set post body
         TextView textBody = vi.findViewById(R.id.postContentText);
@@ -104,23 +107,19 @@ public class PostListAdapter extends BaseAdapter {
 
         // Set item image
         ImageView image = vi.findViewById(R.id.postImage);
-        image.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
-            // This is called once the layout is inflated, so that image.getWidth() returns a valid value
-            ExecutionThread.nonUI(()->{
-                // The post caches the bitmap, so subsequent redraws are faster and the returned pointer is always the same
-                Bitmap bmp = p.getImage(image.getWidth());
-                // If the bitmap has not changed, skip
-                Drawable d = image.getDrawable();
-                if (d != null && ((BitmapDrawable) d).getBitmap() == bmp)
-                    return;
-                // Else, set image
-                ExecutionThread.UI(_owner, ()-> {
-                    if (bmp == null) image.setVisibility(View.GONE);
-                    else {
-                        image.setImageBitmap(bmp);
-                        image.setVisibility(View.VISIBLE);
-                    }
-                });
+        ExecutionThread.nonUI(()->{
+            // Poll image.getWidth() until the layout has been inflated
+            int width = -1;
+            while (width == -1) {
+                width = image.getWidth();
+            }
+            Bitmap bmp = p.getImage(width);
+            ExecutionThread.UI(_owner, ()-> {
+                if (bmp == null) image.setVisibility(View.GONE);
+                else {
+                    image.setImageBitmap(bmp);
+                    image.setVisibility(View.VISIBLE);
+                }
             });
         });
 
@@ -146,29 +145,46 @@ public class PostListAdapter extends BaseAdapter {
             throw new RuntimeException("Invalid user option: " + p.useroption);
         }
 
+        // Display delete button
+        ImageButton deleteButton = vi.findViewById(R.id.deletePostButton);
+        if (p.ownpost) {
+            deleteButton.setVisibility(View.VISIBLE);
+            deleteButton.setOnClickListener(view -> _callback.delete(p, position));
+        }
+        else {
+            deleteButton.setVisibility(View.GONE);
+        }
+
         return vi;
     }
 
-    private String timestampToString(long date) {
-        long time = System.currentTimeMillis() / 1000;
+    private String timestampToString(long timestamp) {
+        // Date takes milliseconds as input
+        Date date = new Date(timestamp * 1000L);
 
         // Difference between dates, in seconds
-        long mills = time - date;
+        long diffSec = (System.currentTimeMillis() - date.getTime()) / 1000L;
         // Convert to hours + minutes
-        int hours = (int) (mills / (60 * 60));
-        int mins = (int) ((mills - (hours * 3600) / 60) % 60);
+        int hours = (int) (diffSec / (60 * 60));
+        int mins = (int) ((diffSec - (hours * 3600) / 60) % 60);
 
         if (hours == 0) {
-            return mins + " minutes ago";
+            int min_string_id = (mins == 1) ? R.string.minutes_ago_one : R.string.minutes_ago;
+            return _owner.getString(min_string_id, mins);
         }
         else if (hours < 24) {
-            return hours + " hours ago";
+            int hour_string_id = (hours == 1) ? R.string.hours_ago_one : R.string.hours_ago;
+            return _owner.getString(hour_string_id, hours);
         }
         else {
-            Date dateTemp = new Date(date * 1000L);
             DateFormat dateFormat = DateFormat.getDateInstance();
-            return dateFormat.format(dateTemp);
+            return dateFormat.format(date);
         }
+    }
+
+    public void deleteItem(int position) {
+        _data.remove(position);
+        super.notifyDataSetChanged();
     }
 
     private class TagClickableSpan extends ClickableSpan {
@@ -229,6 +245,6 @@ public class PostListAdapter extends BaseAdapter {
         else p.useroption = like ? Post.OPT_LIKE : Post.OPT_DISLIKE;
 
         // Call API
-        _callback.vote(p.postid, like, removeThis);
+        _callback.vote(p, like, removeThis);
     }
 }
