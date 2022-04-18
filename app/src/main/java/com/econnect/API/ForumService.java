@@ -29,10 +29,11 @@ public class ForumService extends Service {
         public int useroption;
         public final float timestamp;
         public final boolean ownpost;
+        public final boolean authorbanned;
 
         private Bitmap imageBitmap = null;
         
-        public Post(int postId, String username, int userId, String medal, String text, String imageURL, int likes, int dislikes, int userOption, float timestamp, boolean ownpost) {
+        public Post(int postId, String username, int userId, String medal, String text, String imageURL, int likes, int dislikes, int userOption, float timestamp, boolean ownPost, boolean authorBanned) {
             this.postid = postId;
             this.username = username;
             this.userid = userId;
@@ -43,7 +44,8 @@ public class ForumService extends Service {
             this.dislikes = dislikes;
             this.useroption = userOption;
             this.timestamp = timestamp;
-            this.ownpost = ownpost;
+            this.ownpost = ownPost;
+            this.authorbanned = authorBanned;
         }
 
         public Bitmap getImage(int width) {

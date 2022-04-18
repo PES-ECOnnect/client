@@ -28,13 +28,13 @@ public class ForumServiceTest {
             assertEquals(expectedMessage, e.getMessage());
         }
     }
-    
+
     @Test
     public void testGetPostsOk() {
-        Post[] posts = sv.getPosts(3, null);
+        Post[] posts = sv.getPosts(4, null);
         assertNotNull(posts);
         assertEquals(3, posts.length);
-        
+
         assertEquals(1, posts[0].postid);
         assertEquals("user1", posts[0].username);
         assertEquals(1, posts[0].userid);
@@ -46,8 +46,8 @@ public class ForumServiceTest {
         assertEquals(1, posts[0].useroption);
         assertEquals(1649663866, posts[0].timestamp, 0);
         assertTrue(posts[0].ownpost);
+        assertFalse(posts[0].authorbanned);
 
-        
         assertEquals(2, posts[1].postid);
         assertEquals("user2", posts[1].username);
         assertEquals(2, posts[1].userid);
@@ -59,6 +59,20 @@ public class ForumServiceTest {
         assertEquals(0, posts[1].useroption);
         assertEquals(1649663810, posts[1].timestamp, 0);
         assertFalse(posts[1].ownpost);
+        assertTrue(posts[1].authorbanned);
+
+        assertEquals(3, posts[2].postid);
+        assertEquals("Another User", posts[2].username);
+        assertEquals(3, posts[2].userid);
+        assertEquals("m3", posts[2].medal);
+        assertEquals("Post without tags.", posts[2].text);
+        assertEquals("https://images.unsplash.com/photo-1559583985-c80d8ad9b29f", posts[2].imageurl);
+        assertEquals(1234, posts[2].likes);
+        assertEquals(1234, posts[2].dislikes);
+        assertEquals(2, posts[2].useroption);
+        assertEquals(1649836904, posts[2].timestamp, 0);
+        assertTrue(posts[2].ownpost);
+        assertFalse(posts[2].authorbanned);
     }
     
     @Test

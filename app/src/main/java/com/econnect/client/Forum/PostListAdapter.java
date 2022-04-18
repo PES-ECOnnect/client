@@ -73,7 +73,15 @@ public class PostListAdapter extends BaseAdapter {
 
         // Set author name
         TextView authorName = vi.findViewById(R.id.postUsernameText);
-        authorName.setText(p.username);
+        if (p.authorbanned) {
+            authorName.setText(p.username + " 💀️");
+            authorName.setTypeface(authorName.getTypeface(), Typeface.BOLD_ITALIC);
+        }
+        else {
+            authorName.setText(p.username);
+            authorName.setTypeface(authorName.getTypeface(), Typeface.BOLD);
+        }
+
 
         // TODO: Set medal
 
