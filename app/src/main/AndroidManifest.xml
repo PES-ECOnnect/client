@@ -16,6 +16,12 @@
             android:name=".ItemDetails.DetailsActivity"
             android:exported="false" />
         <activity
+            android:name=".Forum.PostActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Profile.EditProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegisterLogin.RegisterActivity"
             android:exported="true"
             android:theme="@style/Theme.ECOnnect.NoActionBar">

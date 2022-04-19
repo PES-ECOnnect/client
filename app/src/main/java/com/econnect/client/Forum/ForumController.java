@@ -45,7 +45,7 @@ public class ForumController {
         updateTagList();
         // Populate post list (no tag)
         updatePostsList(null);
-        _fragment.setTagsDropdownText("");
+        ExecutionThread.UI(_fragment, ()->_fragment.setTagsDropdownText(""));
     }
 
     private void updateTagList() {
@@ -178,7 +178,7 @@ public class ForumController {
 
     View.OnClickListener addPostOnClick() {
         return (view) -> {
-            // Launch new activity DetailsActivity
+            // Launch new activity PostActivity
             Intent intent = new Intent(_fragment.getContext(), PostActivity.class);
             _activityLauncher.launch(intent);
         };

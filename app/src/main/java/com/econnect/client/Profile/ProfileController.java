@@ -18,6 +18,7 @@ import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
 import com.econnect.Utilities.SettingsFile;
+import com.econnect.client.Forum.PostActivity;
 import com.econnect.client.ItemDetails.DetailsActivity;
 import com.econnect.client.R;
 
@@ -82,18 +83,9 @@ public class ProfileController {
     }
 
     public void editButtonClick() {
-        /*return (parent, view, position, id) -> {
-            // Launch new activity DetailsActivity
-            Intent intent = new Intent(fragment.getContext(), DetailsActivity.class);
-
-            CompanyService.Company p = (CompanyService.Company) parent.getItemAtPosition(position);
-
-            // Pass parameters to activity
-            intent.putExtra("id", p.id);
-            intent.putExtra("type", "company");
-
-            _activityLauncher.launch(intent);
-        };*/
+        // Launch new activity PostActivity
+        Intent intent = new Intent(fragment.getContext(), EditProfileActivity.class);
+        _activityLauncher.launch(intent);
     }
 
 }
