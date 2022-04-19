@@ -5,5 +5,6 @@ import com.econnect.API.ForumService;
 public interface IPostCallback {
     void tagClicked(String tag);
     void share(ForumService.Post post);
-    void vote(int id, boolean isLike, boolean remove);
+    void delete(ForumService.Post post, int position);
+    void vote(ForumService.Post post, boolean isLike, boolean remove);
 }

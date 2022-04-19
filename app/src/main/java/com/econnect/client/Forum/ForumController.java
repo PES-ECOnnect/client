@@ -139,9 +139,39 @@ public class ForumController {
         }
 
         @Override
-        public void vote(int id, boolean isLike, boolean remove) {
-            String text = (remove?"remove ":"") + (isLike?"like":"dislike") + " of post " + id;
-            PopupMessage.warning(_fragment, text);
+        public void delete(ForumService.Post post, int position) {
+            // Show confirmation dialog
+            PopupMessage.yesNoDialog(_fragment, "Delete post", "Are you sure?", (dialog, id) -> {
+                // Execute in non-ui thread
+                ExecutionThread.nonUI(()-> {
+                    // Delete post
+                    ForumService service = ServiceFactory.getInstance().getForumService();
+                    try {
+                        service.deletePost(post.postid);
+                        ExecutionThread.UI(_fragment, ()-> _fragment.deletePost(position));
+                    }
+                    catch (Exception e) {
+                        ExecutionThread.UI(_fragment, ()-> PopupMessage.warning(_fragment, "Could not delete post:\n" + e.getMessage()));
+                    }
+                });
+            });
+        }
+
+        @Override
+        public void vote(ForumService.Post post, boolean isLike, boolean remove) {
+            // Execute in non-ui thread
+            ExecutionThread.nonUI(()-> {
+                // Vote post
+                ForumService service = ServiceFactory.getInstance().getForumService();
+                try {
+                    service.likePost(post.postid, isLike, remove);
+                }
+                catch (Exception e) {
+                    ExecutionThread.UI(_fragment, ()-> {
+                        PopupMessage.warning(_fragment, "Could not cast vote:\n" + e.getMessage());
+                    });
+                }
+            });
         }
 
     };

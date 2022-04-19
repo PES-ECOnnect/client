@@ -54,10 +54,10 @@ public class ProductService extends Service {
 
     public static class ProductDetails {
         public static class Question {
-            public final int num_no;
-            public final int num_yes;
+            public int num_no;
+            public int num_yes;
             public final String text;
-            public final String user_answer;
+            public String user_answer;
 
             public Question(int num_no, int num_yes, String text, String user_answer) {
                 this.num_no = num_no;

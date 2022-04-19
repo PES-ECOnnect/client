@@ -56,8 +56,37 @@ public class ProductDetailsController implements IDetailsController {
         });
     }
 
+    // answer = true => yes // false otherwise
+    public void updateQuestions(int idQuestionUpdated, boolean answer){
+        if(_product.questions[idQuestionUpdated].user_answer != "none"){
+          if(answer && _product.questions[idQuestionUpdated].user_answer != "no"){
+                _product.questions[idQuestionUpdated].user_answer = "yes";
+                _product.questions[idQuestionUpdated].num_no -= 1;
+                _product.questions[idQuestionUpdated].num_yes += 1;
+          }
+          else if(!answer && _product.questions[idQuestionUpdated].user_answer != "yes"){
+                _product.questions[idQuestionUpdated].user_answer = "no";
+                _product.questions[idQuestionUpdated].num_no += 1;
+                _product.questions[idQuestionUpdated].num_yes -= 1;
+          }
+        }
+        else{
+            if(_product.questions[idQuestionUpdated].user_answer != "no"){
+                _product.questions[idQuestionUpdated].user_answer = "no";
+                _product.questions[idQuestionUpdated].num_no += 1;
+            }
+            else{
+                _product.questions[idQuestionUpdated].user_answer = "yes";
+                _product.questions[idQuestionUpdated].num_yes += 1;
+            }
+        }
+        _fragment.setQuestionsElements(_product.questions);
+    }
+
     @Override
     public void reviewProduct() {
+
+
         if(stars == 0) {
             PopupMessage.warning(_fragment, "You need to select some stars to review");
             return;
@@ -90,7 +119,7 @@ public class ProductDetailsController implements IDetailsController {
                 else {
                     questionService.removeQuestionProduct(_productId, questionId);
                 }
-                updateUIElements();
+                updateQuestions(questionId, answer == QuestionAnswer.yes);
             }
             catch (Exception e){
                 ExecutionThread.UI(_fragment, () -> {
@@ -98,5 +127,18 @@ public class ProductDetailsController implements IDetailsController {
                 });
             }
         });
+    }
+
+    public void updateReview(int review){
+        String s = "none"; // _product.ratings_user;
+        if(s.equals("none") /* el usuario no ha votado */){
+            _product.ratings[review-1]++;
+        }
+        else{
+            switch (s) {
+                case "1":
+                    break;
+            }
+        }
     }
 }

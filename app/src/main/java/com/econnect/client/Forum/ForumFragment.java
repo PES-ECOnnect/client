@@ -47,4 +47,9 @@ public class ForumFragment extends CustomFragment<FragmentForumBinding> {
         binding.tagBox.setEnabled(enabled);
     }
 
+    void deletePost(int position) {
+        PostListAdapter adapter = (PostListAdapter) binding.postList.getAdapter();
+        adapter.deleteItem(position);
+    }
+
 }

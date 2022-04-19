@@ -1,11 +1,11 @@
 package com.econnect.client;
 
+import android.os.Bundle;
+import android.os.Looper;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.os.Bundle;
-import android.os.Looper;
 
 import com.econnect.API.Service;
 import com.econnect.API.ServiceFactory;

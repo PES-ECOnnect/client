@@ -86,6 +86,38 @@
         android:paddingBottom="8dp">
 
         <ImageButton
+            android:id="@+id/deletePostButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:background="#00FFFFFF"
+            android:contentDescription="@string/delete_hint"
+            android:hapticFeedbackEnabled="true"
+            android:padding="4dp"
+            android:scaleType="fitCenter"
+            android:soundEffectsEnabled="true"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_delete_24"
+            tools:visibility="visible" />
+
+        <ImageButton
+            android:id="@+id/sharePostButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="#00FFFFFF"
+            android:contentDescription="@string/vote_option_yes_description"
+            android:hapticFeedbackEnabled="true"
+            android:padding="4dp"
+            android:scaleType="fitCenter"
+            android:soundEffectsEnabled="true"
+            app:srcCompat="@drawable/ic_share_24" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2" />
+
+        <ImageButton
             android:id="@+id/likePostButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
@@ -126,23 +158,6 @@
             android:layout_marginEnd="8dp"
             android:textSize="16sp"
             tools:text="2" />
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2" />
-
-        <ImageButton
-            android:id="@+id/sharePostButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="#00FFFFFF"
-            android:contentDescription="@string/vote_option_yes_description"
-            android:hapticFeedbackEnabled="true"
-            android:padding="4dp"
-            android:scaleType="fitCenter"
-            android:soundEffectsEnabled="true"
-            app:srcCompat="@drawable/ic_share_24" />
 
     </LinearLayout>
 
