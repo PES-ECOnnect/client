@@ -77,15 +77,15 @@ public class QuestionListAdapter extends BaseAdapter {
         ImageButton voteNoButton = vi.findViewById(R.id.voteNoButton);
 
         // Highlight previous user choice and set listeners
-        setVoteButtonListener(position, voteYesButton, IDetailsController.QuestionAnswer.yes);
-        setVoteButtonListener(position, voteNoButton, IDetailsController.QuestionAnswer.no);
+        setVoteButtonListener(q.questionid, voteYesButton, IDetailsController.QuestionAnswer.yes);
+        setVoteButtonListener(q.questionid, voteNoButton, IDetailsController.QuestionAnswer.no);
         if (q.user_answer.equals("yes")) {
             voteYesButton.setColorFilter(_highlightColor);
-            setVoteButtonListener(position, voteYesButton, IDetailsController.QuestionAnswer.none);
+            setVoteButtonListener(q.questionid, voteYesButton, IDetailsController.QuestionAnswer.none);
         }
         else if (q.user_answer.equals("no")) {
             voteNoButton.setColorFilter(_highlightColor);
-            setVoteButtonListener(position, voteNoButton, IDetailsController.QuestionAnswer.none);
+            setVoteButtonListener(q.questionid, voteNoButton, IDetailsController.QuestionAnswer.none);
         }
         else if (!q.user_answer.equals("none")) {
             throw new RuntimeException("Invalid user answer: " + q.user_answer);
@@ -94,7 +94,7 @@ public class QuestionListAdapter extends BaseAdapter {
         return vi;
     }
 
-    private void setVoteButtonListener(int position, ImageButton voteButton, IDetailsController.QuestionAnswer answer) {
-        voteButton.setOnClickListener(view -> _fragment.question(position, answer));
+    private void setVoteButtonListener(int id, ImageButton voteButton, IDetailsController.QuestionAnswer answer) {
+        voteButton.setOnClickListener(view -> _fragment.question(id, answer));
     }
 }

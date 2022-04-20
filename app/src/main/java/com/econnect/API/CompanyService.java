@@ -67,14 +67,15 @@ public class CompanyService extends Service {
         public final String name;
         public final Question[] questions;
         public final int[] ratings;
-
-        public CompanyDetails(String imageURL, double latitude, double longitude, String name, Question[] questions, int[] ratings) {
+        public int userRate;
+        public CompanyDetails(String imageURL, double latitude, double longitude, String name, Question[] questions, int[] ratings, int userRate) {
             this.imageURL = imageURL;
             this.latitude = latitude;
             this.longitude = longitude;
             this.name = name;
             this.questions = questions;
             this.ratings = ratings;
+            this.userRate = userRate;
         }
     }
     

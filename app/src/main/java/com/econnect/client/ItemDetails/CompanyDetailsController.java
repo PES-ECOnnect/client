@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 
 import com.econnect.API.CompanyService;
 import com.econnect.API.CompanyService.CompanyDetails;
+import com.econnect.API.ProductService;
 import com.econnect.API.QuestionService;
 import com.econnect.API.ReviewService;
 import com.econnect.API.ServiceFactory;
@@ -68,7 +69,7 @@ public class CompanyDetailsController implements IDetailsController {
             try{
                 ReviewService reviewService = ServiceFactory.getInstance().getReviewService();
                 reviewService.reviewProduct(_companyId, stars);
-                updateUIElements();
+                updateReview();
             } catch (Exception e){
                 throw e;
             }
@@ -100,30 +101,45 @@ public class CompanyDetailsController implements IDetailsController {
         });
     }
 
-    // answer = true => yes // false otherwise
-    public void updateQuestions(int idQuestionUpdated, boolean answer){
-        if(_company.questions[idQuestionUpdated].user_answer != "none"){
-            if(answer && _company.questions[idQuestionUpdated].user_answer != "no"){
-                _company.questions[idQuestionUpdated].user_answer = "yes";
-                _company.questions[idQuestionUpdated].num_no -= 1;
-                _company.questions[idQuestionUpdated].num_yes += 1;
+    // newAnswer = true => yes // false otherwise
+    public void updateQuestions(int idQuestionUpdated, boolean newAnswer){
+        String oldAnswer = _company.questions[idQuestionUpdated].user_answer;
+        ProductService.ProductDetails.Question q = _company.questions[idQuestionUpdated];
+        if(!oldAnswer.equals("none")){
+            if(newAnswer && oldAnswer.equals("no")){
+                q.user_answer = "yes";
+                q.num_no -= 1;
+                q.num_yes += 1;
             }
-            else if(!answer && _company.questions[idQuestionUpdated].user_answer != "yes"){
-                _company.questions[idQuestionUpdated].user_answer = "no";
-                _company.questions[idQuestionUpdated].num_no += 1;
-                _company.questions[idQuestionUpdated].num_yes -= 1;
+            else if(!newAnswer && oldAnswer.equals("yes")){
+                q.user_answer = "no";
+                q.num_no += 1;
+                q.num_yes -= 1;
             }
         }
         else{
-            if(_company.questions[idQuestionUpdated].user_answer != "no"){
-                _company.questions[idQuestionUpdated].user_answer = "no";
-                _company.questions[idQuestionUpdated].num_no += 1;
+            if(!newAnswer){
+                q.user_answer = "no";
+                q.num_no += 1;
             }
             else{
-                _company.questions[idQuestionUpdated].user_answer = "yes";
-                _company.questions[idQuestionUpdated].num_yes += 1;
+                q.user_answer = "yes";
+                q.num_yes += 1;
             }
         }
-        _fragment.setQuestionsElements(_company.questions);
+        ExecutionThread.UI(_fragment, () -> {
+            _fragment.setQuestionsElements(_company.questions);
+        });
+    }
+
+    public void updateReview(){// _product.ratings_user;
+        if(_company.userRate != 0) /* el usuario ha votado */{
+            _company.ratings[_company.userRate]--;
+        }
+        _company.userRate = stars;
+        _company.ratings[stars]++;
+        ExecutionThread.UI(_fragment, () -> {
+            _fragment.setAverageRating(_company.ratings);
+        });
     }
 }
