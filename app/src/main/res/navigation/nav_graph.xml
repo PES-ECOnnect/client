@@ -47,6 +47,16 @@
         <action
             android:id="@+id/macaco"
             app:destination="@id/RegisterFragment" />
+        <action
+            android:id="@+id/action_successful_edit_profile"
+            app:destination="@id/editprofileFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editprofileFragment"
+        android:name="com.econnect.client.Profile.EditFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" >
     </fragment>
 
 </navigation>
