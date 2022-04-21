@@ -58,8 +58,14 @@ public class ProductDetailsController implements IDetailsController {
 
     // answer = true => yes // false otherwise
     public void updateQuestions(int idQuestionUpdated, boolean newAnswer){
-        String oldAnswer = _product.questions[idQuestionUpdated].user_answer;
-        ProductService.ProductDetails.Question q = _product.questions[idQuestionUpdated];
+        ProductDetails.Question q = new ProductDetails.Question();
+        for (ProductDetails.Question question : _product.questions){
+            if(question.questionid == idQuestionUpdated){
+                q = question;
+                break;
+            }
+        }
+        String oldAnswer = q.user_answer;
         if(!oldAnswer.equals("none")){
             if(newAnswer && oldAnswer.equals("no")){
                 q.user_answer = "yes";

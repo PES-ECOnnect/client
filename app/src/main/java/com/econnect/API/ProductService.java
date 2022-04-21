@@ -67,6 +67,11 @@ public class ProductService extends Service {
                 this.text = text;
                 this.user_answer = user_answer;
             }
+
+            public Question() {
+                questionid = 0;
+                text = "";
+            }
         }
 
         // Important: The name of these attributes must match the ones in the returned JSON

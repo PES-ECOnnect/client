@@ -77,6 +77,7 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> impl
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (passwordDelete.getText().equals(""));
 
                 deleter.dismiss();
             }
