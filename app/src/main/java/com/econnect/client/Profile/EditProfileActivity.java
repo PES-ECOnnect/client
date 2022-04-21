@@ -2,13 +2,9 @@ package com.econnect.client.Profile;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
-
-import com.econnect.client.Forum.AddPostController;
-import com.econnect.client.Forum.AddPostFragment;
 import com.econnect.client.R;
 
 public class EditProfileActivity extends AppCompatActivity {

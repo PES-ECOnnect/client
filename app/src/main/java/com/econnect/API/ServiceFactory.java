@@ -88,4 +88,12 @@ public class ServiceFactory {
         }
         return _forumService;
     }
+
+    private static PostService _postService = null;
+    public PostService getPostService() {
+        if(_postService == null) {
+            _postService = new PostService();
+        }
+        return _postService;
+    }
 }
