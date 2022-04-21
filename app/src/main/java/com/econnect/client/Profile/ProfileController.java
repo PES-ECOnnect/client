@@ -1,26 +1,15 @@
 package com.econnect.client.Profile;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.view.View;
 
+import android.content.Intent;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
-import com.econnect.API.CompanyService;
 import com.econnect.API.LoginService;
-import com.econnect.API.ProductService;
 import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
-import com.econnect.Utilities.SettingsFile;
-import com.econnect.client.Forum.PostActivity;
-import com.econnect.client.ItemDetails.DetailsActivity;
-import com.econnect.client.R;
+
 
 public class ProfileController {
 
