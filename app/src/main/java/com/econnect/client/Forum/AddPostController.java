@@ -5,7 +5,7 @@ import com.econnect.API.PostService;
 import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
-import com.econnect.client.R;
+
 
 
 public class AddPostController {
@@ -54,8 +54,7 @@ public class AddPostController {
     private void navigateToForum() {
         ExecutionThread.UI(_fragment, ()->{
             _fragment.enableInput(true);
-            //no es correcto
-            ExecutionThread.navigate(_fragment, R.id.action_successful_login);
+            _fragment.getActivity().finish();
         });
     }
 }
