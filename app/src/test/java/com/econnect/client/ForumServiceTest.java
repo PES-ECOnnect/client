@@ -6,6 +6,7 @@ import com.econnect.API.*;
 import com.econnect.API.ForumService.Post;
 import com.econnect.API.ForumService.Tag;
 import com.econnect.API.HttpClient.StubHttpClient;
+import com.econnect.API.ImageUpload.ImageService;
 
 import static org.junit.Assert.*;
 
@@ -31,6 +32,7 @@ public class ForumServiceTest {
 
     @Test
     public void testGetPostsOk() {
+        new ImageService();
         Post[] posts = sv.getPosts(4, null);
         assertNotNull(posts);
         assertEquals(3, posts.length);

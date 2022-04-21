@@ -92,4 +92,27 @@ public class LoginService extends Service {
         super.setToken(token);
         return true;
     }
+
+    // Wake up the server
+    public void pingServer() {
+        // Call API (no parameters needed)
+        final String EXPECTED_RESPONSE = "PES Econnect Root!";
+        String result = null;
+        try {
+            result = getRaw(ApiConstants.BASE_URL, null);
+        }
+        catch (Exception e) {
+            System.err.println("Error sending ping to server:\n" + e.getMessage());
+            return;
+        }
+
+        if (result == null) {
+            System.err.println("Warning: Server is not responding to ping");
+            return;
+        }
+        if (!result.equals(EXPECTED_RESPONSE)) {
+            System.err.println("Warning: Server returned invalid response to ping '" + result + "'");
+            System.err.println("(expected '" + EXPECTED_RESPONSE + "')");
+        }
+    }
 }

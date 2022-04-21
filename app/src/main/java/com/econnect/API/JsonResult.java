@@ -3,11 +3,24 @@ package com.econnect.API;
 import com.google.gson.*;
 
 public class JsonResult {
+    private static final Gson GSON = new Gson();
     private final JsonObject _jsonObject;
-    private final static Gson GSON = new Gson();
 
     public JsonResult(JsonElement jsonElement) {
         this._jsonObject = jsonElement.getAsJsonObject();
+    }
+
+    public static JsonResult parse(String jsonString) {
+        if (jsonString == null) return null;
+
+        JsonResult json = null;
+        try {
+            json = new JsonResult(JsonParser.parseString(jsonString));
+        }
+        catch (JsonSyntaxException | IllegalStateException e) {
+            throw new RuntimeException("Invalid JSON content:\n" + jsonString);
+        }
+        return json;
     }
 
     public String getAttribute(String attrName) {
@@ -41,6 +54,7 @@ public class JsonResult {
     public <T> T asObject(Class<T> objectClass) {
         return GSON.fromJson(_jsonObject, objectClass);
     }
+
 
     @Override
     public String toString() {

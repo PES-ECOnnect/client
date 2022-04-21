@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.econnect.API.ImageUpload.ImageService;
 import com.econnect.API.Service;
 import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;

@@ -17,7 +17,11 @@ public class StubHttpClient implements HttpClient {
         checkNullParams(params);
         
         switch (path) {
-            
+            // ping
+            case "/":
+            case "":
+                return "PES Econnect Root!";
+
             // Login
             case "/account/login":
                 expectParamsExclusive(params, "email", "password");
