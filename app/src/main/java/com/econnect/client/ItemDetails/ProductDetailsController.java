@@ -57,30 +57,34 @@ public class ProductDetailsController implements IDetailsController {
     }
 
     // answer = true => yes // false otherwise
-    public void updateQuestions(int idQuestionUpdated, boolean answer){
-        if(_product.questions[idQuestionUpdated].user_answer != "none"){
-          if(answer && _product.questions[idQuestionUpdated].user_answer != "no"){
-                _product.questions[idQuestionUpdated].user_answer = "yes";
-                _product.questions[idQuestionUpdated].num_no -= 1;
-                _product.questions[idQuestionUpdated].num_yes += 1;
-          }
-          else if(!answer && _product.questions[idQuestionUpdated].user_answer != "yes"){
-                _product.questions[idQuestionUpdated].user_answer = "no";
-                _product.questions[idQuestionUpdated].num_no += 1;
-                _product.questions[idQuestionUpdated].num_yes -= 1;
-          }
+    public void updateQuestions(int idQuestionUpdated, boolean newAnswer){
+        String oldAnswer = _product.questions[idQuestionUpdated].user_answer;
+        ProductService.ProductDetails.Question q = _product.questions[idQuestionUpdated];
+        if(!oldAnswer.equals("none")){
+            if(newAnswer && oldAnswer.equals("no")){
+                q.user_answer = "yes";
+                q.num_no -= 1;
+                q.num_yes += 1;
+            }
+            else if(!newAnswer && oldAnswer.equals("yes")){
+                q.user_answer = "no";
+                q.num_no += 1;
+                q.num_yes -= 1;
+            }
         }
         else{
-            if(_product.questions[idQuestionUpdated].user_answer != "no"){
-                _product.questions[idQuestionUpdated].user_answer = "no";
-                _product.questions[idQuestionUpdated].num_no += 1;
+            if(!newAnswer){
+                q.user_answer = "no";
+                q.num_no += 1;
             }
             else{
-                _product.questions[idQuestionUpdated].user_answer = "yes";
-                _product.questions[idQuestionUpdated].num_yes += 1;
+                q.user_answer = "yes";
+                q.num_yes += 1;
             }
         }
-        _fragment.setQuestionsElements(_product.questions);
+        ExecutionThread.UI(_fragment, () -> {
+            _fragment.setQuestionsElements(_product.questions);
+        });
     }
 
     @Override
@@ -95,7 +99,7 @@ public class ProductDetailsController implements IDetailsController {
             try {
                 ReviewService reviewService = ServiceFactory.getInstance().getReviewService();
                 reviewService.reviewProduct(_productId, stars);
-                updateUIElements();
+                updateReview();
 
             } catch (Exception e) {
                 ExecutionThread.UI(_fragment, () -> {
@@ -129,16 +133,14 @@ public class ProductDetailsController implements IDetailsController {
         });
     }
 
-    public void updateReview(int review){
-        String s = "none"; // _product.ratings_user;
-        if(s.equals("none") /* el usuario no ha votado */){
-            _product.ratings[review-1]++;
+    public void updateReview(){// _product.ratings_user;
+        if(_product.userRate != 0) /* el usuario ha votado */{
+            _product.ratings[_product.userRate]--;
         }
-        else{
-            switch (s) {
-                case "1":
-                    break;
-            }
-        }
+        _product.userRate = stars;
+        _product.ratings[stars]++;
+        ExecutionThread.UI(_fragment, () -> {
+            _fragment.setAverageRating(_product.ratings);
+        });
     }
 }

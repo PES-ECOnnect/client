@@ -1,9 +1,15 @@
 package com.econnect.client.Forum;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.AdapterView;
+
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 
 import com.econnect.API.ForumService;
 import com.econnect.API.ServiceFactory;
@@ -12,15 +18,26 @@ import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
 import com.econnect.Utilities.ShareManager;
 import com.econnect.client.BuildConfig;
+import com.econnect.client.ItemDetails.DetailsActivity;
 import com.econnect.client.R;
 
 public class ForumController {
 
     private final ForumFragment _fragment;
     private boolean _listContainsAllTags = true;
+    private final ActivityResultLauncher<Intent> _activityLauncher;
 
     public ForumController(ForumFragment fragment) {
         this._fragment = fragment;
+        _activityLauncher = fragment.registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                this::launchDetailsCallback
+        );
+    }
+
+    private void launchDetailsCallback(ActivityResult result) {
+        // Called once the user returns from details screen
+        ExecutionThread.nonUI(this::updateData);
     }
 
     public void updateData() {
@@ -28,7 +45,7 @@ public class ForumController {
         updateTagList();
         // Populate post list (no tag)
         updatePostsList(null);
-        _fragment.setTagsDropdownText("");
+        ExecutionThread.UI(_fragment, ()->_fragment.setTagsDropdownText(""));
     }
 
     private void updateTagList() {
@@ -158,5 +175,13 @@ public class ForumController {
         }
 
     };
+
+    View.OnClickListener addPostOnClick() {
+        return (view) -> {
+            // Launch new activity PostActivity
+            Intent intent = new Intent(_fragment.getContext(), PostActivity.class);
+            _activityLauncher.launch(intent);
+        };
+    }
 
 }

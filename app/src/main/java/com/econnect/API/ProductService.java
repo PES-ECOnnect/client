@@ -53,13 +53,15 @@ public class ProductService extends Service {
     }
 
     public static class ProductDetails {
+
         public static class Question {
+            public final int questionid;
             public int num_no;
             public int num_yes;
             public final String text;
             public String user_answer;
-
-            public Question(int num_no, int num_yes, String text, String user_answer) {
+            public Question(int questionid, int num_no, int num_yes, String text, String user_answer) {
+                this.questionid = questionid;
                 this.num_no = num_no;
                 this.num_yes = num_yes;
                 this.text = text;
@@ -74,13 +76,14 @@ public class ProductService extends Service {
         public final String name;
         public final Question[] questions;
         public final int[] ratings;
-
-        public ProductDetails(String imageURL, String manufacturer, String name, Question[] questions, int[] ratings) {
+        public int userRate;
+        public ProductDetails(String imageURL, String manufacturer, String name, Question[] questions, int[] ratings, int userRate) {
             this.imageURL = imageURL;
             this.manufacturer = manufacturer;
             this.name = name;
             this.questions = questions;
             this.ratings = ratings;
+            this.userRate= userRate;
         }
     }
 
