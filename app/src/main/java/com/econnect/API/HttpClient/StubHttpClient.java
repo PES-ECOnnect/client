@@ -61,7 +61,7 @@ public class StubHttpClient implements HttpClient {
                 }
                 else {
                     // For each type, return the name and an array of questions
-                    return "{\"result\":[{\"name\":\"type1\",\"questions\":[\"q1\",\"q2\",\"q3\"]},{\"name\":\"type2\",\"questions\":[\"q4\",\"q5\",\"q6\"]}]}";
+                    return "{\"result\":[{\"name\":\"type1\",\"questions\":[{\"questionid\":1,\"statement\":\"q1\"},{\"questionid\":2,\"statement\":\"q2\"},{\"questionid\":3,\"statement\":\"q3\"}]},{\"name\":\"type2\",\"questions\":[{\"questionid\":4,\"statement\":\"q4\"},{\"questionid\":5,\"statement\":\"q5\"},{\"questionid\":6,\"statement\":\"q6\"}]}]}";
                 }
                 
             // Get list of products

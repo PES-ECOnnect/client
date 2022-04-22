@@ -145,9 +145,11 @@ public class PostListAdapter extends BaseAdapter {
         // Highlight previous user choice
         if (p.useroption == Post.OPT_LIKE) {
             likeButton.setColorFilter(_highlightColor);
+            dislikeButton.clearColorFilter();
         }
         else if (p.useroption == Post.OPT_DISLIKE) {
             dislikeButton.setColorFilter(_highlightColor);
+            likeButton.clearColorFilter();
         }
         else if (p.useroption != Post.OPT_NONE) {
             throw new RuntimeException("Invalid user option: " + p.useroption);

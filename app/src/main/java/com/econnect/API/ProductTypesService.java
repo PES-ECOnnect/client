@@ -6,12 +6,22 @@ public class ProductTypesService extends Service {
     ProductTypesService() {}
     
     public static class ProductType {
+        public static class Question {
+            public final int questionid;
+            public final String statement;
+
+            public Question(int questionid, String statement) {
+                this.questionid = questionid;
+                this.statement = statement;
+            }
+        }
+
         // Important: The name of these attributes must match the ones in the returned JSON
         // Gson will initialize these fields to the received values
         public final String name;
-        public final String[] questions;
+        public final Question[] questions;
 
-        public ProductType(String name, String[] questions) {
+        public ProductType(String name, Question[] questions) {
             this.name = name;
             this.questions = questions;
         }

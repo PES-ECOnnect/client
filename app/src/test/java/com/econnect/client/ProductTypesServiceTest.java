@@ -37,9 +37,11 @@ public class ProductTypesServiceTest {
         assertEquals("type1", types[0].name);
         assertEquals("type2", types[1].name);
         
-        assertEquals("q1", types[0].questions[0]);
-        assertEquals("q2", types[0].questions[1]);
-        assertEquals("q6", types[1].questions[2]);
+        assertEquals("q1", types[0].questions[0].statement);
+        assertEquals("q2", types[0].questions[1].statement);
+        assertEquals("q6", types[1].questions[2].statement);
+        assertEquals(2, types[0].questions[1].questionid);
+        assertEquals(5, types[1].questions[1].questionid);
     }
     
     @Test
