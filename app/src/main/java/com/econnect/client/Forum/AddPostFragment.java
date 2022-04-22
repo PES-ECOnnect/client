@@ -1,7 +1,6 @@
 package com.econnect.client.Forum;
 
 import com.econnect.Utilities.CustomFragment;
-import com.econnect.client.ItemDetails.IDetailsController;
 import com.econnect.client.databinding.FragmentAddPostBinding;
 
 
@@ -19,6 +18,18 @@ public class AddPostFragment extends CustomFragment<FragmentAddPostBinding>  {
 
     @Override
     protected void addListeners() {
+        binding.addPostButton.setOnClickListener(view -> _ctrl.addPostOnClick());
+    }
 
+    void enableInput(boolean enabled) {
+        binding.addPostButton.setEnabled(enabled);
+    }
+
+    String getText() {
+        return binding.textPost.getText().toString();
+    }
+
+    String getUrl() {
+        return binding.urlPost.getText().toString();
     }
 }

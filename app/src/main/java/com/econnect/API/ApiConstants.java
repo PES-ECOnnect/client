@@ -51,6 +51,8 @@ public interface ApiConstants {
     String POST_TAG = "tag";
     String POST_IS_LIKE = "isLike";
     String POST_REMOVE = "remove";
+    String POST_TEXT = "text";
+    String POST_IMAGE = "image";
 
 
     // RETURN VALUES
@@ -81,4 +83,7 @@ public interface ApiConstants {
     // Delete posts
     String ERROR_POST_NOT_EXISTS = "ERROR_POST_NOT_EXISTS";
     String ERROR_USER_NOT_POST_OWNER = "ERROR_USER_NOT_POST_OWNER";
+
+    //Post posts
+    String ERROR_INCORRECT_INSERTION = "ERROR_INCORRECT_INSERTION";
 }
