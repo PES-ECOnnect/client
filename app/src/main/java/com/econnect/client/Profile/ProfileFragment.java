@@ -64,29 +64,22 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> impl
 
         final View deleterPopupView = getLayoutInflater().inflate(R.layout.delete_account, null);
 
-        deleteButton = (Button) deleterPopupView.findViewById(R.id.deleteAccountButton);
-        cancelButton = (Button) deleterPopupView.findViewById(R.id.deleteAccountCancel);
+        deleteButton = deleterPopupView.findViewById(R.id.deleteAccountButton);
+        cancelButton = deleterPopupView.findViewById(R.id.deleteAccountCancel);
 
-        passwordDelete = (TextView) deleterPopupView.findViewById(R.id.deleteAccountPassword);
-        acceptDelete = (TextView) deleterPopupView.findViewById(R.id.deleteAccountText);
+        passwordDelete = deleterPopupView.findViewById(R.id.deleteAccountPassword);
+        acceptDelete = deleterPopupView.findViewById(R.id.deleteAccountText);
 
         deleterBuilder.setView(deleterPopupView);
         deleter = deleterBuilder.create();
         deleter.show();
 
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                deleter.dismiss();
-            }
+        deleteButton.setOnClickListener(view -> {
+            deleter.dismiss();
         });
 
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleter.dismiss();
-            }
+        cancelButton.setOnClickListener(view -> {
+            deleter.dismiss();
         });
     }
 
@@ -98,9 +91,6 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> impl
                 break;
             case R.id.profile_edit:
                 ctrl.editButtonClick();
-                break;
-            case R.id.profile_placeholder:
-
                 break;
             case R.id.profile_delete_account:
                 createReviewDialog();

@@ -56,6 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
+        android:focusable="true"
         android:src="@drawable/ic_add_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,8 +64,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/pullToRefresh"
         app:layout_constraintVertical_bias="0.94"
-        tools:ignore="SpeakableTextPresentCheck"
-        android:focusable="true" />
+        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
+        tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

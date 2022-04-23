@@ -21,13 +21,10 @@ public class PostActivity extends AppCompatActivity {
 
         // Initialize fragment and corresponding controller (depending on type)
         AddPostFragment fragment = new AddPostFragment();
-        AddPostController ctrl = new AddPostController(fragment);
-
-        fragment.setController(ctrl);
 
         // Display fragment
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.addpostMainLayout, fragment).commit();
+        ft.add(R.id.addpostMainLayout, fragment).commit();
     }
 
     // If back arrow in title bar is pressed, finish activity

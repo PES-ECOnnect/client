@@ -57,40 +57,48 @@ public class ProductDetailsController implements IDetailsController {
     }
 
     // answer = true => yes // false otherwise
-    public void updateQuestions(int idQuestionUpdated, boolean newAnswer){
-        String oldAnswer = _product.questions[idQuestionUpdated].user_answer;
-        ProductService.ProductDetails.Question q = _product.questions[idQuestionUpdated];
-        if(!oldAnswer.equals("none")){
-            if(newAnswer && oldAnswer.equals("no")){
-                q.user_answer = "yes";
+    public void updateQuestionsUi(int idQuestionUpdated, QuestionAnswer newAnswer){
+        ProductService.ProductDetails.Question q = _product.getQuestion(idQuestionUpdated);
+        String oldAnswer = q.user_answer;
+
+        if (newAnswer == QuestionAnswer.yes) {
+            // It's impossible that the old answer was "yes"
+            if (oldAnswer.equals("yes")) throw new RuntimeException("Invalid old answer");
+            // Remove old answer
+            if (oldAnswer.equals("no")) {
                 q.num_no -= 1;
-                q.num_yes += 1;
             }
-            else if(!newAnswer && oldAnswer.equals("yes")){
-                q.user_answer = "no";
-                q.num_no += 1;
+            q.user_answer = "yes";
+            q.num_yes += 1;
+        }
+        else if (newAnswer == QuestionAnswer.no) {
+            // It's impossible that the old answer was "no"
+            if (oldAnswer.equals("no")) throw new RuntimeException("Invalid old answer");
+            if (oldAnswer.equals("yes")) {
                 q.num_yes -= 1;
             }
+            q.user_answer = "no";
+            q.num_no += 1;
         }
-        else{
-            if(!newAnswer){
-                q.user_answer = "no";
-                q.num_no += 1;
+        else if (newAnswer == QuestionAnswer.none) {
+            if (oldAnswer.equals("yes")) {
+                q.num_yes -= 1;
             }
-            else{
-                q.user_answer = "yes";
-                q.num_yes += 1;
+            else if (oldAnswer.equals("no")) {
+                q.num_no -= 1;
             }
+            else {
+                // It's impossible that the old answer was "none"
+                throw new RuntimeException("Invalid old answer");
+            }
+            q.user_answer = "none";
         }
-        ExecutionThread.UI(_fragment, () -> {
-            _fragment.setQuestionsElements(_product.questions);
-        });
+
+        _fragment.setQuestionsElements(_product.questions);
     }
 
     @Override
     public void reviewProduct() {
-
-
         if(stars == 0) {
             PopupMessage.warning(_fragment, "You need to select some stars to review");
             return;
@@ -111,6 +119,7 @@ public class ProductDetailsController implements IDetailsController {
 
     @Override
     public void answerQuestion(int questionId, QuestionAnswer answer){
+        updateQuestionsUi(questionId, answer);
         ExecutionThread.nonUI(()->{
             try{
                 QuestionService questionService = ServiceFactory.getInstance().getQuestionService();
@@ -123,7 +132,6 @@ public class ProductDetailsController implements IDetailsController {
                 else {
                     questionService.removeQuestionProduct(_productId, questionId);
                 }
-                updateQuestions(questionId, answer == QuestionAnswer.yes);
             }
             catch (Exception e){
                 ExecutionThread.UI(_fragment, () -> {

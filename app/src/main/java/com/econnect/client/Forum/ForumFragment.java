@@ -1,5 +1,7 @@
 package com.econnect.client.Forum;
 
+import android.widget.AbsListView;
+
 import androidx.core.content.ContextCompat;
 
 import com.econnect.API.ForumService;
@@ -10,6 +12,8 @@ import com.econnect.client.databinding.FragmentForumBinding;
 public class ForumFragment extends CustomFragment<FragmentForumBinding> {
 
     private final ForumController _ctrl = new ForumController(this);
+    private boolean _isScrollingDown = false;
+    private int _lastShownItem = 0;
 
     public ForumFragment() {
         super(FragmentForumBinding.class);
@@ -21,6 +25,25 @@ public class ForumFragment extends CustomFragment<FragmentForumBinding> {
         binding.tagDropdown.addTextChangedListener(_ctrl.tagFilterText());
         binding.pullToRefresh.setOnRefreshListener(_ctrl::updateData);
         binding.addPostButton.setOnClickListener(_ctrl.addPostOnClick());
+
+        binding.postList.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int scrollState) {}
+
+            @Override
+            public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (firstVisibleItem > _lastShownItem) {
+                    _isScrollingDown = true;
+                } else if (firstVisibleItem < _lastShownItem) {
+                    _isScrollingDown = false;
+                }
+                _lastShownItem = firstVisibleItem;
+
+                if (_isScrollingDown) binding.addPostButton.hide();
+                else binding.addPostButton.show();
+            }
+        });
+
 
         _ctrl.updateData();
     }

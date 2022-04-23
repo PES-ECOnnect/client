@@ -19,6 +19,7 @@ public class LoginFragment extends CustomFragment<FragmentLoginBinding> {
 
         ctrl.attemptAutoLogin();
         ctrl.initializeThirdPartyLogins();
+        ctrl.pingServer();
     }
 
     void enableInput(boolean enabled) {

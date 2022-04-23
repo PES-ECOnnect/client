@@ -85,6 +85,14 @@ public class ProductService extends Service {
             this.ratings = ratings;
             this.userRate= userRate;
         }
+
+        public Question getQuestion(int id) {
+            for (Question q : questions) {
+                if (q.questionid == id)
+                    return q;
+            }
+            return null;
+        }
     }
 
 

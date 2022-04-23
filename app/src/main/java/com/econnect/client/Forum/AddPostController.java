@@ -1,11 +1,16 @@
 package com.econnect.client.Forum;
 
 
+import android.net.Uri;
+
+import com.econnect.API.ImageUpload.ImageService;
 import com.econnect.API.PostService;
 import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
+import com.econnect.Utilities.FileUtils;
 import com.econnect.Utilities.PopupMessage;
 
+import java.io.*;
 
 
 public class AddPostController {
@@ -19,7 +24,6 @@ public class AddPostController {
     public void addPostOnClick() {
         //GET text and image
         String text_post = _fragment.getText();
-        String url_post = _fragment.getUrl();
 
         // Local validation
         if (text_post.isEmpty()) {
@@ -31,7 +35,7 @@ public class AddPostController {
         // This could take some time (and accesses the internet), run on non-UI thread
         ExecutionThread.nonUI(() -> {
             try {
-                attemptPost(text_post, url_post);
+                attemptPost(text_post, getImageUrl());
             }
             catch (Exception e) {
                 // Return to UI for showing errors
@@ -41,6 +45,22 @@ public class AddPostController {
                 });
             }
         });
+    }
+
+    private String getImageUrl() {
+        Uri image = _fragment.getSelectedImage();
+        if (image == null)
+            return "";
+
+        File tempFile;
+        try {
+            tempFile = FileUtils.getFileFromUri(_fragment.requireContext(), image);
+        } catch (Exception e) {
+            throw new RuntimeException("Could not convert URI to File: " + e.getMessage(), e);
+        }
+
+        final ImageService service = new ImageService();
+        return service.uploadImageToUrl(tempFile);
     }
 
     private void attemptPost(String text, String url) {
@@ -54,7 +74,7 @@ public class AddPostController {
     private void navigateToForum() {
         ExecutionThread.UI(_fragment, ()->{
             _fragment.enableInput(true);
-            _fragment.getActivity().finish();
+            _fragment.requireActivity().finish();
         });
     }
 }
