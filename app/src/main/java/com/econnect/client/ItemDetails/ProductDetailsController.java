@@ -56,7 +56,6 @@ public class ProductDetailsController implements IDetailsController {
         });
     }
 
-    // answer = true => yes // false otherwise
     public void updateQuestionsUi(int idQuestionUpdated, QuestionAnswer newAnswer){
         ProductService.ProductDetails.Question q = _product.getQuestion(idQuestionUpdated);
         String oldAnswer = q.user_answer;

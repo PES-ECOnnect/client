@@ -67,4 +67,5 @@
     <string name="new_post_hint">Text</string>
     <string name="post_add_image">(Optional) Add image:</string>
     <string name="remove_image">Remove image</string>
+    <string name="send_review">SEND REVIEW</string>
 </resources>

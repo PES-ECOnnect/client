@@ -46,6 +46,9 @@ public class AddPostFragment extends CustomFragment<FragmentAddPostBinding>  {
 
     void enableInput(boolean enabled) {
         binding.addPostButton.setEnabled(enabled);
+        binding.removeImageButton.setEnabled(enabled);
+        binding.imagePreview.setClickable(enabled);
+        binding.newPostBox.setEnabled(enabled);
     }
 
     String getText() {
