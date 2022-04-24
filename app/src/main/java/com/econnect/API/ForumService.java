@@ -90,12 +90,33 @@ public class ForumService extends Service {
         
         // Parse result
         Post[] posts = result.getArray(ApiConstants.RET_RESULT, Post[].class);
-        if (posts == null) {
-            // This should never happen, the API should always return an array or an error
-            throwInvalidResponseError(result, ApiConstants.RET_RESULT);
-        }
+        assertResultNotNull(posts, result);
         
         return posts;
+    }
+
+    public void createPost(String text, String url) {
+        // Add parameters
+        TreeMap<String, String> params = new TreeMap<>();
+        params.put(ApiConstants.POST_TEXT, text);
+        params.put(ApiConstants.POST_IMAGE, url);
+
+        // Call API
+        super.needsToken = true;
+        JsonResult result;
+
+        try {
+            result = post(ApiConstants.POSTS_PATH, params, null);
+        }
+        catch (ApiException e) {
+            switch (e.getErrorCode()) {
+                case ApiConstants.ERROR_INCORRECT_INSERTION:
+                    throw new RuntimeException("Insertion error");
+                default:
+                    throw e;
+            }
+        }
+        expectOkStatus(result);
     }
     
     // Delete a post
@@ -119,11 +140,7 @@ public class ForumService extends Service {
         }
         
         // Parse result
-        String status = result.getAttribute(ApiConstants.RET_STATUS);
-        if (status == null || !status.equals(ApiConstants.STATUS_OK)) {
-            // This should never happen, the API should always return an array or an error
-            throwInvalidResponseError(result, ApiConstants.RET_STATUS);
-        }
+        expectOkStatus(result);
     }
 
     public Tag[] getAllTags() {
@@ -144,10 +161,7 @@ public class ForumService extends Service {
 
         // Parse result
         Tag[] tags = result.getArray(ApiConstants.RET_RESULT, Tag[].class);
-        if (tags == null) {
-            // This should never happen, the API should always return an array or an error
-            throwInvalidResponseError(result, ApiConstants.RET_RESULT);
-        }
+        assertResultNotNull(tags, result);
 
         return tags;
     }
@@ -173,10 +187,6 @@ public class ForumService extends Service {
         }
 
         // Parse result
-        String status = result.getAttribute(ApiConstants.RET_STATUS);
-        if (status == null || !status.equals(ApiConstants.STATUS_OK)) {
-            // This should never happen, the API should always return an array or an error
-            throwInvalidResponseError(result, ApiConstants.RET_STATUS);
-        }
+        expectOkStatus(result);
     }
 }

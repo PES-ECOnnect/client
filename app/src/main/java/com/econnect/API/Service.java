@@ -130,12 +130,6 @@ public abstract class Service {
         return json;
     }
 
-    protected void throwInvalidResponseError(JsonResult result, String expectedAttr) {
-        throw new RuntimeException("Invalid response from server: " + result.toString()
-                + "\nExpected " + ApiConstants.RET_ERROR + " or attribute '" + expectedAttr + "'");
-    }
-
-
     // Callback for invalid token errors
     public interface ITokenInvalidCallback {
         void invalidToken();
@@ -145,7 +139,6 @@ public abstract class Service {
     }
 
 
-    /*
     // Common checks for all services
     protected void expectOkStatus(JsonResult result) {
         // Parse result
@@ -167,5 +160,4 @@ public abstract class Service {
         throw new RuntimeException("Invalid response from server: " + result.toString()
                 + "\nExpected " + ApiConstants.RET_ERROR + " or attribute '" + expectedAttr + "'");
     }
-    */
 }

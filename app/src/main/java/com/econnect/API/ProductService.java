@@ -123,10 +123,7 @@ public class ProductService extends Service {
         
         // Parse result
         Product[] products = result.getArray(ApiConstants.RET_RESULT, Product[].class);
-        if (products == null) {
-            // This should never happen, the API should always return an array or an error
-            throwInvalidResponseError(result, ApiConstants.RET_RESULT);
-        }
+        assertResultNotNull(products, result);
         
         return products;
     }
@@ -150,10 +147,7 @@ public class ProductService extends Service {
         
         // Parse result
         ProductDetails details = result.asObject(ProductDetails.class);
-        if (details == null) {
-            // This should never happen, the API should always return an object or an error
-            throwInvalidResponseError(result, ApiConstants.RET_RESULT);
-        }
+        assertResultNotNull(details, result);
 
         return details;
     }

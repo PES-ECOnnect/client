@@ -35,10 +35,7 @@ public class ProductTypesService extends Service {
         
         // Parse result
         ProductType[] productTypes = result.getArray(ApiConstants.RET_RESULT, ProductType[].class);
-        if (productTypes == null) {
-            // This should never happen, the API should always return an array or an error
-            throwInvalidResponseError(result, ApiConstants.RET_RESULT);
-        }
+        assertResultNotNull(productTypes, result);
         
         return productTypes;
     }

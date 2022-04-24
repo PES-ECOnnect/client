@@ -7,8 +7,9 @@ import java.util.Map;
 import okhttp3.*;
 
 public class OkHttpAdapter implements HttpClient {
-    private static final MediaType _JSON = MediaType.get("application/json; charset=utf-8");
+    private static final boolean PRINT_PARAMS = true;
 
+    private static final MediaType _JSON = MediaType.get("application/json; charset=utf-8");
     private final OkHttpClient _client = new OkHttpClient();
 
     public String get(String url, Map<String,String> params) throws IOException {
@@ -48,8 +49,9 @@ public class OkHttpAdapter implements HttpClient {
             if (response.isSuccessful()) {
                 return response.body().string();
             }
-            String url_no_params = request.url().toString().split("\\?")[0];
-            throw new RuntimeException("Error code " + response.code() + ": " + response.message() + "\nRequest URL: " + url_no_params);
+            String shown_url = request.url().toString();
+            if (!PRINT_PARAMS) shown_url = shown_url.split("\\?")[0];
+            throw new RuntimeException("Error code " + response.code() + ": " + response.message() + "\nRequest URL: " + shown_url);
         }
     }
 }

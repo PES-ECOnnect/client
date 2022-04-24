@@ -34,12 +34,7 @@ public class QuestionService extends Service{
         }
 
         // Parse result
-        String status = result.getAttribute(ApiConstants.RET_STATUS);
-
-        if (status == null || ! status.equals(ApiConstants.STATUS_OK)) {
-            // This should never happen, the API should always return an object or an error
-            throwInvalidResponseError(result, ApiConstants.RET_STATUS);
-        }
+        expectOkStatus(result);
     }
 
     public void answerQuestionProduct(int productId, int questionId, boolean answer ) {

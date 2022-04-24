@@ -95,7 +95,7 @@ public class ImageService {
     // Upload an image to a server and return the url to the uploaded image
     public String uploadImageToUrl(File file) {
         UploadResult uploadResult = uploadImage(file);
-        return uploadResult.images[0].direct_link;
+        return "https://" + uploadResult.images[0].direct_link;
     }
     
 }

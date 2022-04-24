@@ -3,14 +3,15 @@ package com.econnect.client.Forum;
 
 import android.net.Uri;
 
+import com.econnect.API.ForumService;
 import com.econnect.API.ImageUpload.ImageService;
-import com.econnect.API.PostService;
 import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.FileUtils;
 import com.econnect.Utilities.PopupMessage;
 
 import java.io.*;
+import java.net.URL;
 
 
 public class AddPostController {
@@ -54,19 +55,32 @@ public class AddPostController {
 
         File tempFile;
         try {
-            tempFile = FileUtils.getFileFromUri(_fragment.requireContext(), image);
+            tempFile = FileUtils.from(_fragment.requireContext(), image);
         } catch (Exception e) {
             throw new RuntimeException("Could not convert URI to File: " + e.getMessage(), e);
         }
 
         final ImageService service = new ImageService();
-        return service.uploadImageToUrl(tempFile);
+        String url = service.uploadImageToUrl(tempFile);
+        if (!isValidURL(url)) {
+            throw new RuntimeException("The generated URL is invalid: " + url);
+        }
+        return url;
+    }
+    private static boolean isValidURL(String urlString) {
+        try {
+            URL url = new URL(urlString);
+            url.toURI();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     private void attemptPost(String text, String url) {
         // Post
-        PostService postService = ServiceFactory.getInstance().getPostService();
-        postService.post(text, url);
+        ForumService postService = ServiceFactory.getInstance().getForumService();
+        postService.createPost(text, url);
         // Success
         navigateToForum();
     }
