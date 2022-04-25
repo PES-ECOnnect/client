@@ -17,6 +17,11 @@ public interface ApiConstants {
     String POSTS_PATH = "/posts";
     String TAGS_PATH = "/posts/tags";
     String POST_LIKE_PATH = "/posts/%d/like";
+    String PRIVATE_USER_PATH = "/account";
+    String PUT_USERNAME = "account/username";
+    String PUT_EMAIL = "account/email";
+    String PUT_PASSWORD = "account/password";
+    String PUT_MEDAL = "account/medal";
 
 
     // PARAMETERS
@@ -54,6 +59,13 @@ public interface ApiConstants {
     String POST_TEXT = "text";
     String POST_IMAGE = "image";
 
+    //PUT attributes User
+    String NEW_USER_MEDAL = "medalId";
+    String NEW_USERNAME = "newUsername";
+    String NEW_USER_EMAIL = "newEmail";
+    String NEW_USER_PASSWORD = "newPassword";
+    String OLD_USER_PASSWORD = "oldPassword";
+
 
     // RETURN VALUES
     String RET_TOKEN = "token";
@@ -86,4 +98,7 @@ public interface ApiConstants {
 
     //Post posts
     String ERROR_INCORRECT_INSERTION = "ERROR_INCORRECT_INSERTION";
+
+    //PUT attributes user
+    String ERROR_INVALID_MEDAL = "ERROR_INVALID_MEDAL";
 }

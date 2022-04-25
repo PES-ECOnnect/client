@@ -5,7 +5,9 @@ import android.content.Intent;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+
 import com.econnect.API.LoginService;
+import com.econnect.API.ProfileService;
 import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
@@ -15,9 +17,12 @@ public class ProfileController {
 
     private final ProfileFragment fragment;
     private final ActivityResultLauncher<Intent> _activityLauncher;
+    private  ProfileService.User u;
+
 
     ProfileController(ProfileFragment fragment) {
         this.fragment = fragment;
+        this.u = null;
         _activityLauncher = fragment.registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 this::launchDetailsCallback
@@ -77,4 +82,26 @@ public class ProfileController {
         _activityLauncher.launch(intent);
     }
 
+    public ProfileService.User getInfoUser() {
+
+        // This could take some time (and accesses the internet), run on non-UI thread
+        ExecutionThread.nonUI(() -> {
+            try {
+                attemptGetInfo();
+            }
+            catch (Exception e) {
+                // Return to UI for showing errors
+                ExecutionThread.UI(fragment, ()->{
+                    PopupMessage.warning(fragment, "There has been an error: " + e.getMessage());
+                });
+            }
+        });
+        return u;
+    }
+
+    private void attemptGetInfo() {
+        // Post
+        ProfileService profileService = ServiceFactory.getInstance().getProfileService();
+        u = profileService.getInfoUser();
+    }
 }

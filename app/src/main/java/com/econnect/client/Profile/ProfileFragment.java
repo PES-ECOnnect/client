@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.econnect.API.ProfileService;
 import com.econnect.Utilities.CustomFragment;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.client.R;
@@ -27,7 +28,7 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> impl
     private final ProfileController ctrl = new ProfileController(this);
     private AlertDialog.Builder deleterBuilder;
     private AlertDialog deleter;
-    private TextView passwordDelete, acceptDelete;
+    private TextView passwordDelete, acceptDelete, username;
     private Button deleteButton, cancelButton;
 
     public ProfileFragment() {
@@ -37,6 +38,16 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> impl
     @Override
     protected void addListeners() {
         binding.profileMenuButton.setOnClickListener( view -> showProfileMenu(view));
+        setDetailsUser();
+    }
+
+    void setDetailsUser() {
+        View v = this.getView();
+        username = v.findViewById(R.id.usernameText);
+        ProfileService.User u = ctrl.getInfoUser();
+        if (u != null) {
+            username.setText(u.username);
+        }
     }
 
     void enableInput() {
@@ -48,7 +59,7 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> impl
     }
 
     void setUsername() {
-        //Change the username
+
     }
 
 
