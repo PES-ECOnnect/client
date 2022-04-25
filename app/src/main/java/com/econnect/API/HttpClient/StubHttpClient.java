@@ -204,6 +204,21 @@ public class StubHttpClient implements HttpClient {
         }
         
     }
+    
+    
+    @Override
+    public String put(String path, Map<String, String> params, String json) {
+        path = checkDomain(path);
+        if (params == null) {
+            params = new TreeMap<String, String>();
+        }
+        checkNullParams(params);
+        
+        switch (path) {
+            default:
+                throw new RuntimeException("Invalid path: " + path);
+        }
+    }
 
 
     @Override

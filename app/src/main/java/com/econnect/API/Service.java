@@ -80,6 +80,23 @@ public abstract class Service {
         }
         return result;
     }
+    
+    // Generic PUT request
+    protected JsonResult put(String path, Map<String,String> params, Object content) throws ApiException {
+        String url = ApiConstants.BASE_URL + path;
+        params = addTokenToRequest(params);
+        return parseResult(putRaw(url, params, content));
+    }
+    protected String putRaw(String url, Map<String,String> params, Object content) throws ApiException {
+        String result = null;
+        try {
+            result = _httpClient.put(url, params, gson.toJson(content));
+        }
+        catch (IOException e) {
+            throw new RuntimeException("Error executing PUT on " + url + ": " + e.getMessage());
+        }
+        return result;
+    }
 
     // Generic DELETE request
     protected JsonResult delete(String path, Map<String,String> params) throws ApiException {
