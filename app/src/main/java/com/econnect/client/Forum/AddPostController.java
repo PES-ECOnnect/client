@@ -42,7 +42,7 @@ public class AddPostController {
                 // Return to UI for showing errors
                 ExecutionThread.UI(_fragment, ()->{
                     _fragment.enableInput(true);
-                    PopupMessage.warning(_fragment, "There has been an error: " + e.getMessage());
+                    PopupMessage.warning(_fragment, "Could not add new post: " + e.getMessage());
                 });
             }
         });

@@ -14,10 +14,10 @@
         android:layout_height="64dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.68"
+        app:layout_constraintHorizontal_bias="0.682"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.181"
+        app:layout_constraintVertical_bias="0.163"
         app:shapeAppearance="@style/ShapeAppearance.MaterialComponents.MediumComponent"
         app:shapeAppearanceOverlay="@style/ShapeAppearance.MaterialComponents.MediumComponent"
         app:srcCompat="@drawable/ic_medal_24"
@@ -58,14 +58,14 @@
         android:id="@+id/medalsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="medals"
+        android:text="Medals"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.044"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.344" />
+        app:layout_constraintVertical_bias="0.43" />
 
     <TextView
         android:id="@+id/usernameText"
@@ -87,7 +87,7 @@
         android:id="@+id/activeMedalText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="active_medal"
+        android:text="Active medal"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -95,6 +95,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.112" />
+
+
+    <TextView
+        android:id="@+id/emailText"
+        android:layout_width="259dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="64dp"
+        android:textSize="16sp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toTopOf="@+id/medalsText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.105"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userImage"
+        app:layout_constraintVertical_bias="0.428"
+        tools:text="Email" />
+
+    <TextView
+        android:id="@+id/idMedalText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.677"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/medal_active_image"
+        tools:text="id medal" />
 
     <ListView
         android:id="@+id/medalsList"
@@ -105,6 +134,6 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.689" />
+        app:layout_constraintVertical_bias="0.852" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

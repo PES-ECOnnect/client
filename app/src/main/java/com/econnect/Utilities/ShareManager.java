@@ -35,7 +35,7 @@ public class ShareManager {
             out.close();
         }
         catch (IOException e) {
-            throw new RuntimeException("There has been an error: " + e.getMessage(), e);
+            throw new RuntimeException("There has been an error while sharing: " + e.getMessage(), e);
         }
         Uri bmpUri = FileProvider.getUriForFile(context, "com.econnect.client.fileprovider", outputFile);
 

@@ -1,33 +1,24 @@
 package com.econnect.client.Profile;
 
+import static com.econnect.API.ProfileService.*;
+
 import android.app.AlertDialog;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import com.econnect.Utilities.CustomFragment;
-import com.econnect.Utilities.ExecutionThread;
 import com.econnect.client.R;
-import com.econnect.client.databinding.FragmentProductsBinding;
 import com.econnect.client.databinding.FragmentProfileBinding;
 
-import org.w3c.dom.Text;
 
 public class ProfileFragment extends CustomFragment<FragmentProfileBinding> implements PopupMenu.OnMenuItemClickListener {
     
     private final ProfileController ctrl = new ProfileController(this);
     private AlertDialog.Builder deleterBuilder;
     private AlertDialog deleter;
-    private TextView passwordDelete, acceptDelete;
+    private TextView passwordDelete, acceptDelete, username, email, id_medal;
     private Button deleteButton, cancelButton;
 
     public ProfileFragment() {
@@ -37,18 +28,36 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> impl
     @Override
     protected void addListeners() {
         binding.profileMenuButton.setOnClickListener( view -> showProfileMenu(view));
+        ctrl.getInfoUser();
     }
 
     void enableInput() {
         binding.profileMenuButton.setEnabled(true);
     }
 
-    void setActiveMedal() {
-        //Change the active medal
+    void setActiveMedal(User u) {
+        View v = this.getView();
+        id_medal = v.findViewById(R.id.idMedalText);
+        if (u != null) {
+            int name = u.activeMedal;
+            id_medal.setText(String.valueOf(name));
+        }
     }
 
-    void setUsername() {
-        //Change the username
+    void setEmail(User u) {
+        View v = this.getView();
+        email = v.findViewById(R.id.emailText);
+        if (u != null) {
+            email.setText(u.email);
+        }
+    }
+
+    void setUsername(User u) {
+        View v = this.getView();
+        username = v.findViewById(R.id.usernameText);
+        if (u != null) {
+            username.setText(u.username);
+        }
     }
 
 
