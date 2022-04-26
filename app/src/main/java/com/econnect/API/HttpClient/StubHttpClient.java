@@ -61,7 +61,7 @@ public class StubHttpClient implements HttpClient {
                 }
                 else {
                     // For each type, return the name and an array of questions
-                    return "{\"result\":[{\"name\":\"type1\",\"questions\":[\"q1\",\"q2\",\"q3\"]},{\"name\":\"type2\",\"questions\":[\"q4\",\"q5\",\"q6\"]}]}";
+                    return "{\"result\":[{\"name\":\"type1\",\"questions\":[{\"questionid\":1,\"statement\":\"q1\"},{\"questionid\":2,\"statement\":\"q2\"},{\"questionid\":3,\"statement\":\"q3\"}]},{\"name\":\"type2\",\"questions\":[{\"questionid\":4,\"statement\":\"q4\"},{\"questionid\":5,\"statement\":\"q5\"},{\"questionid\":6,\"statement\":\"q6\"}]}]}";
                 }
                 
             // Get list of products
@@ -203,6 +203,21 @@ public class StubHttpClient implements HttpClient {
                 throw new RuntimeException("Invalid path: " + path);
         }
         
+    }
+    
+    
+    @Override
+    public String put(String path, Map<String, String> params, String json) {
+        path = checkDomain(path);
+        if (params == null) {
+            params = new TreeMap<String, String>();
+        }
+        checkNullParams(params);
+        
+        switch (path) {
+            default:
+                throw new RuntimeException("Invalid path: " + path);
+        }
     }
 
 

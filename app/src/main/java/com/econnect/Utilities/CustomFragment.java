@@ -34,7 +34,9 @@ public abstract class CustomFragment<T extends ViewBinding> extends Fragment {
 
         // Call method "binding = T.inflate(inflate)"
         try {
-            binding = (T) m.invoke(null, inflater);
+            @SuppressWarnings("unchecked")
+            T tmp = (T) m.invoke(null, inflater);
+            binding = tmp;
         } catch (IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException("Error while inflating view " + _tClass.getName());
         }

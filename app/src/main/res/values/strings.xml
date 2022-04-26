@@ -57,4 +57,15 @@
     <string name="minutes_ago">%d minutes ago</string>
     <string name="minutes_ago_one">%d minute ago</string>
     <string name="delete_hint">Delete</string>
+    <string name="warning">WARNING</string>
+    <string name="delete_account_text">You are going to delete your account. Do you really want to delete it? \n\nWrite your password and \'I ACCEPT\' to delete your account.</string>
+    <string name="i_accept_text">I ACCEPT</string>
+    <string name="cancel">CANCEL</string>
+    <string name="delete">DELETE</string>
+    <string name="write_your_opinion">Write your opinion:</string>
+    <string name="add_post">Add Post</string>
+    <string name="new_post_hint">Text</string>
+    <string name="post_add_image">(Optional) Add image:</string>
+    <string name="remove_image">Remove image</string>
+    <string name="send_review">SEND REVIEW</string>
 </resources>

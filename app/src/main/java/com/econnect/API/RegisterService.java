@@ -38,12 +38,8 @@ public class RegisterService extends Service{
         }
 
         String token = result.getAttribute(ApiConstants.RET_TOKEN);
-        if (token == null) {
-            // This should never happen, the API should always return a token or an error
-            throwInvalidResponseError(result, ApiConstants.RET_TOKEN);
-        }
-
-        super.setToken(token);
+        assertResultNotNull(token, result);
+        Service.setToken(token);
 
         if (file != null) {
             file.putString(LoginService.STORED_TOKEN_KEY, token);

@@ -46,7 +46,6 @@ public class ProductDetailsFragment extends CustomFragment<FragmentProductDetail
 
     @Override
     protected void addListeners() {
-        // TODO: decide how many stars we can give (start at 0?)
         binding.addRatingButton.setOnClickListener(view -> createReviewDialog());
         _ctrl.updateUIElements();
     }
@@ -175,19 +174,13 @@ public class ProductDetailsFragment extends CustomFragment<FragmentProductDetail
         star4Rpopup.setOnClickListener(view -> _ctrl.setStars(4));
         star5Rpopup.setOnClickListener(view -> _ctrl.setStars(5));
 
-        reviewpopup_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                review.dismiss();
-            }
-        });
+        // Reset stars
+        _ctrl.setStars(0);
+        reviewpopup_cancel.setOnClickListener(view -> review.dismiss());
 
-        reviewpopup_submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                _ctrl.reviewProduct();
-                review.dismiss();
-            }
+        reviewpopup_submit.setOnClickListener(view -> {
+            _ctrl.reviewProduct();
+            review.dismiss();
         });
     }
 

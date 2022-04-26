@@ -12,4 +12,7 @@ public interface HttpClient {
 
     // DELETE request on a URL and return the response body as a string. params may be null
     String delete(String url, Map<String,String> params) throws IOException;
+    
+    // PUT JSON to URL and return the response body as a string. params may be null
+    String put(String url, Map<String,String> params, String json) throws IOException;
 }

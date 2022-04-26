@@ -88,4 +88,13 @@ public class ServiceFactory {
         }
         return _forumService;
     }
+
+    private static ProfileService _profileService = null;
+    public ProfileService getProfileService() {
+        if(_profileService == null) {
+            _profileService = new ProfileService();
+        }
+        return _profileService;
+    }
+
 }

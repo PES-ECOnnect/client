@@ -4,6 +4,7 @@ import android.view.View;
 
 import com.econnect.API.LoginService;
 import com.econnect.API.RegisterService;
+import com.econnect.API.Service;
 import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
@@ -110,6 +111,13 @@ public class LoginController {
         ExecutionThread.UI(fragment, ()->{
             fragment.enableInput(true);
             ExecutionThread.navigate(fragment, R.id.action_successful_login);
+        });
+    }
+
+    public void pingServer() {
+        ExecutionThread.nonUI(() -> {
+            LoginService service = ServiceFactory.getInstance().getLoginService();
+            service.pingServer();
         });
     }
 }

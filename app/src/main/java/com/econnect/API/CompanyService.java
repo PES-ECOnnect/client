@@ -88,10 +88,7 @@ public class CompanyService extends Service {
         
         // Parse result
         Company[] companies = result.getArray(ApiConstants.RET_RESULT, Company[].class);
-        if (companies == null) {
-            // This should never happen, the API should always return an array or an error
-            throwInvalidResponseError(result, ApiConstants.RET_RESULT);
-        }
+        assertResultNotNull(companies, result);
         
         return companies;
     }
@@ -105,10 +102,7 @@ public class CompanyService extends Service {
         
         // Parse result
         String[] questions = result.getArray(ApiConstants.RET_RESULT, String[].class);
-        if (questions == null) {
-            // This should never happen, the API should always return an array or an error
-            throwInvalidResponseError(result, ApiConstants.RET_RESULT);
-        }
+        assertResultNotNull(questions, result);
         
         return questions;
     }
@@ -132,10 +126,7 @@ public class CompanyService extends Service {
 
         // Parse result
         CompanyDetails details = result.asObject(CompanyDetails.class);
-        if (details == null) {
-            // This should never happen, the API should always return an object or an error
-            throwInvalidResponseError(result, ApiConstants.RET_RESULT);
-        }
+        assertResultNotNull(details, result);
 
         return details;
     }

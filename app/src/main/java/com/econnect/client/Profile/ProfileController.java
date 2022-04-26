@@ -1,34 +1,28 @@
 package com.econnect.client.Profile;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.view.View;
 
+import android.content.Intent;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.econnect.API.CompanyService;
 import com.econnect.API.LoginService;
-import com.econnect.API.ProductService;
+import com.econnect.API.ProfileService;
 import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
-import com.econnect.Utilities.SettingsFile;
-import com.econnect.client.Forum.PostActivity;
-import com.econnect.client.ItemDetails.DetailsActivity;
-import com.econnect.client.R;
+
 
 public class ProfileController {
 
     private final ProfileFragment fragment;
     private final ActivityResultLauncher<Intent> _activityLauncher;
+    private  ProfileService.User u;
+
 
     ProfileController(ProfileFragment fragment) {
         this.fragment = fragment;
+        this.u = null;
         _activityLauncher = fragment.registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 this::launchDetailsCallback
@@ -88,4 +82,47 @@ public class ProfileController {
         _activityLauncher.launch(intent);
     }
 
+    public ProfileService.User getInfoUser() {
+
+        // This could take some time (and accesses the internet), run on non-UI thread
+        ExecutionThread.nonUI(() -> {
+            try {
+                attemptGetInfo();
+            }
+            catch (Exception e) {
+                // Return to UI for showing errors
+                ExecutionThread.UI(fragment, ()->{
+                    PopupMessage.warning(fragment, "There has been an error: " + e.getMessage());
+                });
+            }
+        });
+        return u;
+    }
+
+    private void attemptGetInfo() {
+        // Post
+        ProfileService profileService = ServiceFactory.getInstance().getProfileService();
+        u = profileService.getInfoUser();
+    }
+
+    public void deleteAccount(String password) {
+        ExecutionThread.nonUI(() -> {
+            try {
+                ProfileService profileService = ServiceFactory.getInstance().getProfileService();
+                //check Password
+                //if(profileService.checkPassword(password)){
+                profileService.deleteAccount();
+                ExecutionThread.UI(fragment, ()->{
+                    fragment.getActivity().finish();
+                });
+                //}
+            }
+            catch (Exception e) {
+                // Return to UI for showing errors
+                ExecutionThread.UI(fragment, ()->{
+                    PopupMessage.warning(fragment, "There has been an error: " + e.getMessage());
+                });
+            }
+        });
+    }
 }

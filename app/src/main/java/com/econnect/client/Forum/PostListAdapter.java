@@ -97,10 +97,15 @@ public class PostListAdapter extends BaseAdapter {
         // Iterate for all instances of '#'
         for (int index = p.text.indexOf('#'); index >= 0; index = p.text.indexOf('#', index + 1)) {
             // Skip # symbols in the middle of a word
-            if (index > 0 && p.text.charAt(index-1) != ' ')
+            if (index > 0 && p.text.charAt(index-1) != ' ' && p.text.charAt(index-1) != '\n')
                 continue;
-            int end = p.text.indexOf(' ', index + 1);
-            if (end == -1) end = p.text.length();
+
+            int endBySpace = p.text.indexOf(' ', index + 1);
+            if (endBySpace == -1) endBySpace = p.text.length();
+            int endByNewLine = p.text.indexOf('\n', index + 1);
+            if (endByNewLine == -1) endByNewLine = p.text.length();
+            int end = Math.min(endBySpace, endByNewLine);
+
             // Set color and make bold, also make clickable
             String tag = p.text.substring(index+1, end); // Skip '#'
             spannable.setSpan(new TagClickableSpan(tag), index, end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
@@ -113,8 +118,14 @@ public class PostListAdapter extends BaseAdapter {
         TextView dislikes = vi.findViewById(R.id.dislikesAmountText);
         dislikes.setText(String.format(Locale.getDefault(), "%d", p.dislikes));
 
+        // Store id in view
+        String postId = Integer.toString(p.postid);
+        TextView hidden_id = vi.findViewById(R.id.hidden_PostId);
+        hidden_id.setText(postId);
+
         // Set item image
         ImageView image = vi.findViewById(R.id.postImage);
+        image.setVisibility(View.GONE);
         ExecutionThread.nonUI(()->{
             // Poll image.getWidth() until the layout has been inflated
             int width = -1;
@@ -122,9 +133,10 @@ public class PostListAdapter extends BaseAdapter {
                 width = image.getWidth();
             }
             Bitmap bmp = p.getImage(width);
+            if (bmp == null) return;
             ExecutionThread.UI(_owner, ()-> {
-                if (bmp == null) image.setVisibility(View.GONE);
-                else {
+                // If the view has changed while we were fetching the image, do nothing
+                if (hidden_id.getText().equals(postId)) {
                     image.setImageBitmap(bmp);
                     image.setVisibility(View.VISIBLE);
                 }
@@ -145,11 +157,17 @@ public class PostListAdapter extends BaseAdapter {
         // Highlight previous user choice
         if (p.useroption == Post.OPT_LIKE) {
             likeButton.setColorFilter(_highlightColor);
+            dislikeButton.clearColorFilter();
         }
         else if (p.useroption == Post.OPT_DISLIKE) {
             dislikeButton.setColorFilter(_highlightColor);
+            likeButton.clearColorFilter();
         }
-        else if (p.useroption != Post.OPT_NONE) {
+        else if (p.useroption == Post.OPT_NONE) {
+            likeButton.clearColorFilter();
+            dislikeButton.clearColorFilter();
+        }
+        else {
             throw new RuntimeException("Invalid user option: " + p.useroption);
         }
 
@@ -172,9 +190,10 @@ public class PostListAdapter extends BaseAdapter {
 
         // Difference between dates, in seconds
         long diffSec = (System.currentTimeMillis() - date.getTime()) / 1000L;
+        if (diffSec < 60) diffSec = 60;
         // Convert to hours + minutes
         int hours = (int) (diffSec / (60 * 60));
-        int mins = (int) ((diffSec - (hours * 3600) / 60) % 60);
+        int mins = (int) (((diffSec - hours * 3600) / 60) % 60);
 
         if (hours == 0) {
             int min_string_id = (mins == 1) ? R.string.minutes_ago_one : R.string.minutes_ago;
