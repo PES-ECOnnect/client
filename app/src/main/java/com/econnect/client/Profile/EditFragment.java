@@ -9,6 +9,7 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
 
     public EditFragment() {
         super(FragmentEditProfileBinding.class);
+        setDefaultvalors();
     }
 
     public void setController(EditProfileController ctrl) {
@@ -17,6 +18,10 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
 
     @Override
     protected void addListeners() {
+
+    }
+
+    public void setDefaultvalors() {
 
     }
 

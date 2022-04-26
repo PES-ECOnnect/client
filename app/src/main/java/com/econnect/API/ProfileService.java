@@ -30,9 +30,11 @@ public class ProfileService extends Service {
         }
         public static class Medal {
             public  String nameMedal;
+            public String idMedal;
             //public final String imageMedal;
 
-            public Medal(String nameMedal) {
+            public Medal(String nameMedal, String idMedal) {
+                this.idMedal = idMedal;
                 this.nameMedal = nameMedal;
             }
         }

@@ -18,12 +18,10 @@ public class ProfileController {
 
     private final ProfileFragment fragment;
     private final ActivityResultLauncher<Intent> _activityLauncher;
-    private  ProfileService.User u;
 
 
     ProfileController(ProfileFragment fragment) {
         this.fragment = fragment;
-        this.u = null;
         _activityLauncher = fragment.registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 this::launchDetailsCallback
@@ -39,8 +37,10 @@ public class ProfileController {
         try {
 
             ExecutionThread.UI(fragment, () -> {
-                fragment.setActiveMedal();
-                fragment.setUsername();
+                //por ahora paso un null pero esto se tiene que cambiar
+                fragment.setActiveMedal(null);
+                fragment.setUsername(null);
+                fragment.setEmail(null);
                 fragment.enableInput();
             });
         }
@@ -78,6 +78,7 @@ public class ProfileController {
     }
 
     public void editButtonClick() {
+        /*
         // This could take some time (and accesses the internet), run on non-UI thread
         ExecutionThread.nonUI(() -> {
             try {
@@ -96,17 +97,26 @@ public class ProfileController {
         // Pass parameters to activity
         intent.putExtra("username", u.username);
         intent.putExtra("email", u.email);
-        //intent.putExtra("isPrivate", u.isPrivate);
-        //intent.putExtra("password", u.password);
+        intent.putExtra("isPrivate", u.isPrivate);
+
         _activityLauncher.launch(intent);
+        */
     }
 
-    public ProfileService.User getInfoUser() {
+    public void getInfoUser() {
 
         // This could take some time (and accesses the internet), run on non-UI thread
         ExecutionThread.nonUI(() -> {
             try {
-                attemptGetInfo();
+                ProfileService profileService = ServiceFactory.getInstance().getProfileService();
+                ProfileService.User u = profileService.getInfoUser();
+
+                ExecutionThread.UI(fragment, () -> {
+                    fragment.setActiveMedal(u);
+                    fragment.setUsername(u);
+                    fragment.setEmail(u);
+                    fragment.enableInput();
+                });
             }
             catch (Exception e) {
                 // Return to UI for showing errors
@@ -114,13 +124,7 @@ public class ProfileController {
                     PopupMessage.warning(fragment, "Could not get user info: " + e.getMessage());
                 });
             }
-        });
-        return u;
-    }
 
-    private void attemptGetInfo() {
-        // Post
-        ProfileService profileService = ServiceFactory.getInstance().getProfileService();
-        u = profileService.getInfoUser();
+        });
     }
 }
