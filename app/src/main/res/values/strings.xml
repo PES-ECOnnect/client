@@ -68,4 +68,7 @@
     <string name="post_add_image">(Optional) Add image:</string>
     <string name="remove_image">Remove image</string>
     <string name="send_review">SEND REVIEW</string>
+    <string name="password">password</string>
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
 </resources>

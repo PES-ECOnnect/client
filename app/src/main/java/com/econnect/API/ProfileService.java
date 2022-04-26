@@ -1,6 +1,8 @@
 package com.econnect.API;
 
 import com.econnect.API.Exceptions.ApiException;
+
+import java.util.ArrayList;
 import java.util.TreeMap;
 
 public class ProfileService extends Service {
@@ -15,7 +17,8 @@ public class ProfileService extends Service {
         public  int activeMedal;
         public  String email;
         public  String home;
-        public  int[] medals;
+        //public ArrayList<Medal> medals;
+        public int[] medals;
         public Boolean isPrivate;
         //public final String imageUser;
 
@@ -24,18 +27,24 @@ public class ProfileService extends Service {
             this.activeMedal = activeMedal;
             this.email = email;
             this.home = home;
-            this.medals = medals;
             this.isPrivate = isPrivate;
-
+            this.medals = medals;
+            /*this.medals = new ArrayList<>();
+            for (int m: medals) {
+                Medal aux = new Medal(m);
+                this.medals.add(aux);
+            }*/
         }
+
         public static class Medal {
-            public  String nameMedal;
-            public String idMedal;
+            //public  String nameMedal;
+            public int idMedal;
             //public final String imageMedal;
 
-            public Medal(String nameMedal, String idMedal) {
+            public Medal (int idMedal) {
                 this.idMedal = idMedal;
-                this.nameMedal = nameMedal;
+                //this.nameMedal = nameMedal;
+                //this.imageMedal = imageMedal;
             }
         }
     }

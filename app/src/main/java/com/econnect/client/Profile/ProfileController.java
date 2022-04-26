@@ -115,6 +115,7 @@ public class ProfileController {
                     fragment.setActiveMedal(u);
                     fragment.setUsername(u);
                     fragment.setEmail(u);
+                    fragment.setMedals(u);
                     fragment.enableInput();
                 });
             }
