@@ -47,7 +47,7 @@ public class LoginController {
                 // Return to UI for showing errors
                 ExecutionThread.UI(fragment, ()->{
                     fragment.enableInput(true);
-                    PopupMessage.warning(fragment, "There has been an error: " + e.getMessage());
+                    PopupMessage.warning(fragment, "Could not login: " + e.getMessage());
                 });
             }
         });
@@ -92,7 +92,7 @@ public class LoginController {
                 // Generic error
                 ExecutionThread.UI(fragment, ()->{
                     fragment.enableInput(true);
-                    PopupMessage.warning(fragment, "There has been an error: " + e.getMessage());
+                    PopupMessage.warning(fragment, "Could not login with google: " + e.getMessage());
                 });
             }
         });

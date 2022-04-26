@@ -7,6 +7,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 
 import com.econnect.API.LoginService;
+import com.econnect.API.ProductService;
 import com.econnect.API.ProfileService;
 import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
@@ -77,8 +78,26 @@ public class ProfileController {
     }
 
     public void editButtonClick() {
+        // This could take some time (and accesses the internet), run on non-UI thread
+        ExecutionThread.nonUI(() -> {
+            try {
+                attemptGetInfo();
+            }
+            catch (Exception e) {
+                // Return to UI for showing errors
+                ExecutionThread.UI(fragment, ()->{
+                    PopupMessage.warning(fragment, "Could not get user info: " + e.getMessage());
+                });
+            }
+        });
+
         // Launch new activity PostActivity
         Intent intent = new Intent(fragment.getContext(), EditProfileActivity.class);
+        // Pass parameters to activity
+        intent.putExtra("username", u.username);
+        intent.putExtra("email", u.email);
+        //intent.putExtra("isPrivate", u.isPrivate);
+        //intent.putExtra("password", u.password);
         _activityLauncher.launch(intent);
     }
 
@@ -92,7 +111,7 @@ public class ProfileController {
             catch (Exception e) {
                 // Return to UI for showing errors
                 ExecutionThread.UI(fragment, ()->{
-                    PopupMessage.warning(fragment, "There has been an error: " + e.getMessage());
+                    PopupMessage.warning(fragment, "Could not get user info: " + e.getMessage());
                 });
             }
         });

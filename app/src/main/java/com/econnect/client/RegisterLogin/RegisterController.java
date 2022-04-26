@@ -50,7 +50,7 @@ public class RegisterController {
             } catch (Exception e){
                 ExecutionThread.UI(fragment, ()->{
                     fragment.enableInput(true);
-                    PopupMessage.warning(fragment, "There has been an error: " + e.getMessage());
+                    PopupMessage.warning(fragment, "Could not register: " + e.getMessage());
                 });
             }
 

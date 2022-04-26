@@ -1,10 +1,6 @@
 package com.econnect.API;
 
-import android.graphics.Bitmap;
-
 import com.econnect.API.Exceptions.ApiException;
-import com.econnect.Utilities.BitmapLoader;
-
 import java.util.TreeMap;
 
 public class ProfileService extends Service {
@@ -16,18 +12,20 @@ public class ProfileService extends Service {
 
         // Important: The name of these attributes must match the ones in the returned JSON
         public  String username;
-        public  String activeMedal;
+        public  int activeMedal;
         public  String email;
         public  String home;
-        public  String[] medals;
+        public  int[] medals;
+        public Boolean isPrivate;
         //public final String imageUser;
 
-        public User(String username, String activeMedal, String email, String home, String[] medals) {
+        public User(String username, int activeMedal, String email, String home, int[] medals, Boolean isPrivate) {
             this.username = username;
             this.activeMedal = activeMedal;
             this.email = email;
             this.home = home;
             this.medals = medals;
+            this.isPrivate = isPrivate;
 
         }
         public static class Medal {
@@ -60,7 +58,7 @@ public class ProfileService extends Service {
         return user;
     }
 
-    public User updateUsername(String text) {
+    public void updateUsername(String text) {
         // Add parameters
         TreeMap<String, String> params = new TreeMap<>();
         params.put(ApiConstants.NEW_USERNAME, text);
@@ -79,12 +77,10 @@ public class ProfileService extends Service {
             }
         }
         // Parse result
-        User user = result.getObject(ApiConstants.RET_RESULT, User.class);
-        assertResultNotNull(user, result);
-        return user;
+        super.expectOkStatus(result);
     }
 
-    public User updatePassword(String oldP, String newP) {
+    public void updatePassword(String oldP, String newP) {
         // Add parameters
         TreeMap<String, String> params = new TreeMap<>();
         params.put(ApiConstants.OLD_USER_PASSWORD, oldP);
@@ -103,12 +99,10 @@ public class ProfileService extends Service {
             }
         }
         // Parse result
-        User user = result.getObject(ApiConstants.RET_RESULT, User.class);
-        assertResultNotNull(user, result);
-        return user;
+        super.expectOkStatus(result);
     }
 
-    public User updateEmail(String text) {
+    public void updateEmail(String text) {
         // Add parameters
         TreeMap<String, String> params = new TreeMap<>();
         params.put(ApiConstants.NEW_USER_EMAIL, text);
@@ -126,12 +120,10 @@ public class ProfileService extends Service {
             }
         }
         // Parse result
-        User user = result.getObject(ApiConstants.RET_RESULT, User.class);
-        assertResultNotNull(user, result);
-        return user;
+        super.expectOkStatus(result);
     }
 
-    public User updateActiveMedal(String text) {
+    public void updateActiveMedal(String text) {
         // Add parameters
         TreeMap<String, String> params = new TreeMap<>();
         params.put(ApiConstants.NEW_USER_MEDAL, text);
@@ -149,12 +141,10 @@ public class ProfileService extends Service {
             }
         }
         // Parse result
-        User user = result.getObject(ApiConstants.RET_RESULT, User.class);
-        assertResultNotNull(user, result);
-        return user;
+        super.expectOkStatus(result);
     }
 
-    public User updatePrivate(Boolean isPrivate) {
+    public void updatePrivate(Boolean isPrivate) {
         // Add parameters
         TreeMap<String, String> params = new TreeMap<>();
         params.put(ApiConstants.IS_PRIVATE_USER, isPrivate.toString());
@@ -171,8 +161,6 @@ public class ProfileService extends Service {
             }
         }
         // Parse result
-        User user = result.getObject(ApiConstants.RET_RESULT, User.class);
-        assertResultNotNull(user, result);
-        return user;
+        super.expectOkStatus(result);
     }
 }
