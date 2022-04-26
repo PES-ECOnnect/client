@@ -69,7 +69,7 @@ public class ProfileService extends Service {
         try {
             // Call API
             super.needsToken = true;
-            result = get(ApiConstants.PUT_USERNAME, null);
+            result = put(ApiConstants.PUT_USERNAME, params, null);
         } catch (ApiException e) {
             switch (e.getErrorCode()) {
                 case ApiConstants.ERROR_USERNAME_EXISTS:
@@ -93,7 +93,7 @@ public class ProfileService extends Service {
         try {
             // Call API
             super.needsToken = true;
-            result = get(ApiConstants.PUT_PASSWORD, null);
+            result = put(ApiConstants.PUT_PASSWORD, params, null);
         } catch (ApiException e) {
             switch (e.getErrorCode()) {
                 case ApiConstants.ERROR_USERNAME_EXISTS:
@@ -116,7 +116,7 @@ public class ProfileService extends Service {
         try {
             // Call API
             super.needsToken = true;
-            result = get(ApiConstants.PUT_EMAIL, null);
+            result = put(ApiConstants.PUT_EMAIL, params, null);
         } catch (ApiException e) {
             switch (e.getErrorCode()) {
                 case ApiConstants.ERROR_EMAIL_EXISTS:
@@ -139,11 +139,33 @@ public class ProfileService extends Service {
         try {
             // Call API
             super.needsToken = true;
-            result = get(ApiConstants.PUT_MEDAL, null);
+            result = put(ApiConstants.PUT_MEDAL, params, null);
         } catch (ApiException e) {
             switch (e.getErrorCode()) {
                 case ApiConstants.ERROR_INVALID_MEDAL:
                     throw new RuntimeException("This medal is incorrect");
+                default:
+                    throw e;
+            }
+        }
+        // Parse result
+        User user = result.getObject(ApiConstants.RET_RESULT, User.class);
+        assertResultNotNull(user, result);
+        return user;
+    }
+
+    public User updatePrivate(Boolean isPrivate) {
+        // Add parameters
+        TreeMap<String, String> params = new TreeMap<>();
+        params.put(ApiConstants.IS_PRIVATE_USER, isPrivate.toString());
+
+        JsonResult result = null;
+        try {
+            // Call API
+            super.needsToken = true;
+            result = put(ApiConstants.PUT_IS_PRIVATE, params, null);
+        } catch (ApiException e) {
+            switch (e.getErrorCode()) {
                 default:
                     throw e;
             }

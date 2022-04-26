@@ -96,4 +96,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registerEmailBox" />
 
+    <Switch
+        android:id="@+id/switchPrivate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginBottom="56dp"
+        android:minHeight="48dp"
+        android:text="private"
+        app:layout_constraintBottom_toTopOf="@+id/changes_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registerEmailBox" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

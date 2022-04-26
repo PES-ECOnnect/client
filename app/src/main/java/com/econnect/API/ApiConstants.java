@@ -18,10 +18,11 @@ public interface ApiConstants {
     String TAGS_PATH = "/posts/tags";
     String POST_LIKE_PATH = "/posts/%d/like";
     String PRIVATE_USER_PATH = "/account";
-    String PUT_USERNAME = "account/username";
-    String PUT_EMAIL = "account/email";
-    String PUT_PASSWORD = "account/password";
-    String PUT_MEDAL = "account/medal";
+    String PUT_USERNAME = "/account/username";
+    String PUT_EMAIL = "/account/email";
+    String PUT_PASSWORD = "/account/password";
+    String PUT_MEDAL = "/account/medal";
+    String PUT_IS_PRIVATE = "/account/visibility";
 
 
     // PARAMETERS
@@ -65,6 +66,7 @@ public interface ApiConstants {
     String NEW_USER_EMAIL = "newEmail";
     String NEW_USER_PASSWORD = "newPassword";
     String OLD_USER_PASSWORD = "oldPassword";
+    String IS_PRIVATE_USER = "isPrivate";
 
 
     // RETURN VALUES
