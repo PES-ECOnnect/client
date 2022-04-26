@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.econnect.API.ProfileService;
 import com.econnect.Utilities.CustomFragment;
 import com.econnect.Utilities.ExecutionThread;
+import com.econnect.Utilities.PopupMessage;
 import com.econnect.client.R;
 import com.econnect.client.databinding.FragmentProductsBinding;
 import com.econnect.client.databinding.FragmentProfileBinding;
@@ -86,7 +87,13 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> impl
         deleter.show();
 
         deleteButton.setOnClickListener(view -> {
-            deleter.dismiss();
+            if(acceptDelete.getText().equals("I ACCEPT")) {
+                ctrl.deleteAccount((String) passwordDelete.getText());
+                deleter.dismiss();
+            }
+            else {
+                PopupMessage.warning(this, "You didn't write I ACCEPT");
+            }
         });
 
         cancelButton.setOnClickListener(view -> {

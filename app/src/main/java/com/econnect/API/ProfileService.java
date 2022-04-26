@@ -153,4 +153,23 @@ public class ProfileService extends Service {
         assertResultNotNull(user, result);
         return user;
     }
+
+    public void deleteAccount() {
+        JsonResult result = null;
+        try {
+            // Call API
+            super.needsToken = true;
+            result = delete(ApiConstants.REGISTER_PATH, null);
+        } catch (ApiException e) {
+            switch (e.getErrorCode()) {
+                // This endpoint does not throw any errors
+                default:
+                    throw e;
+            }
+        }
+        // Parse result
+        String s = result.getObject(ApiConstants.RET_RESULT, String.class);
+        assertResultNotNull(s, result);
+
+    }
 }

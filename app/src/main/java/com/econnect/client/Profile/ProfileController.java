@@ -104,4 +104,25 @@ public class ProfileController {
         ProfileService profileService = ServiceFactory.getInstance().getProfileService();
         u = profileService.getInfoUser();
     }
+
+    public void deleteAccount(String password) {
+        ExecutionThread.nonUI(() -> {
+            try {
+                ProfileService profileService = ServiceFactory.getInstance().getProfileService();
+                //check Password
+                //if(profileService.checkPassword(password)){
+                profileService.deleteAccount();
+                ExecutionThread.UI(fragment, ()->{
+                    fragment.getActivity().finish();
+                });
+                //}
+            }
+            catch (Exception e) {
+                // Return to UI for showing errors
+                ExecutionThread.UI(fragment, ()->{
+                    PopupMessage.warning(fragment, "There has been an error: " + e.getMessage());
+                });
+            }
+        });
+    }
 }
