@@ -1,5 +1,7 @@
 package com.econnect.client.Profile;
 
+import static com.econnect.API.ProfileService.*;
+
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,7 +31,7 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> impl
     private final ProfileController ctrl = new ProfileController(this);
     private AlertDialog.Builder deleterBuilder;
     private AlertDialog deleter;
-    private TextView passwordDelete, acceptDelete, username;
+    private TextView passwordDelete, acceptDelete, username, email, id_medal;
     private Button deleteButton, cancelButton;
 
     public ProfileFragment() {
@@ -39,28 +41,36 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> impl
     @Override
     protected void addListeners() {
         binding.profileMenuButton.setOnClickListener( view -> showProfileMenu(view));
-        setDetailsUser();
-    }
-
-    void setDetailsUser() {
-        View v = this.getView();
-        username = v.findViewById(R.id.usernameText);
-        ProfileService.User u = ctrl.getInfoUser();
-        if (u != null) {
-            username.setText(u.username);
-        }
+        ctrl.getInfoUser();
     }
 
     void enableInput() {
         binding.profileMenuButton.setEnabled(true);
     }
 
-    void setActiveMedal() {
-        //Change the active medal
+    void setActiveMedal(User u) {
+        View v = this.getView();
+        id_medal = v.findViewById(R.id.idMedalText);
+        if (u != null) {
+            int name = u.activeMedal;
+            id_medal.setText(String.valueOf(name));
+        }
     }
 
-    void setUsername() {
+    void setEmail(User u) {
+        View v = this.getView();
+        email = v.findViewById(R.id.emailText);
+        if (u != null) {
+            email.setText(u.email);
+        }
+    }
 
+    void setUsername(User u) {
+        View v = this.getView();
+        username = v.findViewById(R.id.usernameText);
+        if (u != null) {
+            username.setText(u.username);
+        }
     }
 
 

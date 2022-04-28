@@ -7,6 +7,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 
 import com.econnect.API.LoginService;
+import com.econnect.API.ProductService;
 import com.econnect.API.ProfileService;
 import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
@@ -17,12 +18,10 @@ public class ProfileController {
 
     private final ProfileFragment fragment;
     private final ActivityResultLauncher<Intent> _activityLauncher;
-    private  ProfileService.User u;
 
 
     ProfileController(ProfileFragment fragment) {
         this.fragment = fragment;
-        this.u = null;
         _activityLauncher = fragment.registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 this::launchDetailsCallback
@@ -38,8 +37,10 @@ public class ProfileController {
         try {
 
             ExecutionThread.UI(fragment, () -> {
-                fragment.setActiveMedal();
-                fragment.setUsername();
+                //por ahora paso un null pero esto se tiene que cambiar
+                fragment.setActiveMedal(null);
+                fragment.setUsername(null);
+                fragment.setEmail(null);
                 fragment.enableInput();
             });
         }
@@ -77,13 +78,7 @@ public class ProfileController {
     }
 
     public void editButtonClick() {
-        // Launch new activity PostActivity
-        Intent intent = new Intent(fragment.getContext(), EditProfileActivity.class);
-        _activityLauncher.launch(intent);
-    }
-
-    public ProfileService.User getInfoUser() {
-
+        /*
         // This could take some time (and accesses the internet), run on non-UI thread
         ExecutionThread.nonUI(() -> {
             try {
@@ -92,17 +87,45 @@ public class ProfileController {
             catch (Exception e) {
                 // Return to UI for showing errors
                 ExecutionThread.UI(fragment, ()->{
-                    PopupMessage.warning(fragment, "There has been an error: " + e.getMessage());
+                    PopupMessage.warning(fragment, "Could not get user info: " + e.getMessage());
                 });
             }
         });
-        return u;
+
+        // Launch new activity PostActivity
+        Intent intent = new Intent(fragment.getContext(), EditProfileActivity.class);
+        // Pass parameters to activity
+        intent.putExtra("username", u.username);
+        intent.putExtra("email", u.email);
+        intent.putExtra("isPrivate", u.isPrivate);
+
+        _activityLauncher.launch(intent);
+        */
     }
 
-    private void attemptGetInfo() {
-        // Post
-        ProfileService profileService = ServiceFactory.getInstance().getProfileService();
-        u = profileService.getInfoUser();
+    public void getInfoUser() {
+
+        // This could take some time (and accesses the internet), run on non-UI thread
+        ExecutionThread.nonUI(() -> {
+            try {
+                ProfileService profileService = ServiceFactory.getInstance().getProfileService();
+                ProfileService.User u = profileService.getInfoUser();
+
+                ExecutionThread.UI(fragment, () -> {
+                    fragment.setActiveMedal(u);
+                    fragment.setUsername(u);
+                    fragment.setEmail(u);
+                    fragment.enableInput();
+                });
+            }
+            catch (Exception e) {
+                // Return to UI for showing errors
+                ExecutionThread.UI(fragment, ()->{
+                    PopupMessage.warning(fragment, "Could not get user info: " + e.getMessage());
+                });
+            }
+
+        });
     }
 
     public void deleteAccount(CharSequence password) {

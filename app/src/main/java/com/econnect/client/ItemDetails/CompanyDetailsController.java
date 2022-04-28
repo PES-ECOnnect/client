@@ -79,6 +79,7 @@ public class CompanyDetailsController implements IDetailsController {
 
     @Override
     public void answerQuestion(int questionId, QuestionAnswer answer){
+        updateQuestionsUi(questionId, answer);
         ExecutionThread.nonUI(()->{
             try{
                 QuestionService questionService = ServiceFactory.getInstance().getQuestionService();
@@ -91,7 +92,6 @@ public class CompanyDetailsController implements IDetailsController {
                 else {
                     questionService.removeQuestionCompany(_companyId, questionId);
                 }
-                updateQuestionsUi(questionId, answer);
             }
             catch (Exception e){
                 ExecutionThread.UI(_fragment, () -> {
@@ -102,7 +102,7 @@ public class CompanyDetailsController implements IDetailsController {
     }
 
     public void updateQuestionsUi(int idQuestionUpdated, QuestionAnswer newAnswer){
-        ProductService.ProductDetails.Question q = _company.questions[idQuestionUpdated];
+        ProductService.ProductDetails.Question q = _company.getQuestion(idQuestionUpdated);
         String oldAnswer = q.user_answer;
 
         if (newAnswer == QuestionAnswer.yes) {
