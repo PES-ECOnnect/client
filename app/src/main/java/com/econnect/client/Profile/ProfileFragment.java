@@ -3,12 +3,17 @@ package com.econnect.client.Profile;
 import static com.econnect.API.ProfileService.*;
 
 import android.app.AlertDialog;
+import android.graphics.drawable.Drawable;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
+
 import com.econnect.Utilities.CustomFragment;
+import com.econnect.client.Products.ProductListAdapter;
 import com.econnect.client.R;
 import com.econnect.client.databinding.FragmentProfileBinding;
 
@@ -16,6 +21,8 @@ import com.econnect.client.databinding.FragmentProfileBinding;
 public class ProfileFragment extends CustomFragment<FragmentProfileBinding> implements PopupMenu.OnMenuItemClickListener {
     
     private final ProfileController ctrl = new ProfileController(this);
+    private MedalListAdapter medals_adapter;
+
     private AlertDialog.Builder deleterBuilder;
     private AlertDialog deleter;
     private TextView passwordDelete, acceptDelete, username, email, id_medal;
@@ -58,6 +65,14 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> impl
         if (u != null) {
             username.setText(u.username);
         }
+    }
+
+    void setMedals(User u) {
+        int highlightColor = ContextCompat.getColor(getContext(), R.color.green);
+        Drawable defaultImage = ContextCompat.getDrawable(getContext(), R.drawable.ic_medal_24);
+        medals_adapter = new MedalListAdapter(this, highlightColor, defaultImage, u.medals);
+        binding.medalsList.setAdapter(medals_adapter);
+        binding.medalsList.refreshDrawableState();
     }
 
 

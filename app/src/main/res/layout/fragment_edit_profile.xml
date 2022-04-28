@@ -7,7 +7,7 @@
     tools:context=".Profile.EditFragment">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/registerUsernameBox"
+        android:id="@+id/editUsernameBox"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="250dp"
         android:layout_height="65dp"
@@ -23,7 +23,7 @@
         app:layout_constraintVertical_bias="0.273">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/registerUsernameText"
+            android:id="@+id/editUsernameText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/username_textbox_hint"
@@ -45,13 +45,13 @@
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerUsernameBox">
+        app:layout_constraintTop_toBottomOf="@+id/editUsernameBox">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/newPasswordText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/password_textbox_hint"
+            android:hint="@string/new_password"
             android:inputType="textPassword"
             android:singleLine="true"
             tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
@@ -76,14 +76,14 @@
             android:id="@+id/oldPasswordText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/password_textbox_hint"
+            android:hint="@string/old_password"
             android:inputType="textPassword"
             android:singleLine="true"
             tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/registerEmailBox"
+        android:id="@+id/editEmailBox"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="250dp"
         android:layout_height="65dp"
@@ -98,7 +98,7 @@
         app:layout_constraintTop_toBottomOf="@+id/oldPasswordBox">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/registerEmailText"
+            android:id="@+id/editEmailText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email_textbox_hint"
@@ -120,7 +120,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerEmailBox" />
+        app:layout_constraintTop_toBottomOf="@+id/editEmailBox" />
 
     <Switch
         android:id="@+id/switchPrivate"
@@ -129,11 +129,12 @@
         android:layout_marginTop="28dp"
         android:layout_marginBottom="56dp"
         android:minHeight="48dp"
-        android:text="private"
+        android:text="Account private"
         app:layout_constraintBottom_toTopOf="@+id/changes_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintHorizontal_bias="0.299"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerEmailBox" />
+        app:layout_constraintTop_toBottomOf="@+id/editEmailBox"
+        app:layout_constraintVertical_bias="0.562" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
