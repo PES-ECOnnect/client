@@ -84,6 +84,7 @@ public interface ApiConstants {
     // Login
     String ERROR_USER_NOT_FOUND = "ERROR_USER_NOT_FOUND";
     String ERROR_WRONG_PASSWORD = "ERROR_USER_INCORRECT_PASSWORD";
+    String ERROR_BANNED = "ERROR_BANNED";
 
     // Sign up
     String ERROR_USERNAME_EXISTS = "ERROR_USER_USERNAME_EXISTS";

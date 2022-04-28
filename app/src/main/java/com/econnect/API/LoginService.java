@@ -38,6 +38,8 @@ public class LoginService extends Service {
                     throw new RuntimeException("No account found for this email");
                 case ApiConstants.ERROR_WRONG_PASSWORD:
                     throw new RuntimeException("Incorrect password for this email");
+                case ApiConstants.ERROR_BANNED:
+                    throw new RuntimeException("Your account has been suspended!");
                 default:
                     throw e;
             }

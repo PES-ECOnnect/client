@@ -3,8 +3,6 @@ package com.econnect.client.RegisterLogin;
 import android.view.View;
 
 import com.econnect.API.LoginService;
-import com.econnect.API.RegisterService;
-import com.econnect.API.Service;
 import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
@@ -13,30 +11,30 @@ import com.econnect.client.R;
 
 public class LoginController {
 
-    private final LoginFragment fragment;
-    private final IThirdPartyLogin googleLogin = new GoogleLogin();
+    private final LoginFragment _fragment;
+    private final IThirdPartyLogin _googleLogin = new GoogleLogin();
 
     LoginController(LoginFragment fragment) {
-        this.fragment = fragment;
+        this._fragment = fragment;
     }
 
     // Boilerplate for interfacing with the fragment
     View.OnClickListener loginButton() { return view -> loginButtonClick(); }
     View.OnClickListener toRegisterButton() { return view -> registerButtonClick(); }
-    View.OnClickListener googleLogin() { return view -> ExecutionThread.nonUI(googleLogin::buttonPressed); }
+    View.OnClickListener googleLogin() { return view -> ExecutionThread.nonUI(_googleLogin::buttonPressed); }
 
 
     private void loginButtonClick() {
         // Get email and password
-        String user_email = fragment.getEmailText();
-        String user_pass = fragment.getPasswordText();
+        String user_email = _fragment.getEmailText();
+        String user_pass = _fragment.getPasswordText();
 
         // Local validation
         if (user_email.isEmpty() || user_pass.isEmpty()) {
-            PopupMessage.warning(fragment, "You have to fill all the fields");
+            PopupMessage.warning(_fragment, "You have to fill all the fields");
             return;
         }
-        fragment.enableInput(false);
+        _fragment.enableInput(false);
 
         // This could take some time (and accesses the internet), run on non-UI thread
         ExecutionThread.nonUI(() -> {
@@ -45,22 +43,22 @@ public class LoginController {
             }
             catch (Exception e) {
                 // Return to UI for showing errors
-                ExecutionThread.UI(fragment, ()->{
-                    fragment.enableInput(true);
-                    PopupMessage.warning(fragment, "Could not login: " + e.getMessage());
+                ExecutionThread.UI(_fragment, ()->{
+                    _fragment.enableInput(true);
+                    PopupMessage.warning(_fragment, "Could not login: " + e.getMessage());
                 });
             }
         });
     }
 
     private void registerButtonClick() {
-        ExecutionThread.navigate(fragment, R.id.action_navigate_to_register);
+        ExecutionThread.navigate(_fragment, R.id.action_navigate_to_register);
     }
 
     // Called once the view has been initialized
     void attemptAutoLogin() {
         LoginService loginService = ServiceFactory.getInstance().getLoginService();
-        SettingsFile file = new SettingsFile(fragment);
+        SettingsFile file = new SettingsFile(_fragment);
         boolean success = loginService.autoLogin(file);
         if (success) {
             navigateToMainMenu();
@@ -68,49 +66,57 @@ public class LoginController {
     }
 
     void initializeThirdPartyLogins() {
-        googleLogin.initialize(fragment, this::thirdPartyloginCallback);
+        _googleLogin.initialize(_fragment, thirdPartyloginCallback);
     }
 
-    private void thirdPartyloginCallback(String email, String name, String password) {
-        // Try to login. If the user does not exist, sign up
+    private IThirdPartyLogin.IThirdPartyLoginCallback thirdPartyloginCallback = new IThirdPartyLogin.IThirdPartyLoginCallback() {
+        @Override
+        public void onLogin(String email, String name, String password) {
+            // Try to login. If the user does not exist, sign up
 
-        // This could take some time (and accesses the internet), run on non-UI thread
-        ExecutionThread.nonUI(() -> {
-            try {
-                attemptLogin(email, password);
-            }
-            catch (Exception e) {
-                // No account found, create account
-                if (e.getMessage().equals("No account found for this email")) {
-                    SettingsFile file = new SettingsFile(fragment);
-                    ServiceFactory.getInstance().getRegisterService().register(email, password, name, file);
-
-                    navigateToMainMenu();
-                    return;
+            // This could take some time (and accesses the internet), run on non-UI thread
+            ExecutionThread.nonUI(() -> {
+                try {
+                    attemptLogin(email, password);
                 }
+                catch (Exception e) {
+                    // No account found, create account
+                    if (e.getMessage().equals("No account found for this email")) {
+                        SettingsFile file = new SettingsFile(_fragment);
+                        ServiceFactory.getInstance().getRegisterService().register(email, password, name, file);
 
-                // Generic error
-                ExecutionThread.UI(fragment, ()->{
-                    fragment.enableInput(true);
-                    PopupMessage.warning(fragment, "Could not login with google: " + e.getMessage());
-                });
-            }
-        });
-    }
+                        navigateToMainMenu();
+                        return;
+                    }
+
+                    // Generic error
+                    ExecutionThread.UI(_fragment, ()->{
+                        _fragment.enableInput(true);
+                        PopupMessage.warning(_fragment, "Could not login with google: " + e.getMessage());
+                    });
+                }
+            });
+        }
+
+        @Override
+        public void printError(String error) {
+            PopupMessage.showToast(_fragment, error);
+        }
+    };
 
     private void attemptLogin(String email, String password) {
         // Login and store token
         LoginService loginService = ServiceFactory.getInstance().getLoginService();
-        SettingsFile file = new SettingsFile(fragment);
+        SettingsFile file = new SettingsFile(_fragment);
         loginService.login(email, password, file);
         // Success
         navigateToMainMenu();
     }
 
     private void navigateToMainMenu() {
-        ExecutionThread.UI(fragment, ()->{
-            fragment.enableInput(true);
-            ExecutionThread.navigate(fragment, R.id.action_successful_login);
+        ExecutionThread.UI(_fragment, ()->{
+            _fragment.enableInput(true);
+            ExecutionThread.navigate(_fragment, R.id.action_successful_login);
         });
     }
 

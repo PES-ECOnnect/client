@@ -7,7 +7,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult;
 import androidx.fragment.app.Fragment;
 
-import com.econnect.Utilities.PopupMessage;
 import com.econnect.client.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -20,10 +19,10 @@ public class GoogleLogin implements IThirdPartyLogin {
 
     private GoogleSignInClient _loginClient;
     private ActivityResultLauncher<Intent> _activityLauncher;
-    private ThirdPartyLoginCallback _callback;
+    private IThirdPartyLoginCallback _callback;
 
     @Override
-    public void initialize(Fragment owner, ThirdPartyLoginCallback callback) {
+    public void initialize(Fragment owner, IThirdPartyLoginCallback callback) {
         _callback = callback;
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -58,11 +57,12 @@ public class GoogleLogin implements IThirdPartyLogin {
         try {
             GoogleSignInAccount account = task.getResult(ApiException.class);
             _callback.onLogin(account.getEmail(), account.getDisplayName(), account.getIdToken());
-            // TODO: remove this
+            // Logout from Google (keep ECOnnect token) so that we can choose a different account next time
             logout();
         }
         catch (ApiException e) {
             // There has been an error, maybe user has cancelled login. Do nothing
+            _callback.printError("Could not login using Google");
         }
     }
 }
