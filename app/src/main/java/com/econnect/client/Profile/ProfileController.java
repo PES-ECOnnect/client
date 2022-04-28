@@ -18,6 +18,7 @@ public class ProfileController {
 
     private final ProfileFragment fragment;
     private final ActivityResultLauncher<Intent> _activityLauncher;
+    private  ProfileService.User u;
 
 
     ProfileController(ProfileFragment fragment) {
@@ -78,19 +79,6 @@ public class ProfileController {
     }
 
     public void editButtonClick() {
-        /*
-        // This could take some time (and accesses the internet), run on non-UI thread
-        ExecutionThread.nonUI(() -> {
-            try {
-                attemptGetInfo();
-            }
-            catch (Exception e) {
-                // Return to UI for showing errors
-                ExecutionThread.UI(fragment, ()->{
-                    PopupMessage.warning(fragment, "Could not get user info: " + e.getMessage());
-                });
-            }
-        });
 
         // Launch new activity PostActivity
         Intent intent = new Intent(fragment.getContext(), EditProfileActivity.class);
@@ -100,7 +88,6 @@ public class ProfileController {
         intent.putExtra("isPrivate", u.isPrivate);
 
         _activityLauncher.launch(intent);
-        */
     }
 
     public void getInfoUser() {
@@ -109,7 +96,7 @@ public class ProfileController {
         ExecutionThread.nonUI(() -> {
             try {
                 ProfileService profileService = ServiceFactory.getInstance().getProfileService();
-                ProfileService.User u = profileService.getInfoUser();
+                u = profileService.getInfoUser();
 
                 ExecutionThread.UI(fragment, () -> {
                     fragment.setActiveMedal(u);

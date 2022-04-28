@@ -7,4 +7,8 @@ public class EditProfileController {
     EditProfileController(EditFragment fragment) {
         this.fragment = fragment;
     }
+
+    public void changeAtributes() {
+
+    }
 }

@@ -91,26 +91,26 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.705"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/userImage"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.112" />
 
 
     <TextView
         android:id="@+id/emailText"
-        android:layout_width="259dp"
-        android:layout_height="26dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="64dp"
-        android:textSize="16sp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/medalsText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.105"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userImage"
-        app:layout_constraintVertical_bias="0.428"
+        app:layout_constraintVertical_bias="1.0"
         tools:text="Email" />
 
     <TextView
@@ -127,13 +127,12 @@
 
     <ListView
         android:id="@+id/medalsList"
-        android:layout_width="412dp"
-        android:layout_height="332dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.852" />
+        app:layout_constraintTop_toBottomOf="@+id/medalsText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

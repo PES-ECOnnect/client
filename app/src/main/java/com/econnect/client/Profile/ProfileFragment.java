@@ -68,11 +68,11 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> impl
     }
 
     void setMedals(User u) {
-        /*int highlightColor = ContextCompat.getColor(getContext(), R.color.green);
+        int highlightColor = ContextCompat.getColor(getContext(), R.color.green);
         Drawable defaultImage = ContextCompat.getDrawable(getContext(), R.drawable.ic_medal_24);
         medals_adapter = new MedalListAdapter(this, highlightColor, defaultImage, u.medals);
         binding.medalsList.setAdapter(medals_adapter);
-        binding.medalsList.refreshDrawableState();*/
+        binding.medalsList.refreshDrawableState();
     }
 
 

@@ -17,33 +17,27 @@ public class ProfileService extends Service {
         public  int activeMedal;
         public  String email;
         public  String home;
-        //public ArrayList<Medal> medals;
-        public int[] medals;
+        public Medal[] medals;
         public Boolean isPrivate;
         //public final String imageUser;
 
-        public User(String username, int activeMedal, String email, String home, int[] medals, Boolean isPrivate) {
+        public User(String username, int activeMedal, String email, String home, Medal[] medals, Boolean isPrivate) {
             this.username = username;
             this.activeMedal = activeMedal;
             this.email = email;
             this.home = home;
             this.isPrivate = isPrivate;
             this.medals = medals;
-            /*this.medals = new ArrayList<>();
-            for (int m: medals) {
-                Medal aux = new Medal(m);
-                this.medals.add(aux);
-            }*/
         }
 
         public static class Medal {
-            //public  String nameMedal;
-            public int idMedal;
+            public  String medalname;
+            public int idmedal;
             //public final String imageMedal;
 
-            public Medal (int idMedal) {
-                this.idMedal = idMedal;
-                //this.nameMedal = nameMedal;
+            public Medal (int idmedal, String medalname) {
+                this.idmedal = idmedal;
+                this.medalname = medalname;
                 //this.imageMedal = imageMedal;
             }
         }
