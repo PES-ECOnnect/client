@@ -1,5 +1,10 @@
 # PES_ECOnnect (Client)
 
+## Deployment
+[ECOnnect Play Store](https://play.google.com/store/apps/details?id=com.econnect.client)
+
+[Releases](https://github.com/PES-ECOnnect/client/releases)
+
 ## Team Members
 | Name | GitHub username | Taiga username |
 | --- | --- | --- |

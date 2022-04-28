@@ -77,6 +77,14 @@ public class CompanyService extends Service {
             this.ratings = ratings;
             this.userRate = userRate;
         }
+
+        public Question getQuestion(int id) {
+            for (Question q : questions) {
+                if (q.questionid == id)
+                    return q;
+            }
+            return null;
+        }
     }
     
     // Get all companies
