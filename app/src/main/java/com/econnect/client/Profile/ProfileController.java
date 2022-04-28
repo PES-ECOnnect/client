@@ -134,7 +134,7 @@ public class ProfileController {
                 ProfileService profileService = ServiceFactory.getInstance().getProfileService();
                 //check Password
                 //if(profileService.checkPassword(password)){
-                String p = (String)password;
+                String p = password.toString();
                 profileService.deleteAccount(p);
                 ServiceFactory.getInstance().getLoginService().logout();
 
@@ -146,7 +146,7 @@ public class ProfileController {
             catch (Exception e) {
                 // Return to UI for showing errors
                 ExecutionThread.UI(fragment, ()->{
-                    PopupMessage.warning(fragment, "There has been an error: " + e.getMessage());
+                    PopupMessage.warning(fragment, "No s'ha pogut esborrar el compte: " + e.getMessage());
                 });
             }
         });
