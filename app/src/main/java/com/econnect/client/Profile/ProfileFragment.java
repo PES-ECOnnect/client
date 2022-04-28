@@ -87,8 +87,8 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> impl
         deleter.show();
 
         deleteButton.setOnClickListener(view -> {
-            if(acceptDelete.getText().equals("I ACCEPT")) {
-                ctrl.deleteAccount((String) passwordDelete.getText());
+            if(acceptDelete.getText().toString().equals("I ACCEPT")) {
+                ctrl.deleteAccount(passwordDelete.getText());
                 deleter.dismiss();
             }
             else {

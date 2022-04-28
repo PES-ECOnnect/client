@@ -201,12 +201,28 @@ public class StubHttpClient implements HttpClient {
 
             case "/products/1/review":
                 expectParams(params, "token", "review");
-                return "";
+                return "{\"status\":\"success\"}";
 
             case "/products/2/review":
                 expectParams(params, "token", "review");
                 return "{\"error\":\"ERROR_PRODUCT_NOT_EXISTS\"}";
-            
+
+            case "/products/1/answer":
+                expectParams(params, "token", "questionIndex", "chosenOption");
+                return "{\"status\":\"success\"}";
+
+            case "/companies/1/answer":
+                expectParams(params, "token", "questionIndex", "chosenOption");
+                return "{\"status\":\"success\"}";
+
+            case "/products/2/answer":
+                expectParams(params, "token", "questionIndex", "chosenOption");
+                return "{\"error\":\"ERROR_PRODUCT_NOT_EXISTS\"}";
+
+            case "/companies/2/answer":
+                expectParams(params, "token", "questionIndex", "chosenOption");
+                return "{\"error\":\"ERROR_PRODUCT_NOT_EXISTS\"}";
+
             default:
                 throw new RuntimeException("Invalid path: " + path);
         }

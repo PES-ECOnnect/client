@@ -154,12 +154,14 @@ public class ProfileService extends Service {
         return user;
     }
 
-    public void deleteAccount() {
+    public void deleteAccount(String password) {
+        TreeMap<String, String> params = new TreeMap<>();
+        params.put(ApiConstants.LOGIN_PASSWORD, password);
         JsonResult result = null;
         try {
             // Call API
             super.needsToken = true;
-            result = delete(ApiConstants.REGISTER_PATH, null);
+            result = delete(ApiConstants.REGISTER_PATH, params);
         } catch (ApiException e) {
             switch (e.getErrorCode()) {
                 // This endpoint does not throw any errors

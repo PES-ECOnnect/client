@@ -42,7 +42,7 @@ public class ReviewServiceTest {
         ServiceTestHelper.setToken();
         expectException(() ->
                         sv.reviewProduct(2, 3),
-                "The server responded with error code ERROR_PRODUCT_NOT_EXISTS"
+                "The product with id 2 does not exist"
         );
     }
 

@@ -89,7 +89,7 @@ public interface ApiConstants {
 
     // Get products/companies
     String ERROR_TYPE_NOT_EXISTS = "ERROR_TYPE_NOT_EXISTS";
-    String ERROR_PRODUCT_NOT_EXISTS = "ERROR_INCORRECT_ID_REVIEWABLE";
+    String ERROR_PRODUCT_NOT_EXISTS = "ERROR_PRODUCT_NOT_EXISTS";
     String ERROR_COMPANY_NOT_EXISTS = "ERROR_INCORRECT_ID_REVIEWABLE";
 
     // Delete posts

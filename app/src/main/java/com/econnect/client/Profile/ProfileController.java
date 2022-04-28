@@ -105,13 +105,16 @@ public class ProfileController {
         u = profileService.getInfoUser();
     }
 
-    public void deleteAccount(String password) {
+    public void deleteAccount(CharSequence password) {
         ExecutionThread.nonUI(() -> {
             try {
                 ProfileService profileService = ServiceFactory.getInstance().getProfileService();
                 //check Password
                 //if(profileService.checkPassword(password)){
-                profileService.deleteAccount();
+                String p = (String)password;
+                profileService.deleteAccount(p);
+                ServiceFactory.getInstance().getLoginService().logout();
+
                 ExecutionThread.UI(fragment, ()->{
                     fragment.getActivity().finish();
                 });
