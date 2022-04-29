@@ -7,7 +7,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 
 import com.econnect.API.LoginService;
-import com.econnect.API.ProductService;
 import com.econnect.API.ProfileService;
 import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
@@ -16,13 +15,13 @@ import com.econnect.Utilities.PopupMessage;
 
 public class ProfileController {
 
-    private final ProfileFragment fragment;
+    private final ProfileFragment _fragment;
     private final ActivityResultLauncher<Intent> _activityLauncher;
     private  ProfileService.User u;
 
 
     ProfileController(ProfileFragment fragment) {
-        this.fragment = fragment;
+        this._fragment = fragment;
         _activityLauncher = fragment.registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 this::launchDetailsCallback
@@ -37,17 +36,17 @@ public class ProfileController {
     private void updateProfile() {
         try {
 
-            ExecutionThread.UI(fragment, () -> {
+            ExecutionThread.UI(_fragment, () -> {
                 //por ahora paso un null pero esto se tiene que cambiar
-                fragment.setActiveMedal(null);
-                fragment.setUsername(null);
-                fragment.setEmail(null);
-                fragment.enableInput();
+                _fragment.setActiveMedal(null);
+                _fragment.setUsername(null);
+                _fragment.setEmail(null);
+                _fragment.enableInput();
             });
         }
         catch (Exception e) {
-            ExecutionThread.UI(fragment, ()->{
-                PopupMessage.warning(fragment, "Could not fetch profile:\n" + e.getMessage());
+            ExecutionThread.UI(_fragment, ()->{
+                PopupMessage.warning(_fragment, "Could not fetch profile:\n" + e.getMessage());
             });
         }
     }
@@ -56,22 +55,22 @@ public class ProfileController {
 
     public void logoutButtonClick() {
         // Show dialog
-        PopupMessage.yesNoDialog(fragment, "Log out", "Are you sure?", (dialog, id) -> {
+        PopupMessage.yesNoDialog(_fragment, "Log out", "Are you sure?", (dialog, id) -> {
             // If YES option is selected:
             ExecutionThread.nonUI(() -> {
                 // Logout
                 LoginService loginService = ServiceFactory.getInstance().getLoginService();
                 try {
                     loginService.logout();
-                    ExecutionThread.UI(fragment, ()->{
-                        fragment.getActivity().finish();
+                    ExecutionThread.UI(_fragment, ()->{
+                        _fragment.getActivity().finish();
                     });
                 }
                 catch (Exception e) {
                     // Return to UI for showing errors
-                    ExecutionThread.UI(fragment, ()->{
+                    ExecutionThread.UI(_fragment, ()->{
                         // Even if there has been an error, return to login anyways
-                        fragment.getActivity().finish();
+                        _fragment.getActivity().finish();
                     });
                 }
             });
@@ -81,7 +80,7 @@ public class ProfileController {
     public void editButtonClick() {
 
         // Launch new activity PostActivity
-        Intent intent = new Intent(fragment.getContext(), EditProfileActivity.class);
+        Intent intent = new Intent(_fragment.requireContext(), EditProfileActivity.class);
         // Pass parameters to activity
         intent.putExtra("username", u.username);
         intent.putExtra("email", u.email);
@@ -98,18 +97,18 @@ public class ProfileController {
                 ProfileService profileService = ServiceFactory.getInstance().getProfileService();
                 u = profileService.getInfoUser();
 
-                ExecutionThread.UI(fragment, () -> {
-                    fragment.setActiveMedal(u);
-                    fragment.setUsername(u);
-                    fragment.setEmail(u);
-                    fragment.setMedals(u);
-                    fragment.enableInput();
+                ExecutionThread.UI(_fragment, () -> {
+                    _fragment.setActiveMedal(u);
+                    _fragment.setUsername(u);
+                    _fragment.setEmail(u);
+                    _fragment.setMedals(u);
+                    _fragment.enableInput();
                 });
             }
             catch (Exception e) {
                 // Return to UI for showing errors
-                ExecutionThread.UI(fragment, ()->{
-                    PopupMessage.warning(fragment, "Could not get user info: " + e.getMessage());
+                ExecutionThread.UI(_fragment, ()->{
+                    PopupMessage.warning(_fragment, "Could not get user info: " + e.getMessage());
                 });
             }
 

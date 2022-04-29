@@ -2,12 +2,14 @@ package com.econnect.client.RegisterLogin;
 
 import android.view.View;
 
+import com.econnect.API.Exceptions.AccountNotFoundException;
 import com.econnect.API.LoginService;
 import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
 import com.econnect.Utilities.SettingsFile;
 import com.econnect.client.R;
+import com.econnect.client.RegisterLogin.IThirdPartyLogin.IThirdPartyLoginCallback;
 
 public class LoginController {
 
@@ -69,7 +71,7 @@ public class LoginController {
         _googleLogin.initialize(_fragment, thirdPartyloginCallback);
     }
 
-    private IThirdPartyLogin.IThirdPartyLoginCallback thirdPartyloginCallback = new IThirdPartyLogin.IThirdPartyLoginCallback() {
+    private final IThirdPartyLoginCallback thirdPartyloginCallback = new IThirdPartyLoginCallback() {
         @Override
         public void onLogin(String email, String name, String password) {
             // Try to login. If the user does not exist, sign up
@@ -79,16 +81,13 @@ public class LoginController {
                 try {
                     attemptLogin(email, password);
                 }
-                catch (Exception e) {
+                catch (AccountNotFoundException e) {
                     // No account found, create account
-                    if (e.getMessage().equals("No account found for this email")) {
-                        SettingsFile file = new SettingsFile(_fragment);
-                        ServiceFactory.getInstance().getRegisterService().register(email, password, name, file);
-
-                        navigateToMainMenu();
-                        return;
-                    }
-
+                    SettingsFile file = new SettingsFile(_fragment);
+                    ServiceFactory.getInstance().getRegisterService().register(email, password, name, file);
+                    navigateToMainMenu();
+                }
+                catch (Exception e) {
                     // Generic error
                     ExecutionThread.UI(_fragment, ()->{
                         _fragment.enableInput(true);

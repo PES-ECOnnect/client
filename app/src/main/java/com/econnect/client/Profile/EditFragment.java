@@ -1,49 +1,33 @@
 package com.econnect.client.Profile;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Switch;
-
 import com.econnect.Utilities.CustomFragment;
-import com.econnect.client.R;
 import com.econnect.client.databinding.FragmentEditProfileBinding;
-import com.google.android.material.textfield.TextInputEditText;
 
 public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
 
-    private EditProfileController _ctrl;
-    private String username;
-    private String email;
-    private Boolean isPrivate;
-    private TextInputEditText username_form, email_form;
-    private Switch isPrivate_form;
+    private final EditProfileController _ctrl = new EditProfileController(this);
+    private final String _username;
+    private final String _email;
+    private final Boolean _isPrivate;
 
 
     public EditFragment(String username, String email, Boolean isPrivate) {
         super(FragmentEditProfileBinding.class);
-        this.username = username;
-        this.email = email;
-        this.isPrivate = isPrivate;
-    }
-
-    public void setController(EditProfileController ctrl) {
-        this._ctrl = ctrl;
+        this._username = username;
+        this._email = email;
+        this._isPrivate = isPrivate;
     }
 
     @Override
     protected void addListeners() {
         binding.changesButton.setOnClickListener(View -> _ctrl.changeAtributes());
-        setDefaultValors();
+        setDefaultValues();
     }
 
-    public void setDefaultValors() {
-        View v = this.getView();
-        username_form = v.findViewById(R.id.editUsernameText);
-        username_form.setText(username);
-        email_form = v.findViewById(R.id.editEmailText);
-        email_form.setText(email);
-        isPrivate_form = v.findViewById(R.id.switchPrivate);
-        isPrivate_form.setChecked(isPrivate);
+    public void setDefaultValues() {
+        binding.editUsernameText.setText(_username);
+        binding.editEmailText.setText(_email);
+        binding.switchPrivate.setChecked(_isPrivate);
     }
 
 }

@@ -21,14 +21,12 @@ import com.econnect.client.R;
 
 public class MedalListAdapter extends BaseAdapter {
     private final Fragment owner;
-    private final int highlightColor;
     private final Drawable defaultImage;
     private final ProfileService.User.Medal[] medals;
     private static LayoutInflater _inflater = null;
 
-    public MedalListAdapter(Fragment owner, int highlightColor, Drawable defaultImage, ProfileService.User.Medal[] medals) {
+    public MedalListAdapter(Fragment owner, Drawable defaultImage, ProfileService.User.Medal[] medals) {
         this.owner = owner;
-        this.highlightColor = highlightColor;
         this.defaultImage = defaultImage;
         this.medals = medals;
         _inflater = (LayoutInflater) owner.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);

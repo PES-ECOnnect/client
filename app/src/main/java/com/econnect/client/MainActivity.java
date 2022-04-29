@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private OnItemSelectedListener bottomNavSelected = item -> {
+    private final OnItemSelectedListener bottomNavSelected = item -> {
         navigateToScreen(item.getItemId());
         return true;
     };

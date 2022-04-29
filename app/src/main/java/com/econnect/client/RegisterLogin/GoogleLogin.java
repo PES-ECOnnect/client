@@ -29,11 +29,11 @@ public class GoogleLogin implements IThirdPartyLogin {
                 .requestIdToken(owner.getString(R.string.google_client_id))
                 .requestEmail()
                 .build();
-        _loginClient = GoogleSignIn.getClient(owner.getContext(), gso);
+        _loginClient = GoogleSignIn.getClient(owner.requireContext(), gso);
 
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(owner.getContext());
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(owner.requireContext());
         if (account != null) {
             _callback.onLogin(account.getEmail(), account.getDisplayName(), account.getIdToken());
         }
