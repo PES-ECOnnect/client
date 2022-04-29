@@ -13,6 +13,7 @@ public class EditProfileActivity extends AppCompatActivity {
         // Init Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_profile_activity);
+        setTitle("Edit profile");
 
         Intent intent = getIntent();
         String username = intent.getStringExtra("username");
@@ -22,16 +23,12 @@ public class EditProfileActivity extends AppCompatActivity {
         // Enable back arrow in title bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Initialize fragment and corresponding controller (depending on type)
+        // Initialize fragment
         EditFragment fragment = new EditFragment(username, email, isPrivate);
-        EditProfileController ctrl = new EditProfileController(fragment);
-
-        fragment.setController(ctrl);
 
         // Display fragment
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.editProfileMainLayout, fragment).commit();
-
     }
 
     // If back arrow in title bar is pressed, finish activity

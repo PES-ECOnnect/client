@@ -2,8 +2,10 @@ package com.econnect.Utilities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
+import android.view.View;
+import android.widget.PopupMenu;
+import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -59,5 +61,12 @@ public class PopupMessage {
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    public static void showPopupMenu(int menuId, View anchor, OnMenuItemClickListener listener) {
+        PopupMenu popupMenu = new PopupMenu(anchor.getContext(), anchor);
+        popupMenu.setOnMenuItemClickListener(listener);
+        popupMenu.inflate(menuId);
+        popupMenu.show();
     }
 }

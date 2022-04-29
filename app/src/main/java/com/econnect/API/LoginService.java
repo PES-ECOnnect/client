@@ -3,6 +3,7 @@ package com.econnect.API;
 import java.util.TreeMap;
 
 import com.econnect.API.Exceptions.ApiException;
+import com.econnect.API.Exceptions.AccountNotFoundException;
 import com.econnect.Utilities.SettingsFile;
 
 public class LoginService extends Service {
@@ -35,9 +36,11 @@ public class LoginService extends Service {
         catch (ApiException e) {
             switch (e.getErrorCode()) {
                 case ApiConstants.ERROR_USER_NOT_FOUND:
-                    throw new RuntimeException("No account found for this email");
+                    throw new AccountNotFoundException();
                 case ApiConstants.ERROR_WRONG_PASSWORD:
                     throw new RuntimeException("Incorrect password for this email");
+                case ApiConstants.ERROR_BANNED:
+                    throw new RuntimeException("Your account has been suspended!");
                 default:
                     throw e;
             }

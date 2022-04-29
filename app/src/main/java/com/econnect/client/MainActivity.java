@@ -14,14 +14,14 @@ import com.econnect.Utilities.PopupMessage;
 import com.econnect.client.Companies.CompaniesFragment;
 import com.econnect.client.Forum.ForumFragment;
 import com.econnect.client.Products.ProductsFragment;
-import com.econnect.client.Profile.ProfileFragment;
+import com.econnect.client.Profile.LoggedUserProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView.OnItemSelectedListener;
 
 public class MainActivity extends AppCompatActivity {
 
     private final Fragment[] _fragments = {new ProductsFragment(), new CompaniesFragment(),
-            new ForumFragment(), new ProfileFragment()};
+            new ForumFragment(), new LoggedUserProfileFragment()};
 
     // Default screen is Products
     private Fragment _selectedFragment = _fragments[0];
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private OnItemSelectedListener bottomNavSelected = item -> {
+    private final OnItemSelectedListener bottomNavSelected = item -> {
         navigateToScreen(item.getItemId());
         return true;
     };

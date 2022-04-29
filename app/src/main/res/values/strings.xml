@@ -71,4 +71,8 @@
     <string name="password">password</string>
     <string name="old_password">Old Password</string>
     <string name="new_password">New Password</string>
+    <string name="active_medal">Active medal</string>
+    <string name="medals_text">Medals</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="private_account_toggle">Private account</string>
 </resources>
