@@ -29,29 +29,9 @@ public class ProfileController {
     }
 
     private void launchDetailsCallback(ActivityResult result) {
-        // Called once the user returns from details screen
-        ExecutionThread.nonUI(this::updateProfile);
+        // Called once the user returns from edit screen, refresh data
+        ExecutionThread.nonUI(this::getInfoUser);
     }
-
-    private void updateProfile() {
-        try {
-
-            ExecutionThread.UI(_fragment, () -> {
-                //por ahora paso un null pero esto se tiene que cambiar
-                _fragment.setActiveMedal(null);
-                _fragment.setUsername(null);
-                _fragment.setEmail(null);
-                _fragment.enableInput();
-            });
-        }
-        catch (Exception e) {
-            ExecutionThread.UI(_fragment, ()->{
-                PopupMessage.warning(_fragment, "Could not fetch profile:\n" + e.getMessage());
-            });
-        }
-    }
-
-    // Boilerplate for interfacing with the fragment
 
     public void logoutButtonClick() {
         // Show dialog
@@ -63,14 +43,14 @@ public class ProfileController {
                 try {
                     loginService.logout();
                     ExecutionThread.UI(_fragment, ()->{
-                        _fragment.getActivity().finish();
+                        _fragment.requireActivity().finish();
                     });
                 }
                 catch (Exception e) {
                     // Return to UI for showing errors
                     ExecutionThread.UI(_fragment, ()->{
                         // Even if there has been an error, return to login anyways
-                        _fragment.getActivity().finish();
+                        _fragment.requireActivity().finish();
                     });
                 }
             });
@@ -78,7 +58,6 @@ public class ProfileController {
     }
 
     public void editButtonClick() {
-
         // Launch new activity PostActivity
         Intent intent = new Intent(_fragment.requireContext(), EditProfileActivity.class);
         // Pass parameters to activity
@@ -90,7 +69,6 @@ public class ProfileController {
     }
 
     public void getInfoUser() {
-
         // This could take some time (and accesses the internet), run on non-UI thread
         ExecutionThread.nonUI(() -> {
             try {
@@ -102,7 +80,7 @@ public class ProfileController {
                     _fragment.setUsername(u);
                     _fragment.setEmail(u);
                     _fragment.setMedals(u);
-                    _fragment.enableInput();
+                    _fragment.enableInput(true);
                 });
             }
             catch (Exception e) {
@@ -111,7 +89,6 @@ public class ProfileController {
                     PopupMessage.warning(_fragment, "Could not get user info: " + e.getMessage());
                 });
             }
-
         });
     }
 }

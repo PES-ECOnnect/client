@@ -17,7 +17,7 @@ import com.econnect.client.databinding.FragmentProfileBinding;
 
 public class ProfileFragment extends CustomFragment<FragmentProfileBinding> {
     
-    private final ProfileController ctrl = new ProfileController(this);
+    protected final ProfileController ctrl = new ProfileController(this);
 
     public ProfileFragment() {
         super(FragmentProfileBinding.class);
@@ -25,12 +25,13 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> {
 
     @Override
     protected void addListeners() {
-        binding.profileMenuButton.setOnClickListener(view -> profileMenuClicked());
+        // Hide floating button for non-logged user profile
+        binding.profileMenuButton.setVisibility(View.GONE);
         ctrl.getInfoUser();
     }
 
-    void enableInput() {
-        binding.profileMenuButton.setEnabled(true);
+    void enableInput(boolean enabled) {
+        // Nothing to enable
     }
 
     void setActiveMedal(User u) {
@@ -57,47 +58,5 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> {
         MedalListAdapter medals_adapter = new MedalListAdapter(this, defaultImage, u.medals);
         binding.medalsList.setAdapter(medals_adapter);
         binding.medalsList.refreshDrawableState();
-    }
-
-
-    void profileMenuClicked(){
-        PopupMessage.showPopupMenu(R.menu.profile_menu, binding.profileMenuButton, menuItem -> {
-            // Called when an item is selected
-            switch (menuItem.getItemId()){
-                case R.id.profile_logout:
-                    ctrl.logoutButtonClick();
-                    break;
-                case R.id.profile_edit:
-                    ctrl.editButtonClick();
-                    break;
-                case R.id.profile_delete_account:
-                    createDeleteAccountDialog();
-                    break;
-                default:
-                    break;
-            }
-            return true;
-        });
-    }
-
-    public void createDeleteAccountDialog() {
-        AlertDialog.Builder deleterBuilder = new AlertDialog.Builder(requireContext());
-
-        final View deleterPopupView = getLayoutInflater().inflate(R.layout.delete_account, null);
-
-        Button deleteButton = deleterPopupView.findViewById(R.id.deleteAccountButton);
-        Button cancelButton = deleterPopupView.findViewById(R.id.deleteAccountCancel);
-
-        deleterBuilder.setView(deleterPopupView);
-        AlertDialog deleter = deleterBuilder.create();
-        deleter.show();
-
-        deleteButton.setOnClickListener(view -> {
-            deleter.dismiss();
-        });
-
-        cancelButton.setOnClickListener(view -> {
-            deleter.dismiss();
-        });
     }
 }

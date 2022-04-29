@@ -13,6 +13,7 @@ public class EditProfileActivity extends AppCompatActivity {
         // Init Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_profile_activity);
+        setTitle("Edit profile");
 
         Intent intent = getIntent();
         String username = intent.getStringExtra("username");
