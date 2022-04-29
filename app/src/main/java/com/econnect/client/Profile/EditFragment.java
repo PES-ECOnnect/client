@@ -1,6 +1,9 @@
 package com.econnect.client.Profile;
 
+import android.view.View;
+
 import com.econnect.Utilities.CustomFragment;
+import com.econnect.Utilities.PopupMessage;
 import com.econnect.client.databinding.FragmentEditProfileBinding;
 
 public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
@@ -20,8 +23,30 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
 
     @Override
     protected void addListeners() {
-        binding.changesButton.setOnClickListener(View -> _ctrl.changeAtributes());
+        binding.changesButton.setOnClickListener(View -> changeAttributes());
+        binding.changePassword.setOnClickListener(View -> changePassword());
         setDefaultValues();
+    }
+
+    private void changePassword() {
+        if (!(binding.newPasswordText.getText().toString().isEmpty()) && !(binding.oldPasswordText.getText().toString().isEmpty())) {
+            _ctrl.changePassword(binding.oldPasswordText.getText().toString(), binding.newPasswordText.getText().toString());
+        }
+        else {
+            PopupMessage.warning(this, "You have to fill old and new passwords");
+        }
+    }
+
+    private void changeAttributes() {
+        if (!binding.editUsernameText.getText().equals(_username)) {
+            _ctrl.changeUsername(binding.editUsernameText.getText().toString());
+        }
+        if (!binding.editEmailText.getText().equals(_email)) {
+            _ctrl.changeEmail(binding.editEmailText.getText().toString());
+        }
+        if (binding.switchPrivate.isChecked() != _isPrivate) {
+            _ctrl.changeIsPrivate(binding.switchPrivate.isChecked());
+        }
     }
 
     public void setDefaultValues() {

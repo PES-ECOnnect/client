@@ -11,13 +11,13 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="250dp"
         android:layout_height="65dp"
+        android:layout_marginTop="20dp"
         android:autofillHints=""
         android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.160000">
+        app:layout_constraintTop_toBottomOf="@+id/change_password">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editUsernameText"
@@ -35,12 +35,13 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="250dp"
         android:layout_height="65dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="50dp"
         android:autofillHints=""
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editUsernameBox">
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/newPasswordText"
@@ -61,6 +62,7 @@
         android:autofillHints=""
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newPasswordBox">
 
@@ -79,12 +81,13 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="250dp"
         android:layout_height="65dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="9dp"
         android:autofillHints=""
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/oldPasswordBox">
+        app:layout_constraintTop_toBottomOf="@+id/editUsernameBox">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editEmailText"
@@ -100,10 +103,10 @@
         android:id="@+id/changes_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add changes"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="21dp"
+        android:text="change attributes"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.81"
+        app:layout_constraintHorizontal_bias="0.861"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/switchPrivate"
         tools:ignore="TextContrastCheck" />
@@ -112,11 +115,23 @@
         android:id="@+id/switchPrivate"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:minHeight="48dp"
         android:text="@string/private_account_toggle"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editEmailBox" />
+
+    <Button
+        android:id="@+id/change_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:text="Change password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.823"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/oldPasswordBox" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
