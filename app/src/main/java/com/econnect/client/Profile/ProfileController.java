@@ -2,6 +2,8 @@ package com.econnect.client.Profile;
 
 
 import android.content.Intent;
+import android.widget.AdapterView;
+
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -87,6 +89,23 @@ public class ProfileController {
                 // Return to UI for showing errors
                 ExecutionThread.UI(_fragment, ()->{
                     PopupMessage.warning(_fragment, "Could not get user info: " + e.getMessage());
+                });
+            }
+        });
+    }
+
+    public void changeActiveMedal(int id) {
+
+        // This could take some time (and accesses the internet), run on non-UI thread
+        ExecutionThread.nonUI(() -> {
+            try {
+                ProfileService profileService = ServiceFactory.getInstance().getProfileService();
+                profileService.updateActiveMedal(id);
+            }
+            catch (Exception e) {
+                // Return to UI for showing errors
+                ExecutionThread.UI(_fragment, ()->{
+                    PopupMessage.warning(_fragment, "Could not update the active medal: " + e.getMessage());
                 });
             }
         });

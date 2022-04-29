@@ -75,4 +75,5 @@
     <string name="medals_text">Medals</string>
     <string name="edit_profile">Edit profile</string>
     <string name="private_account_toggle">Private account</string>
+    <string name="change_active_medal_text">Do you want to change your active medal for the one you just selected?</string>
 </resources>
