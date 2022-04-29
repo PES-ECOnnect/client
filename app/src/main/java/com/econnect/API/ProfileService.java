@@ -128,10 +128,10 @@ public class ProfileService extends Service {
         super.expectOkStatus(result);
     }
 
-    public void updateActiveMedal(String text) {
+    public void updateActiveMedal(int id) {
         // Add parameters
         TreeMap<String, String> params = new TreeMap<>();
-        params.put(ApiConstants.NEW_USER_MEDAL, text);
+        params.put(ApiConstants.NEW_USER_MEDAL, String.valueOf(id));
         JsonResult result = null;
         try {
             // Call API
