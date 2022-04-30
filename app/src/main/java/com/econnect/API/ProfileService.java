@@ -1,6 +1,7 @@
 package com.econnect.API;
 
 import com.econnect.API.Exceptions.ApiException;
+import com.econnect.API.Exceptions.ProfileIsPrivateException;
 
 import java.util.TreeMap;
 
@@ -66,8 +67,7 @@ public class ProfileService extends Service {
         } catch (ApiException e) {
             switch (e.getErrorCode()) {
                 case ApiConstants.ERROR_PRIVATE_USER:
-                    // TODO: Throw dedicated exception
-                    throw new RuntimeException("The profile of this user is private");
+                    throw new ProfileIsPrivateException();
                 default:
                     throw e;
             }

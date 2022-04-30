@@ -31,7 +31,8 @@ public class LoggedUserProfileController extends ProfileController {
     @Override
     protected ProfileService.User getUser() {
         ProfileService profileService = ServiceFactory.getInstance().getProfileService();
-        return profileService.getInfoLoggedUser();
+        u = profileService.getInfoLoggedUser();
+        return u;
     }
 
     private void launchDetailsCallback(ActivityResult result) {
@@ -72,27 +73,6 @@ public class LoggedUserProfileController extends ProfileController {
         intent.putExtra("isPrivate", u.isPrivate);
 
         _activityLauncher.launch(intent);
-    }
-
-    public void getInfoUser() {
-        // This could take some time (and accesses the internet), run on non-UI thread
-        ExecutionThread.nonUI(() -> {
-            try {
-                ProfileService profileService = ServiceFactory.getInstance().getProfileService();
-                u = profileService.getInfoLoggedUser();
-
-                ExecutionThread.UI(_fragment, () -> {
-                    _fragment.updateUI(u);
-                    _fragment.enableInput(true);
-                });
-            }
-            catch (Exception e) {
-                // Return to UI for showing errors
-                ExecutionThread.UI(_fragment, ()->{
-                    PopupMessage.warning(_fragment, "Could not get user info: " + e.getMessage());
-                });
-            }
-        });
     }
 
     public void changeActiveMedal(int id) {

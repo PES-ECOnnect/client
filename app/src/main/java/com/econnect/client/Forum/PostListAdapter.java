@@ -71,24 +71,27 @@ public class PostListAdapter extends BaseAdapter {
         if (convertView != null) vi = convertView;
         else vi = _inflater.inflate(R.layout.post_list_item, null);
 
+        // Set time text
+        TextView timeText = vi.findViewById(R.id.postTimeText);
+        timeText.setText(timestampToString((long) p.timestamp));
+
         // Set author name
         TextView authorName = vi.findViewById(R.id.postUsernameText);
         if (p.authorbanned) {
             authorName.setText(p.username + " 💀️");
             authorName.setTypeface(authorName.getTypeface(), Typeface.BOLD_ITALIC);
+            authorName.setOnClickListener(null);
+            authorName.setTextColor(timeText.getCurrentTextColor()); // Use the color of the time text as default
         }
         else {
             authorName.setText(p.username);
             authorName.setTypeface(authorName.getTypeface(), Typeface.BOLD);
+            authorName.setOnClickListener(view -> _callback.usernameClicked(p.userid));
+            authorName.setTextColor(_highlightColor);
         }
-        authorName.setOnClickListener(view -> _callback.usernameClicked(p.userid));
 
 
         // TODO: Set medal
-
-        // Set time text
-        TextView timeText = vi.findViewById(R.id.postTimeText);
-        timeText.setText(timestampToString((long) p.timestamp));
 
         // Set post body
         TextView textBody = vi.findViewById(R.id.postContentText);

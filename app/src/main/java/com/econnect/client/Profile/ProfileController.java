@@ -1,6 +1,7 @@
 package com.econnect.client.Profile;
 
 
+import com.econnect.API.Exceptions.ProfileIsPrivateException;
 import com.econnect.API.ProfileService;
 import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
@@ -26,6 +27,12 @@ public class ProfileController {
                 ExecutionThread.UI(_fragment, () -> {
                     _fragment.updateUI(u);
                     _fragment.enableInput(true);
+                });
+            }
+            catch (ProfileIsPrivateException e) {
+                ExecutionThread.UI(_fragment, ()->{
+                    PopupMessage.showToast(_fragment, e.getMessage());
+                    _fragment.requireActivity().finish();
                 });
             }
             catch (Exception e) {
