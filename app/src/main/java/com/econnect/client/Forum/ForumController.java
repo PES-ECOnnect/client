@@ -1,5 +1,6 @@
 package com.econnect.client.Forum;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.text.Editable;
@@ -18,7 +19,7 @@ import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
 import com.econnect.Utilities.ShareManager;
 import com.econnect.client.BuildConfig;
-import com.econnect.client.ItemDetails.DetailsActivity;
+import com.econnect.client.Profile.VisitUserProfileActivity;
 import com.econnect.client.R;
 
 public class ForumController {
@@ -36,8 +37,10 @@ public class ForumController {
     }
 
     private void launchDetailsCallback(ActivityResult result) {
-        // Called once the user returns from details screen
-        ExecutionThread.nonUI(this::updateData);
+        // Called once the user returns from new post screen
+        if (result.getResultCode() != Activity.RESULT_CANCELED) {
+            ExecutionThread.nonUI(this::updateData);
+        }
     }
 
     public void updateData() {
@@ -172,6 +175,13 @@ public class ForumController {
                     });
                 }
             });
+        }
+
+        @Override
+        public void usernameClicked(int userId) {
+            Intent intent = new Intent(_fragment.getContext(), VisitUserProfileActivity.class);
+            intent.putExtra("username", userId);
+            _activityLauncher.launch(intent);
         }
 
     };

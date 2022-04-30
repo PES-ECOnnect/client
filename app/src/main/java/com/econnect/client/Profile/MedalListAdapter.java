@@ -22,10 +22,10 @@ import com.econnect.client.R;
 public class MedalListAdapter extends BaseAdapter {
     private final Fragment owner;
     private final Drawable defaultImage;
-    private final ProfileService.User.Medal[] medals;
+    private final ProfileService.Medal[] medals;
     private static LayoutInflater _inflater = null;
 
-    public MedalListAdapter(Fragment owner, Drawable defaultImage, ProfileService.User.Medal[] medals) {
+    public MedalListAdapter(Fragment owner, Drawable defaultImage, ProfileService.Medal[] medals) {
         this.owner = owner;
         this.defaultImage = defaultImage;
         this.medals = medals;
@@ -51,7 +51,7 @@ public class MedalListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         // Initialize view and product
-        final ProfileService.User.Medal m = medals[position];
+        final ProfileService.Medal m = medals[position];
         final View vi;
         if (convertView != null) vi = convertView;
         else vi = _inflater.inflate(R.layout.medal_list_item, null);

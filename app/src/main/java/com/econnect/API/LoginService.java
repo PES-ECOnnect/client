@@ -72,7 +72,7 @@ public class LoginService extends Service {
     public void localLogout() {
         if (settingsFile != null) settingsFile.remove(STORED_TOKEN_KEY);
         try {
-            super.deleteToken();
+            Service.deleteToken();
         }
         catch (IllegalStateException e) {
             // Do nothing

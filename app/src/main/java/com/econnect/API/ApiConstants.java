@@ -9,7 +9,8 @@ public interface ApiConstants {
 
     String LOGIN_PATH = "/account/login";
     String LOGOUT_PATH = "/account/logout";
-    String REGISTER_PATH = "/account";
+    String ACCOUNT_PATH = "/account";
+    String USERS_PATH = "/users";
     String TYPES_PATH = "/products/types";
     String PRODUCTS_PATH = "/products";
     String COMPANIES_PATH = "/companies";
@@ -17,12 +18,11 @@ public interface ApiConstants {
     String POSTS_PATH = "/posts";
     String TAGS_PATH = "/posts/tags";
     String POST_LIKE_PATH = "/posts/%d/like";
-    String PRIVATE_USER_PATH = "/account";
-    String PUT_USERNAME = "/account/username";
-    String PUT_EMAIL = "/account/email";
-    String PUT_PASSWORD = "/account/password";
-    String PUT_MEDAL = "/account/medal";
-    String PUT_IS_PRIVATE = "/account/visibility";
+    String ACCOUNT_USERNAME_PATH = "/account/username";
+    String ACCOUNT_EMAIL_PATH = "/account/email";
+    String ACCOUNT_PASSWORD_PATH = "/account/password";
+    String ACCOUNT_MEDAL_PATH = "/account/medal";
+    String ACCOUNT_VISIBILITY_PATH = "/account/visibility";
 
 
     // PARAMETERS
@@ -68,6 +68,10 @@ public interface ApiConstants {
     String OLD_USER_PASSWORD = "oldPassword";
     String IS_PRIVATE_USER = "isPrivate";
 
+    // Delete account
+    String USER_PASSWORD = "password";
+
+
 
     // RETURN VALUES
     String RET_TOKEN = "token";
@@ -102,6 +106,10 @@ public interface ApiConstants {
     //Post posts
     String ERROR_INCORRECT_INSERTION = "ERROR_INCORRECT_INSERTION";
 
-    //PUT attributes user
+    // Attributes of user
     String ERROR_INVALID_MEDAL = "ERROR_INVALID_MEDAL";
+    String ERROR_PRIVATE_USER = "ERROR_PRIVATE_USER";
+
+    // Delete account
+    String ERROR_DELETE_USER_INCORRECT_PASSWORD = "ERROR_INCORRECT_PASSWORD";
 }

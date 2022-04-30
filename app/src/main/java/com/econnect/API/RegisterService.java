@@ -24,7 +24,7 @@ public class RegisterService extends Service{
         JsonResult result;
 
         try {
-            result = post(ApiConstants.REGISTER_PATH, params, null);
+            result = post(ApiConstants.ACCOUNT_PATH, params, null);
         }
         catch (ApiException e) {
             switch (e.getErrorCode()) {

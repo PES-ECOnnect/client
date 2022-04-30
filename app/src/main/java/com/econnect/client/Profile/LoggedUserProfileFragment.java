@@ -2,12 +2,23 @@ package com.econnect.client.Profile;
 
 import android.app.AlertDialog;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.TextView;
 
+import com.econnect.API.ProfileService;
 import com.econnect.Utilities.PopupMessage;
 import com.econnect.client.R;
 
 public class LoggedUserProfileFragment extends ProfileFragment {
+
+    // This controller is instantiated using instantiateController(), we can cast it to LoggedUserProfileController
+    protected final LoggedUserProfileController _ctrl = (LoggedUserProfileController) super._ctrl;
+
+    @Override
+    protected ProfileController instantiateController() {
+        return new LoggedUserProfileController(this);
+    }
 
     @Override
     protected void addListeners() {
@@ -15,6 +26,8 @@ public class LoggedUserProfileFragment extends ProfileFragment {
         // Show floating button for logged user profile
         binding.profileMenuButton.setVisibility(View.VISIBLE);
         binding.profileMenuButton.setOnClickListener(view -> profileMenuClicked());
+        // Add click listener to medal list
+        binding.medalsList.setOnItemClickListener(createActiveDialog());
     }
 
     @Override
@@ -28,10 +41,10 @@ public class LoggedUserProfileFragment extends ProfileFragment {
             // Called when an item is selected
             switch (menuItem.getItemId()){
                 case R.id.profile_logout:
-                    ctrl.logoutButtonClick();
+                    _ctrl.logoutButtonClick();
                     break;
                 case R.id.profile_edit:
-                    ctrl.editButtonClick();
+                    _ctrl.editButtonClick();
                     break;
                 case R.id.profile_delete_account:
                     createDeleteAccountDialog();
@@ -56,11 +69,45 @@ public class LoggedUserProfileFragment extends ProfileFragment {
         deleter.show();
 
         deleteButton.setOnClickListener(view -> {
+            TextView confirmation = deleterPopupView.findViewById(R.id.deleteAccountConfirmation);
+            TextView password = deleterPopupView.findViewById(R.id.deleteAccountPassword);
+            if (password.getText().length() == 0) {
+                PopupMessage.warning(this, "The password cannot be empty");
+                return;
+            }
+            if (!confirmation.getText().toString().equals("I ACCEPT")) {
+                PopupMessage.warning(this, "You must type exactly 'I ACCEPT' (in uppercase)");
+                return;
+            }
+            _ctrl.deleteAccount(password.getText().toString());
             deleter.dismiss();
         });
 
         cancelButton.setOnClickListener(view -> {
             deleter.dismiss();
         });
+    }
+
+    private AdapterView.OnItemClickListener createActiveDialog() {
+
+        return (parent, view, position, id) -> {
+            final AlertDialog.Builder medalBuilder = new AlertDialog.Builder(requireContext());
+            final View medalPopupView = getLayoutInflater().inflate(R.layout.set_active_medal, null);
+            medalBuilder.setView(medalPopupView);
+            final AlertDialog review = medalBuilder.create();
+            review.show();
+
+            final Button yes_option = medalPopupView.findViewById(R.id.yesChangeActiveMedal);
+            final Button no_option = medalPopupView.findViewById(R.id.noChangeActiveMedal);
+
+            no_option.setOnClickListener(View -> review.dismiss());
+            yes_option.setOnClickListener(View -> {
+                ProfileService.Medal m = (ProfileService.Medal) parent.getItemAtPosition(position);
+                _ctrl.changeActiveMedal(m.idmedal);
+                review.dismiss();
+                _ctrl.getInfoUser();
+            });
+
+        };
     }
 }

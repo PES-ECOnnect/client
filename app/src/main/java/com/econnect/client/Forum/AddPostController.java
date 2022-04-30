@@ -1,6 +1,7 @@
 package com.econnect.client.Forum;
 
 
+import android.app.Activity;
 import android.net.Uri;
 
 import com.econnect.API.ForumService;
@@ -82,12 +83,9 @@ public class AddPostController {
         ForumService postService = ServiceFactory.getInstance().getForumService();
         postService.createPost(text, url);
         // Success
-        navigateToForum();
-    }
-
-    private void navigateToForum() {
         ExecutionThread.UI(_fragment, ()->{
             _fragment.enableInput(true);
+            _fragment.requireActivity().setResult(Activity.RESULT_OK);
             _fragment.requireActivity().finish();
         });
     }

@@ -81,6 +81,7 @@ public class PostListAdapter extends BaseAdapter {
             authorName.setText(p.username);
             authorName.setTypeface(authorName.getTypeface(), Typeface.BOLD);
         }
+        authorName.setOnClickListener(view -> _callback.usernameClicked(p.userid));
 
 
         // TODO: Set medal

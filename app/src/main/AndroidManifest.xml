@@ -22,6 +22,9 @@
             android:name=".Profile.EditProfileActivity"
             android:exported="false" />
         <activity
+            android:name=".Profile.VisitUserProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegisterLogin.RegisterActivity"
             android:exported="true"
             android:theme="@style/Theme.ECOnnect.NoActionBar">
