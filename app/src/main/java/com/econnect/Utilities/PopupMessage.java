@@ -3,6 +3,7 @@ package com.econnect.Utilities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.PopupMenu.OnMenuItemClickListener;
@@ -66,6 +67,9 @@ public class PopupMessage {
     public static void showPopupMenu(int menuId, View anchor, OnMenuItemClickListener listener) {
         PopupMenu popupMenu = new PopupMenu(anchor.getContext(), anchor);
         popupMenu.setOnMenuItemClickListener(listener);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            popupMenu.setForceShowIcon(true);
+        }
         popupMenu.inflate(menuId);
         popupMenu.show();
     }

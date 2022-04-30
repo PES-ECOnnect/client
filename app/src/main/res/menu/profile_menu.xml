@@ -5,17 +5,17 @@
     <item
         android:id="@+id/profile_logout"
         android:icon="@drawable/ic_logout_24"
-        android:title="Log Out" />
+        android:title="@string/menu_log_out" />
 
     <item
         android:id="@+id/profile_edit"
         android:icon="@drawable/ic_edit_profile_24"
-        android:title="Edit Profile" />
+        android:title="@string/menu_edit_profile" />
 
     <item
         android:id="@+id/profile_delete_account"
-        android:icon="@drawable/common_google_signin_btn_text_dark"
-        android:title="Delete Account" />
+        android:icon="@drawable/ic_delete_24"
+        android:title="@string/menu_delete_account" />
 
 
 </menu>

@@ -79,4 +79,7 @@
     <string name="change_attributes">change attributes</string>
     <string name="change_password">Change password</string>
     <string name="account">Account</string>
+    <string name="menu_log_out">Log Out</string>
+    <string name="menu_edit_profile">Edit Profile</string>
+    <string name="menu_delete_account">Delete Account</string>
 </resources>
