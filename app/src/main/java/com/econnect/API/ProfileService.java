@@ -168,4 +168,24 @@ public class ProfileService extends Service {
         // Parse result
         super.expectOkStatus(result);
     }
+
+    public void deleteAccount(String password) {
+        TreeMap<String, String> params = new TreeMap<>();
+        params.put(ApiConstants.LOGIN_PASSWORD, password);
+        JsonResult result = null;
+        try {
+            // Call API
+            super.needsToken = true;
+            result = delete(ApiConstants.REGISTER_PATH, params);
+        } catch (ApiException e) {
+            switch (e.getErrorCode()) {
+                // This endpoint does not throw any errors
+                default:
+                    throw e;
+            }
+        }
+        // Parse result
+        super.expectOkStatus(result);
+
+    }
 }

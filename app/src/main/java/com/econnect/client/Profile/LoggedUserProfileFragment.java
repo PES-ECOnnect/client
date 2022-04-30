@@ -1,13 +1,24 @@
 package com.econnect.client.Profile;
 
 import android.app.AlertDialog;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.PopupMenu;
+import android.widget.TextView;
 
+import com.econnect.API.ProfileService;
+import com.econnect.Utilities.CustomFragment;
 import com.econnect.Utilities.PopupMessage;
 import com.econnect.client.R;
 
 public class LoggedUserProfileFragment extends ProfileFragment {
+
+    private final ProfileController ctrl = new ProfileController(this);
+    private AlertDialog.Builder deleterBuilder;
+    private AlertDialog deleter;
+    private TextView passwordDelete, acceptDelete;
+    private Button deleteButton, cancelButton;
 
     @Override
     protected void addListeners() {
@@ -44,23 +55,42 @@ public class LoggedUserProfileFragment extends ProfileFragment {
     }
 
     public void createDeleteAccountDialog() {
-        AlertDialog.Builder deleterBuilder = new AlertDialog.Builder(requireContext());
+        deleterBuilder = new AlertDialog.Builder(getContext());
 
         final View deleterPopupView = getLayoutInflater().inflate(R.layout.delete_account, null);
 
-        Button deleteButton = deleterPopupView.findViewById(R.id.deleteAccountButton);
-        Button cancelButton = deleterPopupView.findViewById(R.id.deleteAccountCancel);
+        deleteButton = deleterPopupView.findViewById(R.id.deleteAccountButton);
+        cancelButton = deleterPopupView.findViewById(R.id.deleteAccountCancel);
+
+        passwordDelete = deleterPopupView.findViewById(R.id.deleteAccountPassword);
+        acceptDelete = deleterPopupView.findViewById(R.id.deleteAccountText);
 
         deleterBuilder.setView(deleterPopupView);
-        AlertDialog deleter = deleterBuilder.create();
+        deleter = deleterBuilder.create();
         deleter.show();
 
         deleteButton.setOnClickListener(view -> {
-            deleter.dismiss();
+            if(acceptDelete.getText().toString().equals("I ACCEPT")) {
+                ctrl.deleteAccount(passwordDelete.getText());
+                deleter.dismiss();
+            }
+            else {
+                PopupMessage.warning(this, "You didn't write I ACCEPT");
+            }
         });
 
         cancelButton.setOnClickListener(view -> {
             deleter.dismiss();
         });
     }
+
 }
+
+
+
+
+
+
+
+
+
