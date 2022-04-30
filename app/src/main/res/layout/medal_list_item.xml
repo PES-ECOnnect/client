@@ -22,11 +22,11 @@
             tools:ignore="ImageContrastCheck" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/medalTextName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="medal_id"
+            android:text="medal_name"
             android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>

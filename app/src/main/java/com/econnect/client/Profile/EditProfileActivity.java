@@ -1,5 +1,6 @@
 package com.econnect.client.Profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
@@ -12,15 +13,18 @@ public class EditProfileActivity extends AppCompatActivity {
         // Init Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_profile_activity);
+        setTitle("Edit profile");
+
+        Intent intent = getIntent();
+        String username = intent.getStringExtra("username");
+        String email = intent.getStringExtra("email");
+        Boolean isPrivate = intent.getBooleanExtra("isPrivate", false);
 
         // Enable back arrow in title bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Initialize fragment and corresponding controller (depending on type)
-        EditFragment fragment = new EditFragment();
-        EditProfileController ctrl = new EditProfileController(fragment);
-
-        fragment.setController(ctrl);
+        // Initialize fragment
+        EditFragment fragment = new EditFragment(username, email, isPrivate);
 
         // Display fragment
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

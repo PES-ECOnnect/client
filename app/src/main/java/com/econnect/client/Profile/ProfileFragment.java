@@ -3,36 +3,28 @@ package com.econnect.client.Profile;
 import static com.econnect.API.ProfileService.*;
 
 import android.app.AlertDialog;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.PopupMenu;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
 
+import com.econnect.API.ProductService;
 import com.econnect.API.ProfileService;
 import com.econnect.Utilities.CustomFragment;
-import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
+import com.econnect.client.ItemDetails.DetailsActivity;
 import com.econnect.client.R;
-import com.econnect.client.databinding.FragmentProductsBinding;
 import com.econnect.client.databinding.FragmentProfileBinding;
 
-import org.w3c.dom.Text;
 
-public class ProfileFragment extends CustomFragment<FragmentProfileBinding> implements PopupMenu.OnMenuItemClickListener {
+public class ProfileFragment extends CustomFragment<FragmentProfileBinding> {
     
-    private final ProfileController ctrl = new ProfileController(this);
-    private AlertDialog.Builder deleterBuilder;
-    private AlertDialog deleter;
-    private TextView passwordDelete, acceptDelete, username, email, id_medal;
-    private Button deleteButton, cancelButton;
+    protected final ProfileController ctrl = new ProfileController(this);
+    private AlertDialog review;
+    private Button yes_option, no_option;
 
     public ProfileFragment() {
         super(FragmentProfileBinding.class);
@@ -40,92 +32,62 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> impl
 
     @Override
     protected void addListeners() {
-        binding.profileMenuButton.setOnClickListener( view -> showProfileMenu(view));
+        // Hide floating button for non-logged user profile
+        binding.profileMenuButton.setVisibility(View.GONE);
+        binding.medalsList.setOnItemClickListener(createActiveDialog());
         ctrl.getInfoUser();
     }
 
-    void enableInput() {
-        binding.profileMenuButton.setEnabled(true);
+    private AdapterView.OnItemClickListener createActiveDialog() {
+
+        return (parent, view, position, id) -> {
+            AlertDialog.Builder medalBuilder = new AlertDialog.Builder(getContext());
+            final View medalPopupView = getLayoutInflater().inflate(R.layout.set_active_medal, null);
+            medalBuilder.setView(medalPopupView);
+            review = medalBuilder.create();
+            review.show();
+
+            yes_option = medalPopupView.findViewById(R.id.yesChangeActiveMedal);
+            no_option = medalPopupView.findViewById(R.id.noChangeActiveMedal);
+
+            no_option.setOnClickListener(View -> review.dismiss());
+            yes_option.setOnClickListener(View -> {
+                ProfileService.User.Medal m = (ProfileService.User.Medal) parent.getItemAtPosition(position);
+                ctrl.changeActiveMedal(m.idmedal);
+                review.dismiss();
+                ctrl.getInfoUser();
+            });
+
+        };
+    }
+
+    void enableInput(boolean enabled) {
+        // Nothing to enable
     }
 
     void setActiveMedal(User u) {
-        View v = this.getView();
-        id_medal = v.findViewById(R.id.idMedalText);
         if (u != null) {
             int name = u.activeMedal;
-            id_medal.setText(String.valueOf(name));
+            binding.idMedalText.setText(String.valueOf(name));
         }
     }
 
     void setEmail(User u) {
-        View v = this.getView();
-        email = v.findViewById(R.id.emailText);
         if (u != null) {
-            email.setText(u.email);
+            binding.emailText.setText(u.email);
         }
     }
 
     void setUsername(User u) {
-        View v = this.getView();
-        username = v.findViewById(R.id.usernameText);
         if (u != null) {
-            username.setText(u.username);
+            binding.usernameText.setText(u.username);
         }
     }
 
-
-    void showProfileMenu(View v){
-        PopupMenu popupMenu = new PopupMenu(this.getContext(), v);
-        popupMenu.setOnMenuItemClickListener(this);
-        popupMenu.inflate(R.menu.profile_menu);
-        popupMenu.show();
-
-    }
-    public void createReviewDialog() {
-        deleterBuilder = new AlertDialog.Builder(getContext());
-
-        final View deleterPopupView = getLayoutInflater().inflate(R.layout.delete_account, null);
-
-        deleteButton = deleterPopupView.findViewById(R.id.deleteAccountButton);
-        cancelButton = deleterPopupView.findViewById(R.id.deleteAccountCancel);
-
-        passwordDelete = deleterPopupView.findViewById(R.id.deleteAccountPassword);
-        acceptDelete = deleterPopupView.findViewById(R.id.deleteAccountText);
-
-        deleterBuilder.setView(deleterPopupView);
-        deleter = deleterBuilder.create();
-        deleter.show();
-
-        deleteButton.setOnClickListener(view -> {
-            if(acceptDelete.getText().toString().equals("I ACCEPT")) {
-                ctrl.deleteAccount(passwordDelete.getText());
-                deleter.dismiss();
-            }
-            else {
-                PopupMessage.warning(this, "You didn't write I ACCEPT");
-            }
-        });
-
-        cancelButton.setOnClickListener(view -> {
-            deleter.dismiss();
-        });
-    }
-
-        @Override
-    public boolean onMenuItemClick(MenuItem menuItem) {
-        switch (menuItem.getItemId()){
-            case R.id.profile_logout:
-                ctrl.logoutButtonClick();
-                break;
-            case R.id.profile_edit:
-                ctrl.editButtonClick();
-                break;
-            case R.id.profile_delete_account:
-                createReviewDialog();
-                break;
-            default:
-                break;
-        }
-        return true;
+    void setMedals(User u) {
+        Drawable defaultImage = ContextCompat.getDrawable(requireContext(), R.drawable.ic_medal_24);
+        MedalListAdapter medals_adapter = new MedalListAdapter(this, defaultImage, u.medals);
+        binding.medalsList.setAdapter(medals_adapter);
+        binding.medalsList.refreshDrawableState();
     }
 }
