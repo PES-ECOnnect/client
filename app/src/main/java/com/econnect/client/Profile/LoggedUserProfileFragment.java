@@ -58,18 +58,15 @@ public class LoggedUserProfileFragment extends ProfileFragment {
     }
 
     public void createDeleteAccountDialog() {
-        deleterBuilder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder deleterBuilder = new AlertDialog.Builder(requireContext());
 
         final View deleterPopupView = getLayoutInflater().inflate(R.layout.delete_account, null);
 
-        deleteButton = deleterPopupView.findViewById(R.id.deleteAccountButton);
-        cancelButton = deleterPopupView.findViewById(R.id.deleteAccountCancel);
-
-        passwordDelete = deleterPopupView.findViewById(R.id.deleteAccountPassword);
-        acceptDelete = deleterPopupView.findViewById(R.id.deleteAccountText);
+        Button deleteButton = deleterPopupView.findViewById(R.id.deleteAccountButton);
+        Button cancelButton = deleterPopupView.findViewById(R.id.deleteAccountCancel);
 
         deleterBuilder.setView(deleterPopupView);
-        deleter = deleterBuilder.create();
+        AlertDialog deleter = deleterBuilder.create();
         deleter.show();
 
         deleteButton.setOnClickListener(view -> {
@@ -115,12 +112,3 @@ public class LoggedUserProfileFragment extends ProfileFragment {
         };
     }
 }
-
-
-
-
-
-
-
-
-
