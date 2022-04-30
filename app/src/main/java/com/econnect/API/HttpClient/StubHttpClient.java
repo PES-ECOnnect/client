@@ -89,7 +89,7 @@ public class StubHttpClient implements HttpClient {
                 
             case "/products/2":
                 expectParamsExclusive(params, "token");
-                return "{\"error\":\"ERROR_INCORRECT_ID_REVIEWABLE\"}";
+                return "{\"error\":\"ERROR_PRODUCT_NOT_EXISTS\"}";
                 
             // Get list of companies
             case "/companies":
@@ -112,7 +112,7 @@ public class StubHttpClient implements HttpClient {
                 
             case "/companies/2":
                 expectParamsExclusive(params, "token");
-                return "{\"error\":\"ERROR_INCORRECT_ID_REVIEWABLE\"}";
+                return "{\"error\":\"ERROR_COMPANY_NOT_EXISTS\"}";
 
 
 
