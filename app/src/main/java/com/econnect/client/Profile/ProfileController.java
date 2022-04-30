@@ -42,4 +42,28 @@ public class ProfileController {
         ProfileService service = ServiceFactory.getInstance().getProfileService();
         return service.getInfoOtherUser(_userId);
     }
+
+    public void deleteAccount(CharSequence password) {
+        ExecutionThread.nonUI(() -> {
+            try {
+                ProfileService profileService = ServiceFactory.getInstance().getProfileService();
+                //check Password
+                //if(profileService.checkPassword(password)){
+                String p = password.toString();
+                profileService.deleteAccount(p);
+                ServiceFactory.getInstance().getLoginService().logout();
+
+                ExecutionThread.UI(_fragment, ()->{
+                    _fragment.getActivity().finish();
+                });
+                //}
+            }
+            catch (Exception e) {
+                // Return to UI for showing errors
+                ExecutionThread.UI(_fragment, ()->{
+                    PopupMessage.warning(_fragment, "No s'ha pogut esborrar el compte: " + e.getMessage());
+                });
+            }
+        });
+    }
 }

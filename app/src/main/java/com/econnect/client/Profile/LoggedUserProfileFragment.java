@@ -1,6 +1,7 @@
 package com.econnect.client.Profile;
 
 import android.app.AlertDialog;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -57,15 +58,18 @@ public class LoggedUserProfileFragment extends ProfileFragment {
     }
 
     public void createDeleteAccountDialog() {
-        AlertDialog.Builder deleterBuilder = new AlertDialog.Builder(requireContext());
+        deleterBuilder = new AlertDialog.Builder(getContext());
 
         final View deleterPopupView = getLayoutInflater().inflate(R.layout.delete_account, null);
 
-        Button deleteButton = deleterPopupView.findViewById(R.id.deleteAccountButton);
-        Button cancelButton = deleterPopupView.findViewById(R.id.deleteAccountCancel);
+        deleteButton = deleterPopupView.findViewById(R.id.deleteAccountButton);
+        cancelButton = deleterPopupView.findViewById(R.id.deleteAccountCancel);
+
+        passwordDelete = deleterPopupView.findViewById(R.id.deleteAccountPassword);
+        acceptDelete = deleterPopupView.findViewById(R.id.deleteAccountText);
 
         deleterBuilder.setView(deleterPopupView);
-        AlertDialog deleter = deleterBuilder.create();
+        deleter = deleterBuilder.create();
         deleter.show();
 
         deleteButton.setOnClickListener(view -> {
@@ -111,3 +115,12 @@ public class LoggedUserProfileFragment extends ProfileFragment {
         };
     }
 }
+
+
+
+
+
+
+
+
+
