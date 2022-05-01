@@ -7,10 +7,10 @@ import com.econnect.Utilities.PopupMessage;
 
 public class EditProfileController {
 
-    private final EditFragment fragment;
+    private final EditFragment _fragment;
 
     EditProfileController(EditFragment fragment) {
-        this.fragment = fragment;
+        this._fragment = fragment;
     }
 
     public void changePassword(String oldP, String newP) {
@@ -20,11 +20,15 @@ public class EditProfileController {
             try {
                 ProfileService profileService = ServiceFactory.getInstance().getProfileService();
                 profileService.updatePassword(oldP, newP);
+                ExecutionThread.UI(_fragment, ()->{
+                    PopupMessage.showToast(_fragment, "Password updated successfully");
+                    _fragment.clearPasswordFields();
+                });
             }
             catch (Exception e) {
                 // Return to UI for showing errors
-                ExecutionThread.UI(fragment, ()->{
-                    PopupMessage.warning(fragment, "Could not update password: " + e.getMessage());
+                ExecutionThread.UI(_fragment, ()->{
+                    PopupMessage.warning(_fragment, "Could not update password: " + e.getMessage());
                 });
             }
         });
@@ -37,12 +41,12 @@ public class EditProfileController {
         ExecutionThread.nonUI(() -> {
             try {
                 ProfileService profileService = ServiceFactory.getInstance().getProfileService();
-                profileService.updatePrivate(isPrivate);
+                profileService.updateAccountVisibility(isPrivate);
             }
             catch (Exception e) {
                 // Return to UI for showing errors
-                ExecutionThread.UI(fragment, ()->{
-                    PopupMessage.warning(fragment, "Could not update private attribute: " + e.getMessage());
+                ExecutionThread.UI(_fragment, ()->{
+                    PopupMessage.warning(_fragment, "Could not update private attribute: " + e.getMessage());
                 });
             }
         });
@@ -59,8 +63,8 @@ public class EditProfileController {
             }
             catch (Exception e) {
                 // Return to UI for showing errors
-                ExecutionThread.UI(fragment, ()->{
-                    PopupMessage.warning(fragment, "Could not update email: " + e.getMessage());
+                ExecutionThread.UI(_fragment, ()->{
+                    PopupMessage.warning(_fragment, "Could not update email: " + e.getMessage());
                 });
             }
         });
@@ -76,8 +80,8 @@ public class EditProfileController {
             }
             catch (Exception e) {
                 // Return to UI for showing errors
-                ExecutionThread.UI(fragment, ()->{
-                    PopupMessage.warning(fragment, "Could not update username: " + e.getMessage());
+                ExecutionThread.UI(_fragment, ()->{
+                    PopupMessage.warning(_fragment, "Could not update username: " + e.getMessage());
                 });
             }
         });

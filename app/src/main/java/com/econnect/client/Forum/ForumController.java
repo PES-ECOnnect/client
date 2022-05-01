@@ -39,16 +39,17 @@ public class ForumController {
     private void launchDetailsCallback(ActivityResult result) {
         // Called once the user returns from new post screen
         if (result.getResultCode() != Activity.RESULT_CANCELED) {
-            ExecutionThread.nonUI(this::updateData);
+            updateData();
         }
     }
 
     public void updateData() {
+        _fragment.setTagsDropdownText("");
+        _fragment.enableInput(false);
         // Populate tag dropdown
         updateTagList();
         // Populate post list (no tag)
         updatePostsList(null);
-        ExecutionThread.UI(_fragment, ()->_fragment.setTagsDropdownText(""));
     }
 
     private void updateTagList() {
@@ -112,8 +113,10 @@ public class ForumController {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // If the list is dirty and the new text is blank, delete filter
-                if (!_listContainsAllTags && s.toString().trim().isEmpty())
+                if (!_listContainsAllTags && s.toString().trim().isEmpty()) {
+                    _fragment.enableInput(false);
                     updatePostsList(null);
+                }
             }
         };
     }
@@ -123,6 +126,7 @@ public class ForumController {
         public void tagClicked(String tag) {
             // Called when a tag from the post body is clicked. Update the search bar and the post list
             _fragment.setTagsDropdownText(tag);
+            _fragment.enableInput(false);
             updatePostsList(tag);
         }
 
