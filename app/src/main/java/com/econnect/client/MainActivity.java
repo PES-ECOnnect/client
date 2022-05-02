@@ -3,6 +3,7 @@ package com.econnect.client;
 import android.os.Bundle;
 import android.os.Looper;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getOnBackPressedDispatcher().addCallback(backPressedCallback);
 
         BottomNavigationView bottomNav = findViewById(R.id.bottomNav);
         bottomNav.setOnItemSelectedListener(bottomNavSelected);
@@ -102,21 +104,22 @@ public class MainActivity extends AppCompatActivity {
 
     // Double tap to exit
     private boolean _doubleBackToExitPressedOnce = false;
-    @Override
-    public void onBackPressed() {
-        // If flag has been set, exit
-        if (_doubleBackToExitPressedOnce) {
-            moveTaskToBack(true);
-            android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(0);
+    private final OnBackPressedCallback backPressedCallback = new OnBackPressedCallback(true) {
+        @Override
+        public void handleOnBackPressed() {
+            // If flag has been set, exit
+            if (_doubleBackToExitPressedOnce) {
+                moveTaskToBack(true);
+                android.os.Process.killProcess(android.os.Process.myPid());
+                System.exit(0);
+            }
+
+            _doubleBackToExitPressedOnce = true;
+            PopupMessage.showToast(MainActivity.this, "Please click BACK again to exit");
+
+            // Wait 2 seconds before clearing flag
+            android.os.Handler handler = new android.os.Handler(Looper.getMainLooper());
+            handler.postDelayed(() -> _doubleBackToExitPressedOnce=false, 2000);
         }
-
-        _doubleBackToExitPressedOnce = true;
-        PopupMessage.showToast(this, "Please click BACK again to exit");
-
-        // Wait 2 seconds before clearing flag
-        android.os.Handler handler = new android.os.Handler(Looper.getMainLooper());
-        Runnable unsetFlag = () -> _doubleBackToExitPressedOnce=false;
-        handler.postDelayed(unsetFlag, 2000);
-    }
+    };
 }

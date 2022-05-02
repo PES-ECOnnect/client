@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -83,6 +84,7 @@ public class ForumController {
                 ExecutionThread.UI(_fragment, () -> {
                     _fragment.setPostElements(posts);
                     _fragment.enableInput(true);
+                    if (!_listContainsAllTags) backPressedHandler.setEnabled(true);
                 });
             } catch (Exception e) {
                 ExecutionThread.UI(_fragment, () -> {
@@ -197,5 +199,18 @@ public class ForumController {
             _activityLauncher.launch(intent);
         };
     }
+
+    final OnBackPressedCallback backPressedHandler = new OnBackPressedCallback(true) {
+        @Override
+        public void handleOnBackPressed() {
+            if (!_fragment.getTagsDropdownText().isEmpty()) {
+                _fragment.setTagsDropdownText("");
+            }
+            else {
+                setEnabled(false);
+                _fragment.requireActivity().onBackPressed();
+            }
+        }
+    };
 
 }

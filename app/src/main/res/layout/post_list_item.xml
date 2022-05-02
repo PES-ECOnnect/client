@@ -91,7 +91,7 @@
             android:background="#00FFFFFF"
             android:contentDescription="@string/delete_hint"
             android:hapticFeedbackEnabled="true"
-            android:padding="4dp"
+            android:padding="6dp"
             android:scaleType="fitCenter"
             android:soundEffectsEnabled="true"
             android:visibility="gone"
@@ -105,7 +105,7 @@
             android:background="#00FFFFFF"
             android:contentDescription="@string/vote_option_yes_description"
             android:hapticFeedbackEnabled="true"
-            android:padding="4dp"
+            android:padding="6dp"
             android:scaleType="fitCenter"
             android:soundEffectsEnabled="true"
             app:srcCompat="@drawable/ic_share_24" />
@@ -122,7 +122,7 @@
             android:background="#00FFFFFF"
             android:contentDescription="@string/like_post_description"
             android:hapticFeedbackEnabled="true"
-            android:padding="4dp"
+            android:padding="6dp"
             android:scaleType="fitCenter"
             android:soundEffectsEnabled="true"
             app:srcCompat="@drawable/ic_like_24" />
@@ -143,7 +143,7 @@
             android:background="#00FFFFFF"
             android:contentDescription="@string/dislike_post_description"
             android:hapticFeedbackEnabled="true"
-            android:padding="4dp"
+            android:padding="6dp"
             android:scaleType="fitCenter"
             android:soundEffectsEnabled="true"
             app:srcCompat="@drawable/ic_dislike_24" />
