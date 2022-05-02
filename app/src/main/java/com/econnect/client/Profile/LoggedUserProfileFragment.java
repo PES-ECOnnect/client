@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.econnect.API.ProfileService;
+import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
 import com.econnect.client.R;
 
@@ -104,9 +105,15 @@ public class LoggedUserProfileFragment extends ProfileFragment {
             no_option.setOnClickListener(View -> review.dismiss());
             yes_option.setOnClickListener(View -> {
                 ProfileService.Medal m = (ProfileService.Medal) parent.getItemAtPosition(position);
-                _ctrl.changeActiveMedal(m.idmedal);
+                ExecutionThread.nonUI(() -> {
+                    _ctrl.changeActiveMedal(m.idmedal);
+                    ExecutionThread.UI(this, ()-> {
+                        binding.idMedalText.setText(String.valueOf(m.idmedal));
+                        //binding.medalImage.setView(m.imagen);
+                    });
+                });
                 review.dismiss();
-                _ctrl.getInfoUser();
+
             });
 
         };
