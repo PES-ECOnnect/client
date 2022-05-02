@@ -1,7 +1,5 @@
 package com.econnect.client.Profile;
 
-import android.view.View;
-
 import com.econnect.Utilities.CustomFragment;
 import com.econnect.Utilities.PopupMessage;
 import com.econnect.client.databinding.FragmentEditProfileBinding;
@@ -23,25 +21,30 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
 
     @Override
     protected void addListeners() {
-        binding.changesButton.setOnClickListener(View -> changeAttributes());
-        binding.changePassword.setOnClickListener(View -> changePassword());
+        binding.changesButton.setOnClickListener(view -> changeAttributes());
+        binding.changePassword.setOnClickListener(view -> changePassword());
         setDefaultValues();
     }
 
     private void changePassword() {
-        if (!(binding.newPasswordText.getText().toString().isEmpty()) && !(binding.oldPasswordText.getText().toString().isEmpty())) {
-            _ctrl.changePassword(binding.oldPasswordText.getText().toString(), binding.newPasswordText.getText().toString());
-        }
-        else {
+        String newPassword = binding.newPasswordText.getText().toString();
+        String oldPassword = binding.oldPasswordText.getText().toString();
+        if (oldPassword.isEmpty() || newPassword.isEmpty()) {
             PopupMessage.warning(this, "You have to fill old and new passwords");
+            return;
         }
+        if (newPassword.equals(oldPassword)) {
+            PopupMessage.warning(this, "The new password must not be the same as the old one");
+            return;
+        }
+        _ctrl.changePassword(oldPassword, newPassword);
     }
 
     private void changeAttributes() {
-        if (!binding.editUsernameText.getText().equals(_username)) {
+        if (!binding.editUsernameText.getText().toString().equals(_username)) {
             _ctrl.changeUsername(binding.editUsernameText.getText().toString());
         }
-        if (!binding.editEmailText.getText().equals(_email)) {
+        if (!binding.editEmailText.getText().toString().equals(_email)) {
             _ctrl.changeEmail(binding.editEmailText.getText().toString());
         }
         if (binding.switchPrivate.isChecked() != _isPrivate) {
@@ -53,6 +56,11 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
         binding.editUsernameText.setText(_username);
         binding.editEmailText.setText(_email);
         binding.switchPrivate.setChecked(_isPrivate);
+    }
+
+    public void clearPasswordFields() {
+        binding.oldPasswordText.setText("");
+        binding.newPasswordText.setText("");
     }
 
 }

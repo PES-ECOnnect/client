@@ -93,7 +93,7 @@ public class ProfileService extends Service {
             result = put(ApiConstants.ACCOUNT_USERNAME_PATH, params, null);
         } catch (ApiException e) {
             switch (e.getErrorCode()) {
-                case ApiConstants.ERROR_USERNAME_EXISTS:
+                case ApiConstants.ERROR_ACCOUNT_USERNAME_EXISTS:
                     throw new RuntimeException("This username already exists");
                 default:
                     throw e;
@@ -115,8 +115,8 @@ public class ProfileService extends Service {
             result = put(ApiConstants.ACCOUNT_PASSWORD_PATH, params, null);
         } catch (ApiException e) {
             switch (e.getErrorCode()) {
-                case ApiConstants.ERROR_USERNAME_EXISTS:
-                    throw new RuntimeException("This username already exists");
+                case ApiConstants.ERROR_ACCOUNT_INCORRECT_PASSWORD:
+                    throw new RuntimeException("The old password is incorrect");
                 default:
                     throw e;
             }
@@ -138,6 +138,8 @@ public class ProfileService extends Service {
             switch (e.getErrorCode()) {
                 case ApiConstants.ERROR_EMAIL_EXISTS:
                     throw new RuntimeException("This email already exists");
+                case ApiConstants.ERROR_ACCOUNT_INVALID_EMAIL:
+                    throw new RuntimeException("Please enter a valid email");
                 default:
                     throw e;
             }
@@ -167,22 +169,17 @@ public class ProfileService extends Service {
         super.expectOkStatus(result);
     }
 
-    public void updatePrivate(Boolean isPrivate) {
+    public void updateAccountVisibility(Boolean isPrivate) {
         // Add parameters
         TreeMap<String, String> params = new TreeMap<>();
         params.put(ApiConstants.IS_PRIVATE_USER, isPrivate.toString());
 
         JsonResult result = null;
-        try {
-            // Call API
-            super.needsToken = true;
-            result = put(ApiConstants.ACCOUNT_VISIBILITY_PATH, params, null);
-        } catch (ApiException e) {
-            switch (e.getErrorCode()) {
-                default:
-                    throw e;
-            }
-        }
+        // Call API
+        super.needsToken = true;
+        result = put(ApiConstants.ACCOUNT_VISIBILITY_PATH, params, null);
+        // This endpoint does not throw exceptions
+
         // Parse result
         super.expectOkStatus(result);
     }
@@ -199,7 +196,7 @@ public class ProfileService extends Service {
             result = delete(ApiConstants.ACCOUNT_PATH, params);
         } catch (ApiException e) {
             switch (e.getErrorCode()) {
-                case ApiConstants.ERROR_DELETE_USER_INCORRECT_PASSWORD:
+                case ApiConstants.ERROR_ACCOUNT_INCORRECT_PASSWORD:
                     throw new RuntimeException("The entered password was incorrect.");
                 default:
                     throw e;

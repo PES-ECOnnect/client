@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -39,16 +40,17 @@ public class ForumController {
     private void launchDetailsCallback(ActivityResult result) {
         // Called once the user returns from new post screen
         if (result.getResultCode() != Activity.RESULT_CANCELED) {
-            ExecutionThread.nonUI(this::updateData);
+            updateData();
         }
     }
 
     public void updateData() {
+        _fragment.setTagsDropdownText("");
+        _fragment.enableInput(false);
         // Populate tag dropdown
         updateTagList();
         // Populate post list (no tag)
         updatePostsList(null);
-        ExecutionThread.UI(_fragment, ()->_fragment.setTagsDropdownText(""));
     }
 
     private void updateTagList() {
@@ -82,6 +84,7 @@ public class ForumController {
                 ExecutionThread.UI(_fragment, () -> {
                     _fragment.setPostElements(posts);
                     _fragment.enableInput(true);
+                    if (!_listContainsAllTags) backPressedHandler.setEnabled(true);
                 });
             } catch (Exception e) {
                 ExecutionThread.UI(_fragment, () -> {
@@ -112,8 +115,10 @@ public class ForumController {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // If the list is dirty and the new text is blank, delete filter
-                if (!_listContainsAllTags && s.toString().trim().isEmpty())
+                if (!_listContainsAllTags && s.toString().trim().isEmpty()) {
+                    _fragment.enableInput(false);
                     updatePostsList(null);
+                }
             }
         };
     }
@@ -123,6 +128,7 @@ public class ForumController {
         public void tagClicked(String tag) {
             // Called when a tag from the post body is clicked. Update the search bar and the post list
             _fragment.setTagsDropdownText(tag);
+            _fragment.enableInput(false);
             updatePostsList(tag);
         }
 
@@ -193,5 +199,18 @@ public class ForumController {
             _activityLauncher.launch(intent);
         };
     }
+
+    final OnBackPressedCallback backPressedHandler = new OnBackPressedCallback(true) {
+        @Override
+        public void handleOnBackPressed() {
+            if (!_fragment.getTagsDropdownText().isEmpty()) {
+                _fragment.setTagsDropdownText("");
+            }
+            else {
+                setEnabled(false);
+                _fragment.requireActivity().onBackPressed();
+            }
+        }
+    };
 
 }

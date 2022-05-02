@@ -1,7 +1,9 @@
 package com.econnect.client.Forum;
 
+import android.os.Bundle;
 import android.widget.AbsListView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.core.content.ContextCompat;
 
 import com.econnect.API.ForumService;
@@ -44,6 +46,8 @@ public class ForumFragment extends CustomFragment<FragmentForumBinding> {
             }
         });
 
+        // Override back button
+        requireActivity().getOnBackPressedDispatcher().addCallback(_ctrl.backPressedHandler);
 
         _ctrl.updateData();
     }
@@ -53,6 +57,9 @@ public class ForumFragment extends CustomFragment<FragmentForumBinding> {
         binding.tagDropdown.setAdapter(adapter);
     }
 
+    String getTagsDropdownText() {
+        return binding.tagDropdown.getText().toString();
+    }
     void setTagsDropdownText(String text) {
         binding.tagDropdown.setText(text);
     }
