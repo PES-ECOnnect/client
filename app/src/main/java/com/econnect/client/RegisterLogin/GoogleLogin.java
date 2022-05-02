@@ -56,7 +56,7 @@ public class GoogleLogin implements IThirdPartyLogin {
         Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
         try {
             GoogleSignInAccount account = task.getResult(ApiException.class);
-            _callback.onLogin(account.getEmail(), account.getDisplayName(), account.getIdToken());
+            _callback.onLogin(account.getEmail(), account.getDisplayName(), account.getId());
             // Logout from Google (keep ECOnnect token) so that we can choose a different account next time
             logout();
         }
