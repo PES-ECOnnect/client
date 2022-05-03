@@ -14,18 +14,23 @@
         tools:targetApi="n">
         <activity
             android:name=".ItemDetails.DetailsActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false" />
         <activity
             android:name=".Forum.PostActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false" />
         <activity
             android:name=".Profile.EditProfileActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false" />
         <activity
             android:name=".Profile.VisitUserProfileActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false" />
         <activity
             android:name=".RegisterLogin.RegisterActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="true"
             android:theme="@style/Theme.ECOnnect.NoActionBar">
             <intent-filter>
@@ -36,6 +41,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="true" />
         <provider
             android:name="androidx.core.content.FileProvider"

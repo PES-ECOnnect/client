@@ -3,6 +3,7 @@ package com.econnect.client.Forum;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -130,6 +131,12 @@ public class ForumController {
             _fragment.setTagsDropdownText(tag);
             _fragment.enableInput(false);
             updatePostsList(tag);
+        }
+
+        @Override
+        public void linkClicked(String url) {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            _fragment.requireActivity().startActivity(browserIntent);
         }
 
         @Override

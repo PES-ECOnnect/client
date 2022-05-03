@@ -28,8 +28,8 @@ public class CompaniesFragment extends CustomFragment<FragmentCompaniesBinding> 
     }
 
     void setCompanyElements(Company[] products) {
-        int highlightColor = ContextCompat.getColor(getContext(), R.color.green);
-        Drawable defaultImage = ContextCompat.getDrawable(getContext(), R.drawable.ic_companies_24);
+        int highlightColor = ContextCompat.getColor(requireContext(), R.color.green);
+        Drawable defaultImage = ContextCompat.getDrawable(requireContext(), R.drawable.ic_companies_24);
         _companiesAdapter = new CompaniesListAdapter(this, highlightColor, defaultImage, products);
         binding.itemList.setAdapter(_companiesAdapter);
     }

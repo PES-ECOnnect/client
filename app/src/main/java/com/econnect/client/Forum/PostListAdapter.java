@@ -3,8 +3,6 @@ package com.econnect.client.Forum;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextPaint;
@@ -23,10 +21,11 @@ import androidx.fragment.app.Fragment;
 
 import com.econnect.API.ForumService.Post;
 import com.econnect.Utilities.ExecutionThread;
+import com.econnect.Utilities.HashtagPatternMatcher;
+import com.econnect.Utilities.URLPatternMatcher;
 import com.econnect.client.R;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -99,21 +98,18 @@ public class PostListAdapter extends BaseAdapter {
         textBody.setMovementMethod(LinkMovementMethod.getInstance());
         Spannable spannable = new SpannableString(p.text);
         // Iterate for all instances of '#'
-        for (int index = p.text.indexOf('#'); index >= 0; index = p.text.indexOf('#', index + 1)) {
-            // Skip # symbols in the middle of a word
-            if (index > 0 && p.text.charAt(index-1) != ' ' && p.text.charAt(index-1) != '\n')
-                continue;
-
-            int endBySpace = p.text.indexOf(' ', index + 1);
-            if (endBySpace == -1) endBySpace = p.text.length();
-            int endByNewLine = p.text.indexOf('\n', index + 1);
-            if (endByNewLine == -1) endByNewLine = p.text.length();
-            int end = Math.min(endBySpace, endByNewLine);
-
+        new HashtagPatternMatcher().find(p.text, (start, end) -> {
             // Set color and make bold, also make clickable
-            String tag = p.text.substring(index+1, end); // Skip '#'
-            spannable.setSpan(new TagClickableSpan(tag), index, end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-        }
+            String tag = p.text.substring(start+1, end);
+            spannable.setSpan(new TagClickableSpan(tag), start, end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        });
+        // Iterate for all URLs
+        new URLPatternMatcher().find(p.text, (start, end) -> {
+            // Set color and make bold, also make clickable
+            String tag = p.text.substring(start, end);
+            spannable.setSpan(new LinkClickableSpan(tag), start, end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        });
+
         textBody.setText(spannable, TextView.BufferType.SPANNABLE);
 
         // Set likes and dislikes
@@ -220,10 +216,7 @@ public class PostListAdapter extends BaseAdapter {
 
     private class TagClickableSpan extends ClickableSpan {
         String _tag;
-        public TagClickableSpan(String tag) {
-            _tag = tag;
-        }
-
+        public TagClickableSpan(String tag) { _tag = tag; }
         @Override
         public void onClick(@NonNull View view) {
             _callback.tagClicked(_tag);
@@ -233,6 +226,22 @@ public class PostListAdapter extends BaseAdapter {
             super.updateDrawState(ds);
             // No underline, set color and make bold
             ds.setUnderlineText(false);
+            ds.setColor(_highlightColor);
+            ds.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        }
+    }
+    private class LinkClickableSpan extends ClickableSpan {
+        String _url;
+        public LinkClickableSpan(String url) { _url = url; }
+        @Override
+        public void onClick(@NonNull View view) {
+            _callback.linkClicked(_url);
+        }
+        @Override
+        public void updateDrawState(TextPaint ds) {
+            super.updateDrawState(ds);
+            // Underline, set color and make bold
+            ds.setUnderlineText(true);
             ds.setColor(_highlightColor);
             ds.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         }
