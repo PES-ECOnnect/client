@@ -33,7 +33,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/pullToRefresh"
+        android:id="@+id/pullToRefreshPosts"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"

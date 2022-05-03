@@ -23,6 +23,7 @@ public class CompaniesFragment extends CustomFragment<FragmentCompaniesBinding> 
     protected void addListeners() {
         binding.searchText.addTextChangedListener(_ctrl.searchText());
         binding.itemList.setOnItemClickListener(_ctrl.companyClick());
+        binding.pullToRefreshCompanies.setOnRefreshListener(_ctrl::updateList);
 
         _ctrl.updateList();
     }
@@ -38,8 +39,8 @@ public class CompaniesFragment extends CustomFragment<FragmentCompaniesBinding> 
         _companiesAdapter.getFilter().filter(binding.searchText.getText());
     }
 
-    void enableInput() {
-        binding.companiesProgressBar.setVisibility(View.GONE);
-        binding.searchBox.setEnabled(true);
+    void enableInput(boolean enabled) {
+        binding.pullToRefreshCompanies.setRefreshing(!enabled);
+        binding.searchBox.setEnabled(enabled);
     }
 }
