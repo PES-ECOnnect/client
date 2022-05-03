@@ -36,4 +36,91 @@ public class ProfileServiceTest {
             assertEquals(expectedMessage, e.getMessage());
         }
     }
+
+    @Test
+    public void testgetInfoLoggedUserOK() {
+        sv.getInfoLoggedUser();
+        // This should not throw an exception
+    }
+
+    @Test
+    public void testgetInfoOtherUserOK() {
+        //sv.getInfoOtherUser();
+        // This should not throw an exception
+    }
+
+    @Test
+    public void testgetInfoOtherUserPrivate() {
+        /*expectException(() ->
+                        sv.getInfoOtherUser(),
+                "This user is private"
+        );*/
+    }
+
+    @Test
+    public void tesUpdateUsernameOK() {
+        //sv.updateUsername();
+        // This should not throw an exception
+    }
+
+    @Test
+    public void tesUpdateUsernameExistent() {
+        /*expectException(() ->
+                        sv.updateUsername(),
+                "This username already exists"
+        );*/
+    }
+
+    @Test
+    public void tesUpdatePasswordOK() {
+        //sv.updatePassword();
+        // This should not throw an exception
+    }
+
+    @Test
+    public void tesUpdatePasswordAntigaIncorrecta() {
+        /*expectException(() ->
+                        sv.updatePassword(),
+                "The old password is incorrect"
+        );*/
+    }
+
+    @Test
+    public void tesUpdateEmailOK() {
+        //sv.updateEmail();
+        // This should not throw an exception
+    }
+
+    @Test
+    public void tesUpdateEmailExistent() {
+        /*expectException(() ->
+                        sv.updateEmail(),
+                "This email already exists"
+        );*/
+    }
+
+    @Test
+    public void tesUpdateEmailInvalid() {
+        /*expectException(() ->
+                        sv.updateEmail(),
+                "Please enter a valid email"
+        );*/
+    }
+
+    @Test
+    public void tesActiveMedalOK() {
+        //sv.updateEmail();
+        // This should not throw an exception
+    }
+
+    @Test
+    public void tesUpdateActiveMedalInvalid() {
+        /*expectException(() ->
+                        sv.updateEmail(),
+                "This medal is incorrect""
+        );*/
+    }
+
+
+
 }
