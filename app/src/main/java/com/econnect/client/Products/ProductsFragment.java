@@ -27,19 +27,20 @@ public class ProductsFragment extends CustomFragment<FragmentProductsBinding> {
         binding.filterDropdown.setOnItemClickListener(_ctrl.typesDropdown());
         binding.searchText.addTextChangedListener(_ctrl.searchText());
         binding.itemList.setOnItemClickListener(_ctrl.productClick());
+        binding.pullToRefreshProducts.setOnRefreshListener(_ctrl::updateLists);
 
         _ctrl.updateLists();
     }
 
     void setTypesDropdownElements(List<String> items) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.types_list_item, items);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), R.layout.types_list_item, items);
         binding.filterDropdown.setAdapter(adapter);
         binding.filterDropdown.setText(_ctrl.getDefaultType(), false);
     }
 
     void setProductElements(ProductService.Product[] products) {
-        int highlightColor = ContextCompat.getColor(getContext(), R.color.green);
-        Drawable defaultImage = ContextCompat.getDrawable(getContext(), R.drawable.ic_products_24);
+        int highlightColor = ContextCompat.getColor(requireContext(), R.color.green);
+        Drawable defaultImage = ContextCompat.getDrawable(requireContext(), R.drawable.ic_products_24);
         _products_adapter = new ProductListAdapter(this, highlightColor, defaultImage, products);
         binding.itemList.setAdapter(_products_adapter);
         binding.itemList.refreshDrawableState();
@@ -53,9 +54,9 @@ public class ProductsFragment extends CustomFragment<FragmentProductsBinding> {
         _products_adapter.getFilter().filter(binding.searchText.getText());
     }
 
-    void enableInput() {
-        binding.productsProgressBar.setVisibility(View.GONE);
-        binding.filterBox.setEnabled(true);
-        binding.searchBox.setEnabled(true);
+    void enableInput(boolean enabled) {
+        binding.pullToRefreshProducts.setRefreshing(!enabled);
+        binding.filterBox.setEnabled(enabled);
+        binding.searchBox.setEnabled(enabled);
     }
 }

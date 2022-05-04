@@ -28,6 +28,7 @@ public class CompaniesController {
     }
 
     void updateList() {
+        _fragment.enableInput(false);
         ExecutionThread.nonUI(()-> {
             // Populate companies list
             updateCompaniesList();
@@ -42,7 +43,7 @@ public class CompaniesController {
 
             ExecutionThread.UI(_fragment, () -> {
                 _fragment.setCompanyElements(companies);
-                _fragment.enableInput();
+                _fragment.enableInput(true);
             });
         }
         catch (Exception e){

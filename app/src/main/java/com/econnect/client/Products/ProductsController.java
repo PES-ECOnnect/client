@@ -41,6 +41,7 @@ public class ProductsController {
 
 
     void updateLists() {
+        _fragment.enableInput(false);
         ExecutionThread.nonUI(()-> {
             // Populate types dropdown
             updateTypesList();
@@ -79,7 +80,7 @@ public class ProductsController {
             ExecutionThread.UI(_fragment, () -> {
                 _fragment.setProductElements(products);
                 _fragment.filterProductList();
-                _fragment.enableInput();
+                _fragment.enableInput(true);
             });
         }
         catch (Exception e) {
