@@ -197,7 +197,7 @@ public class ProfileService extends Service {
         } catch (ApiException e) {
             switch (e.getErrorCode()) {
                 case ApiConstants.ERROR_ACCOUNT_INCORRECT_PASSWORD:
-                    throw new RuntimeException("The entered password was incorrect.");
+                    throw new RuntimeException("The entered password was incorrect");
                 default:
                     throw e;
             }
