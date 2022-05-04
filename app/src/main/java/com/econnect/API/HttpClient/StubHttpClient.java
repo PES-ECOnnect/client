@@ -153,9 +153,22 @@ public class StubHttpClient implements HttpClient {
                     // For each tag, return: tag, count
                     return "{\"result\": [{\"tag\":\"tag1\",\"count\":15},{\"tag\":\"tag2\",\"count\":2},{\"tag\":\"abc\",\"count\":1}]}";
                 }
-                
+
+            //Get logged user info
+            case "/account":
+                expectParamsExclusive(params, "token");
+                return "{\"result\":{\"username\":\"user1\",\"medals\":[{\"idmedal\":1,\"medalname\":\"testMedal\"},{\"idmedal\":2,\"medalname\":\"testMedal2\"}],\"activeMedal\":1,\"home\":null,\"email\":\"user1@gmail.com\",\"isPrivate\":true}}";
+
             default:
                 throw new RuntimeException("Invalid path: " + path);
+
+            case "/users/2":
+                expectParamsExclusive(params, "token");
+                return "{\"username\":\"user2\",\"medals\":[{\"idmedal\":1,\"medalname\":\"testMedal\"},{\"idmedal\":2,\"medalname\":\"testMedal2\"}],\"activeMedal\":1234,\"home\":null,\"email\":null,\"isPrivate\":null}";
+
+            case "/users/3":
+                expectParamsExclusive(params, "token");
+                return "{\"error\":\"ERROR_PRIVATE_USER\"}";
         }
     }
 
@@ -239,6 +252,44 @@ public class StubHttpClient implements HttpClient {
         checkNullParams(params);
         
         switch (path) {
+            case "/account/username":
+                expectParams(params, "token", "newUsername");
+                if (equals(params, "newUsername", "userExistent")) {
+                    return "{\"error\":\"ERROR_USERNAME_EXISTS\"}";
+                }
+                else {
+                    return "{status: 'success'}";
+                }
+            case "/account/email":
+                expectParams(params, "token", "newEmail");
+                if (equals(params, "newEmail", "emailExistent")) {
+                    return "{\"error\":\"ERROR_USER_EMAIL_EXISTS\"}";
+                }
+                else if (equals(params, "newEmail", "emailInvalid")) {
+                    return "{\"error\":\"ERROR_INVALID_EMAIL\"}";
+                }
+                else {
+                    return "{status: 'success'}";
+                }
+            case "/account/medal":
+                expectParams(params, "token", "medalId");
+                if (equals(params, "medalId", "5")) {
+                    return "{\"error\":\"ERROR_INVALID_MEDAL\"}";
+                }
+                else {
+                    return "{status: 'success'}";
+                }
+            case "/account/visibility":
+                expectParams(params, "token", "isPrivate");
+                return "{status: 'success'}";
+            case "/account/password":
+                expectParams(params, "token", "oldPassword", "newPassword");
+                if (!equals(params, "oldPassword", "123")) {
+                    return "{\"error\":\"ERROR_INCORRECT_PASSWORD\"}";
+                }
+                else {
+                    return "{status: 'success'}";
+                }
             default:
                 throw new RuntimeException("Invalid path: " + path);
         }
@@ -278,6 +329,14 @@ public class StubHttpClient implements HttpClient {
                 }
                 else {
                     return "{\"error\":\"ERROR_POST_NOT_EXISTS\"}";
+                }
+            case "/account":
+                expectParamsExclusive(params, "token", "password");
+                if (equals(params, "password", "badPassword")) {
+                    return "{\"error\":\"ERROR_INCORRECT_PASSWORD\"}";
+                }
+                else {
+                    return "{status: 'success'}";
                 }
 
             default:
