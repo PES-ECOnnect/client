@@ -3,7 +3,9 @@ package com.econnect.client.RegisterLogin;
 import android.view.View;
 
 import com.econnect.API.Exceptions.AccountNotFoundException;
+import com.econnect.API.Exceptions.UsernameExistsException;
 import com.econnect.API.LoginService;
+import com.econnect.API.RegisterService;
 import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
@@ -83,15 +85,14 @@ public class LoginController {
                 }
                 catch (AccountNotFoundException e) {
                     // No account found, create account
-                    SettingsFile file = new SettingsFile(_fragment);
-                    ServiceFactory.getInstance().getRegisterService().register(email, password, name, file);
+                    createAccount(email, password, name);
                     navigateToMainMenu();
                 }
                 catch (Exception e) {
                     // Generic error
                     ExecutionThread.UI(_fragment, ()->{
                         _fragment.enableInput(true);
-                        PopupMessage.warning(_fragment, "Could not login with google: " + e.getMessage());
+                        PopupMessage.warning(_fragment, "Could not login with Google: " + e.getMessage());
                     });
                 }
             });
@@ -102,6 +103,34 @@ public class LoginController {
             PopupMessage.showToast(_fragment, error);
         }
     };
+
+
+    private void createAccount(String email, String password, String name) {
+        final SettingsFile file = new SettingsFile(_fragment);
+        final RegisterService service = ServiceFactory.getInstance().getRegisterService();
+
+        // There may already be a user with this name, keep trying with a different suffix
+        for (int suffix = 0; /* exit with a return */; suffix++) {
+            try {
+                String nameWithSuffix = suffix > 0 ? name + " " + suffix : name; // "name", "name 1", "name 2"...
+                service.register(email, password, nameWithSuffix, file);
+                // Done! Escape the for loop
+                return;
+            }
+            catch (UsernameExistsException e) {
+                // This username has been taken, keep iterating in the for loop
+            }
+            catch (Exception e) {
+                // Generic error
+                ExecutionThread.UI(_fragment, ()->{
+                    _fragment.enableInput(true);
+                    PopupMessage.warning(_fragment, "Could not create account with Google: " + e.getMessage());
+                });
+                // After the first popup, stop trying to create the account and exit
+                return;
+            }
+        }
+    }
 
     private void attemptLogin(String email, String password) {
         // Login and store token

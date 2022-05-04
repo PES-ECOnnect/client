@@ -23,13 +23,14 @@ public class CompaniesFragment extends CustomFragment<FragmentCompaniesBinding> 
     protected void addListeners() {
         binding.searchText.addTextChangedListener(_ctrl.searchText());
         binding.itemList.setOnItemClickListener(_ctrl.companyClick());
+        binding.pullToRefreshCompanies.setOnRefreshListener(_ctrl::updateList);
 
         _ctrl.updateList();
     }
 
     void setCompanyElements(Company[] products) {
-        int highlightColor = ContextCompat.getColor(getContext(), R.color.green);
-        Drawable defaultImage = ContextCompat.getDrawable(getContext(), R.drawable.ic_companies_24);
+        int highlightColor = ContextCompat.getColor(requireContext(), R.color.green);
+        Drawable defaultImage = ContextCompat.getDrawable(requireContext(), R.drawable.ic_companies_24);
         _companiesAdapter = new CompaniesListAdapter(this, highlightColor, defaultImage, products);
         binding.itemList.setAdapter(_companiesAdapter);
     }
@@ -38,8 +39,8 @@ public class CompaniesFragment extends CustomFragment<FragmentCompaniesBinding> 
         _companiesAdapter.getFilter().filter(binding.searchText.getText());
     }
 
-    void enableInput() {
-        binding.companiesProgressBar.setVisibility(View.GONE);
-        binding.searchBox.setEnabled(true);
+    void enableInput(boolean enabled) {
+        binding.pullToRefreshCompanies.setRefreshing(!enabled);
+        binding.searchBox.setEnabled(enabled);
     }
 }

@@ -1,13 +1,14 @@
 package com.econnect.API;
 
 import com.econnect.API.Exceptions.ApiException;
+import com.econnect.API.Exceptions.UsernameExistsException;
 import com.econnect.Utilities.SettingsFile;
 
 import java.util.TreeMap;
 
 public class RegisterService extends Service{
 
-    RegisterService() {};
+    RegisterService() {}
 
     // Sets the user token, throws an exception if an error occurs
     // If file is not null, the token is stored for later
@@ -29,9 +30,11 @@ public class RegisterService extends Service{
         catch (ApiException e) {
             switch (e.getErrorCode()) {
                 case ApiConstants.ERROR_USERNAME_EXISTS:
-                    throw new RuntimeException("This username has already been taken");
+                    throw new UsernameExistsException();
                 case ApiConstants.ERROR_EMAIL_EXISTS:
                     throw new RuntimeException("This email already has an account");
+                case ApiConstants.ERROR_ACCOUNT_INVALID_EMAIL:
+                    throw new RuntimeException("Please enter a valid email");
                 default:
                     throw e;
             }

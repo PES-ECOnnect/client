@@ -25,7 +25,7 @@ public class ForumFragment extends CustomFragment<FragmentForumBinding> {
     protected void addListeners() {
         binding.tagDropdown.setOnItemClickListener(_ctrl.tagsDropdown());
         binding.tagDropdown.addTextChangedListener(_ctrl.tagFilterText());
-        binding.pullToRefresh.setOnRefreshListener(_ctrl::updateData);
+        binding.pullToRefreshPosts.setOnRefreshListener(_ctrl::updateData);
         binding.addPostButton.setOnClickListener(_ctrl.addPostOnClick());
 
         binding.postList.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -72,7 +72,7 @@ public class ForumFragment extends CustomFragment<FragmentForumBinding> {
     }
 
     void enableInput(boolean enabled) {
-        binding.pullToRefresh.setRefreshing(!enabled);
+        binding.pullToRefreshPosts.setRefreshing(!enabled);
         binding.postList.setEnabled(enabled);
         binding.tagBox.setEnabled(enabled);
     }
