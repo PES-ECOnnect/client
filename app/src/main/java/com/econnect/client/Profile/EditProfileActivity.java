@@ -1,43 +1,23 @@
 package com.econnect.client.Profile;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
-import com.econnect.client.R;
 
-public class EditProfileActivity extends AppCompatActivity {
-    protected void onCreate(Bundle savedInstanceState) {
-        // Init Activity
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_profile_activity);
-        setTitle("Edit profile");
+import androidx.fragment.app.Fragment;
 
-        Intent intent = getIntent();
+import com.econnect.Utilities.FragmentContainerActivity;
+
+public class EditProfileActivity extends FragmentContainerActivity {
+
+    public EditProfileActivity() {
+        super("Edit profile");
+    }
+
+    @Override
+    protected Fragment initializeFragment(Intent intent) {
         String username = intent.getStringExtra("username");
         String email = intent.getStringExtra("email");
         Boolean isPrivate = intent.getBooleanExtra("isPrivate", false);
-
-        // Enable back arrow in title bar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        // Initialize fragment
-        EditFragment fragment = new EditFragment(username, email, isPrivate);
-
-        // Display fragment
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.editProfileMainLayout, fragment).commit();
+        return new EditFragment(username, email, isPrivate);
     }
 
-    // If back arrow in title bar is pressed, finish activity
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            this.finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }

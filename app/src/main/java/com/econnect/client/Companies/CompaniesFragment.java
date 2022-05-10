@@ -24,6 +24,7 @@ public class CompaniesFragment extends CustomFragment<FragmentCompaniesBinding> 
         binding.searchText.addTextChangedListener(_ctrl.searchText());
         binding.itemList.setOnItemClickListener(_ctrl.companyClick());
         binding.pullToRefreshCompanies.setOnRefreshListener(_ctrl::updateList);
+        binding.viewMapButton.setOnClickListener(_ctrl.mapButtonClick());
 
         _ctrl.updateList();
     }
