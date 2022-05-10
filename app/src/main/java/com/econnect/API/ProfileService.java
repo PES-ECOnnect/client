@@ -184,24 +184,11 @@ public class ProfileService extends Service {
         super.expectOkStatus(result);
     }
 
-    public void deleteAccount(String password) {
-        // Add parameters
-        TreeMap<String, String> params = new TreeMap<>();
-        params.put(ApiConstants.USER_PASSWORD, password);
+    public void deleteAccount() {
+        // Call API
+        super.needsToken = true;
+        JsonResult result = delete(ApiConstants.ACCOUNT_PATH, null);
 
-        JsonResult result = null;
-        try {
-            // Call API
-            super.needsToken = true;
-            result = delete(ApiConstants.ACCOUNT_PATH, params);
-        } catch (ApiException e) {
-            switch (e.getErrorCode()) {
-                case ApiConstants.ERROR_ACCOUNT_INCORRECT_PASSWORD:
-                    throw new RuntimeException("The entered password was incorrect.");
-                default:
-                    throw e;
-            }
-        }
         // Parse result
         super.expectOkStatus(result);
     }

@@ -1,14 +1,19 @@
 package com.econnect.client.Profile;
 
+import android.text.Editable;
+import android.text.NoCopySpan;
+import android.text.TextWatcher;
+
 import com.econnect.Utilities.CustomFragment;
+import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
 import com.econnect.client.databinding.FragmentEditProfileBinding;
 
 public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
 
     private final EditProfileController _ctrl = new EditProfileController(this);
-    private final String _username;
-    private final String _email;
+    private String _username;
+    private String _email;
     private final Boolean _isPrivate;
 
 
@@ -21,7 +26,25 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
 
     @Override
     protected void addListeners() {
-        binding.changesButton.setOnClickListener(view -> changeAttributes());
+        binding.changeNameButton.setOnClickListener(view ->
+            _ctrl.changeUsername(binding.editUsernameText.getText().toString())
+        );
+        binding.changeEmailButton.setOnClickListener(view ->
+            _ctrl.changeEmail(binding.editEmailText.getText().toString())
+        );
+        binding.switchPrivate.setOnClickListener(view ->
+            _ctrl.changeIsPrivate(binding.switchPrivate.isChecked())
+        );
+
+        binding.editUsernameText.addTextChangedListener(new AccountTextWatcher(()->{
+            boolean sameText = binding.editUsernameText.getText().toString().equals(_username);
+            binding.changeNameButton.setEnabled(!sameText);
+        }));
+        binding.editEmailText.addTextChangedListener(new AccountTextWatcher(()->{
+            boolean sameText = binding.editEmailText.getText().toString().equals(_email);
+            binding.changeEmailButton.setEnabled(!sameText);
+        }));
+
         binding.changePassword.setOnClickListener(view -> changePassword());
         setDefaultValues();
     }
@@ -40,16 +63,14 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
         _ctrl.changePassword(oldPassword, newPassword);
     }
 
-    private void changeAttributes() {
-        if (!binding.editUsernameText.getText().toString().equals(_username)) {
-            _ctrl.changeUsername(binding.editUsernameText.getText().toString());
-        }
-        if (!binding.editEmailText.getText().toString().equals(_email)) {
-            _ctrl.changeEmail(binding.editEmailText.getText().toString());
-        }
-        if (binding.switchPrivate.isChecked() != _isPrivate) {
-            _ctrl.changeIsPrivate(binding.switchPrivate.isChecked());
-        }
+    void updateUsername(String newUsername) {
+        _username = newUsername;
+        ExecutionThread.UI(this, ()->binding.changeNameButton.setEnabled(false));
+
+    }
+    void updateEmail(String newEmail) {
+        _email = newEmail;
+        ExecutionThread.UI(this, ()->binding.changeEmailButton.setEnabled(false));
     }
 
     public void setDefaultValues() {
@@ -62,5 +83,24 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
         binding.oldPasswordText.setText("");
         binding.newPasswordText.setText("");
     }
+
+
+    private static class AccountTextWatcher implements TextWatcher {
+        private final Runnable _runnable;
+        public AccountTextWatcher(Runnable runnable) {
+            _runnable = runnable;
+        }
+        public void beforeTextChanged(CharSequence var1, int var2, int var3, int var4) {
+            // Do nothing
+        }
+        public void onTextChanged(CharSequence var1, int var2, int var3, int var4) {
+            // Call runnable
+            _runnable.run();
+        }
+        public void afterTextChanged(Editable var1) {
+            // Do nothing
+        }
+    }
+
 
 }

@@ -60,6 +60,7 @@ public class EditProfileController {
             try {
                 ProfileService profileService = ServiceFactory.getInstance().getProfileService();
                 profileService.updateEmail(email);
+                _fragment.updateEmail(email);
             }
             catch (Exception e) {
                 // Return to UI for showing errors
@@ -77,6 +78,7 @@ public class EditProfileController {
             try {
                 ProfileService profileService = ServiceFactory.getInstance().getProfileService();
                 profileService.updateUsername(username);
+                _fragment.updateUsername(username);
             }
             catch (Exception e) {
                 // Return to UI for showing errors

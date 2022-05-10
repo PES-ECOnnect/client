@@ -27,72 +27,102 @@
                 android:text="@string/account"
                 android:textSize="20sp" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/editUsernameBox"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="250dp"
-                android:layout_height="65dp"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginTop="16dp"
-                android:autofillHints=""
-                android:minHeight="48dp">
+                android:gravity="center"
+                android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editUsernameText"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/editUsernameBox"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="250dp"
+                    android:layout_height="65dp"
+                    android:autofillHints=""
+                    android:minHeight="48dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editUsernameText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/username_textbox_hint"
+                        android:inputType="textEmailAddress"
+                        android:singleLine="true"
+                        tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Space
+                    android:layout_width="8dp"
+                    android:layout_height="wrap_content" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/changeNameButton"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:hint="@string/username_textbox_hint"
-                    android:inputType="textEmailAddress"
-                    android:singleLine="true"
-                    tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:enabled="false"
+                    android:focusable="true"
+                    android:src="@drawable/ic_save_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
+            </LinearLayout>
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/editEmailBox"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="250dp"
-                android:layout_height="65dp"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
-                android:autofillHints=""
-                android:minHeight="48dp">
+                android:gravity="center"
+                android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editEmailText"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/editEmailBox"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="250dp"
+                    android:layout_height="65dp"
+                    android:autofillHints=""
+                    android:minHeight="48dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editEmailText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/email_textbox_hint"
+                        android:inputType="textEmailAddress"
+                        android:singleLine="true"
+                        tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Space
+                    android:layout_width="8dp"
+                    android:layout_height="wrap_content" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/changeEmailButton"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="@string/email_textbox_hint"
-                    android:inputType="textEmailAddress"
-                    android:singleLine="true"
-                    tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_weight="1"
+                    android:baselineAlignBottom="false"
+                    android:clickable="true"
+                    android:enabled="false"
+                    android:focusable="true"
+                    android:src="@drawable/ic_save_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
+            </LinearLayout>
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/switchPrivate"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:minHeight="48dp"
                 android:text="@string/private_account_toggle" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-                <Button
-                    android:id="@+id/changes_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="@string/change_attributes"
-                    tools:ignore="TextContrastCheck" />
-            </LinearLayout>
 
             <TextView
                 android:id="@+id/textView4"

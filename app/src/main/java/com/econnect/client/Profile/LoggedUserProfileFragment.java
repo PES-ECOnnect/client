@@ -72,16 +72,11 @@ public class LoggedUserProfileFragment extends ProfileFragment {
 
         deleteButton.setOnClickListener(view -> {
             TextView confirmation = deleterPopupView.findViewById(R.id.deleteAccountConfirmation);
-            TextView password = deleterPopupView.findViewById(R.id.deleteAccountPassword);
-            if (password.getText().length() == 0) {
-                PopupMessage.warning(this, "The password cannot be empty");
-                return;
-            }
             if (!confirmation.getText().toString().equals("I ACCEPT")) {
                 PopupMessage.warning(this, "You must type exactly 'I ACCEPT' (in uppercase)");
                 return;
             }
-            _ctrl.deleteAccount(password.getText().toString());
+            _ctrl.deleteAccount();
             deleter.dismiss();
         });
 
