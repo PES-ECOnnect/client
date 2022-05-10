@@ -1,16 +1,10 @@
 package com.econnect.client;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
-
-import com.econnect.API.ForumService;
-import com.econnect.API.ForumService.Post;
-import com.econnect.API.ForumService.Tag;
 import com.econnect.API.HttpClient.StubHttpClient;
-import com.econnect.API.ImageUpload.ImageService;
 import com.econnect.API.ProfileService;
 import com.econnect.API.ServiceFactory;
 
@@ -36,4 +30,131 @@ public class ProfileServiceTest {
             assertEquals(expectedMessage, e.getMessage());
         }
     }
+
+    @Test
+    //peta json
+    public void testGetInfoLoggedUserOK() {
+        ProfileService.User user = sv.getInfoLoggedUser();
+        assertNotNull(user);
+        assertEquals("user1", user.username);
+        assertEquals(1, user.activeMedal);
+        assertNull(user.home);
+        assertEquals("user1@gmail.com", user.email);
+        assertEquals(true, user.isPrivate);
+        assertEquals(2, user.medals.length);
+        assertEquals(1, user.medals[0].idmedal);
+        assertEquals("testMedal", user.medals[0].medalname);
+        assertEquals(2, user.medals[1].idmedal);
+        assertEquals("testMedal2", user.medals[1].medalname);
+    }
+
+    @Test
+    public void testGetInfoOtherUserOK() {
+        ProfileService.User user = sv.getInfoOtherUser(2);
+        assertNotNull(user);
+        assertEquals("user2", user.username);
+        assertEquals(1234, user.activeMedal);
+        assertNull(user.home);
+        assertNull(user.email);
+        assertNull(user.isPrivate);
+        assertEquals(2, user.medals.length);
+        assertEquals(1, user.medals[0].idmedal);
+        assertEquals("testMedal", user.medals[0].medalname);
+        assertEquals(2, user.medals[1].idmedal);
+        assertEquals("testMedal2", user.medals[1].medalname);
+    }
+
+    @Test
+    public void testGetInfoOtherUserPrivate() {
+        expectException(() ->
+                sv.getInfoOtherUser(3),
+                "The profile of this user is private"
+        );
+    }
+
+    @Test
+    public void tesUpdateUsernameOK() {
+        sv.updateUsername("userTest");
+        // This should not throw an exception
+    }
+
+    @Test
+    public void tesUpdateUsernameExistent() {
+        expectException(() ->
+                sv.updateUsername("userExistent"),
+                "This username already exists"
+        );
+    }
+
+    @Test
+    public void tesUpdatePasswordOK() {
+        sv.updatePassword("123", "456");
+        // This should not throw an exception
+    }
+
+    @Test
+    public void tesUpdatePasswordAntigaIncorrecta() {
+        expectException(() ->
+                sv.updatePassword("---", "456"),
+                "The old password is incorrect"
+        );
+    }
+
+    @Test
+    public void tesUpdateEmailOK() {
+        sv.updateEmail("email2");
+        // This should not throw an exception
+    }
+
+    @Test
+    public void tesUpdateEmailExistent() {
+        expectException(() ->
+                sv.updateEmail("emailExistent"),
+                "This email already exists"
+        );
+    }
+
+    @Test
+    public void tesUpdateEmailInvalid() {
+        expectException(() ->
+                sv.updateEmail("emailInvalid"),
+                "Please enter a valid email"
+        );
+    }
+
+    @Test
+    public void tesUpdateActiveMedalOK() {
+        sv.updateActiveMedal(2);
+        // This should not throw an exception
+    }
+
+    @Test
+    public void tesUpdateActiveMedalInvalid() {
+        expectException(() ->
+                sv.updateActiveMedal(5),
+                "This medal is incorrect"
+        );
+    }
+
+    @Test
+    public void tesUpdateAccountVisibilityOK() {
+        sv.updateAccountVisibility(true);
+        // This should not throw an exception
+    }
+
+    @Test
+    public void tesDeleteAccountOK() {
+        sv.deleteAccount("goodPassword");
+        // This should not throw an exception
+    }
+
+    @Test
+    //peta por la excepcion
+    public void tesDeleteAccountIncorrectPassword() {
+        expectException(() ->
+                sv.deleteAccount("badPassword"),
+                "The entered password was incorrect"
+        );
+    }
+
 }
