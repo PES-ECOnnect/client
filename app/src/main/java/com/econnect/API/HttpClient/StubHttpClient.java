@@ -331,9 +331,9 @@ public class StubHttpClient implements HttpClient {
                     return "{\"error\":\"ERROR_POST_NOT_EXISTS\"}";
                 }
             case "/account":
-                expectParamsExclusive(params, "token", "password");
-                if (equals(params, "password", "badPassword")) {
-                    return "{\"error\":\"ERROR_INCORRECT_PASSWORD\"}";
+                expectParamsExclusive(params, "token");
+                if (equals(params, "token", "badToken")) {
+                    return "{\"error\":\"ERROR_INVALID_TOKEN\"}";
                 }
                 else {
                     return "{status: 'success'}";

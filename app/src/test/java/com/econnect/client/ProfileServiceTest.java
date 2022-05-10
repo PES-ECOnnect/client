@@ -144,16 +144,27 @@ public class ProfileServiceTest {
 
     @Test
     public void tesDeleteAccountOK() {
-        sv.deleteAccount("goodPassword");
+        sv.deleteAccount();
         // This should not throw an exception
     }
 
     @Test
     //peta por la excepcion
     public void tesDeleteAccountIncorrectPassword() {
+        ServiceTestHelper.clearToken();
         expectException(() ->
-                sv.deleteAccount("badPassword"),
-                "The entered password was incorrect"
+                sv.deleteAccount(),
+                "User token not set"
+        );
+    }
+
+
+    @Test
+    public void cannotGetProductsWithWrongToken() {
+        ServiceTestHelper.setToken("badToken");
+        expectException(()->
+                        sv.deleteAccount(),
+                "This session has expired, please logout and try again"
         );
     }
 

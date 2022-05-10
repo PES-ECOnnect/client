@@ -92,12 +92,12 @@ public class LoggedUserProfileController extends ProfileController {
         });
     }
 
-    public void deleteAccount(String password) {
+    public void deleteAccount() {
         ExecutionThread.nonUI(() -> {
             try {
                 // Delete account
                 ProfileService profileService = ServiceFactory.getInstance().getProfileService();
-                profileService.deleteAccount(password);
+                profileService.deleteAccount();
                 // Delete stored token
                 LoginService loginService = ServiceFactory.getInstance().getLoginService();
                 loginService.localLogout();
