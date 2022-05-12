@@ -3,6 +3,7 @@ package com.econnect.client.Companies;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.AdapterView;
 
 import androidx.activity.result.ActivityResult;
@@ -84,6 +85,14 @@ public class CompaniesController {
             intent.putExtra("id", p.id);
             intent.putExtra("type", "company");
 
+            _activityLauncher.launch(intent);
+        };
+    }
+
+    View.OnClickListener mapButtonClick() {
+        return view -> {
+            // Launch new activity DetailsActivity
+            Intent intent = new Intent(_fragment.getContext(), CompanyMapActivity.class);
             _activityLauncher.launch(intent);
         };
     }

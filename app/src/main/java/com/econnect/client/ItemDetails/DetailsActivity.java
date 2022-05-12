@@ -6,29 +6,26 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.MenuItem;
 
+import com.econnect.Utilities.FragmentContainerActivity;
 import com.econnect.client.R;
 
 
-public class DetailsActivity extends AppCompatActivity {
+public class DetailsActivity extends FragmentContainerActivity {
+
+    public DetailsActivity() {
+        // Set the title in initializeFragment()
+        super("");
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        // Init Activity
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_details);
-
-        // Enable back arrow in title bar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        // Get parameters
-        Intent intent = getIntent();
+    protected Fragment initializeFragment(Intent intent) {
         String type = intent.getStringExtra("type");
         int itemId = intent.getIntExtra("id", -1);
-
         if (type == null || itemId == -1) {
             throw new RuntimeException("Incorrect parameters passed to DetailsActivity");
         }
@@ -50,19 +47,7 @@ public class DetailsActivity extends AppCompatActivity {
         }
         fragment.setController(ctrl);
 
-        // Display fragment
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.detailsMainLayout, fragment).commit();
-    }
-
-    // If back arrow in title bar is pressed, finish activity
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            this.finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return fragment;
     }
 }
 

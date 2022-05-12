@@ -34,11 +34,11 @@ public class ForumController {
         this._fragment = fragment;
         _activityLauncher = fragment.registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
-                this::launchDetailsCallback
+                this::launchNewPostCallback
         );
     }
 
-    private void launchDetailsCallback(ActivityResult result) {
+    private void launchNewPostCallback(ActivityResult result) {
         // Called once the user returns from new post screen
         if (result.getResultCode() != Activity.RESULT_CANCELED) {
             updateData();
