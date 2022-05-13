@@ -30,15 +30,17 @@ public class ProfileService extends Service {
         public final String home;
         public final Boolean isPrivate;
         public final String email;
+        public final String about;
         //public final String imageUser;
 
-        public User(String username, int activeMedal, String email, String home, Medal[] medals, Boolean isPrivate) {
+        public User(String username, int activeMedal, String email, String home, Medal[] medals, Boolean isPrivate, String about) {
             this.username = username;
             this.medals = medals;
             this.activeMedal = activeMedal;
             this.home = home;
             this.email = email;
             this.isPrivate = isPrivate;
+            this.about = about;
         }
     }
 
@@ -78,7 +80,7 @@ public class ProfileService extends Service {
         assertResultNotNull(username, result);
         assertResultNotNull(medals, result);
         // TODO: get active medal from endpoint
-        return new User(username, 1234, null, null, medals, null);
+        return new User(username, 1234, null, null, medals, null, null);
     }
 
     public void updateUsername(String text) {
