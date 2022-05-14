@@ -14,13 +14,15 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
     private final EditProfileController _ctrl = new EditProfileController(this);
     private String _username;
     private String _email;
+    private String _about;
     private final Boolean _isPrivate;
 
 
-    public EditFragment(String username, String email, Boolean isPrivate) {
+    public EditFragment(String username, String email, String about,Boolean isPrivate) {
         super(FragmentEditProfileBinding.class);
         this._username = username;
         this._email = email;
+        this._about = about;
         this._isPrivate = isPrivate;
     }
 
@@ -31,6 +33,9 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
         );
         binding.changeEmailButton.setOnClickListener(view ->
             _ctrl.changeEmail(binding.editEmailText.getText().toString())
+        );
+        binding.changeAboutButton.setOnClickListener(view ->
+            _ctrl.changeAbout(binding.editAboutText.getText().toString())
         );
         binding.switchPrivate.setOnClickListener(view ->
             _ctrl.changeIsPrivate(binding.switchPrivate.isChecked())
@@ -43,6 +48,10 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
         binding.editEmailText.addTextChangedListener(new AccountTextWatcher(()->{
             boolean sameText = binding.editEmailText.getText().toString().equals(_email);
             binding.changeEmailButton.setEnabled(!sameText);
+        }));
+        binding.editAboutText.addTextChangedListener(new AccountTextWatcher(()->{
+            boolean sameText = binding.editAboutText.getText().toString().equals(_about);
+            binding.changeAboutButton.setEnabled(!sameText);
         }));
 
         binding.changePassword.setOnClickListener(view -> changePassword());
@@ -73,9 +82,15 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
         ExecutionThread.UI(this, ()->binding.changeEmailButton.setEnabled(false));
     }
 
+    void updateAbout(String newAbout) {
+        _about = newAbout;
+        ExecutionThread.UI(this, ()->binding.changeAboutButton.setEnabled(false));
+    }
+
     public void setDefaultValues() {
         binding.editUsernameText.setText(_username);
         binding.editEmailText.setText(_email);
+        binding.editAboutText.setText(_about);
         binding.switchPrivate.setChecked(_isPrivate);
     }
 

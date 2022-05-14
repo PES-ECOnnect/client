@@ -1,5 +1,7 @@
 package com.econnect.API;
 
+import android.nfc.tech.Ndef;
+
 import com.econnect.API.Exceptions.ApiException;
 import com.econnect.API.Exceptions.ProfileIsPrivateException;
 
@@ -142,6 +144,27 @@ public class ProfileService extends Service {
                     throw new RuntimeException("This email already exists");
                 case ApiConstants.ERROR_ACCOUNT_INVALID_EMAIL:
                     throw new RuntimeException("Please enter a valid email");
+                default:
+                    throw e;
+            }
+        }
+        // Parse result
+        super.expectOkStatus(result);
+    }
+
+    public void updateAbout(String text) {
+        // Add parameters
+        TreeMap<String, String> params = new TreeMap<>();
+        params.put(ApiConstants.NEW_USER_ABOUT, text);
+        JsonResult result = null;
+        try {
+            // Call API
+            super.needsToken = true;
+            result = put(ApiConstants.ACCOUNT_ABOUT_PATH, params, null);
+        } catch (ApiException e) {
+            switch (e.getErrorCode()){
+                case ApiConstants.ERROR_INVALID_TOKEN:
+                    throw new RuntimeException("Invalid token");
                 default:
                     throw e;
             }
