@@ -56,6 +56,9 @@ public class CompanyService extends Service {
                 imageBitmap = BitmapLoader.fromURLResizeHeight(imageurl, height);
             return imageBitmap;
         }
+        public boolean hasImage() {
+            return imageBitmap != null;
+        }
     }
 
     public static class CompanyDetails {
