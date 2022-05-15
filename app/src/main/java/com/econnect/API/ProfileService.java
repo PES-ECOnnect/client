@@ -79,10 +79,11 @@ public class ProfileService extends Service {
         // Parse result
         String username = result.getObject("username", String.class);
         Medal[] medals = result.getArray("medals", Medal[].class);
+        String about = result.getObject("about", String.class);
         assertResultNotNull(username, result);
         assertResultNotNull(medals, result);
         // TODO: get active medal from endpoint
-        return new User(username, 1234, null, null, medals, null, null);
+        return new User(username, 1234, null, null, medals, null, about);
     }
 
     public void updateUsername(String text) {
