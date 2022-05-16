@@ -85,4 +85,8 @@
     <string name="menu_delete_account">Delete Account</string>
     <string name="title_activity_maps_delete">MapsActivityDELETE</string>
     <string name="about_text">About</string>
+    <string name="seats">Free seats:</string>
+    <string name="carpool_start">Start:</string>
+    <string name="carpool_destination">Destination:</string>
+
 </resources>
