@@ -1,7 +1,6 @@
 package com.econnect.client.Companies;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
-import androidx.fragment.app.Fragment;
 
 import com.econnect.API.CompanyService.Company;
-import com.econnect.Utilities.ExecutionThread;
+import com.econnect.API.ElektroGo.CarpoolService.CarpoolPoint;
 import com.econnect.client.R;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
@@ -31,27 +29,62 @@ public class CompanyMapInfoAdapter implements GoogleMap.InfoWindowAdapter {
     @Override
     public View getInfoContents(@NonNull Marker marker) {
         // Customize the contents of the map popup
+        Object tag = marker.getTag();
+        assert tag != null;
 
-        // Get view
-        final View v = _inflater.inflate(R.layout.map_popup_item, null);
+        if (tag instanceof Company) {
+            final Company company = (Company) tag;
+            final View v = _inflater.inflate(R.layout.map_popup_item, null);
 
-        final Company company = (Company) marker.getTag();
-        assert company != null;
+            TextView companyName = v.findViewById(R.id.popup_companyName);
+            companyName.setText(company.name);
 
-        TextView companyName = v.findViewById(R.id.popup_companyName);
-        companyName.setText(company.name);
+            // Set item image
+            if (company.hasImage()) {
+                ImageView image = v.findViewById(R.id.popup_image);
+                image.setImageBitmap(company.getImage(-1));
+            }
 
-        // Set item image
-        if (company.hasImage()) {
-            ImageView image = v.findViewById(R.id.popup_image);
-            image.setImageBitmap(company.getImage(-1));
+            // Set average rating
+            setStars(v, company.getAvgRating());
+
+            // Returning the view containing InfoWindow contents
+            return v;
         }
+        else if (tag instanceof CarpoolPoint) {
+            final CarpoolPoint point = (CarpoolPoint) tag;
+            final View v = _inflater.inflate(R.layout.map_popup_item_carpool, null);
 
-        // Set average rating
-        setStars(v, company.getAvgRating());
+            // Name
+            TextView name = v.findViewById(R.id.popup_carpoolName);
+            name.setText(String.format("%s - %s", point.username, point.vehicleNumberPlate));
 
-        // Returning the view containing InfoWindow contents
-        return v;
+            // Extra info
+            TextView restrictions = v.findViewById(R.id.popup_restrictions);
+            restrictions.setText(point.restrictions);
+            TextView details = v.findViewById(R.id.popup_details);
+            details.setText(point.details);
+
+            // Start
+            TextView start = v.findViewById(R.id.popup_startText);
+            start.setText(String.format("%s %s", point.startDate, point.startTime));
+
+            // Destination
+            TextView destination = v.findViewById(R.id.popup_destinationText);
+            destination.setText(point.destination);
+
+            // Free seats
+            TextView seats = v.findViewById(R.id.popup_remainingSeats);
+            int freeSeats = point.offeredSeats - point.occupiedSeats;
+            seats.setText(String.format("%d/%d", freeSeats, point.offeredSeats));
+
+
+            // Returning the view containing InfoWindow contents
+            return v;
+        }
+        else {
+            throw new RuntimeException("Unrecognized tag type");
+        }
     }
 
     private void setStars(View v, float average) {

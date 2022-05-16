@@ -3,15 +3,33 @@ package com.econnect.client.Companies;
 import android.annotation.SuppressLint;
 import android.view.View;
 
+import com.econnect.API.CompanyService;
+import com.econnect.API.ElektroGo.CarpoolService;
 import com.econnect.Utilities.CustomFragment;
+import com.econnect.Utilities.ExecutionThread;
 import com.econnect.client.R;
 import com.econnect.client.databinding.FragmentCompaniesMapBinding;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CircleOptions;
+import com.google.android.gms.maps.model.Dash;
+import com.google.android.gms.maps.model.Gap;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PatternItem;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.maps.model.RoundCap;
+import com.google.android.gms.maps.model.SquareCap;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class CompanyMapFragment extends CustomFragment<FragmentCompaniesMapBinding> {
 
     private final CompanyMapController _ctrl = new CompanyMapController(this);
+    private GoogleMap _map = null;
 
 
     public CompanyMapFragment() {
@@ -23,13 +41,18 @@ public class CompanyMapFragment extends CustomFragment<FragmentCompaniesMapBindi
         binding.centerMap.setOnClickListener(view -> _ctrl.centerOnLocation());
 
         SupportMapFragment mapFragment = binding.map.getFragment();
-        mapFragment.getMapAsync(_ctrl);
+        mapFragment.getMapAsync(map -> {
+            // Store map for later
+            _map = map;
+            _ctrl.onMapReady(map);
+        });
 
-        _ctrl.loadCompanies();
+        // Begin loading markers before the map is ready, since the server can take a while to respond
+        _ctrl.loadMarkers();
     }
 
 
-    void enableLocationLoading(boolean loading) {
+    void showLocationLoadIcon(boolean loading) {
         if (loading) {
             binding.centerMap.setImageDrawable(null);
             binding.centerMapProgress.setVisibility(View.VISIBLE);
@@ -52,5 +75,46 @@ public class CompanyMapFragment extends CustomFragment<FragmentCompaniesMapBindi
         catch (Exception e) {
             // Could not remove default button, do nothing
         }
+    }
+
+    void addMarker(CompanyService.Company company) {
+        assert _map != null;
+
+        LatLng coords = new LatLng(company.lat, company.lon);
+        MarkerOptions options = new MarkerOptions().position(coords);
+        // Add marker to map
+        Marker m = _map.addMarker(options);
+        assert m != null;
+        m.setTag(company);
+        // Create a task for loading images in the background
+        ExecutionThread.nonUI(()-> company.getImage(64));
+    }
+    void addMarker(CarpoolService.CarpoolPoint point) {
+        // SOURCE
+        LatLng origin = new LatLng(point.latitudeOrigin, point.longitudeOrigin);
+        MarkerOptions options = new MarkerOptions()
+                .position(origin)
+                .alpha(0.7f)
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+        // Add marker to map
+        Marker m = _map.addMarker(options);
+        assert m != null;
+        m.setTag(point);
+
+        // DESTINATION
+        LatLng dest = new LatLng(point.latitudeDestination, point.longitudeDestination);
+        CircleOptions circle = new CircleOptions()
+                .center(dest)
+                .radius(100);
+        _map.addCircle(circle);
+
+        // LINE
+        final List<PatternItem> pattern = Arrays.asList(new Gap(20), new Dash(30));
+        PolylineOptions line = new PolylineOptions()
+                .add(origin, dest)
+                .pattern(pattern)
+                .geodesic(true)
+                .width(4);
+        _map.addPolyline(line);
     }
 }
