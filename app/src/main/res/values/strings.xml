@@ -88,5 +88,6 @@
     <string name="seats">Free seats:</string>
     <string name="carpool_start">Start:</string>
     <string name="carpool_destination">Destination:</string>
+    <string name="profile_picture">Profile Picture</string>
 
 </resources>
