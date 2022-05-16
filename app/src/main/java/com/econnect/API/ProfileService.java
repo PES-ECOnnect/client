@@ -1,7 +1,5 @@
 package com.econnect.API;
 
-import android.nfc.tech.Ndef;
-
 import com.econnect.API.Exceptions.ApiException;
 import com.econnect.API.Exceptions.ProfileIsPrivateException;
 
@@ -33,9 +31,9 @@ public class ProfileService extends Service {
         public final Boolean isPrivate;
         public final String email;
         public final String about;
-        //public final String imageUser;
+        public final String pictureURL;
 
-        public User(String username, int activeMedal, String email, String home, Medal[] medals, Boolean isPrivate, String about) {
+        public User(String username, int activeMedal, String email, String home, Medal[] medals, Boolean isPrivate, String about, String imageUser) {
             this.username = username;
             this.medals = medals;
             this.activeMedal = activeMedal;
@@ -43,6 +41,7 @@ public class ProfileService extends Service {
             this.email = email;
             this.isPrivate = isPrivate;
             this.about = about;
+            this.pictureURL = imageUser;
         }
     }
 
@@ -58,6 +57,7 @@ public class ProfileService extends Service {
         }
         // Parse result
         User user = result.getObject(ApiConstants.RET_RESULT, User.class);
+        System.out.println("service: "+user.pictureURL);
         assertResultNotNull(user, result);
         return user;
     }
@@ -80,10 +80,12 @@ public class ProfileService extends Service {
         String username = result.getObject("username", String.class);
         Medal[] medals = result.getArray("medals", Medal[].class);
         String about = result.getObject("about", String.class);
+        String pictureURL = result.getObject("pictureURL", String.class);
         assertResultNotNull(username, result);
         assertResultNotNull(medals, result);
+        System.out.println("otheruser"+pictureURL);
         // TODO: get active medal from endpoint
-        return new User(username, 1234, null, null, medals, null, about);
+        return new User(username, 1234, null, null, medals, null, about, pictureURL);
     }
 
     public void updateUsername(String text) {

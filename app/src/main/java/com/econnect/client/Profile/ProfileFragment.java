@@ -1,16 +1,22 @@
 package com.econnect.client.Profile;
 
 import static com.econnect.API.ProfileService.User;
+import static com.econnect.Utilities.BitmapLoader.fromURL;
 
+import android.app.Activity;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.core.content.ContextCompat;
 
 import com.econnect.API.ProfileService;
 import com.econnect.Utilities.CustomFragment;
+import com.econnect.Utilities.ExecutionThread;
 import com.econnect.client.R;
 import com.econnect.client.databinding.FragmentProfileBinding;
+import com.google.android.material.imageview.ShapeableImageView;
 
 
 public class ProfileFragment extends CustomFragment<FragmentProfileBinding> {
@@ -62,5 +68,19 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> {
         MedalListAdapter medals_adapter = new MedalListAdapter(this, defaultImage, u.medals);
         binding.medalsList.setAdapter(medals_adapter);
         binding.medalsList.refreshDrawableState();
+
+        // set image
+
+        Drawable userDefaultImage = ContextCompat.getDrawable(requireContext(), R.drawable.ic_profile_24);
+        ImageView image = binding.userImage;
+        ExecutionThread.nonUI(()->{
+            Bitmap bmp = fromURL(u.pictureURL);
+            ExecutionThread.UI(_ctrl._fragment, ()-> {
+                // TODO: set defaultimage for users
+                if (bmp == null) image.setImageDrawable(userDefaultImage);
+                else image.setImageBitmap(bmp);
+            });
+        });
+
     }
 }
