@@ -4,11 +4,15 @@ import static com.econnect.Utilities.BitmapLoader.fromURL;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.text.Editable;
 import android.text.NoCopySpan;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.ImageView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.content.ContextCompat;
 
 import com.econnect.Utilities.CustomFragment;
@@ -25,6 +29,15 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
     private String _about;
     private final Boolean _isPrivate;
     private String _pictureURL;
+
+    private Uri _selectedImage = null;
+
+    private final ActivityResultLauncher<String> _getContentLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
+        if (uri == null) return;
+        _selectedImage = uri;
+        binding.editUserImage.setImageURI(uri);
+        //binding.removeImageButton.setVisibility(View.VISIBLE);
+    });
 
 
     public EditFragment(String username, String email, String about,Boolean isPrivate, String pictureURL) {
@@ -50,6 +63,7 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
         binding.switchPrivate.setOnClickListener(view ->
             _ctrl.changeIsPrivate(binding.switchPrivate.isChecked())
         );
+        binding.editUserImage.setOnClickListener(view -> _getContentLauncher.launch("image/*"));
 
         binding.editUsernameText.addTextChangedListener(new AccountTextWatcher(()->{
             boolean sameText = binding.editUsernameText.getText().toString().equals(_username);
@@ -138,5 +152,8 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
         }
     }
 
+    Uri getSelectedImage() {
+        return _selectedImage;
+    }
 
 }
