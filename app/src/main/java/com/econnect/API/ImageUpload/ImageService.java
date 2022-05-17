@@ -65,7 +65,6 @@ public class ImageService {
     }
     
     // This token should be stored in the backend and retrieved from there
-    private final String _IMAGESHACK_TOKEN = "HZFLDN3Q913ed2f68ed00054d7e1f3cdcc1d71ad";
     private final String _IMAGESHACK_UPLOAD_URL = "https://api.imageshack.com/v2/images";
     
     private final IUploadClient _uploadClient = new ApacheUploadClient();
@@ -74,7 +73,7 @@ public class ImageService {
     public UploadResult uploadImage(File file) {
         // Add parameters
         TreeMap<String, String> params = new TreeMap<>();
-        params.put("key", _IMAGESHACK_TOKEN);
+        params.put("key", ApiKey.IMAGESHACK_TOKEN);
         params.put("album", "my_album");
         params.put("comments_disabled", "true");
         
@@ -97,5 +96,4 @@ public class ImageService {
         UploadResult uploadResult = uploadImage(file);
         return "https://" + uploadResult.images[0].direct_link;
     }
-    
 }
