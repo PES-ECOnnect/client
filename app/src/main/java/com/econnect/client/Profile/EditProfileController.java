@@ -88,4 +88,21 @@ public class EditProfileController {
             }
         });
     }
+
+    public void changeAbout(String about) {
+        // This could take some time (and accesses the internet), run non-UI thread
+        ExecutionThread.nonUI(() -> {
+            try {
+                ProfileService profileService = ServiceFactory.getInstance().getProfileService();
+                profileService.updateAbout(about);
+                _fragment.updateAbout(about);
+            }
+            catch (Exception e) {
+                // Return to UI for showing errors
+                ExecutionThread.UI(_fragment, ()->{
+                    PopupMessage.warning(_fragment, "Could not update username" + e.getMessage());
+                });
+            }
+        });
+    }
 }

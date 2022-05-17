@@ -1,0 +1,96 @@
+<resources>
+    <string name="app_name">ECOnnect</string>
+    <string name="products_name">Productos</string>
+    <string name="companies_name">Compañias</string>
+    <string name="forum_name">Foro</string>
+    <string name="profile_name">Perfil</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="google_client_id">143740353566-ork4rg1f38a7pqv0shd6kebk7oshbnj6.apps.googleusercontent.com</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="register_fragment_label">Únete a ECOnnect</string>
+    <string name="login_fragment_label">Inicia Sesión</string>
+    <string name="next">Siguiente</string>
+    <string name="previous">Anterior</string>
+
+    <string name="login_button_text">INICIA SESIÓN</string>
+    <string name="password_textbox_hint">Contraseña</string>
+    <string name="email_textbox_hint">Email</string>
+    <string name="logo">logo</string>
+    <string name="new_account_button_text">Crear una Nueva Cuenta</string>
+    <string name="postal_code_text">Código Postal</string>
+    <string name="username_textbox_hint">Nombre de Usuario</string>
+    <string name="register_button_text">REGISTRARSE</string>
+    <string name="already_have_an_account_text">Ya tengo una cuenta</string>
+
+    <string name="search_products_hint">Buscar</string>
+    <string name="logout_button_text">Cerrar Sesión</string>
+    <string name="filter_type_text">Filtrar por el tipo de producto</string>
+    <string name="filter_type_hint">Tipo de Producto</string>
+    <string name="product_image_description">Imagen del Producto</string>
+    <string name="star_image_description">Estrella</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="questions_text">Preguntas</string>
+    <string name="add_rating_button_text">Añadir Valoración</string>
+    <string name="vote_option_yes">Sí</string>
+    <string name="vote_option_no">No</string>
+    <string name="vote_option_yes_description">Votar Sí</string>
+    <string name="vote_option_no_description">Votar No</string>
+
+    <string name="num_votes_text">%d votos</string>
+    <string name="num_votes_text_one">%d voto</string>
+    <string name="question_text_and_votes">%s - %d votos</string>
+    <string name="question_text_and_votes_one">%s - %d voto</string>
+    <string name="filter_tag_hint">Buscar por etiqueta</string>
+
+    <string name="tag_posts_count">%d publicación</string>
+    <string name="tag_posts_count_one">%d publicación</string>
+    <string name="like_post_description">Me gusta la publicación</string>
+    <string name="dislike_post_description">No me gusta la publicación</string>
+    <string name="post_image_description">Imagen de la publicación</string>
+    <string name="user_medal_description">Medall de Usuario</string>
+
+    <string name="check_out_econnect">revisa ECOnnect en</string>
+    <string name="on_econnect">%s en ECOnnect:</string>
+    <string name="invalid_date_warning">Fecha Invalida</string>
+    <string name="hours_ago">hace %d horas</string>
+    <string name="hours_ago_one">hace %d hora</string>
+    <string name="minutes_ago">hace %d minutos</string>
+    <string name="minutes_ago_one">hace %d minuto</string>
+    <string name="delete_hint">Borrar</string>
+    <string name="warning">AVISO</string>
+    <string name="delete_account_text">Estás a punto de borrar tu cuenta. ¿Realmente quieres borrarla? \n\nEscribe \'ACEPTO\' para confirmar.</string>
+    <string name="i_accept_text">ACEPTO</string>
+    <string name="cancel">CANCELAR</string>
+    <string name="delete">BORRAR</string>
+    <string name="write_your_opinion">Escribe tu opinión:</string>
+    <string name="add_post">Añadir una publicación</string>
+    <string name="new_post_hint">Texto</string>
+    <string name="post_add_image">(Opcional) Añadir una imagen:</string>
+    <string name="remove_image">Borrar imagen</string>
+    <string name="send_review">ENVIAR VALORACIÓN</string>
+    <string name="password">contraseña</string>
+    <string name="old_password">Contraseña Antigua</string>
+    <string name="new_password">Contraseña Nueva</string>
+    <string name="active_medal">Medalla Activa</string>
+    <string name="medals_text">Medallas</string>
+    <string name="edit_profile">Editar Perfil</string>
+    <string name="private_account_toggle">Cuenta Privada</string>
+    <string name="change_active_medal_text">¿Quieres cambiar tu medalla activa por la que acabas de seleccionar?</string>
+    <string name="change_attributes">Cambiar atributos</string>
+    <string name="change_password">Cambiar contraseña</string>
+    <string name="account">Cuenta</string>
+    <string name="menu_log_out">Cerrar Sesión</string>
+    <string name="menu_edit_profile">Editar Perfil</string>
+    <string name="menu_delete_account">Borrar Cuenta</string>
+    <string name="title_activity_maps_delete">MapsActivityDELETE</string>
+    <string name="about_text">Sobre</string>
+    <string name="seats">Asientos libres:</string>
+    <string name="carpool_start">Inicio:</string>
+    <string name="carpool_destination">Destino:</string>
+    <string name="translate">Cambiar Idioma</string>
+    <string name="change_idiom">¿Quieres cambiar el idioma? Selecciona la opción que necesites.</string>
+    <string name="english">Inglés</string>
+    <string name="catalan">Catalan</string>
+    <string name="spanish">Castellano</string>
+    <string name="about_textbox_hint">Sobre</string>
+</resources>
