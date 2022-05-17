@@ -51,11 +51,39 @@ public class LoggedUserProfileFragment extends ProfileFragment {
                 case R.id.profile_delete_account:
                     createDeleteAccountDialog();
                     break;
+                case R.id.profile_translate:
+                    createTranslateDialog();
+                    break;
                 default:
                     break;
             }
             return true;
         });
+    }
+
+    private void createTranslateDialog() {
+        AlertDialog.Builder idiomBuilder = new AlertDialog.Builder(requireContext());
+
+        final View idiomPopupView = getLayoutInflater().inflate(R.layout.change_idiom, null);
+
+        Button englishButton = idiomPopupView.findViewById(R.id.englishButton);
+        Button spanishButton = idiomPopupView.findViewById(R.id.spanishButton);
+        Button catalanButton = idiomPopupView.findViewById(R.id.catalanButton);
+
+        idiomBuilder.setView(idiomPopupView);
+        AlertDialog idiom = idiomBuilder.create();
+        idiom.show();
+
+        englishButton.setOnClickListener(view -> {
+           _ctrl.changeIdiom("english");
+        });
+        spanishButton.setOnClickListener(view -> {
+            _ctrl.changeIdiom("spanish");
+        });
+        catalanButton.setOnClickListener(view -> {
+            _ctrl.changeIdiom("catalan");
+        });
+
     }
 
     public void createDeleteAccountDialog() {

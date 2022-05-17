@@ -1,0 +1,96 @@
+<resources>
+    <string name="app_name">ECOnnect</string>
+    <string name="products_name">Productes</string>
+    <string name="companies_name">Companyies</string>
+    <string name="forum_name">Fòrum</string>
+    <string name="profile_name">Perfil</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="google_client_id">143740353566-ork4rg1f38a7pqv0shd6kebk7oshbnj6.apps.googleusercontent.com</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="register_fragment_label">Uneix-te a ECOnnect</string>
+    <string name="login_fragment_label">Iniciar Sessió</string>
+    <string name="next">Següent</string>
+    <string name="previous">Anterior</string>
+
+    <string name="login_button_text">INICIAR SESSIÓ</string>
+    <string name="password_textbox_hint">Contrasenya</string>
+    <string name="email_textbox_hint">Email</string>
+    <string name="logo">logo</string>
+    <string name="new_account_button_text">Crear un Nou Compte</string>
+    <string name="postal_code_text">Codi Postal</string>
+    <string name="username_textbox_hint">Nom d\'Usuari</string>
+    <string name="register_button_text">REGISTRAR</string>
+    <string name="already_have_an_account_text">Ja tinc un compte</string>
+
+    <string name="search_products_hint">Buscar</string>
+    <string name="logout_button_text">Tancar sessió</string>
+    <string name="filter_type_text">Filtrar per tipus de producte</string>
+    <string name="filter_type_hint">Tipus de Producte</string>
+    <string name="product_image_description">Imatge de Producte</string>
+    <string name="star_image_description">Estrella</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="questions_text">Preguntes</string>
+    <string name="add_rating_button_text">Afegir Valoració</string>
+    <string name="vote_option_yes">Sí</string>
+    <string name="vote_option_no">No</string>
+    <string name="vote_option_yes_description">Votar Sí</string>
+    <string name="vote_option_no_description">Votar No</string>
+
+    <string name="num_votes_text">%d vots</string>
+    <string name="num_votes_text_one">%d vot</string>
+    <string name="question_text_and_votes">%s - %d vots</string>
+    <string name="question_text_and_votes_one">%s - %d vot</string>
+    <string name="filter_tag_hint">Buscar per etiqueta</string>
+
+    <string name="tag_posts_count">%d publicacions</string>
+    <string name="tag_posts_count_one">%d publicació</string>
+    <string name="like_post_description">M\'agrada la publicació</string>
+    <string name="dislike_post_description">No m\'agrada la publicació</string>
+    <string name="post_image_description">Imatge de la publicació</string>
+    <string name="user_medal_description">Medalla d\'Usuari</string>
+
+    <string name="check_out_econnect">revisa ECOnnect en</string>
+    <string name="on_econnect">%s en ECOnnect:</string>
+    <string name="invalid_date_warning">Data Invalida</string>
+    <string name="hours_ago">fa %d hores </string>
+    <string name="hours_ago_one">fa %d hora</string>
+    <string name="minutes_ago">fa %d minuts</string>
+    <string name="minutes_ago_one">fa %d minut</string>
+    <string name="delete_hint">Esborrar</string>
+    <string name="warning">ADVERTENCIA</string>
+    <string name="delete_account_text">Esborraràs el teu compte. De veritat voleu suprimir-lo? \i Escriviu \'ACCEPTO\' per confirmar.</string>
+    <string name="i_accept_text">ACCEPTO</string>
+    <string name="cancel">CANCELAR</string>
+    <string name="delete">ESBORRAR</string>
+    <string name="write_your_opinion">Escriu la teva opinió:</string>
+    <string name="add_post">Afegeix una publicació</string>
+    <string name="new_post_hint">Text</string>
+    <string name="post_add_image">(Opcional) Afegir ina imatge:</string>
+    <string name="remove_image">Esborrar Imatge</string>
+    <string name="send_review">ENVIAR VALORACIÓ</string>
+    <string name="password">contrasenya</string>
+    <string name="old_password">Contrasenya antiga</string>
+    <string name="new_password">Contrasenya nova</string>
+    <string name="active_medal">Medalla activa</string>
+    <string name="medals_text">Medalles</string>
+    <string name="edit_profile">Editar Perfil</string>
+    <string name="private_account_toggle">Compte Privat</string>
+    <string name="change_active_medal_text">Vols canviar la teva medalla activa per la que acabes de seleccionar?</string>
+    <string name="change_attributes">Canviar atributs</string>
+    <string name="change_password">canviar contrasenya</string>
+    <string name="account">Compte</string>
+    <string name="menu_log_out">Tancar Sessió</string>
+    <string name="menu_edit_profile">Editar Perfil</string>
+    <string name="menu_delete_account">Esborrar Compte</string>
+    <string name="title_activity_maps_delete">MapsActivityDELETE</string>
+    <string name="about_text">Sobre</string>
+    <string name="seats">Seients lliures:</string>
+    <string name="carpool_start">Inici:</string>
+    <string name="carpool_destination">Destí:</string>
+    <string name="translate">Canviar Idioma</string>
+    <string name="change_idiom">Vols canviar l\'idioma? Sel·lecciona l\'opció que necessitis.</string>
+    <string name="english">Anglès</string>
+    <string name="catalan">Català</string>
+    <string name="spanish">Castellà</string>
+    <string name="about_textbox_hint">Sobre</string>
+</resources>
