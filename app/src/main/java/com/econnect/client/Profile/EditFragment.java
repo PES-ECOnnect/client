@@ -4,6 +4,7 @@ import static com.econnect.Utilities.BitmapLoader.fromURL;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
 import android.text.Editable;
 import android.text.NoCopySpan;
@@ -63,7 +64,16 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
         binding.switchPrivate.setOnClickListener(view ->
             _ctrl.changeIsPrivate(binding.switchPrivate.isChecked())
         );
-        binding.editUserImage.setOnClickListener(view -> _getContentLauncher.launch("image/*"));
+        binding.editUserImage.setOnClickListener(view -> {
+            _getContentLauncher.launch("image/*");
+            binding.changeImageButton.setEnabled(true);
+        });
+
+        binding.changeImageButton.setOnClickListener(view-> {
+            _ctrl.changeProfilePicture();
+            binding.changeImageButton.setEnabled(false);
+
+        });
 
         binding.editUsernameText.addTextChangedListener(new AccountTextWatcher(()->{
             boolean sameText = binding.editUsernameText.getText().toString().equals(_username);
@@ -152,7 +162,7 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
         }
     }
 
-    Uri getSelectedImage() {
+    Uri getSelectedImageUri() {
         return _selectedImage;
     }
 

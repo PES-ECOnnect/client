@@ -89,5 +89,6 @@
     <string name="carpool_start">Start:</string>
     <string name="carpool_destination">Destination:</string>
     <string name="profile_picture">Profile Picture</string>
+    <string name="change_profile_image">Change Image</string>
 
 </resources>

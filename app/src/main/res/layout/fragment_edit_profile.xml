@@ -188,6 +188,16 @@
                 android:layout_marginRight="16sp"
                 android:src="@drawable/ic_profile_24" />
 
+            <Button
+                android:id="@+id/changeImageButton"
+                android:layout_width="165dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8sp"
+                android:clickable="true"
+                android:enabled="false"
+                android:text="@string/change_profile_image"
+                tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
+
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"

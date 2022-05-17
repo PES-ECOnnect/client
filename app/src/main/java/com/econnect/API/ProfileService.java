@@ -212,6 +212,22 @@ public class ProfileService extends Service {
         super.expectOkStatus(result);
     }
 
+    public void updatePicture(String url) {
+        // Add parameters
+        TreeMap<String, String> params = new TreeMap<>();
+        params.put(ApiConstants.NEW_PROFILE_PICTURE, url);
+
+        JsonResult result = null;
+        // Call API
+        super.needsToken = true;
+        result = put(ApiConstants.ACCOUNT_PICTURE_PATH, params, null);
+        // This endpoint does not throw exceptions
+
+        // Parse Result
+        super.expectOkStatus(result);
+
+    }
+
     public void deleteAccount() {
         // Call API
         super.needsToken = true;
