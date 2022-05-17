@@ -94,8 +94,7 @@ public class CompanyMapFragment extends CustomFragment<FragmentCompaniesMapBindi
         LatLng origin = new LatLng(point.latitudeOrigin, point.longitudeOrigin);
         MarkerOptions options = new MarkerOptions()
                 .position(origin)
-                .alpha(0.7f)
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.car));
         // Add marker to map
         Marker m = _map.addMarker(options);
         assert m != null;
