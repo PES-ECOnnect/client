@@ -28,6 +28,9 @@ jobs:
       
     - name: Add Google Maps key to local.properties
       run: echo 'MAPS_API_KEY=${{ secrets.MAPS_KEY }}' >> local.properties
+      
+    - name: Create ImageShack token
+      run: echo '${{ secrets.IMAGESHACK_KEY }}' > app/src/main/java/com/econnect/API/ImageUpload/ApiKey.java
         
         
     # This may improve performance
