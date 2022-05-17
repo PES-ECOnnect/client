@@ -9,7 +9,7 @@
     <!-- Strings used for fragments for navigation -->
     <string name="register_fragment_label">Uneix-te a ECOnnect</string>
     <string name="login_fragment_label">Iniciar Sessió</string>
-    <string name="next">Seguent</string>
+    <string name="next">Següent</string>
     <string name="previous">Anterior</string>
 
     <string name="login_button_text">INICIAR SESSIÓ</string>
@@ -83,4 +83,14 @@
     <string name="menu_edit_profile">Editar Perfil</string>
     <string name="menu_delete_account">Esborrar Compte</string>
     <string name="title_activity_maps_delete">MapsActivityDELETE</string>
+    <string name="about_text">Sobre</string>
+    <string name="seats">Seients lliures:</string>
+    <string name="carpool_start">Inici:</string>
+    <string name="carpool_destination">Destí:</string>
+    <string name="translate">Canviar Idioma</string>
+    <string name="change_idiom">Vols canviar l\'idioma? Sel·lecciona l\'opció que necessitis.</string>
+    <string name="english">Anglès</string>
+    <string name="catalan">Català</string>
+    <string name="spanish">Castellà</string>
+    <string name="about_textbox_hint">Sobre</string>
 </resources>

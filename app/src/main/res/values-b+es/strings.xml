@@ -83,4 +83,14 @@
     <string name="menu_edit_profile">Editar Perfil</string>
     <string name="menu_delete_account">Borrar Cuenta</string>
     <string name="title_activity_maps_delete">MapsActivityDELETE</string>
+    <string name="about_text">Sobre</string>
+    <string name="seats">Asientos libres:</string>
+    <string name="carpool_start">Inicio:</string>
+    <string name="carpool_destination">Destino:</string>
+    <string name="translate">Cambiar Idioma</string>
+    <string name="change_idiom">¿Quieres cambiar el idioma? Selecciona la opción que necesites.</string>
+    <string name="english">Inglés</string>
+    <string name="catalan">Catalan</string>
+    <string name="spanish">Castellano</string>
+    <string name="about_textbox_hint">Sobre</string>
 </resources>
