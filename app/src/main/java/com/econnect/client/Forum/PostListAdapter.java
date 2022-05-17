@@ -44,7 +44,7 @@ public class PostListAdapter extends BaseAdapter {
         this._highlightColor = highlightColor;
         this._data = new ArrayList<>(Arrays.asList(posts));
         this._callback = callback;
-        _inflater = (LayoutInflater) owner.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        _inflater = (LayoutInflater) owner.requireContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override

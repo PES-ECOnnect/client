@@ -30,10 +30,7 @@ import com.econnect.client.databinding.FragmentProductDetailsBinding;
 public class ProductDetailsFragment extends CustomFragment<FragmentProductDetailsBinding> {
 
     private IDetailsController _ctrl;
-    private AlertDialog.Builder reviewBuilder;
-    private AlertDialog review;
     private ImageView star1Rpopup, star2Rpopup, star3Rpopup, star4Rpopup, star5Rpopup;
-    private Button reviewpopup_cancel, reviewpopup_submit;
 
 
     public ProductDetailsFragment() {
@@ -55,52 +52,21 @@ public class ProductDetailsFragment extends CustomFragment<FragmentProductDetail
     }
 
 
-    public void updateStars(int i){
-        final Drawable fullStar = AppCompatResources.getDrawable(getContext(), R.drawable.ic_star_24);
-        final Drawable emptyStar = AppCompatResources.getDrawable(getContext(), R.drawable.ic_star_empty_24);
-        switch (i){
-            case 1:
-                star1Rpopup.setImageDrawable(fullStar);
-                star2Rpopup.setImageDrawable(emptyStar);
-                star3Rpopup.setImageDrawable(emptyStar);
-                star4Rpopup.setImageDrawable(emptyStar);
-                star5Rpopup.setImageDrawable(emptyStar);
-                break;
-            case 2:
-                star1Rpopup.setImageDrawable(fullStar);
-                star2Rpopup.setImageDrawable(fullStar);
-                star3Rpopup.setImageDrawable(emptyStar);
-                star4Rpopup.setImageDrawable(emptyStar);
-                star5Rpopup.setImageDrawable(emptyStar);
-                break;
-            case 3:
-                star1Rpopup.setImageDrawable(fullStar);
-                star2Rpopup.setImageDrawable(fullStar);
-                star3Rpopup.setImageDrawable(fullStar);
-                star4Rpopup.setImageDrawable(emptyStar);
-                star5Rpopup.setImageDrawable(emptyStar);
-                break;
-            case 4:
-                star1Rpopup.setImageDrawable(fullStar);
-                star2Rpopup.setImageDrawable(fullStar);
-                star3Rpopup.setImageDrawable(fullStar);
-                star4Rpopup.setImageDrawable(fullStar);
-                star5Rpopup.setImageDrawable(emptyStar);
-                break;
-            case 5:
-                star1Rpopup.setImageDrawable(fullStar);
-                star2Rpopup.setImageDrawable(fullStar);
-                star3Rpopup.setImageDrawable(fullStar);
-                star4Rpopup.setImageDrawable(fullStar);
-                star5Rpopup.setImageDrawable(fullStar);
-                break;
-        }
+    public void updateStars(int nStars){
+        final Drawable fullStar = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_star_24);
+        final Drawable emptyStar = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_star_empty_24);
+
+        star1Rpopup.setImageDrawable(nStars < 1 ? emptyStar : fullStar);
+        star2Rpopup.setImageDrawable(nStars < 2 ? emptyStar : fullStar);
+        star3Rpopup.setImageDrawable(nStars < 3 ? emptyStar : fullStar);
+        star4Rpopup.setImageDrawable(nStars < 4 ? emptyStar : fullStar);
+        star5Rpopup.setImageDrawable(nStars < 5 ? emptyStar : fullStar);
     }
 
     void setAverageRating(int[] votes) {
-        final Drawable fullStar = AppCompatResources.getDrawable(getContext(), R.drawable.ic_star_24);
-        final Drawable halfStar = AppCompatResources.getDrawable(getContext(), R.drawable.ic_star_half_24);
-        final Drawable emptyStar = AppCompatResources.getDrawable(getContext(), R.drawable.ic_star_empty_24);
+        final Drawable fullStar = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_star_24);
+        final Drawable halfStar = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_star_half_24);
+        final Drawable emptyStar = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_star_empty_24);
         final Drawable[] starDrawables = new Drawable[]{emptyStar, halfStar, fullStar};
         
         int rating = 0;
@@ -141,7 +107,7 @@ public class ProductDetailsFragment extends CustomFragment<FragmentProductDetail
     }
 
     void setQuestionsElements(Question[] questions) {
-        int highlightColor = ContextCompat.getColor(getContext(), R.color.green);
+        int highlightColor = ContextCompat.getColor(requireContext(), R.color.green);
         binding.questionsList.setAdapter(new QuestionListAdapter(this, questions, highlightColor));
     }
 
@@ -150,22 +116,19 @@ public class ProductDetailsFragment extends CustomFragment<FragmentProductDetail
     }
 
     public void createReviewDialog(){
-        reviewBuilder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder reviewBuilder = new AlertDialog.Builder(getContext());
 
         final View reviewPopupView = getLayoutInflater().inflate(R.layout.reviewpopup, null);
 
 
-        star1Rpopup = (ImageView) reviewPopupView.findViewById(R.id.star1Rpopup);
-        star2Rpopup = (ImageView) reviewPopupView.findViewById(R.id.star2Rpopup);
-        star3Rpopup = (ImageView) reviewPopupView.findViewById(R.id.star3Rpopup);
-        star4Rpopup = (ImageView) reviewPopupView.findViewById(R.id.star4Rpopup);
-        star5Rpopup = (ImageView) reviewPopupView.findViewById(R.id.star5Rpopup);
-
-        reviewpopup_cancel = (Button) reviewPopupView.findViewById(R.id.reviewpopup_cancel);
-        reviewpopup_submit = (Button) reviewPopupView.findViewById(R.id.reviewpopup_submit);
+        star1Rpopup = reviewPopupView.findViewById(R.id.star1Rpopup);
+        star2Rpopup = reviewPopupView.findViewById(R.id.star2Rpopup);
+        star3Rpopup = reviewPopupView.findViewById(R.id.star3Rpopup);
+        star4Rpopup = reviewPopupView.findViewById(R.id.star4Rpopup);
+        star5Rpopup = reviewPopupView.findViewById(R.id.star5Rpopup);
 
         reviewBuilder.setView(reviewPopupView);
-        review = reviewBuilder.create();
+        final AlertDialog review = reviewBuilder.create();
         review.show();
 
         star1Rpopup.setOnClickListener(view -> _ctrl.setStars(1));
@@ -176,8 +139,11 @@ public class ProductDetailsFragment extends CustomFragment<FragmentProductDetail
 
         // Reset stars
         _ctrl.setStars(0);
+
+        Button reviewpopup_cancel = reviewPopupView.findViewById(R.id.reviewpopup_cancel);
         reviewpopup_cancel.setOnClickListener(view -> review.dismiss());
 
+        Button reviewpopup_submit = reviewPopupView.findViewById(R.id.reviewpopup_submit);
         reviewpopup_submit.setOnClickListener(view -> {
             _ctrl.reviewProduct();
             review.dismiss();

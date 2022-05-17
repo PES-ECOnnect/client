@@ -70,6 +70,7 @@ public class LoggedUserProfileController extends ProfileController {
         // Pass parameters to activity
         intent.putExtra("username", u.username);
         intent.putExtra("email", u.email);
+        intent.putExtra("about", u.about);
         intent.putExtra("isPrivate", u.isPrivate);
 
         _activityLauncher.launch(intent);

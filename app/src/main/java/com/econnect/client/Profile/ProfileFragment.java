@@ -14,7 +14,7 @@ import com.econnect.client.databinding.FragmentProfileBinding;
 
 
 public class ProfileFragment extends CustomFragment<FragmentProfileBinding> {
-    
+
     protected final ProfileController _ctrl;
 
     public ProfileFragment() {
@@ -48,6 +48,7 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> {
         // Update text
         binding.idMedalText.setText(String.valueOf(u.activeMedal));
         binding.usernameText.setText(u.username);
+        binding.aboutField.setText(u.about);
         if (u.email != null) {
             binding.emailText.setText(u.email);
             binding.emailText.setVisibility(View.VISIBLE);

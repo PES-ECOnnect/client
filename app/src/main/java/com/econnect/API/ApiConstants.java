@@ -20,6 +20,7 @@ public interface ApiConstants {
     String POST_LIKE_PATH = "/posts/%d/like";
     String ACCOUNT_USERNAME_PATH = "/account/username";
     String ACCOUNT_EMAIL_PATH = "/account/email";
+    String ACCOUNT_ABOUT_PATH = "/account/about";
     String ACCOUNT_PASSWORD_PATH = "/account/password";
     String ACCOUNT_MEDAL_PATH = "/account/medal";
     String ACCOUNT_VISIBILITY_PATH = "/account/visibility";
@@ -64,6 +65,7 @@ public interface ApiConstants {
     String NEW_USER_MEDAL = "medalId";
     String NEW_USERNAME = "newUsername";
     String NEW_USER_EMAIL = "newEmail";
+    String NEW_USER_ABOUT = "newAbout";
     String NEW_USER_PASSWORD = "newPassword";
     String OLD_USER_PASSWORD = "oldPassword";
     String IS_PRIVATE_USER = "isPrivate";

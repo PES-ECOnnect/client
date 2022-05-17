@@ -21,6 +21,7 @@
     <string name="username_textbox_hint">User Name</string>
     <string name="register_button_text">REGISTER</string>
     <string name="already_have_an_account_text">Already have an account</string>
+    <string name="about_textbox_hint">About</string>
 
     <string name="search_products_hint">Search</string>
     <string name="logout_button_text">Logout</string>
@@ -83,4 +84,9 @@
     <string name="menu_edit_profile">Edit Profile</string>
     <string name="menu_delete_account">Delete Account</string>
     <string name="title_activity_maps_delete">MapsActivityDELETE</string>
+    <string name="about_text">About</string>
+    <string name="seats">Free seats:</string>
+    <string name="carpool_start">Start:</string>
+    <string name="carpool_destination">Destination:</string>
+
 </resources>

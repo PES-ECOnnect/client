@@ -30,10 +30,8 @@ public class CompaniesController {
 
     void updateList() {
         _fragment.enableInput(false);
-        ExecutionThread.nonUI(()-> {
-            // Populate companies list
-            updateCompaniesList();
-        });
+        // Populate companies list
+        ExecutionThread.nonUI(this::updateCompaniesList);
     }
 
     private void updateCompaniesList() {
