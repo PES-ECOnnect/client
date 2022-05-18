@@ -118,4 +118,15 @@ public class LoggedUserProfileController extends ProfileController {
         });
     }
 
+    public void changeIdiom(String idiom) {
+        if (idiom.equals("english")) {
+            //TODO
+        }
+        else if (idiom.equals("spanish")) {
+            //TODO
+        }
+        else {
+            //TODO
+        }
+    }
 }

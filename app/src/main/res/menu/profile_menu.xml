@@ -17,5 +17,10 @@
         android:icon="@drawable/ic_delete_24"
         android:title="@string/menu_delete_account" />
 
+    <item
+        android:id="@+id/profile_translate"
+        android:icon="@drawable/ic_translate_24"
+        android:title="@string/translate" />
+
 
 </menu>

@@ -90,5 +90,10 @@
     <string name="carpool_destination">Destination:</string>
     <string name="profile_picture">Profile Picture</string>
     <string name="change_profile_image">Change Image</string>
+    <string name="translate">Change Idiom</string>
+    <string name="change_idiom">Do you want to change the idiom? Select the option that you need.</string>
+    <string name="english">English</string>
+    <string name="catalan">Catalan</string>
+    <string name="spanish">Spanish</string>
 
 </resources>

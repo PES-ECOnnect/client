@@ -15,3 +15,6 @@
 local.properties
 app/release/*
 .idea
+
+
+/app/src/main/java/com/econnect/API/ImageUpload/ApiKey.java

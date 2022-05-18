@@ -40,8 +40,8 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
         //binding.removeImageButton.setVisibility(View.VISIBLE);
     });
 
-
     public EditFragment(String username, String email, String about,Boolean isPrivate, String pictureURL) {
+
         super(FragmentEditProfileBinding.class);
         this._username = username;
         this._email = email;

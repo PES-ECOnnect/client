@@ -20,6 +20,7 @@ public class EditProfileActivity extends FragmentContainerActivity {
         Boolean isPrivate = intent.getBooleanExtra("isPrivate", false);
         String pictureURL = intent.getStringExtra("pictureURL");
         return new EditFragment(username, email, about,isPrivate, pictureURL);
+
     }
 
 }
