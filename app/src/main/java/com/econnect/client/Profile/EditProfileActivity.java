@@ -18,7 +18,9 @@ public class EditProfileActivity extends FragmentContainerActivity {
         String email = intent.getStringExtra("email");
         String about = intent.getStringExtra("about");
         Boolean isPrivate = intent.getBooleanExtra("isPrivate", false);
-        return new EditFragment(username, email, about,isPrivate);
+        String pictureURL = intent.getStringExtra("pictureURL");
+        return new EditFragment(username, email, about,isPrivate, pictureURL);
+
     }
 
 }

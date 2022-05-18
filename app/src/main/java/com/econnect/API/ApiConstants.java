@@ -24,6 +24,7 @@ public interface ApiConstants {
     String ACCOUNT_PASSWORD_PATH = "/account/password";
     String ACCOUNT_MEDAL_PATH = "/account/medal";
     String ACCOUNT_VISIBILITY_PATH = "/account/visibility";
+    String ACCOUNT_PICTURE_PATH = "/account/picture";
 
 
     // PARAMETERS
@@ -69,6 +70,7 @@ public interface ApiConstants {
     String NEW_USER_PASSWORD = "newPassword";
     String OLD_USER_PASSWORD = "oldPassword";
     String IS_PRIVATE_USER = "isPrivate";
+    String NEW_PROFILE_PICTURE = "newPictureURL";
 
     // Delete account
     String USER_PASSWORD = "password";

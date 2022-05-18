@@ -108,8 +108,6 @@ public abstract class AbstractProductListAdapter extends BaseAdapter implements 
         return vi;
     }
 
-
-
     // Implement search
 
     @Override

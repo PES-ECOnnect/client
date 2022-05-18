@@ -93,4 +93,6 @@
     <string name="catalan">Català</string>
     <string name="spanish">Castellà</string>
     <string name="about_textbox_hint">Sobre</string>
+    <string name="profile_picture">Foto de Perfil</string>
+    <string name="change_profile_image">Canviar Foto de Perfil</string>
 </resources>

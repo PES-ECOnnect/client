@@ -72,6 +72,7 @@ public class LoggedUserProfileController extends ProfileController {
         intent.putExtra("email", u.email);
         intent.putExtra("about", u.about);
         intent.putExtra("isPrivate", u.isPrivate);
+        intent.putExtra("pictureURL", u.pictureURL);
 
         _activityLauncher.launch(intent);
     }
