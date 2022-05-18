@@ -1,7 +1,5 @@
 package com.econnect.client.Profile;
 
-import static com.econnect.API.ProfileService.User;
-
 import android.graphics.drawable.Drawable;
 import android.view.View;
 
@@ -9,6 +7,7 @@ import androidx.core.content.ContextCompat;
 
 import com.econnect.API.ProfileService;
 import com.econnect.Utilities.CustomFragment;
+import com.econnect.client.Profile.Medals.MedalListAdapter;
 import com.econnect.client.R;
 import com.econnect.client.databinding.FragmentProfileBinding;
 

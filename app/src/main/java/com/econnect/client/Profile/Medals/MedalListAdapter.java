@@ -1,4 +1,4 @@
-package com.econnect.client.Profile;
+package com.econnect.client.Profile.Medals;
 
 import android.content.Context;
 import android.graphics.Bitmap;

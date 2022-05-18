@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.econnect.client.R;
+
 public class PopupMessage {
     public static void warning(Fragment caller, String text) {
         AlertDialog.Builder builder = new AlertDialog.Builder(caller.getContext());
@@ -72,5 +74,12 @@ public class PopupMessage {
         }
         popupMenu.inflate(menuId);
         popupMenu.show();
+    }
+
+    public static View popupCustomFragment(Fragment caller, int popupId) {
+        AlertDialog.Builder idiomBuilder = new AlertDialog.Builder(caller.requireContext());
+        final View popupView = caller.getLayoutInflater().inflate(popupId, null);
+        idiomBuilder.setView(popupView);
+        return popupView;
     }
 }

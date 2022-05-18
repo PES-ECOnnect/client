@@ -81,7 +81,8 @@ public interface ApiConstants {
     String STATUS_OK = "success";
     String RET_ERROR = "error";
     String RET_RESULT = "result";
-    
+    String RET_NEW_MEDAL = "medal";
+
     
     // ERRORS
     // General
