@@ -97,9 +97,7 @@ public class PostListAdapter extends BaseAdapter {
         // TODO: get medal picture corresponding to p.medal
         Drawable defaultImage = ContextCompat.getDrawable(_owner.requireContext(), R.drawable.ic_medal_24);
         ExecutionThread.nonUI(()->{
-            //--> tenemos p.medal: hay que bucar a que image pertenece p.medal = id
             ExecutionThread.UI(_owner, ()-> {
-                //medalImage.setImageBitmap(bmp);
                 medalImage.setVisibility(View.VISIBLE);
                 medalImage.setImageDrawable(defaultImage);
             });
