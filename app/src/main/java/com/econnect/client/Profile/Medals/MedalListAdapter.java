@@ -29,7 +29,7 @@ public class MedalListAdapter extends BaseAdapter {
         this.owner = owner;
         this.defaultImage = defaultImage;
         this.medals = medals;
-        _inflater = (LayoutInflater) owner.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        _inflater = (LayoutInflater) owner.requireContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -58,27 +58,11 @@ public class MedalListAdapter extends BaseAdapter {
 
         // Set name text
         TextView nameMedal = vi.findViewById(R.id.medalTextName);
-        nameMedal.setText(m.medalname);
+        nameMedal.setText(MedalUtils.medalName(owner, m.idmedal));
 
         // Set item image
         ImageView image = vi.findViewById(R.id.medal_item_image);
-        image.setImageDrawable(defaultImage);
-        /*ExecutionThread.nonUI(()->{
-            // Poll image.getWidth() until the layout has been inflated
-            int width = -1;
-            while (width == -1) {
-                width = image.getWidth();
-            }
-            Bitmap bmp = m.getImage(width);
-            if (bmp == null) return;
-            ExecutionThread.UI(owner, ()-> {
-                // If the view has changed while we were fetching the image, do nothing
-                if (hidden_id.getText().equals(m.idmedal)) {
-                    image.setImageBitmap(bmp);
-                    image.setVisibility(View.VISIBLE);
-                }
-            });
-        });*/
+        image.setImageDrawable(MedalUtils.medalIcon(owner, m.idmedal));
 
         return vi;
     }

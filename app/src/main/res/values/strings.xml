@@ -96,6 +96,7 @@
     
     <string name="congratulations">Congratulations!</string>
     <string name="you_just_unlocked_this_medal">You just unlocked this medal:</string>
+    <string name="medal_none">No medal</string>
     <string name="medal_eficiencia_a">A home efficiency</string>
     <string name="medal_eficiencia_b">B home efficiency</string>
     <string name="medal_eficiencia_c">C home efficiency</string>

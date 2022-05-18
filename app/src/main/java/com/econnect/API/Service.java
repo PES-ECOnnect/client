@@ -1,16 +1,13 @@
 package com.econnect.API;
 
-import android.os.SystemClock;
+import com.econnect.API.Exceptions.ApiException;
+import com.econnect.API.Exceptions.InvalidTokenApiException;
+import com.econnect.API.HttpClient.HttpClient;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
-
-import com.google.gson.*;
-
-import com.econnect.API.Exceptions.ApiException;
-import com.econnect.API.Exceptions.InvalidTokenApiException;
-import com.econnect.API.HttpClient.HttpClient;
 
 public abstract class Service {
     // Reference to the HttpClient used to communicate with the API
@@ -146,7 +143,6 @@ public abstract class Service {
             // Generic API error
             throw new ApiException(error);
         }
-
         // Check for unlocked medals
         String newMedal = json.getAttribute(ApiConstants.RET_NEW_MEDAL);
         if (newMedal != null) {

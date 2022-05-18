@@ -75,11 +75,4 @@ public class PopupMessage {
         popupMenu.inflate(menuId);
         popupMenu.show();
     }
-
-    public static View popupCustomFragment(Fragment caller, int popupId) {
-        AlertDialog.Builder idiomBuilder = new AlertDialog.Builder(caller.requireContext());
-        final View popupView = caller.getLayoutInflater().inflate(popupId, null);
-        idiomBuilder.setView(popupView);
-        return popupView;
-    }
 }

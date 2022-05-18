@@ -13,14 +13,9 @@ public class ProfileService extends Service {
     ProfileService() {}
 
     public static class Medal {
-        public final String medalname;
         public final int idmedal;
-        //public final String imageMedal;
-
-        public Medal (int idmedal, String medalname) {
+        public Medal (int idmedal) {
             this.idmedal = idmedal;
-            this.medalname = medalname;
-            //this.imageMedal = imageMedal;
         }
     }
 

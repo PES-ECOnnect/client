@@ -4,12 +4,14 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 
 import androidx.core.content.res.ResourcesCompat;
+import androidx.fragment.app.Fragment;
 
 import com.econnect.client.R;
 
 public class MedalUtils {
 
     private enum Medals {
+        None(0, R.string.medal_none, R.drawable.ic_medal_24),
         EficienciaA(1, R.string.medal_eficiencia_a, R.drawable.medal_eficiencia_a),
         EficienciaB(2, R.string.medal_eficiencia_b, R.drawable.medal_eficiencia_b),
         EficienciaC(3, R.string.medal_eficiencia_c, R.drawable.medal_eficiencia_c),
@@ -53,17 +55,17 @@ public class MedalUtils {
         }
     }
 
-    public static String medalName(int id) {
+    public static String medalName(Fragment f, int id) {
         Medals medal = Medals.getMedal(id);
         assert medal != null;
         int stringId = medal.nameResourceId;
-        return Resources.getSystem().getString(stringId);
+        return f.getString(stringId);
     }
 
-    public static Drawable medalIcon(int id) {
+    public static Drawable medalIcon(Fragment f, int id) {
         Medals medal = Medals.getMedal(id);
         assert medal != null;
         int drawableId = medal.drawableResourceId;
-        return Resources.getSystem().getDrawable(drawableId);
+        return ResourcesCompat.getDrawable(f.getResources(), drawableId, f.requireContext().getTheme());
     }
 }
