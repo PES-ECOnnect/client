@@ -196,6 +196,7 @@
                 android:clickable="true"
                 android:enabled="false"
                 android:text="@string/change_profile_image"
+                android:visibility="invisible"
                 tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
 
             <TextView

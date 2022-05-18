@@ -72,7 +72,6 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
         binding.changeImageButton.setOnClickListener(view-> {
             _ctrl.changeProfilePicture();
             binding.changeImageButton.setEnabled(false);
-
         });
 
         binding.editUsernameText.addTextChangedListener(new AccountTextWatcher(()->{

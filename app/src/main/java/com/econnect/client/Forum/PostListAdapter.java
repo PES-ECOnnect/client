@@ -3,6 +3,7 @@ package com.econnect.client.Forum;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextPaint;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.econnect.API.ForumService.Post;
@@ -90,7 +92,18 @@ public class PostListAdapter extends BaseAdapter {
         }
 
 
-        // TODO: Set medal
+        // Set medal
+        ImageView medalImage = vi.findViewById(R.id.postMedalImage);
+        // TODO: get medal picture corresponding to p.medal
+        Drawable defaultImage = ContextCompat.getDrawable(_owner.requireContext(), R.drawable.ic_medal_24);
+        ExecutionThread.nonUI(()->{
+            //--> tenemos p.medal: hay que bucar a que image pertenece p.medal = id
+            ExecutionThread.UI(_owner, ()-> {
+                //medalImage.setImageBitmap(bmp);
+                medalImage.setVisibility(View.VISIBLE);
+                medalImage.setImageDrawable(defaultImage);
+            });
+        });
 
         // Set post body
         TextView textBody = vi.findViewById(R.id.postContentText);
