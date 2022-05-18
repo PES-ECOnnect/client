@@ -33,9 +33,9 @@ public class ProfileService extends Service {
         public final Boolean isPrivate;
         public final String email;
         public final String about;
-        //public final String imageUser;
+        public final String pictureURL;
 
-        public User(String username, int activeMedal, String email, String home, Medal[] medals, Boolean isPrivate, String about) {
+        public User(String username, int activeMedal, String email, String home, Medal[] medals, Boolean isPrivate, String about, String imageUser) {
             this.username = username;
             this.medals = medals;
             this.activeMedal = activeMedal;
@@ -43,6 +43,7 @@ public class ProfileService extends Service {
             this.email = email;
             this.isPrivate = isPrivate;
             this.about = about;
+            this.pictureURL = imageUser;
         }
     }
 
@@ -58,6 +59,7 @@ public class ProfileService extends Service {
         }
         // Parse result
         User user = result.getObject(ApiConstants.RET_RESULT, User.class);
+        System.out.println("service: "+user.pictureURL);
         assertResultNotNull(user, result);
         return user;
     }
@@ -80,10 +82,14 @@ public class ProfileService extends Service {
         String username = result.getObject("username", String.class);
         Medal[] medals = result.getArray("medals", Medal[].class);
         String about = result.getObject("about", String.class);
+        String pictureURL = result.getObject("pictureURL", String.class);
+
         assertResultNotNull(username, result);
         assertResultNotNull(medals, result);
+        System.out.println("otheruser"+pictureURL);
         // TODO: get active medal from endpoint
-        return new User(username, 1234, null, null, medals, null, about);
+
+        return new User(username, 1234, null, null, medals, null, about, pictureURL);
     }
 
     public void updateUsername(String text) {
@@ -208,6 +214,22 @@ public class ProfileService extends Service {
 
         // Parse result
         super.expectOkStatus(result);
+    }
+
+    public void updatePicture(String url) {
+        // Add parameters
+        TreeMap<String, String> params = new TreeMap<>();
+        params.put(ApiConstants.NEW_PROFILE_PICTURE, url);
+
+        JsonResult result = null;
+        // Call API
+        super.needsToken = true;
+        result = put(ApiConstants.ACCOUNT_PICTURE_PATH, params, null);
+        // This endpoint does not throw exceptions
+
+        // Parse Result
+        super.expectOkStatus(result);
+
     }
 
     public void deleteAccount() {

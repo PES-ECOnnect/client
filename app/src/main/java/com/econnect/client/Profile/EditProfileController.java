@@ -1,9 +1,20 @@
 package com.econnect.client.Profile;
 
+import static com.econnect.Utilities.BitmapLoader.fromURL;
+
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.widget.ImageView;
+
+import com.econnect.API.ImageUpload.ImageService;
 import com.econnect.API.ProfileService;
 import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
+import com.econnect.Utilities.FileUtils;
 import com.econnect.Utilities.PopupMessage;
+
+import java.io.File;
+import java.net.URL;
 
 public class EditProfileController {
 
@@ -105,4 +116,46 @@ public class EditProfileController {
             }
         });
     }
+
+    public void changeProfilePicture() {
+        // Get picture url
+        ExecutionThread.nonUI(() ->{
+            String url = getImageUrl();
+            System.out.println(url);
+            // Call Service
+            ProfileService profileService = ServiceFactory.getInstance().getProfileService();
+            profileService.updatePicture(url);
+        });
+    }
+
+    private String getImageUrl() {
+        Uri image = _fragment.getSelectedImageUri();
+        if (image == null)
+            return "";
+        File tempFile;
+        try {
+            tempFile = FileUtils.from(_fragment.requireContext(), image);
+        } catch (Exception e) {
+            throw new RuntimeException("Could not convert URI to File " + e.getMessage(), e);
+        }
+
+        final ImageService service = new ImageService();
+        String url = service.uploadImageToUrl(tempFile);
+        if (!isValidURL(url)) {
+            throw new RuntimeException("The generated URL is invalid" + url);
+        }
+        System.out.println(url);
+        return url;
+    }
+
+    private static boolean isValidURL (String urlString) {
+        try {
+            URL url = new URL(urlString);
+            url.toURI();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }

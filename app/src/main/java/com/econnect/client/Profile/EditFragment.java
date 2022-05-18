@@ -1,12 +1,25 @@
 package com.econnect.client.Profile;
 
+import static com.econnect.Utilities.BitmapLoader.fromURL;
+
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
+import android.net.Uri;
 import android.text.Editable;
 import android.text.NoCopySpan;
 import android.text.TextWatcher;
+import android.view.View;
+import android.widget.ImageView;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.core.content.ContextCompat;
 
 import com.econnect.Utilities.CustomFragment;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
+import com.econnect.client.R;
 import com.econnect.client.databinding.FragmentEditProfileBinding;
 
 public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
@@ -16,14 +29,25 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
     private String _email;
     private String _about;
     private final Boolean _isPrivate;
+    private String _pictureURL;
 
+    private Uri _selectedImage = null;
 
-    public EditFragment(String username, String email, String about,Boolean isPrivate) {
+    private final ActivityResultLauncher<String> _getContentLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
+        if (uri == null) return;
+        _selectedImage = uri;
+        binding.editUserImage.setImageURI(uri);
+        //binding.removeImageButton.setVisibility(View.VISIBLE);
+    });
+
+    public EditFragment(String username, String email, String about,Boolean isPrivate, String pictureURL) {
+
         super(FragmentEditProfileBinding.class);
         this._username = username;
         this._email = email;
         this._about = about;
         this._isPrivate = isPrivate;
+        this._pictureURL = pictureURL;
     }
 
     @Override
@@ -40,6 +64,15 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
         binding.switchPrivate.setOnClickListener(view ->
             _ctrl.changeIsPrivate(binding.switchPrivate.isChecked())
         );
+        binding.editUserImage.setOnClickListener(view -> {
+            _getContentLauncher.launch("image/*");
+            binding.changeImageButton.setEnabled(true);
+        });
+
+        binding.changeImageButton.setOnClickListener(view-> {
+            _ctrl.changeProfilePicture();
+            binding.changeImageButton.setEnabled(false);
+        });
 
         binding.editUsernameText.addTextChangedListener(new AccountTextWatcher(()->{
             boolean sameText = binding.editUsernameText.getText().toString().equals(_username);
@@ -92,6 +125,17 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
         binding.editEmailText.setText(_email);
         binding.editAboutText.setText(_about);
         binding.switchPrivate.setChecked(_isPrivate);
+        // set image
+        Drawable userDefaultImage = ContextCompat.getDrawable(requireContext(), R.drawable.ic_profile_24);
+        ImageView image = binding.editUserImage;
+        ExecutionThread.nonUI(()->{
+            Bitmap bmp = fromURL(_pictureURL);
+            ExecutionThread.UI(this, ()-> {
+                // TODO: set defaultimage for users
+                if (bmp == null) image.setImageDrawable(userDefaultImage);
+                else image.setImageBitmap(bmp);
+            });
+        });
     }
 
     public void clearPasswordFields() {
@@ -117,5 +161,8 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
         }
     }
 
+    Uri getSelectedImageUri() {
+        return _selectedImage;
+    }
 
 }
