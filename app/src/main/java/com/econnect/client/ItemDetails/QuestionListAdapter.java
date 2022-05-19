@@ -15,7 +15,7 @@ import com.econnect.client.R;
 
 public class QuestionListAdapter extends BaseAdapter {
 
-    private final Question[] _questions;
+    private Question[] _questions;
     private final ProductDetailsFragment _fragment;
     private final int _highlightColor;
     private static LayoutInflater inflater = null;
@@ -24,7 +24,12 @@ public class QuestionListAdapter extends BaseAdapter {
         this._questions = questions;
         this._fragment = owner;
         this._highlightColor = highlightColor;
-        inflater = (LayoutInflater) owner.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater) owner.requireContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    public void replaceData(Question[] questions) {
+        _questions = questions;
+        super.notifyDataSetChanged();
     }
 
     @Override
@@ -63,14 +68,18 @@ public class QuestionListAdapter extends BaseAdapter {
         questionText.setText(text);
 
         // Set percent
-        if (percentVotes != -1) {
-            ProgressBar bar = vi.findViewById(R.id.questionPercentBar);
-            bar.setProgress(percentVotes);
+        ProgressBar bar = vi.findViewById(R.id.questionPercentBar);
+        TextView yesPercent = vi.findViewById(R.id.yesPercentText);
+        TextView noPercent = vi.findViewById(R.id.noPercentText);
 
-            TextView yesPercent = vi.findViewById(R.id.yesPercentText);
+        if (percentVotes != -1) {
+            bar.setProgress(percentVotes);
             yesPercent.setText(percentVotes + "%");
-            TextView noPercent = vi.findViewById(R.id.noPercentText);
             noPercent.setText(100-percentVotes + "%");
+        } else {
+            bar.setProgress(50);
+            yesPercent.setText("");
+            noPercent.setText("");
         }
 
         ImageButton voteYesButton = vi.findViewById(R.id.voteYesButton);
@@ -79,16 +88,23 @@ public class QuestionListAdapter extends BaseAdapter {
         // Highlight previous user choice and set listeners
         setVoteButtonListener(q.questionid, voteYesButton, IDetailsController.QuestionAnswer.yes);
         setVoteButtonListener(q.questionid, voteNoButton, IDetailsController.QuestionAnswer.no);
-        if (q.user_answer.equals("yes")) {
-            voteYesButton.setColorFilter(_highlightColor);
-            setVoteButtonListener(q.questionid, voteYesButton, IDetailsController.QuestionAnswer.none);
-        }
-        else if (q.user_answer.equals("no")) {
-            voteNoButton.setColorFilter(_highlightColor);
-            setVoteButtonListener(q.questionid, voteNoButton, IDetailsController.QuestionAnswer.none);
-        }
-        else if (!q.user_answer.equals("none")) {
-            throw new RuntimeException("Invalid user answer: " + q.user_answer);
+        switch (q.user_answer) {
+            case "yes":
+                voteYesButton.setColorFilter(_highlightColor);
+                voteNoButton.setColorFilter(null);
+                setVoteButtonListener(q.questionid, voteYesButton, IDetailsController.QuestionAnswer.none);
+                break;
+            case "no":
+                voteYesButton.setColorFilter(null);
+                voteNoButton.setColorFilter(_highlightColor);
+                setVoteButtonListener(q.questionid, voteNoButton, IDetailsController.QuestionAnswer.none);
+                break;
+            case "none":
+                voteYesButton.setColorFilter(null);
+                voteNoButton.setColorFilter(null);
+                break;
+            default:
+                throw new RuntimeException("Invalid user answer: " + q.user_answer);
         }
 
         return vi;

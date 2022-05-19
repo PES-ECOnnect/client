@@ -108,7 +108,13 @@ public class ProductDetailsFragment extends CustomFragment<FragmentProductDetail
 
     void setQuestionsElements(Question[] questions) {
         int highlightColor = ContextCompat.getColor(requireContext(), R.color.green);
-        binding.questionsList.setAdapter(new QuestionListAdapter(this, questions, highlightColor));
+        QuestionListAdapter adapter = (QuestionListAdapter) binding.questionsList.getAdapter();
+        if (adapter == null) {
+            binding.questionsList.setAdapter(new QuestionListAdapter(this, questions, highlightColor));
+        }
+        else {
+            adapter.replaceData(questions);
+        }
     }
 
     void setTitle(String name) {
