@@ -129,15 +129,15 @@ public class StubHttpClient implements HttpClient {
                 }
                 else if (!params.containsKey("tag")) {
                     // For each post, return: postId, username, userId, medal, text, imageURL, likes, dislikes, userOption (1 or 0), timestamp, ownpost and authorbanned
-                    return "{\"result\":[{\"postid\":1,\"username\":\"user1\",\"userid\":1,\"medal\":\"m1\",\"text\":\"#tag1 text1\",\"imageurl\":\"https://wallpapercave.com/wp/wp4676582.jpg\",\"likes\":1,\"dislikes\":2,\"useroption\":1,\"timestamp\":\"1649663866\",\"ownpost\":true,\"authorbanned\":false}," +
-                            "{\"postid\":2,\"username\":\"user2\",\"userid\":2,\"medal\":\"m2\",\"text\":\"text2 #another . #tag2\",\"imageurl\":\"image2\",\"likes\":3,\"dislikes\":4,\"useroption\":0,\"timestamp\":\"1649663810\",\"ownpost\":false,\"authorbanned\":true}," +
-                            "{\"postid\":3,\"username\":\"Another User\",\"userid\":3,\"medal\":\"m3\",\"text\":\"Post without tags.\",\"imageurl\":\"https://images.unsplash.com/photo-1559583985-c80d8ad9b29f\",\"likes\":1234,\"dislikes\":1234,\"useroption\":2,\"timestamp\":\"1649836904\",\"ownpost\":true,\"authorbanned\":false}]}";
+                    return "{\"result\":[{\"postid\":1,\"username\":\"user1\",\"userid\":1,\"medal\":\"1\",\"text\":\"#tag1 text1\",\"imageurl\":\"https://wallpapercave.com/wp/wp4676582.jpg\",\"likes\":1,\"dislikes\":2,\"useroption\":1,\"timestamp\":\"1649663866\",\"ownpost\":true,\"authorbanned\":false}," +
+                            "{\"postid\":2,\"username\":\"user2\",\"userid\":2,\"medal\":\"2\",\"text\":\"text2 #another . #tag2\",\"imageurl\":\"image2\",\"likes\":3,\"dislikes\":4,\"useroption\":0,\"timestamp\":\"1649663810\",\"ownpost\":false,\"authorbanned\":true}," +
+                            "{\"postid\":3,\"username\":\"Another User\",\"userid\":3,\"medal\":\"3\",\"text\":\"Post without tags.\",\"imageurl\":\"https://images.unsplash.com/photo-1559583985-c80d8ad9b29f\",\"likes\":1234,\"dislikes\":1234,\"useroption\":2,\"timestamp\":\"1649836904\",\"ownpost\":true,\"authorbanned\":false}]}";
                 }
                 else if (equals(params, "tag", "tag1")) {
-                    return "{\"result\":[{\"postid\":1,\"username\":\"user1\",\"userid\":1,\"medal\":\"m1\",\"text\":\"#tag1 text1\",\"imageurl\":\"https://wallpapercave.com/wp/wp4676582.jpg\",\"likes\":1,\"dislikes\":2,\"useroption\":1,\"timestamp\":\"1649663866\",\"ownpost\":true,\"authorbanned\":false}]}";
+                    return "{\"result\":[{\"postid\":1,\"username\":\"user1\",\"userid\":1,\"medal\":\"1\",\"text\":\"#tag1 text1\",\"imageurl\":\"https://wallpapercave.com/wp/wp4676582.jpg\",\"likes\":1,\"dislikes\":2,\"useroption\":1,\"timestamp\":\"1649663866\",\"ownpost\":true,\"authorbanned\":false}]}";
                 }
                 else if (equals(params, "tag", "tag2")) {
-                    return "{\"result\":[{\"postid\":2,\"username\":\"user2\",\"userid\":2,\"medal\":\"m2\",\"text\":\"text2 #another . #tag2\",\"imageurl\":\"image2\",\"likes\":3,\"dislikes\":4,\"useroption\":0,\"timestamp\":\"1649663810\",\"ownpost\":false,\"authorbanned\":true}]}";
+                    return "{\"result\":[{\"postid\":2,\"username\":\"user2\",\"userid\":2,\"medal\":\"2\",\"text\":\"text2 #another . #tag2\",\"imageurl\":\"image2\",\"likes\":3,\"dislikes\":4,\"useroption\":0,\"timestamp\":\"1649663810\",\"ownpost\":false,\"authorbanned\":true}]}";
                 }
                 else {
                     return "{\"result\":[]}";
@@ -157,14 +157,14 @@ public class StubHttpClient implements HttpClient {
             //Get logged user info
             case "/account":
                 expectParamsExclusive(params, "token");
-                return "{\"result\":{\"username\":\"user1\",\"medals\":[{\"idmedal\":1},{\"idmedal\":2}],\"activeMedal\":1,\"home\":null,\"email\":\"user1@gmail.com\",\"isPrivate\":true}}";
+                return "{\"result\":{\"username\":\"user1\",\"medals\":[{\"idmedal\":1,\"medalname\":\"testMedal\"},{\"idmedal\":2,\"medalname\":\"testMedal2\"}],\"activeMedal\":1,\"home\":null,\"email\":\"user1@gmail.com\",\"isPrivate\":true}}";
 
             default:
                 throw new RuntimeException("Invalid path: " + path);
 
             case "/users/2":
                 expectParamsExclusive(params, "token");
-                return "{\"username\":\"user2\",\"medals\":[{\"idmedal\":1},{\"idmedal\":2}],\"activeMedal\":1234,\"home\":null,\"email\":null,\"isPrivate\":null}";
+                return "{\"username\":\"user2\",\"medals\":[{\"idmedal\":1,\"medalname\":\"testMedal\"},{\"idmedal\":2,\"medalname\":\"testMedal2\"}],\"activeMedal\":1234,\"home\":null,\"email\":null,\"isPrivate\":null}";
 
             case "/users/3":
                 expectParamsExclusive(params, "token");
