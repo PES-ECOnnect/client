@@ -157,14 +157,14 @@ public class StubHttpClient implements HttpClient {
             //Get logged user info
             case "/account":
                 expectParamsExclusive(params, "token");
-                return "{\"result\":{\"username\":\"user1\",\"medals\":[{\"idmedal\":1,\"medalname\":\"testMedal\"},{\"idmedal\":2,\"medalname\":\"testMedal2\"}],\"activeMedal\":1,\"home\":null,\"email\":\"user1@gmail.com\",\"isPrivate\":true}}";
+                return "{\"result\":{\"username\":\"user1\",\"medals\":[{\"idmedal\":1},{\"idmedal\":2}],\"activeMedal\":1,\"home\":null,\"email\":\"user1@gmail.com\",\"isPrivate\":true}}";
 
             default:
                 throw new RuntimeException("Invalid path: " + path);
 
             case "/users/2":
                 expectParamsExclusive(params, "token");
-                return "{\"username\":\"user2\",\"medals\":[{\"idmedal\":1,\"medalname\":\"testMedal\"},{\"idmedal\":2,\"medalname\":\"testMedal2\"}],\"activeMedal\":1234,\"home\":null,\"email\":null,\"isPrivate\":null}";
+                return "{\"username\":\"user2\",\"medals\":[{\"idmedal\":1},{\"idmedal\":2}],\"activeMedal\":1234,\"home\":null,\"email\":null,\"isPrivate\":null}";
 
             case "/users/3":
                 expectParamsExclusive(params, "token");
