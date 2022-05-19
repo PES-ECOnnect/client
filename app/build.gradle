@@ -25,7 +25,6 @@ android {
             targetSdk 32
             versionCode code
             versionName "1.0"
-            resConfigs "en", "US", "es", "cat"
 
             testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         }
