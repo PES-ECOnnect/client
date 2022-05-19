@@ -95,4 +95,30 @@
     <string name="about_textbox_hint">Sobre</string>
     <string name="profile_picture">Foto de Perfil</string>
     <string name="change_profile_image">Cambiar Foto de Perfil</string>
+
+    <string name="congratulations">Congratulations!</string>
+    <string name="you_just_unlocked_this_medal">You just unlocked this medal:</string>
+    <string name="medal_none">No medal</string>
+    <string name="medal_eficiencia_a">A home efficiency</string>
+    <string name="medal_eficiencia_b">B home efficiency</string>
+    <string name="medal_eficiencia_c">C home efficiency</string>
+    <string name="medal_eficiencia_d">D home efficiency</string>
+    <string name="medal_eficiencia_e">E home efficiency</string>
+    <string name="medal_eficiencia_f">F home efficiency</string>
+    <string name="medal_eficiencia_g">G home efficiency</string>
+    <string name="medal_empresa_or">Review 20 companies</string>
+    <string name="medal_empresa_plata">Review 10 companies</string>
+    <string name="medal_empresa_bronze">Review 1 company</string>
+    <string name="medal_producte_or">Review 20 products</string>
+    <string name="medal_producte_plata">Review 10 products</string>
+    <string name="medal_producte_bronze">Review 1 product</string>
+    <string name="medal_forum_or">Make 25 forum posts</string>
+    <string name="medal_forum_plata">Make 10 forum posts</string>
+    <string name="medal_forum_bronze">Make 1 forum post</string>
+    <string name="medal_like_or">Like/dislike 100 posts</string>
+    <string name="medal_like_plata">Like/dislike 20 posts</string>
+    <string name="medal_like_bronze">Like/dislike 1 post</string>
+    <string name="medal_pregunta_or">Answer 50 questions</string>
+    <string name="medal_pregunta_plata">Answer 15 questions</string>
+    <string name="medal_pregunta_bronze">Answer 1 question</string>
 </resources>
