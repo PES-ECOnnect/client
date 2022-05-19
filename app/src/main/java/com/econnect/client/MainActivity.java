@@ -98,32 +98,28 @@ public class MainActivity extends AppCompatActivity {
         // Hide old selected fragment
         ft = ft.hide(_selectedFragment);
 
-        switch (id) {
-            case R.id.products:
-                _selectedFragment = _fragments[0];
-                super.setTitle(R.string.products_name);
-                break;
-
-            case R.id.companies:
-                _selectedFragment = _fragments[1];
-                super.setTitle(R.string.companies_name);
-                break;
-
-            case R.id.forum:
-                _selectedFragment = _fragments[2];
-                super.setTitle(R.string.forum_name);
-                break;
-
-            case R.id.profile:
-                _selectedFragment = _fragments[3];
-                super.setTitle(R.string.profile_name);
-                break;
-
-            default:
-                assert(false);
+        if (id == R.id.products) {
+            _selectedFragment = _fragments[0];
+            super.setTitle(R.string.products_name);
+        }
+        else if (id == R.id.companies) {
+            _selectedFragment = _fragments[1];
+            super.setTitle(R.string.companies_name);
+        }
+        else if (id == R.id.forum) {
+            _selectedFragment = _fragments[2];
+            super.setTitle(R.string.forum_name);
+        }
+        else if (id == R.id.profile) {
+            _selectedFragment = _fragments[3];
+            super.setTitle(R.string.profile_name);
+        }
+        else {
+            throw new RuntimeException("Invalid menu option");
         }
         // Show new selected fragment
         ft.show(_selectedFragment).commit();
+        _selectedFragment.onStart();
     }
 
     // Double tap to exit
