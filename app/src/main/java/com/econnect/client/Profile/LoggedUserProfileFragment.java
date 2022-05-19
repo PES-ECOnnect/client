@@ -31,32 +31,33 @@ public class LoggedUserProfileFragment extends ProfileFragment {
         binding.profileMenuButton.setOnClickListener(view -> profileMenuClicked());
         // Add click listener to medal list
         binding.medalsList.setOnItemClickListener(createActiveDialog());
+        // Show locked medals list
+        binding.lockedMedalsText.setVisibility(View.VISIBLE);
+        binding.lockedMedalsList.setVisibility(View.VISIBLE);
     }
 
     @Override
     void enableInput(boolean enabled) {
         super.enableInput(enabled);
-        binding.profileMenuButton.setEnabled(true);
+        binding.profileMenuButton.setEnabled(enabled);
+        binding.medalsList.setEnabled(enabled);
     }
 
     void profileMenuClicked(){
         PopupMessage.showPopupMenu(R.menu.profile_menu, binding.profileMenuButton, menuItem -> {
             // Called when an item is selected
-            switch (menuItem.getItemId()){
-                case R.id.profile_logout:
-                    _ctrl.logoutButtonClick();
-                    break;
-                case R.id.profile_edit:
-                    _ctrl.editButtonClick();
-                    break;
-                case R.id.profile_delete_account:
-                    createDeleteAccountDialog();
-                    break;
-                case R.id.profile_translate:
-                    createTranslateDialog();
-                    break;
-                default:
-                    break;
+            int itemId = menuItem.getItemId();
+            if (itemId == R.id.profile_logout) {
+                _ctrl.logoutButtonClick();
+            }
+            else if (itemId == R.id.profile_edit) {
+                _ctrl.editButtonClick();
+            }
+            else if (itemId == R.id.profile_delete_account) {
+                createDeleteAccountDialog();
+            }
+            else if (itemId == R.id.profile_translate) {
+                createTranslateDialog();
             }
             return true;
         });

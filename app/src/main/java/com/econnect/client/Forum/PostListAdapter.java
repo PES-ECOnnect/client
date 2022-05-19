@@ -95,15 +95,15 @@ public class PostListAdapter extends BaseAdapter {
 
         // Set medal
         ImageView medalImage = vi.findViewById(R.id.postMedalImage);
-        // TODO: get medal picture corresponding to p.medal
-        Drawable medalDrawable = MedalUtils.medalIcon(_owner, p.medal);
-        Drawable defaultImage = ContextCompat.getDrawable(_owner.requireContext(), R.drawable.ic_medal_24);
-        ExecutionThread.nonUI(()->{
-            ExecutionThread.UI(_owner, ()-> {
-                medalImage.setVisibility(View.VISIBLE);
-                medalImage.setImageDrawable(medalDrawable);
-            });
-        });
+        if (p.medal == 0) {
+            medalImage.setVisibility(View.GONE);
+        }
+        else {
+            Drawable medalDrawable = MedalUtils.medalIcon(_owner, p.medal);
+            medalImage.setVisibility(View.VISIBLE);
+            medalImage.setImageDrawable(medalDrawable);
+        }
+
 
         // Set post body
         TextView textBody = vi.findViewById(R.id.postContentText);

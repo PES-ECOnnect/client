@@ -134,23 +134,28 @@
                 android:layout_marginEnd="16dp" />
 
             <TextView
+                android:id="@+id/lockedMedalsText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
-                android:text="Not unlocked yet"
+                android:text="@string/not_unlocked_yet"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                tools:ignore="TextContrastCheck" />
+                android:visibility="gone"
+                tools:ignore="TextContrastCheck"
+                tools:visibility="visible" />
 
             <com.econnect.Utilities.NonScrollingListView
                 android:id="@+id/lockedMedalsList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp">
+                android:layout_marginEnd="16dp"
+                android:visibility="gone"
+                tools:visibility="visible">
 
             </com.econnect.Utilities.NonScrollingListView>
         </LinearLayout>
