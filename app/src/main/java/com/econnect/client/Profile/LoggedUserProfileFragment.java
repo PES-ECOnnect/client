@@ -77,12 +77,15 @@ public class LoggedUserProfileFragment extends ProfileFragment {
 
         englishButton.setOnClickListener(view -> {
            _ctrl.changeIdiom("english");
+           idiom.dismiss();
         });
         spanishButton.setOnClickListener(view -> {
             _ctrl.changeIdiom("spanish");
+            idiom.dismiss();
         });
         catalanButton.setOnClickListener(view -> {
             _ctrl.changeIdiom("catalan");
+            idiom.dismiss();
         });
 
     }
