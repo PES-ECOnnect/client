@@ -78,13 +78,14 @@ public class ProfileService extends Service {
         Medal[] medals = result.getArray("medals", Medal[].class);
         String about = result.getObject("about", String.class);
         String pictureURL = result.getObject("pictureURL", String.class);
+        String activeMedal = result.getAttribute("activeMedal");
+        if(activeMedal == null) activeMedal = "0";
 
         assertResultNotNull(username, result);
         assertResultNotNull(medals, result);
         System.out.println("otheruser"+pictureURL);
-        // TODO: get active medal from endpoint
 
-        return new User(username, 1234, null, null, medals, null, about, pictureURL);
+        return new User(username,Integer.parseInt(activeMedal), null, null, medals, null, about, pictureURL);
     }
 
     public void updateUsername(String text) {
