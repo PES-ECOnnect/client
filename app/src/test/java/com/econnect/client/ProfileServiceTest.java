@@ -43,9 +43,7 @@ public class ProfileServiceTest {
         assertEquals(true, user.isPrivate);
         assertEquals(2, user.medals.length);
         assertEquals(1, user.medals[0].idmedal);
-        assertEquals("testMedal", user.medals[0].medalname);
         assertEquals(2, user.medals[1].idmedal);
-        assertEquals("testMedal2", user.medals[1].medalname);
     }
 
     @Test
@@ -59,9 +57,7 @@ public class ProfileServiceTest {
         assertNull(user.isPrivate);
         assertEquals(2, user.medals.length);
         assertEquals(1, user.medals[0].idmedal);
-        assertEquals("testMedal", user.medals[0].medalname);
         assertEquals(2, user.medals[1].idmedal);
-        assertEquals("testMedal2", user.medals[1].medalname);
     }
 
     @Test

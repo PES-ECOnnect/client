@@ -1,9 +1,7 @@
 package com.econnect.client.Profile;
 
-import static com.econnect.API.ProfileService.User;
 import static com.econnect.Utilities.BitmapLoader.fromURL;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.view.View;
@@ -13,12 +11,11 @@ import androidx.core.content.ContextCompat;
 
 import com.econnect.API.ProfileService;
 import com.econnect.Utilities.CustomFragment;
+import com.econnect.Utilities.ExecutionThread;
 import com.econnect.client.Profile.Medals.MedalListAdapter;
 import com.econnect.client.Profile.Medals.MedalUtils;
-import com.econnect.Utilities.ExecutionThread;
 import com.econnect.client.R;
 import com.econnect.client.databinding.FragmentProfileBinding;
-import com.google.android.material.imageview.ShapeableImageView;
 
 
 public class ProfileFragment extends CustomFragment<FragmentProfileBinding> {

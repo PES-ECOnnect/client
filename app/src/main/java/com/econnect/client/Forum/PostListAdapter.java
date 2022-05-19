@@ -25,6 +25,7 @@ import com.econnect.API.ForumService.Post;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.HashtagPatternMatcher;
 import com.econnect.Utilities.URLPatternMatcher;
+import com.econnect.client.Profile.Medals.MedalUtils;
 import com.econnect.client.R;
 
 import java.text.DateFormat;
@@ -95,11 +96,12 @@ public class PostListAdapter extends BaseAdapter {
         // Set medal
         ImageView medalImage = vi.findViewById(R.id.postMedalImage);
         // TODO: get medal picture corresponding to p.medal
+        Drawable medalDrawable = MedalUtils.medalIcon(_owner, p.medal);
         Drawable defaultImage = ContextCompat.getDrawable(_owner.requireContext(), R.drawable.ic_medal_24);
         ExecutionThread.nonUI(()->{
             ExecutionThread.UI(_owner, ()-> {
                 medalImage.setVisibility(View.VISIBLE);
-                medalImage.setImageDrawable(defaultImage);
+                medalImage.setImageDrawable(medalDrawable);
             });
         });
 
