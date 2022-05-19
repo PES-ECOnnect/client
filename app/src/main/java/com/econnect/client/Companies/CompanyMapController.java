@@ -71,7 +71,13 @@ public class CompanyMapController {
                         _fragment.addMarker(c);
                     }
                 });
-
+            }
+            catch (Exception e){
+                ExecutionThread.UI(_fragment, ()->{
+                    PopupMessage.warning(_fragment, "Could not fetch companies:\n" + e.getMessage());
+                });
+            }
+            try {
                 CarpoolPoint[] points = loadCarpool ? getPoints() : new CarpoolPoint[0];
                 ExecutionThread.UI(_fragment, () -> {
                     // Add new markers
@@ -82,7 +88,7 @@ public class CompanyMapController {
             }
             catch (Exception e){
                 ExecutionThread.UI(_fragment, ()->{
-                    PopupMessage.warning(_fragment, "Could not fetch companies:\n" + e.getMessage());
+                    PopupMessage.showToast(_fragment, "Could not fetch carpool points:\n" + e.getMessage());
                 });
             }
         });

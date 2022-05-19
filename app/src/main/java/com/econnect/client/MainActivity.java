@@ -1,7 +1,12 @@
 package com.econnect.client;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Looper;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +21,7 @@ import com.econnect.client.Companies.CompaniesFragment;
 import com.econnect.client.Forum.ForumFragment;
 import com.econnect.client.Products.ProductsFragment;
 import com.econnect.client.Profile.LoggedUserProfileFragment;
+import com.econnect.client.Profile.Medals.MedalUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView.OnItemSelectedListener;
 
@@ -60,6 +66,24 @@ public class MainActivity extends AppCompatActivity {
                     // User selected OK, unblock thread
                     synchronized (this) { notify(); }
                 });
+            });
+        });
+
+        // Add callback for showing unlocked medal popup
+        Service.setMedalUnlockedCallback((medalId)->{
+            ExecutionThread.UI(_fragments[1], ()->{
+                AlertDialog.Builder popupBuilder = new AlertDialog.Builder(_fragments[1].requireContext());
+                final View v = _fragments[1].getLayoutInflater().inflate(R.layout.medal_unlocked, null);
+
+                ImageView icon = v.findViewById(R.id.popupMedal_icon);
+                TextView medalName = v.findViewById(R.id.popupMedal_name);
+
+                icon.setImageDrawable(MedalUtils.medalIcon(_fragments[1], medalId));
+                medalName.setText(MedalUtils.medalName(_fragments[1], medalId));
+
+                popupBuilder.setView(v);
+                final AlertDialog popupDialog = popupBuilder.create();
+                popupDialog.show();
             });
         });
     }

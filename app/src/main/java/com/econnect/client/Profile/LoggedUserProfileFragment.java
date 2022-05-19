@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.econnect.API.ProfileService;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
+import com.econnect.client.Profile.Medals.MedalUtils;
 import com.econnect.client.R;
 
 public class LoggedUserProfileFragment extends ProfileFragment {
@@ -131,8 +132,8 @@ public class LoggedUserProfileFragment extends ProfileFragment {
                 ExecutionThread.nonUI(() -> {
                     _ctrl.changeActiveMedal(m.idmedal);
                     ExecutionThread.UI(this, ()-> {
-                        binding.idMedalText.setText(String.valueOf(m.idmedal));
-                        //binding.medalImage.setView(m.imagen);
+                        binding.idMedalText.setText(MedalUtils.medalName(this, m.idmedal));
+                        binding.medalActiveImage.setImageDrawable(MedalUtils.medalIcon(this, m.idmedal));
                     });
                 });
                 review.dismiss();

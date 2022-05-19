@@ -1,7 +1,6 @@
 package com.econnect.client.Profile;
 
 import static com.econnect.API.ProfileService.User;
-import static com.econnect.Utilities.BitmapLoader.fromURL;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -13,6 +12,9 @@ import androidx.core.content.ContextCompat;
 
 import com.econnect.API.ProfileService;
 import com.econnect.Utilities.CustomFragment;
+import com.econnect.client.Profile.Medals.MedalListAdapter;
+import com.econnect.client.Profile.Medals.MedalUtils;
+import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.client.R;
 import com.econnect.client.databinding.FragmentProfileBinding;
@@ -52,7 +54,8 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> {
 
     void updateUI(ProfileService.User u) {
         // Update text
-        binding.idMedalText.setText(String.valueOf(u.activeMedal));
+        binding.idMedalText.setText(MedalUtils.medalName(this, u.activeMedal));
+        binding.medalActiveImage.setImageDrawable(MedalUtils.medalIcon(this, u.activeMedal));
         binding.usernameText.setText(u.username);
         binding.aboutField.setText(u.about);
         if (u.email != null) {

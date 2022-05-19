@@ -25,7 +25,7 @@ public class JsonResult {
 
     public String getAttribute(String attrName) {
         JsonElement element = _jsonObject.get(attrName);
-        if (element == null) return null;
+        if (element == null || element instanceof JsonNull) return null;
 
         return element.getAsString();
     }

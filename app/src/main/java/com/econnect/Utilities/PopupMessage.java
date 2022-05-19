@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.econnect.client.R;
+
 public class PopupMessage {
     public static void warning(Fragment caller, String text) {
         AlertDialog.Builder builder = new AlertDialog.Builder(caller.getContext());

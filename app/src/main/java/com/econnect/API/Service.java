@@ -1,16 +1,13 @@
 package com.econnect.API;
 
-import android.os.SystemClock;
+import com.econnect.API.Exceptions.ApiException;
+import com.econnect.API.Exceptions.InvalidTokenApiException;
+import com.econnect.API.HttpClient.HttpClient;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
-
-import com.google.gson.*;
-
-import com.econnect.API.Exceptions.ApiException;
-import com.econnect.API.Exceptions.InvalidTokenApiException;
-import com.econnect.API.HttpClient.HttpClient;
 
 public abstract class Service {
     // Reference to the HttpClient used to communicate with the API
@@ -20,7 +17,9 @@ public abstract class Service {
     // Gson object used to serialize and deserialize JSON
     private final Gson gson = new Gson();
     // Called when ERROR_INVALID_TOKEN is received
-    private static ITokenInvalidCallback _tokenInvalidCallback;
+    private static Runnable _tokenInvalidCallback;
+    // Called when a new medal is unlocked
+    private static IMedalUnlockedCallback _medalUnlockedCallback;
     // Set by the subclass to indicate whether the request needs an adminToken
     protected boolean needsToken = true;
 
@@ -130,29 +129,42 @@ public abstract class Service {
 
     private JsonResult parseResult(String result) throws ApiException {
         JsonResult json = JsonResult.parse(result);
-        String error = json.getAttribute(ApiConstants.RET_ERROR);
 
+        String error = json.getAttribute(ApiConstants.RET_ERROR);
         if (error != null) {
             // Special treatment for ERROR_INVALID_TOKEN
             if (error.equals(ApiConstants.ERROR_INVALID_TOKEN)) {
                 // Call the invalid token callback
                 if (_tokenInvalidCallback != null) {
-                    _tokenInvalidCallback.invalidToken();
+                    _tokenInvalidCallback.run();
                 }
                 throw new InvalidTokenApiException();
             }
             // Generic API error
             throw new ApiException(error);
         }
+        // Check for unlocked medals
+        String newMedal = json.getAttribute(ApiConstants.RET_NEW_MEDAL);
+        if (newMedal != null) {
+            if (_medalUnlockedCallback != null) {
+                _medalUnlockedCallback.unlocked(Integer.parseInt(newMedal));
+            }
+        }
+
         return json;
     }
 
     // Callback for invalid token errors
-    public interface ITokenInvalidCallback {
-        void invalidToken();
-    }
-    public static void setInvalidTokenCallback(ITokenInvalidCallback callback) {
+    public static void setInvalidTokenCallback(Runnable callback) {
         _tokenInvalidCallback = callback;
+    }
+
+    public interface IMedalUnlockedCallback {
+        void unlocked(int medalId);
+    }
+    // Callback for unlocking medals
+    public static void setMedalUnlockedCallback(IMedalUnlockedCallback callback) {
+        _medalUnlockedCallback = callback;
     }
 
 
