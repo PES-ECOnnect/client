@@ -21,7 +21,7 @@ public class ForumService extends Service {
         public final int postid;
         public final String username;
         public final int userid;
-        public final String medal;
+        public final int medal;
         public final String text;
         public final String imageurl;
         public int likes;
@@ -33,7 +33,7 @@ public class ForumService extends Service {
 
         private Bitmap imageBitmap = null;
         
-        public Post(int postId, String username, int userId, String medal, String text, String imageURL, int likes, int dislikes, int userOption, float timestamp, boolean ownPost, boolean authorBanned) {
+        public Post(int postId, String username, int userId, int medal, String text, String imageURL, int likes, int dislikes, int userOption, float timestamp, boolean ownPost, boolean authorBanned) {
             this.postid = postId;
             this.username = username;
             this.userid = userId;
