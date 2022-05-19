@@ -2,6 +2,8 @@ package com.econnect.client.Profile.Medals;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -24,11 +26,13 @@ public class MedalListAdapter extends BaseAdapter {
     private final Drawable defaultImage;
     private final ProfileService.Medal[] medals;
     private static LayoutInflater _inflater = null;
+    private final boolean _gray;
 
-    public MedalListAdapter(Fragment owner, Drawable defaultImage, ProfileService.Medal[] medals) {
+    public MedalListAdapter(Fragment owner, Drawable defaultImage, ProfileService.Medal[] medals, boolean gray) {
         this.owner = owner;
         this.defaultImage = defaultImage;
         this.medals = medals;
+        _gray = gray;
         _inflater = (LayoutInflater) owner.requireContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -63,6 +67,11 @@ public class MedalListAdapter extends BaseAdapter {
         // Set item image
         ImageView image = vi.findViewById(R.id.medal_item_image);
         image.setImageDrawable(MedalUtils.medalIcon(owner, m.idmedal));
+        if (_gray) {
+            ColorMatrix matrix = new ColorMatrix();
+            matrix.setSaturation(0);
+            image.setColorFilter(new ColorMatrixColorFilter(matrix));
+        }
 
         return vi;
     }

@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat;
 import com.econnect.API.ProfileService;
 import com.econnect.Utilities.CustomFragment;
 import com.econnect.Utilities.ExecutionThread;
+import com.econnect.Utilities.PopupMessage;
 import com.econnect.client.Profile.Medals.MedalListAdapter;
 import com.econnect.client.Profile.Medals.MedalUtils;
 import com.econnect.client.R;
@@ -41,6 +42,12 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> {
     protected void addListeners() {
         // Hide floating button for non-logged user profile
         binding.profileMenuButton.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        // Refresh user info every time the fragment is shown (update medals)
         _ctrl.getInfoUser();
     }
 
@@ -65,18 +72,22 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> {
 
         // Set medal list
         Drawable defaultImage = ContextCompat.getDrawable(requireContext(), R.drawable.ic_medal_24);
-        MedalListAdapter medals_adapter = new MedalListAdapter(this, defaultImage, u.medals);
+        MedalListAdapter medals_adapter = new MedalListAdapter(this, defaultImage, u.medals, false);
         binding.medalsList.setAdapter(medals_adapter);
-        binding.medalsList.refreshDrawableState();
+
+        // Set locked medal list
+        // TODO: Create a Medal array with all medals and subtract u.medals
+        ProfileService.Medal[] remainingMedals = u.medals;
+        MedalListAdapter lockedMedalsAdapter = new MedalListAdapter(this, defaultImage, remainingMedals, true);
+        binding.lockedMedalsList.setAdapter(lockedMedalsAdapter);
+        binding.lockedMedalsList.setEnabled(false);
 
         // set image
-
         Drawable userDefaultImage = ContextCompat.getDrawable(requireContext(), R.drawable.ic_profile_24);
         ImageView image = binding.userImage;
         ExecutionThread.nonUI(()->{
             Bitmap bmp = fromURL(u.pictureURL);
             ExecutionThread.UI(_ctrl._fragment, ()-> {
-                // TODO: set defaultimage for users
                 if (bmp == null) image.setImageDrawable(userDefaultImage);
                 else image.setImageBitmap(bmp);
             });

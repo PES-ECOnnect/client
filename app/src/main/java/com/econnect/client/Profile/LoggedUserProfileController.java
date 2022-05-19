@@ -36,8 +36,8 @@ public class LoggedUserProfileController extends ProfileController {
     }
 
     private void launchDetailsCallback(ActivityResult result) {
-        // Called once the user returns from edit screen, refresh data
-        ExecutionThread.nonUI(this::getInfoUser);
+        // Called once the user returns from edit screen
+        // No need to refresh data, it's reloaded every time that the fragment is selected
     }
 
     public void logoutButtonClick() {
