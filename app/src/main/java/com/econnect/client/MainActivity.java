@@ -71,15 +71,15 @@ public class MainActivity extends AppCompatActivity {
 
         // Add callback for showing unlocked medal popup
         Service.setMedalUnlockedCallback((medalId)->{
-            ExecutionThread.UI(_fragments[1], ()->{
-                AlertDialog.Builder popupBuilder = new AlertDialog.Builder(_fragments[1].requireContext());
-                final View v = _fragments[1].getLayoutInflater().inflate(R.layout.medal_unlocked, null);
+            ExecutionThread.UI(_selectedFragment, ()->{
+                AlertDialog.Builder popupBuilder = new AlertDialog.Builder(_selectedFragment.requireContext());
+                final View v = _selectedFragment.getLayoutInflater().inflate(R.layout.medal_unlocked, null);
 
                 ImageView icon = v.findViewById(R.id.popupMedal_icon);
                 TextView medalName = v.findViewById(R.id.popupMedal_name);
 
-                icon.setImageDrawable(MedalUtils.medalIcon(_fragments[1], medalId));
-                medalName.setText(MedalUtils.medalName(_fragments[1], medalId));
+                icon.setImageDrawable(MedalUtils.medalIcon(_selectedFragment, medalId));
+                medalName.setText(MedalUtils.medalName(_selectedFragment, medalId));
 
                 popupBuilder.setView(v);
                 final AlertDialog popupDialog = popupBuilder.create();
