@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.location.Location;
+import android.net.Uri;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
@@ -129,7 +130,10 @@ public class CompanyMapController {
             _activityLauncher.launch(intent);
         }
         else if (tag instanceof CarpoolPoint) {
-            PopupMessage.showToast(_fragment, "Download the ElektroGo app for more info");
+            //PopupMessage.showToast(_fragment, "Download the ElektroGo app for more info");
+            Intent viewIntent  = new Intent("android.intent.action.VIEW",
+                    Uri.parse("https://marccastellsdostal.wixsite.com/elektrogo"));
+            _fragment.startActivity(viewIntent);
         }
         else {
             throw new RuntimeException("Unrecognized tag type");
