@@ -11,13 +11,23 @@ import androidx.navigation.fragment.NavHostFragment;
 public class ExecutionThread {
     // Execute a runnable on the UI thread
     public static void UI(Fragment caller, Runnable runnable) {
-        caller.getActivity().runOnUiThread(runnable);
+        Activity act = caller.getActivity();
+        if (act == null) {
+            // Fragment not attached to an activity, it may have closed while we were calling the API
+            return; // Do nothing
+        }
+        act.runOnUiThread(runnable);
     }
 
     // Execute a runnable on the UI thread, wait for the runnable to call notify()
     public static void UI_blocking(Fragment caller, Runnable runnable) {
         synchronized( runnable ) {
-            caller.getActivity().runOnUiThread(runnable);
+            Activity act = caller.getActivity();
+            if (act == null) {
+                // Fragment not attached to an activity, it may have closed while we were calling the API
+                return; // Do nothing
+            }
+            act.runOnUiThread(runnable);
             try {
                 runnable.wait();
             } catch (InterruptedException e) {

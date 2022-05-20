@@ -1,29 +1,17 @@
 package com.econnect.client.ItemDetails;
 
-import static android.view.ViewGroup.FOCUS_BLOCK_DESCENDANTS;
-
-import static java.security.AccessController.getContext;
-
 import android.app.AlertDialog;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 
 import androidx.appcompat.content.res.AppCompatResources;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
 
-import com.econnect.API.ProductService;
 import com.econnect.API.ProductService.ProductDetails.Question;
 import com.econnect.Utilities.CustomFragment;
-import com.econnect.Utilities.PopupMessage;
-import com.econnect.client.Products.ProductListAdapter;
 import com.econnect.client.R;
 import com.econnect.client.databinding.FragmentProductDetailsBinding;
 
