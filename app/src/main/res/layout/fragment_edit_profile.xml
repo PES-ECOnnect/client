@@ -124,12 +124,10 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/editAboutBox"
-                    style="Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="250dp"
-                    android:layout_height="60dp"
-                    android:minHeight="48dp"
-                    app:boxBackgroundColor="@null"
-                    app:boxBackgroundMode="outline">
+                    android:layout_height="65dp"
+                    android:minHeight="48dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editAboutText"

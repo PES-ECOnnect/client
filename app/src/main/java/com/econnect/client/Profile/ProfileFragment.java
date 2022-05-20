@@ -79,12 +79,16 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> {
 
         // Set locked medal list
         ArrayList<ProfileService.Medal> aux = new ArrayList<>();
-        for (int i = 1; i <= 22; ++i) {
-            boolean trobat = false;
-            for (int j = 0; j < medals_adapter.getCount() && !trobat; ++j) {
-                if (i == medals_adapter.getItemId(j)) trobat = true;
+        // For each medal, check if it's unlocked. Skip the "none" medal
+        for (int i = 1; i < MedalUtils.getNumMedals(); ++i) {
+            boolean unlocked = false;
+            for (ProfileService.Medal m : u.medals) {
+                if (i == m.idmedal) {
+                    unlocked = true;
+                    break;
+                }
             }
-            if (!trobat) aux.add(new ProfileService.Medal(i));
+            if (!unlocked) aux.add(new ProfileService.Medal(i));
         }
 
         ProfileService.Medal[] remainingMedals = new ProfileService.Medal[aux.size()];

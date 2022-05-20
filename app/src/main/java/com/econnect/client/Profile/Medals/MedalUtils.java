@@ -68,4 +68,9 @@ public class MedalUtils {
         int drawableId = medal.drawableResourceId;
         return ResourcesCompat.getDrawable(f.getResources(), drawableId, f.requireContext().getTheme());
     }
+
+    public static int getNumMedals() {
+        // Return the number of existing medals, including the null medal
+        return Medals.values().length;
+    }
 }

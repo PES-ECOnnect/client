@@ -58,7 +58,6 @@ public class ProfileService extends Service {
         result = get(ApiConstants.ACCOUNT_PATH, null);
         // Parse result
         User user = result.getObject(ApiConstants.RET_RESULT, User.class);
-        System.out.println("service: "+user.pictureURL);
         assertResultNotNull(user, result);
         return user;
     }
