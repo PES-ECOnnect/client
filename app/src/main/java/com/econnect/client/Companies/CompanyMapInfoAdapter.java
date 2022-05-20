@@ -17,6 +17,8 @@ import com.econnect.client.R;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 
+import org.w3c.dom.Text;
+
 public class CompanyMapInfoAdapter implements GoogleMap.InfoWindowAdapter {
 
     private final LayoutInflater _inflater;
@@ -81,6 +83,9 @@ public class CompanyMapInfoAdapter implements GoogleMap.InfoWindowAdapter {
 
             // Returning the view containing InfoWindow contents
             return v;
+        }
+        else if (tag instanceof String && tag.equals("Home")) {
+            return _inflater.inflate(R.layout.map_popup_myhome, null);
         }
         else {
             throw new RuntimeException("Unrecognized tag type");

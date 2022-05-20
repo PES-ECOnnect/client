@@ -4,6 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
+
+import android.location.Location;
+
 import com.econnect.API.HttpClient.StubHttpClient;
 import com.econnect.API.ProfileService;
 import com.econnect.API.ServiceFactory;
@@ -160,6 +163,41 @@ public class ProfileServiceTest {
         ServiceTestHelper.setToken("badToken");
         expectException(()->
                         sv.deleteAccount(),
+                "This session has expired, please logout and try again"
+        );
+    }
+    
+
+    @Test
+    public void testGetHomeCoordinatesOk() {
+        ProfileService.HomeCoords loc = sv.getHomeLocation();
+        assertEquals(12.0, loc.latitude, 0);
+        assertEquals(34.0, loc.longitude, 0);
+        // This should not throw an exception
+    }
+
+    @Test
+    public void testGetHomeCoordinatesNoHome() {
+        ServiceTestHelper.setToken("userNoHome");
+        ProfileService.HomeCoords loc = sv.getHomeLocation();
+        assertNull(loc);
+        // This should not throw an exception
+    }
+
+    @Test
+    public void cannotGetHomeCoordinatesWithoutToken() {
+        ServiceTestHelper.clearToken();
+        expectException(() ->
+                sv.getHomeLocation(),
+                "User token not set"
+        );
+    }
+
+    @Test
+    public void cannotGetHomeCoordinatesWithWrongToken() {
+        ServiceTestHelper.setToken("badToken");
+        expectException(() ->
+                sv.getHomeLocation(),
                 "This session has expired, please logout and try again"
         );
     }

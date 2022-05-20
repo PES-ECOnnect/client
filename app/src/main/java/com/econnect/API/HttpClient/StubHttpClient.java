@@ -169,6 +169,18 @@ public class StubHttpClient implements HttpClient {
             case "/users/3":
                 expectParamsExclusive(params, "token");
                 return "{\"error\":\"ERROR_PRIVATE_USER\"}";
+
+            // Get logged user home coordinates
+            case "/account/home":
+                expectParamsExclusive(params, "token");
+                if (equals(params, "token", "badToken")) {
+                    return "{\"error\":\"ERROR_INVALID_TOKEN\"}";
+                }
+                else if (equals(params, "token", "userNoHome")) {
+                    return "{\"lat\":null,\"lon\":null}";
+                } else {
+                    return "{\"lat\":12,\"lon\":34}";
+                }
         }
     }
 

@@ -39,6 +39,7 @@ public class CompanyMapFragment extends CustomFragment<FragmentCompaniesMapBindi
     @Override
     protected void addListeners() {
         binding.centerMap.setOnClickListener(view -> _ctrl.centerOnLocation());
+        binding.centerMapHome.setOnClickListener(view -> _ctrl.centerOnHome());
 
         SupportMapFragment mapFragment = binding.map.getFragment();
         mapFragment.getMapAsync(map -> {
@@ -89,6 +90,7 @@ public class CompanyMapFragment extends CustomFragment<FragmentCompaniesMapBindi
         // Create a task for loading images in the background
         ExecutionThread.nonUI(()-> company.getImage(64));
     }
+
     void addMarker(CarpoolService.CarpoolPoint point) {
         // SOURCE
         LatLng origin = new LatLng(point.latitudeOrigin, point.longitudeOrigin);
@@ -115,5 +117,21 @@ public class CompanyMapFragment extends CustomFragment<FragmentCompaniesMapBindi
                 .geodesic(true)
                 .width(4);
         _map.addPolyline(line);
+    }
+
+    void addHome(LatLng home) {
+        MarkerOptions options = new MarkerOptions()
+                .position(home)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.home));
+        // Add marker to map
+        Marker m = _map.addMarker(options);
+        assert m != null;
+        m.setTag("Home");
+    }
+
+    public void showCenterOnHome(boolean show) {
+        ExecutionThread.UI(this, ()->{
+            binding.centerMapHome.setVisibility(show ? View.VISIBLE : View.GONE);
+        });
     }
 }

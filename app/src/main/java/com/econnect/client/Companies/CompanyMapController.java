@@ -9,11 +9,14 @@ import android.net.Uri;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.econnect.API.CompanyService;
 import com.econnect.API.CompanyService.Company;
 import com.econnect.API.ElektroGo.CarpoolService;
 import com.econnect.API.ElektroGo.CarpoolService.CarpoolPoint;
+import com.econnect.API.ProfileService;
 import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.LocationHelper;
@@ -31,7 +34,6 @@ public class CompanyMapController {
     private final ActivityResultLauncher<Intent> _activityLauncher;
     private final ActivityResultLauncher<String> _requestPermissionLauncher;
     private volatile GoogleMap _googleMap = null;
-    private boolean loadCarpool = true;
 
     // Initialization
 
@@ -53,6 +55,10 @@ public class CompanyMapController {
         CompanyMapInfoAdapter adapter = new CompanyMapInfoAdapter(_fragment.requireContext());
         _googleMap.setInfoWindowAdapter(adapter);
         _googleMap.setOnInfoWindowClickListener(this::onClickMarker);
+
+        // Initial camera position
+        CameraUpdate c = CameraUpdateFactory.newLatLngZoom(new LatLng(41.8, 1.67), 7);
+        _googleMap.moveCamera(c);
     }
 
 
@@ -79,7 +85,21 @@ public class CompanyMapController {
                 });
             }
             try {
-                CarpoolPoint[] points = loadCarpool ? getPoints() : new CarpoolPoint[0];
+                LatLng home = getHome();
+                if (home != null) {
+                    ExecutionThread.UI(_fragment, () -> {
+                        // Add home marker
+                        _fragment.addHome(home);
+                    });
+                }
+            }
+            catch (Exception e) {
+                ExecutionThread.UI(_fragment, ()->{
+                    PopupMessage.warning(_fragment, "Could not get home location:\n" + e.getMessage());
+                });
+            }
+            try {
+                CarpoolPoint[] points = getPoints();
                 ExecutionThread.UI(_fragment, () -> {
                     // Add new markers
                     for (CarpoolPoint p : points) {
@@ -101,15 +121,34 @@ public class CompanyMapController {
     }
     private CarpoolPoint[] getPoints() {
         CarpoolService service = new CarpoolService();
-        if (!service.pingServer()) {
+        boolean success;
+        try {
+            success = service.pingServer();
+        }
+        catch (Exception e) {
+            success = false;
+        }
+        if (!success) {
             ExecutionThread.UI(_fragment, ()->
-                    PopupMessage.showToast(_fragment, "Couldn't connect to ElektroGo server, please enable the UPC VPN")
+                PopupMessage.showToast(_fragment, "Couldn't connect to ElektroGo server, please enable the UPC VPN")
             );
             return new CarpoolPoint[0];
         }
 
         // For now, get points of all the world
         return service.getPoints(0, 0, 40_000);
+    }
+    private LatLng getHome() {
+        ProfileService service = ServiceFactory.getInstance().getProfileService();
+        ProfileService.HomeCoords loc = service.getHomeLocation();
+        if (loc == null) {
+            _fragment.showCenterOnHome(false);
+            return null;
+        }
+        else {
+            _fragment.showCenterOnHome(true);
+            return new LatLng(loc.latitude, loc.longitude);
+        }
     }
 
 
@@ -130,10 +169,13 @@ public class CompanyMapController {
             _activityLauncher.launch(intent);
         }
         else if (tag instanceof CarpoolPoint) {
-            //PopupMessage.showToast(_fragment, "Download the ElektroGo app for more info");
+            PopupMessage.showToast(_fragment, "Download the ElektroGo app for more info");
             Intent viewIntent  = new Intent("android.intent.action.VIEW",
                     Uri.parse("https://marccastellsdostal.wixsite.com/elektrogo"));
             _fragment.startActivity(viewIntent);
+        }
+        else if (tag instanceof String && tag.equals("Home")) {
+            // "My home" popup has been clicked, do nothing
         }
         else {
             throw new RuntimeException("Unrecognized tag type");
@@ -165,15 +207,7 @@ public class CompanyMapController {
                 // Success: move camera and enable blue dot
                 _fragment.enableBlueDot(_googleMap);
                 LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
-
-                final CameraUpdate update;
-                // Increment zoom only if we are zoomed out
-                if (_googleMap.getCameraPosition().zoom < 10) {
-                    update = CameraUpdateFactory.newLatLngZoom(loc, 15);
-                } else {
-                    update = CameraUpdateFactory.newLatLng(loc);
-                }
-                _googleMap.animateCamera(update);
+                animateCamera(loc);
             }
 
             @Override
@@ -184,11 +218,31 @@ public class CompanyMapController {
         });
     }
 
+    private void animateCamera(LatLng target) {
+        final CameraUpdate update;
+        // Increment zoom only if we are zoomed out
+        if (_googleMap.getCameraPosition().zoom < 10) {
+            update = CameraUpdateFactory.newLatLngZoom(target, 15);
+        } else {
+            update = CameraUpdateFactory.newLatLng(target);
+        }
+        _googleMap.animateCamera(update);
+    }
+
     private void onRequestPermissionResult(boolean isGranted) {
         if (isGranted) {
             // If we got the permission, try again.
             centerOnLocation();
         }
         else PopupMessage.showToast(_fragment, "Could not get location permission");
+    }
+
+    void centerOnHome() {
+        ExecutionThread.nonUI(()->{
+            LatLng home = getHome();
+            ExecutionThread.UI(_fragment, ()->{
+                if (home != null) animateCamera(home);
+            });
+        });
     }
 }

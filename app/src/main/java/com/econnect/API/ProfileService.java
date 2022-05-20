@@ -1,6 +1,6 @@
 package com.econnect.API;
 
-import android.nfc.tech.Ndef;
+import android.location.Location;
 
 import com.econnect.API.Exceptions.ApiException;
 import com.econnect.API.Exceptions.ProfileIsPrivateException;
@@ -42,16 +42,20 @@ public class ProfileService extends Service {
         }
     }
 
-    public User getInfoLoggedUser() {
-        JsonResult result = null;
-        try {
-            // Call API
-            super.needsToken = true;
-            result = get(ApiConstants.ACCOUNT_PATH, null);
-        } catch (ApiException e) {
-            // This endpoint does not throw any errors
-            throw e;
+    public static class HomeCoords {
+        public final double latitude;
+        public final double longitude;
+        public HomeCoords(double lat, double lon) {
+            latitude = lat;
+            longitude = lon;
         }
+    }
+
+    public User getInfoLoggedUser() {
+        JsonResult result;
+        // Call API
+        super.needsToken = true;
+        result = get(ApiConstants.ACCOUNT_PATH, null);
         // Parse result
         User user = result.getObject(ApiConstants.RET_RESULT, User.class);
         System.out.println("service: "+user.pictureURL);
@@ -60,7 +64,7 @@ public class ProfileService extends Service {
     }
 
     public User getInfoOtherUser(int userId) {
-        JsonResult result = null;
+        JsonResult result;
         try {
             // Call API
             super.needsToken = true;
@@ -93,7 +97,7 @@ public class ProfileService extends Service {
         TreeMap<String, String> params = new TreeMap<>();
         params.put(ApiConstants.NEW_USERNAME, text);
 
-        JsonResult result = null;
+        JsonResult result;
         try {
             // Call API
             super.needsToken = true;
@@ -115,7 +119,7 @@ public class ProfileService extends Service {
         TreeMap<String, String> params = new TreeMap<>();
         params.put(ApiConstants.OLD_USER_PASSWORD, oldP);
         params.put(ApiConstants.NEW_USER_PASSWORD, newP);
-        JsonResult result = null;
+        JsonResult result;
         try {
             // Call API
             super.needsToken = true;
@@ -136,7 +140,7 @@ public class ProfileService extends Service {
         // Add parameters
         TreeMap<String, String> params = new TreeMap<>();
         params.put(ApiConstants.NEW_USER_EMAIL, text);
-        JsonResult result = null;
+        JsonResult result;
         try {
             // Call API
             super.needsToken = true;
@@ -159,7 +163,7 @@ public class ProfileService extends Service {
         // Add parameters
         TreeMap<String, String> params = new TreeMap<>();
         params.put(ApiConstants.NEW_USER_ABOUT, text);
-        JsonResult result = null;
+        JsonResult result;
         try {
             // Call API
             super.needsToken = true;
@@ -180,7 +184,7 @@ public class ProfileService extends Service {
         // Add parameters
         TreeMap<String, String> params = new TreeMap<>();
         params.put(ApiConstants.NEW_USER_MEDAL, String.valueOf(id));
-        JsonResult result = null;
+        JsonResult result;
         try {
             // Call API
             super.needsToken = true;
@@ -202,7 +206,7 @@ public class ProfileService extends Service {
         TreeMap<String, String> params = new TreeMap<>();
         params.put(ApiConstants.IS_PRIVATE_USER, isPrivate.toString());
 
-        JsonResult result = null;
+        JsonResult result;
         // Call API
         super.needsToken = true;
         result = put(ApiConstants.ACCOUNT_VISIBILITY_PATH, params, null);
@@ -217,7 +221,7 @@ public class ProfileService extends Service {
         TreeMap<String, String> params = new TreeMap<>();
         params.put(ApiConstants.NEW_PROFILE_PICTURE, url);
 
-        JsonResult result = null;
+        JsonResult result;
         // Call API
         super.needsToken = true;
         result = put(ApiConstants.ACCOUNT_PICTURE_PATH, params, null);
@@ -235,5 +239,18 @@ public class ProfileService extends Service {
 
         // Parse result
         super.expectOkStatus(result);
+    }
+
+    public HomeCoords getHomeLocation() {
+        // Call API
+        super.needsToken = true;
+        JsonResult result = get(ApiConstants.HOME_PATH, null);
+
+        // Parse result
+        Double lat = result.getObject("lat", Double.class);
+        Double lon = result.getObject("lon", Double.class);
+
+        if (lat == null || lon == null) return null;
+        return new HomeCoords(lat, lon);
     }
 }

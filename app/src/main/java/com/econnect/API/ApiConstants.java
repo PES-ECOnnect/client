@@ -10,6 +10,7 @@ public interface ApiConstants {
     String LOGIN_PATH = "/account/login";
     String LOGOUT_PATH = "/account/logout";
     String ACCOUNT_PATH = "/account";
+    String HOME_PATH = "/account/home";
     String USERS_PATH = "/users";
     String TYPES_PATH = "/products/types";
     String PRODUCTS_PATH = "/products";
@@ -71,9 +72,6 @@ public interface ApiConstants {
     String OLD_USER_PASSWORD = "oldPassword";
     String IS_PRIVATE_USER = "isPrivate";
     String NEW_PROFILE_PICTURE = "newPictureURL";
-
-    // Delete account
-    String USER_PASSWORD = "password";
 
 
 
