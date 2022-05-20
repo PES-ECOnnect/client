@@ -18,6 +18,8 @@ import com.econnect.client.Profile.Medals.MedalUtils;
 import com.econnect.client.R;
 import com.econnect.client.databinding.FragmentProfileBinding;
 
+import java.util.ArrayList;
+
 
 public class ProfileFragment extends CustomFragment<FragmentProfileBinding> {
 
@@ -76,8 +78,17 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> {
         binding.medalsList.setAdapter(medals_adapter);
 
         // Set locked medal list
-        // TODO: Create a Medal array with all medals and subtract u.medals
-        ProfileService.Medal[] remainingMedals = u.medals;
+        ArrayList<ProfileService.Medal> aux = new ArrayList<>();
+        for (int i = 1; i <= 22; ++i) {
+            boolean trobat = false;
+            for (int j = 0; j < medals_adapter.getCount() && !trobat; ++j) {
+                if (i == medals_adapter.getItemId(j)) trobat = true;
+            }
+            if (!trobat) aux.add(new ProfileService.Medal(i));
+        }
+
+        ProfileService.Medal[] remainingMedals = new ProfileService.Medal[aux.size()];
+        remainingMedals = aux.toArray(remainingMedals);
         MedalListAdapter lockedMedalsAdapter = new MedalListAdapter(this, defaultImage, remainingMedals, true);
         binding.lockedMedalsList.setAdapter(lockedMedalsAdapter);
         binding.lockedMedalsList.setEnabled(false);

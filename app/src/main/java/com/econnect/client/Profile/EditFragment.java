@@ -37,6 +37,8 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
         if (uri == null) return;
         _selectedImage = uri;
         binding.editUserImage.setImageURI(uri);
+        binding.changeImageButton.setEnabled(true);
+        binding.deleteImageButton.setEnabled(true);
         //binding.removeImageButton.setVisibility(View.VISIBLE);
     });
 
@@ -48,6 +50,8 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
         this._about = about;
         this._isPrivate = isPrivate;
         this._pictureURL = pictureURL;
+
+        System.out.println("fragment: " + this._pictureURL);
     }
 
     @Override
@@ -66,12 +70,19 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
         );
         binding.editUserImage.setOnClickListener(view -> {
             _getContentLauncher.launch("image/*");
-            binding.changeImageButton.setEnabled(true);
         });
 
         binding.changeImageButton.setOnClickListener(view-> {
             _ctrl.changeProfilePicture();
             binding.changeImageButton.setEnabled(false);
+            PopupMessage.showToast(this, "Image updated: this could take some time");
+        });
+
+        binding.deleteImageButton.setOnClickListener(view -> {
+           _ctrl.removeProfilePicture();
+           binding.deleteImageButton.setEnabled(false);
+           binding.changeImageButton.setEnabled(false);
+           PopupMessage.showToast(this, "Image updated: this could take some time");
         });
 
         binding.editUsernameText.addTextChangedListener(new AccountTextWatcher(()->{
@@ -133,7 +144,10 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
             ExecutionThread.UI(this, ()-> {
                 // TODO: set defaultimage for users
                 if (bmp == null) image.setImageDrawable(userDefaultImage);
-                else image.setImageBitmap(bmp);
+                else {
+                    image.setImageBitmap(bmp);
+                    binding.deleteImageButton.setEnabled(true);
+                }
             });
         });
     }
@@ -165,4 +179,11 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
         return _selectedImage;
     }
 
+    public void removeProfileImage() {
+        Drawable userDefaultImage = ContextCompat.getDrawable(requireContext(), R.drawable.ic_profile_24);
+        ImageView image = binding.editUserImage;
+        ExecutionThread.UI(this, ()-> {
+            image.setImageDrawable(userDefaultImage);
+        });
+    }
 }
