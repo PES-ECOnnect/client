@@ -188,15 +188,39 @@
                 android:layout_marginRight="16sp"
                 android:src="@drawable/ic_profile_24" />
 
-            <Button
-                android:id="@+id/changeImageButton"
-                android:layout_width="165dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8sp"
-                android:clickable="true"
-                android:enabled="false"
-                android:text="@string/change_profile_image"
-                tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/changeImageButton"
+                    android:layout_width="118dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="64dp"
+                    android:layout_marginTop="8sp"
+                    android:clickable="true"
+                    android:enabled="false"
+                    android:text="@string/change_profile_image"
+                    tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
+
+                <Space
+                    android:layout_width="8dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/deleteImageButton"
+                    android:layout_width="84dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="64dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:enabled="false"
+                    android:text="@string/remove_image"
+                    tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/textView4"

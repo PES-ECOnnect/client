@@ -3,6 +3,7 @@ package com.econnect.client.Profile;
 import static com.econnect.Utilities.BitmapLoader.fromURL;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.widget.ImageView;
 
@@ -158,4 +159,13 @@ public class EditProfileController {
         }
     }
 
+    public void removeProfilePicture() {
+        ExecutionThread.nonUI(() ->{
+            // Call Service
+            ProfileService profileService = ServiceFactory.getInstance().getProfileService();
+            profileService.updatePicture(null);
+            // remove image
+            _fragment.removeProfileImage();
+        });
+    }
 }
