@@ -28,7 +28,6 @@ public class RegisterController {
         String user_name = fragment.getUsernameText();
         String user_pass = fragment.getPasswordText();
         String user_email = fragment.getEmailText();
-        String user_address = fragment.getPostalAddressText();
 
         // Local validation
         if (user_email.isEmpty() || user_name.isEmpty() || user_pass.isEmpty()) {

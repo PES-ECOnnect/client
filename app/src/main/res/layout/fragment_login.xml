@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
     tools:context=".RegisterLogin.LoginFragment">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imageView2"
         android:layout_width="312dp"
         android:layout_height="210dp"
+        android:layout_marginBottom="32dp"
         android:background="#FFFFFF"
         android:contentDescription="@string/logo"
         android:src="@drawable/logo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.141"
         app:shapeAppearance="@style/ShapeAppearance.MaterialComponents.MediumComponent"
         app:shapeAppearanceOverlay="@style/ShapeAppearance.MaterialComponents.MediumComponent"
         tools:ignore="ImageContrastCheck" />
@@ -29,12 +26,7 @@
         android:layout_width="250dp"
         android:layout_height="65dp"
         android:autofillHints=""
-        android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.13999999">
+        android:minHeight="48dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/loginEmailText"
@@ -52,12 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="65dp"
         android:autofillHints=""
-        android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginEmailBox"
-        app:layout_constraintVertical_bias="0.01999998">
+        android:minHeight="48dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/loginPasswordText"
@@ -68,41 +55,44 @@
             android:inputType="textWebPassword"
             android:singleLine="true"
             tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+
     </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/text_login_to_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center"
-        android:minHeight="48dp"
-        android:text="@string/new_account_button_text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.31"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginPasswordBox" />
-
-    <Button
-        android:id="@+id/button_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/login_button_text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.761"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginPasswordBox"
-        tools:ignore="TextContrastCheck" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/googleLoginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginPasswordBox" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_marginBottom="16sp">
+
+    </com.google.android.gms.common.SignInButton>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/text_login_to_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:minHeight="48dp"
+            android:text="@string/new_account_button_text" />
+
+        <Space
+            android:layout_width="16dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2" />
+
+        <Button
+            android:id="@+id/button_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_button_text"
+            tools:ignore="TextContrastCheck" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,7 +1,6 @@
 package com.econnect.client.Profile;
 
 import android.app.AlertDialog;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -64,30 +63,21 @@ public class LoggedUserProfileFragment extends ProfileFragment {
     }
 
     private void createTranslateDialog() {
-        AlertDialog.Builder idiomBuilder = new AlertDialog.Builder(requireContext());
+        AlertDialog.Builder languageBuilder = new AlertDialog.Builder(requireContext());
 
-        final View idiomPopupView = getLayoutInflater().inflate(R.layout.change_idiom, null);
+        final View languagePopupView = getLayoutInflater().inflate(R.layout.change_language, null);
 
-        Button englishButton = idiomPopupView.findViewById(R.id.englishButton);
-        Button spanishButton = idiomPopupView.findViewById(R.id.spanishButton);
-        Button catalanButton = idiomPopupView.findViewById(R.id.catalanButton);
+        Button englishButton = languagePopupView.findViewById(R.id.englishButton);
+        Button spanishButton = languagePopupView.findViewById(R.id.spanishButton);
+        Button catalanButton = languagePopupView.findViewById(R.id.catalanButton);
 
-        idiomBuilder.setView(idiomPopupView);
-        AlertDialog idiom = idiomBuilder.create();
-        idiom.show();
+        languageBuilder.setView(languagePopupView);
+        AlertDialog language = languageBuilder.create();
+        language.show();
 
-        englishButton.setOnClickListener(view -> {
-           _ctrl.changeIdiom("english");
-           idiom.dismiss();
-        });
-        spanishButton.setOnClickListener(view -> {
-            _ctrl.changeIdiom("spanish");
-            idiom.dismiss();
-        });
-        catalanButton.setOnClickListener(view -> {
-            _ctrl.changeIdiom("catalan");
-            idiom.dismiss();
-        });
+        englishButton.setOnClickListener(view -> _ctrl.changeLanguage("english"));
+        spanishButton.setOnClickListener(view -> _ctrl.changeLanguage("spanish"));
+        catalanButton.setOnClickListener(view -> _ctrl.changeLanguage("catalan"));
 
     }
 

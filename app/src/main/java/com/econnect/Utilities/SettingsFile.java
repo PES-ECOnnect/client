@@ -8,14 +8,14 @@ import androidx.fragment.app.Fragment;
 
 public class SettingsFile {
     private final SharedPreferences _sharedPref;
-    private final String _SETTINGS_FILENAME = "stored_settings";
 
     public SettingsFile(Activity owner) {
         // load file
-        _sharedPref = owner.getSharedPreferences(_SETTINGS_FILENAME, Context.MODE_PRIVATE);
+        final String SETTINGS_FILENAME = "stored_settings";
+        _sharedPref = owner.getSharedPreferences(SETTINGS_FILENAME, Context.MODE_PRIVATE);
     }
     public SettingsFile(Fragment owner) {
-        this(owner.getActivity());
+        this(owner.requireActivity());
     }
 
     // Get a stored value. Returns null if key was not present

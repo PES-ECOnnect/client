@@ -89,7 +89,7 @@ public class LoginService extends Service {
 
         if (token == null) return false;
 
-        super.setToken(token);
+        Service.setToken(token);
         return true;
     }
 

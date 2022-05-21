@@ -5,7 +5,7 @@
     <string name="forum_name">Forum</string>
     <string name="profile_name">Profile</string>
     <string name="title_activity_register">RegisterActivity</string>
-    <string name="google_client_id">143740353566-ork4rg1f38a7pqv0shd6kebk7oshbnj6.apps.googleusercontent.com</string>
+    <string name="google_client_id" translatable="false">143740353566-ork4rg1f38a7pqv0shd6kebk7oshbnj6.apps.googleusercontent.com</string>
     <!-- Strings used for fragments for navigation -->
     <string name="register_fragment_label">Join ECOnnect</string>
     <string name="login_fragment_label">Login</string>
@@ -29,7 +29,6 @@
     <string name="filter_type_hint">Product Type</string>
     <string name="product_image_description">Product image</string>
     <string name="star_image_description">Star</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="questions_text">Questions</string>
     <string name="add_rating_button_text">Add rating</string>
     <string name="vote_option_yes">Yes</string>
@@ -83,15 +82,14 @@
     <string name="menu_log_out">Log Out</string>
     <string name="menu_edit_profile">Edit Profile</string>
     <string name="menu_delete_account">Delete Account</string>
-    <string name="title_activity_maps_delete">MapsActivityDELETE</string>
-    <string name="about_text">About</string>
+    <string name="about_text">About me</string>
     <string name="seats">Free seats:</string>
     <string name="carpool_start">Start:</string>
     <string name="carpool_destination">Destination:</string>
     <string name="profile_picture">Profile Picture</string>
     <string name="change_profile_image">Change Image</string>
-    <string name="translate">Change Idiom</string>
-    <string name="change_idiom">Do you want to change the idiom? Select the option that you need.</string>
+    <string name="translate">Change Language</string>
+    <string name="change_language">Select your language:</string>
     <string name="english">English</string>
     <string name="catalan">Catalan</string>
     <string name="spanish">Spanish</string>

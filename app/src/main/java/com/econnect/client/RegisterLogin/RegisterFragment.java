@@ -30,10 +30,6 @@ public class RegisterFragment extends CustomFragment<FragmentRegisterBinding> {
         return binding.registerEmailText.getText().toString();
     }
 
-    String getPostalAddressText() {
-        return binding.registerPostalCodeText.getText().toString();
-    }
-
     public void enableInput(boolean b) {
         binding.buttonRegister.setEnabled(b);
         binding.textRegisterToLogin.setEnabled(b);

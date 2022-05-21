@@ -1,11 +1,10 @@
 <resources>
     <string name="app_name">ECOnnect</string>
     <string name="products_name">Productos</string>
-    <string name="companies_name">Compañias</string>
+    <string name="companies_name">Empresas</string>
     <string name="forum_name">Foro</string>
     <string name="profile_name">Perfil</string>
     <string name="title_activity_register">RegisterActivity</string>
-    <string name="google_client_id">143740353566-ork4rg1f38a7pqv0shd6kebk7oshbnj6.apps.googleusercontent.com</string>
     <!-- Strings used for fragments for navigation -->
     <string name="register_fragment_label">Únete a ECOnnect</string>
     <string name="login_fragment_label">Inicia Sesión</string>
@@ -14,7 +13,7 @@
 
     <string name="login_button_text">INICIA SESIÓN</string>
     <string name="password_textbox_hint">Contraseña</string>
-    <string name="email_textbox_hint">Email</string>
+    <string name="email_textbox_hint">Correo</string>
     <string name="logo">logo</string>
     <string name="new_account_button_text">Crear una Nueva Cuenta</string>
     <string name="postal_code_text">Código Postal</string>
@@ -28,7 +27,6 @@
     <string name="filter_type_hint">Tipo de Producto</string>
     <string name="product_image_description">Imagen del Producto</string>
     <string name="star_image_description">Estrella</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="questions_text">Preguntas</string>
     <string name="add_rating_button_text">Añadir Valoración</string>
     <string name="vote_option_yes">Sí</string>
@@ -47,9 +45,9 @@
     <string name="like_post_description">Me gusta la publicación</string>
     <string name="dislike_post_description">No me gusta la publicación</string>
     <string name="post_image_description">Imagen de la publicación</string>
-    <string name="user_medal_description">Medall de Usuario</string>
+    <string name="user_medal_description">Medalla de usuario</string>
 
-    <string name="check_out_econnect">revisa ECOnnect en</string>
+    <string name="check_out_econnect">descarga ECOnnect en</string>
     <string name="on_econnect">%s en ECOnnect:</string>
     <string name="invalid_date_warning">Fecha Invalida</string>
     <string name="hours_ago">hace %d horas</string>
@@ -69,8 +67,8 @@
     <string name="remove_image">Borrar imagen</string>
     <string name="send_review">ENVIAR VALORACIÓN</string>
     <string name="password">contraseña</string>
-    <string name="old_password">Contraseña Antigua</string>
-    <string name="new_password">Contraseña Nueva</string>
+    <string name="old_password">Contraseña antigua</string>
+    <string name="new_password">Contraseña nueva</string>
     <string name="active_medal">Medalla Activa</string>
     <string name="medals_text">Medallas</string>
     <string name="edit_profile">Editar Perfil</string>
@@ -82,13 +80,12 @@
     <string name="menu_log_out">Cerrar Sesión</string>
     <string name="menu_edit_profile">Editar Perfil</string>
     <string name="menu_delete_account">Borrar Cuenta</string>
-    <string name="title_activity_maps_delete">MapsActivityDELETE</string>
-    <string name="about_text">Sobre</string>
+    <string name="about_text">Sobre mí</string>
     <string name="seats">Asientos libres:</string>
     <string name="carpool_start">Inicio:</string>
     <string name="carpool_destination">Destino:</string>
     <string name="translate">Cambiar Idioma</string>
-    <string name="change_idiom">¿Quieres cambiar el idioma? Selecciona la opción que necesites.</string>
+    <string name="change_language">Selecciona tu idioma:</string>
     <string name="english">Inglés</string>
     <string name="catalan">Catalan</string>
     <string name="spanish">Castellano</string>
@@ -96,29 +93,31 @@
     <string name="profile_picture">Foto de Perfil</string>
     <string name="change_profile_image">Cambiar Foto de Perfil</string>
 
-    <string name="congratulations">Congratulations!</string>
-    <string name="you_just_unlocked_this_medal">You just unlocked this medal:</string>
-    <string name="medal_none">No medal</string>
-    <string name="medal_eficiencia_a">A home efficiency</string>
-    <string name="medal_eficiencia_b">B home efficiency</string>
-    <string name="medal_eficiencia_c">C home efficiency</string>
-    <string name="medal_eficiencia_d">D home efficiency</string>
-    <string name="medal_eficiencia_e">E home efficiency</string>
-    <string name="medal_eficiencia_f">F home efficiency</string>
-    <string name="medal_eficiencia_g">G home efficiency</string>
-    <string name="medal_empresa_or">Review 20 companies</string>
-    <string name="medal_empresa_plata">Review 10 companies</string>
-    <string name="medal_empresa_bronze">Review 1 company</string>
-    <string name="medal_producte_or">Review 20 products</string>
-    <string name="medal_producte_plata">Review 10 products</string>
-    <string name="medal_producte_bronze">Review 1 product</string>
-    <string name="medal_forum_or">Make 25 forum posts</string>
-    <string name="medal_forum_plata">Make 10 forum posts</string>
-    <string name="medal_forum_bronze">Make 1 forum post</string>
-    <string name="medal_like_or">Like/dislike 100 posts</string>
-    <string name="medal_like_plata">Like/dislike 20 posts</string>
-    <string name="medal_like_bronze">Like/dislike 1 post</string>
-    <string name="medal_pregunta_or">Answer 50 questions</string>
-    <string name="medal_pregunta_plata">Answer 15 questions</string>
-    <string name="medal_pregunta_bronze">Answer 1 question</string>
+    <string name="congratulations">¡Felicidades!</string>
+    <string name="you_just_unlocked_this_medal">Acabas de desbloquear esta medalla:</string>
+    <string name="medal_none">Sin medalla</string>
+    <string name="medal_eficiencia_a">Eficiencia energética A</string>
+    <string name="medal_eficiencia_b">Eficiencia energética B</string>
+    <string name="medal_eficiencia_c">Eficiencia energética C</string>
+    <string name="medal_eficiencia_d">Eficiencia energética D</string>
+    <string name="medal_eficiencia_e">Eficiencia energética E</string>
+    <string name="medal_eficiencia_f">Eficiencia energética F</string>
+    <string name="medal_eficiencia_g">Eficiencia energética G</string>
+    <string name="medal_empresa_or">Valorar 20 empresas</string>
+    <string name="medal_empresa_plata">Valorar 10 empresas</string>
+    <string name="medal_empresa_bronze">Valorar 1 empresa</string>
+    <string name="medal_producte_or">Valorar 20 productos</string>
+    <string name="medal_producte_plata">Valorar 10 productos</string>
+    <string name="medal_producte_bronze">Valorar 1 producto</string>
+    <string name="medal_forum_or">Hacer 25 posts en el forum</string>
+    <string name="medal_forum_plata">Hacer 10 posts en el forum</string>
+    <string name="medal_forum_bronze">Hacer 1 post en el forum</string>
+    <string name="medal_like_or">Dar 100 likes/dislikes</string>
+    <string name="medal_like_plata">Dar 20 likes/dislikes</string>
+    <string name="medal_like_bronze">Dar 1 like/dislike</string>
+    <string name="medal_pregunta_or">Contestar 50 preguntas</string>
+    <string name="medal_pregunta_plata">Contestar 15 preguntas</string>
+    <string name="medal_pregunta_bronze">Contestar 1 pregunta</string>
+    <string name="not_unlocked_yet">Sin desbloquear</string>
+    <string name="my_home">Mi casa</string>
 </resources>

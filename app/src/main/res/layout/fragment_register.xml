@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
     tools:context=".RegisterLogin.RegisterFragment">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imageView"
+        android:layout_width="229dp"
+        android:layout_height="190dp"
+        android:layout_marginBottom="16dp"
+        android:background="#FFFFFF"
+        android:contentDescription="@string/logo"
+        android:src="@drawable/logo"
+        app:shapeAppearance="@style/ShapeAppearance.MaterialComponents.MediumComponent"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.MaterialComponents.MediumComponent"
+        tools:ignore="ImageContrastCheck" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/registerUsernameBox"
@@ -12,12 +26,7 @@
         android:layout_width="250dp"
         android:layout_height="65dp"
         android:autofillHints=""
-        android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.41000003">
+        android:minHeight="48dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/registerUsernameText"
@@ -36,10 +45,7 @@
         android:layout_height="65dp"
         android:layout_marginTop="8dp"
         android:autofillHints=""
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerUsernameBox">
+        android:minHeight="48dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/registerPasswordText"
@@ -52,41 +58,13 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/registerPostalCodeBox"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="250dp"
-        android:layout_height="65dp"
-        android:layout_marginTop="8dp"
-        android:autofillHints=""
-        android:enabled="false"
-        android:minHeight="48dp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerEmailBox">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/registerPostalCodeText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/postal_code_text"
-            android:inputType="textEmailAddress"
-            android:singleLine="true"
-            tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/registerEmailBox"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="250dp"
         android:layout_height="65dp"
         android:layout_marginTop="8dp"
         android:autofillHints=""
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerPasswordBox">
+        android:minHeight="48dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/registerEmailText"
@@ -98,45 +76,34 @@
             tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/button_register"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/register_button_text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.783"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerPostalCodeBox"
-        tools:ignore="TextContrastCheck" />
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        android:orientation="horizontal">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/imageView"
-        android:layout_width="229dp"
-        android:layout_height="190dp"
-        android:background="#FFFFFF"
-        android:contentDescription="@string/logo"
-        android:src="@drawable/logo"
-        app:layout_constraintBottom_toTopOf="@+id/registerUsernameBox"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearance="@style/ShapeAppearance.MaterialComponents.MediumComponent"
-        app:shapeAppearanceOverlay="@style/ShapeAppearance.MaterialComponents.MediumComponent"
-        tools:ignore="ImageContrastCheck" />
+        <TextView
+            android:id="@+id/text_register_to_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:minHeight="48dp"
+            android:text="@string/already_have_an_account_text" />
 
-    <TextView
-        android:id="@+id/text_register_to_login"
-        android:layout_width="158dp"
-        android:layout_height="48dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center"
-        android:text="@string/already_have_an_account_text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.213"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerPostalCodeBox" />
+        <Space
+            android:layout_width="16dp"
+            android:layout_height="wrap_content" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/button_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/register_button_text"
+            tools:ignore="TextContrastCheck" />
+
+    </LinearLayout>
+
+</LinearLayout>
