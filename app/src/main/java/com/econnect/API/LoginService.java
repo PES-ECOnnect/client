@@ -89,7 +89,12 @@ public class LoginService extends Service {
 
         if (token == null) return false;
 
-        Service.setToken(token);
+        try {
+            Service.setToken(token);
+        }
+        catch (IllegalStateException e) {
+            // Token already set, ignore
+        }
         return true;
     }
 

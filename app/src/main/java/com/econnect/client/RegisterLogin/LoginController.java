@@ -18,9 +18,6 @@ import com.econnect.client.RegisterLogin.IThirdPartyLogin.IThirdPartyLoginCallba
 import java.util.Locale;
 
 public class LoginController {
-
-    public static String CUSTOM_LANGUAGE_KEY = "LOGIN_CONTROLLER_CUSTOM_LANGUAGE";
-
     private final LoginFragment _fragment;
     private final IThirdPartyLogin _googleLogin = new GoogleLogin();
 
@@ -74,26 +71,6 @@ public class LoginController {
             navigateToMainMenu();
         }
     }
-
-    void attemptAutoSetLanguage() {
-        final SettingsFile file = new SettingsFile(_fragment);
-        final String language = file.getString(CUSTOM_LANGUAGE_KEY);
-        // Language must be either null or an ISO 639 language code
-
-        if (language == null) {
-            // No custom language set, use device default
-            return;
-        }
-
-        Locale locale = new Locale(language);
-
-        Locale.setDefault(locale);
-        Resources resources = _fragment.requireActivity().getResources();
-        Configuration config = resources.getConfiguration();
-        config.setLocale(locale);
-        resources.updateConfiguration(config, resources.getDisplayMetrics());
-    }
-
 
     void initializeThirdPartyLogins() {
         _googleLogin.initialize(_fragment, thirdPartyloginCallback);

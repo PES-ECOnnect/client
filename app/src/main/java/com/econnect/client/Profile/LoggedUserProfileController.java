@@ -4,14 +4,10 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.os.Build;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.RequiresApi;
 
 import com.econnect.API.LoginService;
 import com.econnect.API.ProfileService;
@@ -19,10 +15,7 @@ import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
 import com.econnect.Utilities.SettingsFile;
-import com.econnect.client.RegisterLogin.LoginController;
-import com.econnect.client.RegisterLogin.RegisterActivity;
-
-import java.util.Locale;
+import com.econnect.client.StartupActivity;
 
 
 public class LoggedUserProfileController extends ProfileController {
@@ -140,27 +133,18 @@ public class LoggedUserProfileController extends ProfileController {
 
         switch (language) {
             case "english":
-                file.putString(LoginController.CUSTOM_LANGUAGE_KEY, ENGLISH_CODE);
+                file.putString(StartupActivity.CUSTOM_LANGUAGE_KEY, ENGLISH_CODE);
                 break;
             case "spanish":
-                file.putString(LoginController.CUSTOM_LANGUAGE_KEY, SPANISH_CODE);
+                file.putString(StartupActivity.CUSTOM_LANGUAGE_KEY, SPANISH_CODE);
                 break;
             case "catalan":
-                file.putString(LoginController.CUSTOM_LANGUAGE_KEY, CATALAN_CODE);
+                file.putString(StartupActivity.CUSTOM_LANGUAGE_KEY, CATALAN_CODE);
                 break;
             default:
                 throw new RuntimeException("Unrecognized language");
         }
-
-        // Restart app
-        Context context = _fragment.requireContext();
-        // RegisterActivity is the startup activity of the app
-        Intent mStartActivity = new Intent(context, RegisterActivity.class);
-        int mPendingIntentId = 123456;
-        PendingIntent mPendingIntent = PendingIntent.getActivity(context, mPendingIntentId,
-                mStartActivity, PendingIntent.FLAG_IMMUTABLE);
-        AlarmManager mgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
-        System.exit(0);
+        
+        PopupMessage.showToast(_fragment, "Language changes will be applied next time the app is restarted");
     }
 }

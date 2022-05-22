@@ -2,6 +2,7 @@ package com.econnect.Utilities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.view.View;
@@ -53,9 +54,9 @@ public class PopupMessage {
         yesNoDialog(caller, title, message, yesListener, (dialog, id) -> dialog.cancel());
     }
 
-    public static void okDialog(Fragment caller, String title, String message,
+    public static void okDialog(Context context, String title, String message,
                                 DialogInterface.OnClickListener okListener) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(caller.getContext());
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         alertDialogBuilder.setTitle(title);
         alertDialogBuilder
             .setMessage(message)
@@ -64,6 +65,10 @@ public class PopupMessage {
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+    public static void okDialog(Fragment caller, String title, String message,
+                                DialogInterface.OnClickListener okListener) {
+        okDialog(caller.requireContext(), title, message, okListener);
     }
 
     public static void showPopupMenu(int menuId, View anchor, OnMenuItemClickListener listener) {

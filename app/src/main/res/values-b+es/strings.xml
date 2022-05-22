@@ -4,8 +4,6 @@
     <string name="companies_name">Empresas</string>
     <string name="forum_name">Foro</string>
     <string name="profile_name">Perfil</string>
-    <string name="title_activity_register">RegisterActivity</string>
-    <!-- Strings used for fragments for navigation -->
     <string name="register_fragment_label">Únete a ECOnnect</string>
     <string name="login_fragment_label">Inicia Sesión</string>
     <string name="next">Siguiente</string>
@@ -40,10 +38,10 @@
     <string name="question_text_and_votes_one">%s - %d voto</string>
     <string name="filter_tag_hint">Buscar por etiqueta</string>
 
-    <string name="tag_posts_count">%d publicación</string>
-    <string name="tag_posts_count_one">%d publicación</string>
-    <string name="like_post_description">Me gusta la publicación</string>
-    <string name="dislike_post_description">No me gusta la publicación</string>
+    <string name="tag_posts_count">%d posts</string>
+    <string name="tag_posts_count_one">%d post</string>
+    <string name="like_post_description">Me gusta</string>
+    <string name="dislike_post_description">No me gusta</string>
     <string name="post_image_description">Imagen de la publicación</string>
     <string name="user_medal_description">Medalla de usuario</string>
 
@@ -56,12 +54,12 @@
     <string name="minutes_ago_one">hace %d minuto</string>
     <string name="delete_hint">Borrar</string>
     <string name="warning">AVISO</string>
-    <string name="delete_account_text">Estás a punto de borrar tu cuenta. ¿Realmente quieres borrarla? \n\nEscribe \'ACEPTO\' para confirmar.</string>
+    <string name="delete_account_text">Eliminarás tu cuenta. Escribe \'ACEPTO\' para confirmar.</string>
     <string name="i_accept_text">ACEPTO</string>
     <string name="cancel">CANCELAR</string>
     <string name="delete">BORRAR</string>
     <string name="write_your_opinion">Escribe tu opinión:</string>
-    <string name="add_post">Añadir una publicación</string>
+    <string name="add_post">Crear post</string>
     <string name="new_post_hint">Texto</string>
     <string name="post_add_image">(Opcional) Añadir una imagen:</string>
     <string name="remove_image">Borrar imagen</string>
@@ -85,7 +83,7 @@
     <string name="carpool_start">Inicio:</string>
     <string name="carpool_destination">Destino:</string>
     <string name="translate">Cambiar Idioma</string>
-    <string name="change_language">Selecciona tu idioma:</string>
+    <string name="change_language">Selecciona tu idioma (es necesario reiniciar la app):</string>
     <string name="english">Inglés</string>
     <string name="catalan">Catalan</string>
     <string name="spanish">Castellano</string>

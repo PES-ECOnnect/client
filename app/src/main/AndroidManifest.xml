@@ -22,6 +22,17 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
+
+        <activity
+            android:name=".StartupActivity"
+            android:exported="true"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/Theme.ECOnnect.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Companies.CompanyMapActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -46,13 +57,7 @@
             android:name=".RegisterLogin.RegisterActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="true"
-            android:theme="@style/Theme.ECOnnect.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/Theme.ECOnnect.NoActionBar"/>
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"

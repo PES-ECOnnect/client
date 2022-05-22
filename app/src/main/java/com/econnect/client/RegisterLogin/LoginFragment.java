@@ -17,7 +17,6 @@ public class LoginFragment extends CustomFragment<FragmentLoginBinding> {
         binding.textLoginToRegister.setOnClickListener(ctrl.toRegisterButton());
         binding.googleLoginButton.setOnClickListener(ctrl.googleLogin());
 
-        ctrl.attemptAutoSetLanguage();
         ctrl.attemptAutoLogin();
         ctrl.initializeThirdPartyLogins();
         ctrl.pingServer();

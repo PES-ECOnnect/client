@@ -4,9 +4,7 @@
     <string name="companies_name">Companies</string>
     <string name="forum_name">Forum</string>
     <string name="profile_name">Profile</string>
-    <string name="title_activity_register">RegisterActivity</string>
     <string name="google_client_id" translatable="false">143740353566-ork4rg1f38a7pqv0shd6kebk7oshbnj6.apps.googleusercontent.com</string>
-    <!-- Strings used for fragments for navigation -->
     <string name="register_fragment_label">Join ECOnnect</string>
     <string name="login_fragment_label">Login</string>
     <string name="next">Next</string>
@@ -58,12 +56,12 @@
     <string name="minutes_ago_one">%d minute ago</string>
     <string name="delete_hint">Delete</string>
     <string name="warning">WARNING</string>
-    <string name="delete_account_text">You are going to delete your account. Do you really want to delete it? \n\nWrite \'I ACCEPT\' to confirm.</string>
+    <string name="delete_account_text">You are going to delete your account. Write \'I ACCEPT\' to confirm.</string>
     <string name="i_accept_text">I ACCEPT</string>
     <string name="cancel">CANCEL</string>
     <string name="delete">DELETE</string>
     <string name="write_your_opinion">Write your opinion:</string>
-    <string name="add_post">Add Post</string>
+    <string name="add_post">Create Post</string>
     <string name="new_post_hint">Text</string>
     <string name="post_add_image">(Optional) Add image:</string>
     <string name="remove_image">Remove image</string>
@@ -89,11 +87,11 @@
     <string name="profile_picture">Profile Picture</string>
     <string name="change_profile_image">Change Image</string>
     <string name="translate">Change Language</string>
-    <string name="change_language">Select your language:</string>
+    <string name="change_language">Select your language (requires app restart):</string>
     <string name="english">English</string>
     <string name="catalan">Catalan</string>
     <string name="spanish">Spanish</string>
-    
+
     <string name="congratulations">Congratulations!</string>
     <string name="you_just_unlocked_this_medal">You just unlocked this medal:</string>
     <string name="medal_none">No medal</string>

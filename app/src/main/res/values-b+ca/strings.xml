@@ -4,8 +4,6 @@
     <string name="companies_name">Empreses</string>
     <string name="forum_name">Fòrum</string>
     <string name="profile_name">Perfil</string>
-    <string name="title_activity_register">RegisterActivity</string>
-    <!-- Strings used for fragments for navigation -->
     <string name="register_fragment_label">Uneix-te a ECOnnect</string>
     <string name="login_fragment_label">Iniciar Sessió</string>
     <string name="next">Següent</string>
@@ -40,10 +38,10 @@
     <string name="question_text_and_votes_one">%s - %d vot</string>
     <string name="filter_tag_hint">Buscar per etiqueta</string>
 
-    <string name="tag_posts_count">%d publicacions</string>
-    <string name="tag_posts_count_one">%d publicació</string>
-    <string name="like_post_description">M\'agrada la publicació</string>
-    <string name="dislike_post_description">No m\'agrada la publicació</string>
+    <string name="tag_posts_count">%d posts</string>
+    <string name="tag_posts_count_one">%d post</string>
+    <string name="like_post_description">M\'agrada</string>
+    <string name="dislike_post_description">No m\'agrada</string>
     <string name="post_image_description">Imatge de la publicació</string>
     <string name="user_medal_description">Medalla d\'usuari</string>
 
@@ -56,15 +54,15 @@
     <string name="minutes_ago_one">fa %d minut</string>
     <string name="delete_hint">Esborrar</string>
     <string name="warning">ADVERTENCIA</string>
-    <string name="delete_account_text">Esborraràs el teu compte. De veritat voleu suprimir-lo? \i Escriviu \'ACCEPTO\' per confirmar.</string>
+    <string name="delete_account_text">Eliminaràs el teu compte. Escriviu \'ACCEPTO\' per confirmar.</string>
     <string name="i_accept_text">ACCEPTO</string>
     <string name="cancel">CANCELAR</string>
     <string name="delete">ESBORRAR</string>
     <string name="write_your_opinion">Escriu la teva opinió:</string>
-    <string name="add_post">Afegeix una publicació</string>
+    <string name="add_post">Crear post</string>
     <string name="new_post_hint">Text</string>
-    <string name="post_add_image">(Opcional) Afegir ina imatge:</string>
-    <string name="remove_image">Esborra Imatge</string>
+    <string name="post_add_image">(Opcional) Afegir una imatge:</string>
+    <string name="remove_image">Esborra imatge</string>
     <string name="send_review">ENVIAR VALORACIÓ</string>
     <string name="password">contrasenya</string>
     <string name="old_password">Contrasenya antiga</string>
@@ -85,7 +83,7 @@
     <string name="carpool_start">Inici:</string>
     <string name="carpool_destination">Destí:</string>
     <string name="translate">Canviar Idioma</string>
-    <string name="change_language">Selecciona el teu idioma:</string>
+    <string name="change_language">Selecciona el teu idioma (cal reiniciar la app):</string>
     <string name="english">Anglès</string>
     <string name="catalan">Català</string>
     <string name="spanish">Castellà</string>

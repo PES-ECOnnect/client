@@ -72,12 +72,21 @@ public class LoggedUserProfileFragment extends ProfileFragment {
         Button catalanButton = languagePopupView.findViewById(R.id.catalanButton);
 
         languageBuilder.setView(languagePopupView);
-        AlertDialog language = languageBuilder.create();
-        language.show();
+        final AlertDialog languageDialog = languageBuilder.create();
+        languageDialog.show();
 
-        englishButton.setOnClickListener(view -> _ctrl.changeLanguage("english"));
-        spanishButton.setOnClickListener(view -> _ctrl.changeLanguage("spanish"));
-        catalanButton.setOnClickListener(view -> _ctrl.changeLanguage("catalan"));
+        englishButton.setOnClickListener(view -> {
+            _ctrl.changeLanguage("english");
+            languageDialog.dismiss();
+        });
+        spanishButton.setOnClickListener(view -> {
+            _ctrl.changeLanguage("spanish");
+            languageDialog.dismiss();
+        });
+        catalanButton.setOnClickListener(view -> {
+            _ctrl.changeLanguage("catalan");
+            languageDialog.dismiss();
+        });
 
     }
 
