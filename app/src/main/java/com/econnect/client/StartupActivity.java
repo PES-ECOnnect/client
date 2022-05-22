@@ -1,5 +1,7 @@
 package com.econnect.client;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -14,6 +16,9 @@ import com.econnect.client.RegisterLogin.RegisterActivity;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.Arrays;
 import java.util.Locale;
 
 public class StartupActivity extends AppCompatActivity {
@@ -51,6 +56,19 @@ public class StartupActivity extends AppCompatActivity {
     }
 
     private void exceptionHandler(Thread thread, Throwable throwable) {
+        printTraceToClipboard(throwable);
+        PopupMessage.showToast(this, "Stack trace copied to clipboard");
+        printTraceToFile(throwable);
+
+        // Exit
+        moveTaskToBack(true);
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(1);
+    }
+
+
+    private void printTraceToFile(Throwable throwable) {
+        // Get file
         final String path = getFilesDir().getPath() + "/crash.txt";
         final File printFile = new File(path);
         final PrintStream output;
@@ -62,18 +80,11 @@ public class StartupActivity extends AppCompatActivity {
             e.printStackTrace();
             return;
         }
-
+        // Print to file
         printRow(output);
         throwable.printStackTrace(output);
         printRow(output);
-
-        PopupMessage.showToast(this, "Stack trace written at: " + path);
-        // Exit
-        moveTaskToBack(true);
-        android.os.Process.killProcess(android.os.Process.myPid());
-        System.exit(1);
     }
-
     private void printRow(PrintStream p) {
         final int ROW_SIZE = 50;
 
@@ -83,5 +94,16 @@ public class StartupActivity extends AppCompatActivity {
         }
         p.println();
         p.println();
+    }
+
+    private void printTraceToClipboard(Throwable throwable) {
+        // Convert trace to string
+        final StringWriter sw = new StringWriter();
+        throwable.printStackTrace(new PrintWriter(sw));
+        final String exceptionAsString = sw.toString();
+        // Copy to clipboard
+        final ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        final ClipData clip = ClipData.newPlainText("ECOnnect stack trace", exceptionAsString);
+        clipboard.setPrimaryClip(clip);
     }
 }
