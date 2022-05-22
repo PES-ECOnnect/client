@@ -14,7 +14,7 @@
     <string name="password_textbox_hint">Password</string>
     <string name="email_textbox_hint">Email</string>
     <string name="logo">logo</string>
-    <string name="new_account_button_text">Create New Account</string>
+    <string name="new_account_button_text">Create new account</string>
     <string name="postal_code_text">Postal Code</string>
     <string name="username_textbox_hint">User Name</string>
     <string name="register_button_text">REGISTER</string>
@@ -65,7 +65,7 @@
     <string name="new_post_hint">Text</string>
     <string name="post_add_image">(Optional) Add image:</string>
     <string name="remove_image">Remove image</string>
-    <string name="send_review">SEND REVIEW</string>
+    <string name="send_review">REVIEW</string>
     <string name="password">password</string>
     <string name="old_password">Old Password</string>
     <string name="new_password">New Password</string>
