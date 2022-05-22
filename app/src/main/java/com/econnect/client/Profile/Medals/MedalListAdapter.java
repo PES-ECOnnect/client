@@ -1,11 +1,8 @@
 package com.econnect.client.Profile.Medals;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,22 +12,18 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.econnect.API.ForumService;
 import com.econnect.API.ProfileService;
-import com.econnect.Utilities.ExecutionThread;
 import com.econnect.client.R;
 
 
 public class MedalListAdapter extends BaseAdapter {
     private final Fragment owner;
-    private final Drawable defaultImage;
     private final ProfileService.Medal[] medals;
     private static LayoutInflater _inflater = null;
     private final boolean _gray;
 
-    public MedalListAdapter(Fragment owner, Drawable defaultImage, ProfileService.Medal[] medals, boolean gray) {
+    public MedalListAdapter(Fragment owner, ProfileService.Medal[] medals, boolean gray) {
         this.owner = owner;
-        this.defaultImage = defaultImage;
         this.medals = medals;
         _gray = gray;
         _inflater = (LayoutInflater) owner.requireContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -62,11 +55,11 @@ public class MedalListAdapter extends BaseAdapter {
 
         // Set name text
         TextView nameMedal = vi.findViewById(R.id.medalTextName);
-        nameMedal.setText(MedalUtils.medalName(owner, m.idmedal));
+        nameMedal.setText(MedalUtils.medalName(m.idmedal));
 
         // Set item image
         ImageView image = vi.findViewById(R.id.medal_item_image);
-        image.setImageDrawable(MedalUtils.medalIcon(owner, m.idmedal));
+        image.setImageDrawable(MedalUtils.medalIcon(m.idmedal));
         if (_gray) {
             ColorMatrix matrix = new ColorMatrix();
             matrix.setSaturation(0);

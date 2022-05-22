@@ -24,6 +24,7 @@ import com.econnect.client.R;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public abstract class AbstractProductListAdapter extends BaseAdapter implements Filterable {
     private final Fragment owner;
@@ -40,7 +41,7 @@ public abstract class AbstractProductListAdapter extends BaseAdapter implements 
         this.highlightColor = highlightColor;
         this.defaultImage = defaultImage;
         data = new ArrayList<>();
-        inflater = (LayoutInflater) owner.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater) owner.requireContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     protected void setInitialValues(IAbstractProduct[] products) {
@@ -93,7 +94,7 @@ public abstract class AbstractProductListAdapter extends BaseAdapter implements 
         // Set item rating
         TextView rating = vi.findViewById(R.id.product_item_rating);
         if(p.getAvgRating() == 0.0f) rating.setText("-");
-        else rating.setText(String.format("%.02f", p.getAvgRating()));
+        else rating.setText(String.format(Locale.getDefault(), "%.02f", p.getAvgRating()));
 
         // Set item image
         ImageView image = vi.findViewById(R.id.product_item_image);

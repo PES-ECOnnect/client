@@ -119,4 +119,5 @@
     <string name="medal_pregunta_bronze">Contestar 1 pregunta</string>
     <string name="not_unlocked_yet">Sense desbloquejar</string>
     <string name="my_home">Casa meva</string>
+    <string name="type_exactly">Has d\'escriure exactament \'%s\' (en majúscules)</string>
 </resources>

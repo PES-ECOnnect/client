@@ -12,7 +12,6 @@ import androidx.core.content.ContextCompat;
 import com.econnect.API.ProfileService;
 import com.econnect.Utilities.CustomFragment;
 import com.econnect.Utilities.ExecutionThread;
-import com.econnect.Utilities.PopupMessage;
 import com.econnect.client.Profile.Medals.MedalListAdapter;
 import com.econnect.client.Profile.Medals.MedalUtils;
 import com.econnect.client.R;
@@ -60,8 +59,8 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> {
 
     void updateUI(ProfileService.User u) {
         // Update text
-        binding.idMedalText.setText(MedalUtils.medalName(this, u.activeMedal));
-        binding.medalActiveImage.setImageDrawable(MedalUtils.medalIcon(this, u.activeMedal));
+        binding.idMedalText.setText(MedalUtils.medalName(u.activeMedal));
+        binding.medalActiveImage.setImageDrawable(MedalUtils.medalIcon(u.activeMedal));
         binding.usernameText.setText(u.username);
         binding.aboutField.setText(u.about);
         if (u.email != null) {
@@ -73,8 +72,7 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> {
         }
 
         // Set medal list
-        Drawable defaultImage = ContextCompat.getDrawable(requireContext(), R.drawable.ic_medal_24);
-        MedalListAdapter medals_adapter = new MedalListAdapter(this, defaultImage, u.medals, false);
+        MedalListAdapter medals_adapter = new MedalListAdapter(this, u.medals, false);
         binding.medalsList.setAdapter(medals_adapter);
 
         // Set locked medal list
@@ -93,7 +91,7 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> {
 
         ProfileService.Medal[] remainingMedals = new ProfileService.Medal[aux.size()];
         remainingMedals = aux.toArray(remainingMedals);
-        MedalListAdapter lockedMedalsAdapter = new MedalListAdapter(this, defaultImage, remainingMedals, true);
+        MedalListAdapter lockedMedalsAdapter = new MedalListAdapter(this, remainingMedals, true);
         binding.lockedMedalsList.setAdapter(lockedMedalsAdapter);
         binding.lockedMedalsList.setEnabled(false);
 

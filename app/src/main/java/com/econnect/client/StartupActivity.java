@@ -2,6 +2,7 @@ package com.econnect.client;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.lang.ref.WeakReference;
 import java.util.Arrays;
 import java.util.Locale;
 
@@ -25,9 +27,16 @@ public class StartupActivity extends AppCompatActivity {
 
     public static String CUSTOM_LANGUAGE_KEY = "CUSTOM_LANGUAGE";
 
+    private static WeakReference<Context> _globalContext;
+
+    public static Context globalContext() {
+        return _globalContext.get();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        _globalContext = new WeakReference<>(this);
         Thread.setDefaultUncaughtExceptionHandler(this::exceptionHandler);
 
         attemptAutoSetLanguage();

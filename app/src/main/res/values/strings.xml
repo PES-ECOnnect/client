@@ -119,6 +119,7 @@
     <string name="medal_pregunta_bronze">Answer 1 question</string>
     <string name="not_unlocked_yet">Not unlocked yet</string>
     <string name="my_home">My home</string>
+    <string name="type_exactly">You must type exactly \'%s\' (in uppercase)</string>
 
 
 </resources>

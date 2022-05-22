@@ -7,6 +7,7 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import com.econnect.client.R;
+import com.econnect.client.StartupActivity;
 
 public class MedalUtils {
 
@@ -55,18 +56,22 @@ public class MedalUtils {
         }
     }
 
-    public static String medalName(Fragment f, int id) {
+    public static String medalName(int id) {
         Medals medal = Medals.getMedal(id);
         assert medal != null;
         int stringId = medal.nameResourceId;
-        return f.getString(stringId);
+        return StartupActivity.globalContext().getString(stringId);
     }
 
-    public static Drawable medalIcon(Fragment f, int id) {
+    public static Drawable medalIcon(int id) {
         Medals medal = Medals.getMedal(id);
         assert medal != null;
         int drawableId = medal.drawableResourceId;
-        return ResourcesCompat.getDrawable(f.getResources(), drawableId, f.requireContext().getTheme());
+        return ResourcesCompat.getDrawable(
+                StartupActivity.globalContext().getResources(),
+                drawableId,
+                StartupActivity.globalContext().getTheme()
+        );
     }
 
     public static int getNumMedals() {

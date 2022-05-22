@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Looper;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -78,8 +77,8 @@ public class MainActivity extends AppCompatActivity {
                 ImageView icon = v.findViewById(R.id.popupMedal_icon);
                 TextView medalName = v.findViewById(R.id.popupMedal_name);
 
-                icon.setImageDrawable(MedalUtils.medalIcon(_selectedFragment, medalId));
-                medalName.setText(MedalUtils.medalName(_selectedFragment, medalId));
+                icon.setImageDrawable(MedalUtils.medalIcon(medalId));
+                medalName.setText(MedalUtils.medalName(medalId));
 
                 popupBuilder.setView(v);
                 final AlertDialog popupDialog = popupBuilder.create();

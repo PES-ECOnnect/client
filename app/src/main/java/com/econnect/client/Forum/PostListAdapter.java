@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.econnect.API.ForumService.Post;
@@ -99,7 +98,7 @@ public class PostListAdapter extends BaseAdapter {
             medalImage.setVisibility(View.GONE);
         }
         else {
-            Drawable medalDrawable = MedalUtils.medalIcon(_owner, p.medal);
+            Drawable medalDrawable = MedalUtils.medalIcon(p.medal);
             medalImage.setVisibility(View.VISIBLE);
             medalImage.setImageDrawable(medalDrawable);
         }

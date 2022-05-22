@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.econnect.API.ProfileService;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
+import com.econnect.Utilities.Translate;
 import com.econnect.client.Profile.Medals.MedalUtils;
 import com.econnect.client.R;
 
@@ -104,8 +105,9 @@ public class LoggedUserProfileFragment extends ProfileFragment {
 
         deleteButton.setOnClickListener(view -> {
             TextView confirmation = deleterPopupView.findViewById(R.id.deleteAccountConfirmation);
-            if (!confirmation.getText().toString().equals("I ACCEPT")) {
-                PopupMessage.warning(this, "You must type exactly 'I ACCEPT' (in uppercase)");
+            String accept = Translate.id(R.string.i_accept_text);
+            if (!confirmation.getText().toString().equals(accept)) {
+                PopupMessage.warning(this, Translate.id(R.string.type_exactly, accept));
                 return;
             }
             _ctrl.deleteAccount();
@@ -135,8 +137,8 @@ public class LoggedUserProfileFragment extends ProfileFragment {
                 ExecutionThread.nonUI(() -> {
                     _ctrl.changeActiveMedal(m.idmedal);
                     ExecutionThread.UI(this, ()-> {
-                        binding.idMedalText.setText(MedalUtils.medalName(this, m.idmedal));
-                        binding.medalActiveImage.setImageDrawable(MedalUtils.medalIcon(this, m.idmedal));
+                        binding.idMedalText.setText(MedalUtils.medalName(m.idmedal));
+                        binding.medalActiveImage.setImageDrawable(MedalUtils.medalIcon(m.idmedal));
                     });
                 });
                 review.dismiss();

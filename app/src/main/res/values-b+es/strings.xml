@@ -118,4 +118,5 @@
     <string name="medal_pregunta_bronze">Contestar 1 pregunta</string>
     <string name="not_unlocked_yet">Sin desbloquear</string>
     <string name="my_home">Mi casa</string>
+    <string name="type_exactly">Tienes que escribir exactamente \'%s\' (en mayúsculas)</string>
 </resources>

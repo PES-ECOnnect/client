@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment;
 import com.econnect.API.CompanyService.Company;
 import com.econnect.API.IAbstractProduct;
 import com.econnect.client.Products.AbstractProductListAdapter;
-import com.econnect.client.R;
 
 public class CompaniesListAdapter extends AbstractProductListAdapter {
     private final Company[] _allCompanies;
