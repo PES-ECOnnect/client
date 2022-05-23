@@ -32,16 +32,6 @@ jobs:
     - name: Create ImageShack token
       run: echo '${{ secrets.IMAGESHACK_KEY }}' > app/src/main/java/com/econnect/API/ImageUpload/ApiKey.java
         
-        
-    # Cache gradle files, otherwise they will be rebuilt (takes ~5 minutes) on each execution
-    - uses: actions/cache@v2
-      with:
-        path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-        restore-keys: |
-            ${{ runner.os }}-gradle-
 
        
     - name: Run Unit Tests
