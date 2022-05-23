@@ -121,6 +121,12 @@ public class LoggedUserProfileController extends ProfileController {
         });
     }
 
+    public void setHomeClick() {
+        Intent intent = new Intent(_fragment.requireContext(), SetHomeActivity.class);
+
+        _activityLauncher.launch(intent);
+    }
+
     enum LocaleLanguage {
         ENGLISH,
         SPANISH,

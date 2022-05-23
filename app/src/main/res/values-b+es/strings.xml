@@ -197,4 +197,8 @@
     <string name="enable_location">Habilite la ubicación primero</string>
     <string name="could_not_get_location">No se pudo obtener la ubicación actual</string>
     <string name="error_sharing">"Ha habido un error al compartir: "</string>
+    <string name="postal_code_num">00000</string>
+    <string name="set_home">Establecer Domicilio</string>
+    <string name="city_not_exists" />
+    <string name="building_not_exists" />
 </resources>

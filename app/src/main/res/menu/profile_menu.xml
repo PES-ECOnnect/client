@@ -3,6 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/set_home"
+        android:icon="@drawable/ic_edit_profile_24"
+        android:title="@string/set_home" />
+
+    <item
         android:id="@+id/profile_delete_account"
         android:icon="@drawable/ic_delete_24"
         android:title="@string/menu_delete_account" />

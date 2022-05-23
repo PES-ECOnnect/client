@@ -73,7 +73,17 @@ public interface ApiConstants {
     String IS_PRIVATE_USER = "isPrivate";
     String NEW_PROFILE_PICTURE = "newPictureURL";
 
+    //GET paths Home
+    String BUILDING_PATH = "/homes/building";
+    String CITY_PATH= "/homes/cities";
 
+    //GET attributes Home
+    String ZIPCODE = "zipcode";
+    String STREET_NAME= "street_name";
+    String STREET_NUM = "num";
+    String ESCALA = "escala";
+    String FLOOR = "pis";
+    String DOOR = "porta";
 
     // RETURN VALUES
     String RET_TOKEN = "token";
@@ -117,4 +127,8 @@ public interface ApiConstants {
     String ERROR_ACCOUNT_INCORRECT_PASSWORD = "ERROR_INCORRECT_PASSWORD";
     String ERROR_ACCOUNT_INVALID_EMAIL = "ERROR_INVALID_EMAIL";
     String ERROR_ACCOUNT_USERNAME_EXISTS = "ERROR_USERNAME_EXISTS";
+
+    // Setting Home Errors
+    String ERROR_CITY_NOT_EXISTS = "CITY_NOT_EXISTS";
+    String ERROR_BUILDING_NOT_EXISTS = "BUILDING_NOT_EXISTS";
 }

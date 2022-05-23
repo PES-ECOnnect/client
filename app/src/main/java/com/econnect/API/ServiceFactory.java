@@ -97,4 +97,12 @@ public class ServiceFactory {
         return _profileService;
     }
 
+    private static HomeService _homeService = null;
+    public HomeService getHomeService() {
+        if(_homeService == null) {
+            _homeService = new HomeService();
+        }
+        return _homeService;
+    }
+
 }

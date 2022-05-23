@@ -198,4 +198,9 @@
     <string name="enable_location">Primer, activeu la ubicació</string>
     <string name="could_not_get_location">No s\'ha pogut obtenir la ubicació actual</string>
     <string name="error_sharing">"S'ha produït un error en compartir: "</string>
+    <string name="postal_code_num">00000</string>
+    <string name="set_home">Establir domicili</string>
+    <string name="city_not_exists" />
+    <string name="building_not_exists" />
+
 </resources>
