@@ -53,4 +53,4 @@ jobs:
         dependencies-cache-enabled: true
         configuration-cache-enabled: true
         # Run ./gradlew test
-        arguments: test --info
+        arguments: test --info --tests com.econnect.client.LoginServiceTest.validateMaps
