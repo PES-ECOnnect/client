@@ -10,6 +10,7 @@ import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
 import com.econnect.API.QuestionService;
 import com.econnect.API.ReviewService;
+import com.econnect.client.R;
 
 public class ProductDetailsController implements IDetailsController {
 
@@ -50,7 +51,7 @@ public class ProductDetailsController implements IDetailsController {
             }
             catch (Exception e) {
                 ExecutionThread.UI(_fragment, () -> {
-                    PopupMessage.warning(_fragment, "Could not get product info:\n" + e.getMessage());
+                    PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_get_product_info) + "\n" + e.getMessage());
                 });
             }
         });
@@ -99,7 +100,7 @@ public class ProductDetailsController implements IDetailsController {
     @Override
     public void reviewProduct() {
         if(stars == 0) {
-            PopupMessage.warning(_fragment, "You need to select some stars to review");
+            PopupMessage.warning(_fragment, _fragment.getString(R.string.missing_stars));
             return;
         }
         ExecutionThread.nonUI(() -> {
@@ -110,7 +111,7 @@ public class ProductDetailsController implements IDetailsController {
 
             } catch (Exception e) {
                 ExecutionThread.UI(_fragment, () -> {
-                    PopupMessage.warning(_fragment, "Could not add review:\n" + e.getMessage());
+                    PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_add_review) + "\n" + e.getMessage());
                 });
             }
         });
@@ -134,7 +135,7 @@ public class ProductDetailsController implements IDetailsController {
             }
             catch (Exception e){
                 ExecutionThread.UI(_fragment, () -> {
-                    PopupMessage.warning(_fragment, "Could not cast vote:\n" + e.getMessage());
+                    PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_cast_vote) + "\n" + e.getMessage());
                 });
             }
         });

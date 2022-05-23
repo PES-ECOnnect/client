@@ -11,6 +11,6 @@ public class InvalidTokenApiException extends ApiException {
     
     @Override
     public String getMessage() {
-        return Translate.id(R.string.session_expired);
+        return Translate.id(R.string.session_expired_exception);
     }
 }

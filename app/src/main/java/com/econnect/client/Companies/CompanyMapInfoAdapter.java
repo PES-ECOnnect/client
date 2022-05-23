@@ -19,6 +19,8 @@ import com.google.android.gms.maps.model.Marker;
 
 import org.w3c.dom.Text;
 
+import java.util.Locale;
+
 public class CompanyMapInfoAdapter implements GoogleMap.InfoWindowAdapter {
 
     private final LayoutInflater _inflater;
@@ -78,7 +80,7 @@ public class CompanyMapInfoAdapter implements GoogleMap.InfoWindowAdapter {
             // Free seats
             TextView seats = v.findViewById(R.id.popup_remainingSeats);
             int freeSeats = point.offeredSeats - point.occupiedSeats;
-            seats.setText(String.format("%d/%d", freeSeats, point.offeredSeats));
+            seats.setText(String.format(Locale.US, "%d/%d", freeSeats, point.offeredSeats));
 
 
             // Returning the view containing InfoWindow contents

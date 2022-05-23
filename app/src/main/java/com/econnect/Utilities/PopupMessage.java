@@ -17,7 +17,7 @@ import com.econnect.client.R;
 public class PopupMessage {
     public static void warning(Fragment caller, String text) {
         AlertDialog.Builder builder = new AlertDialog.Builder(caller.getContext());
-        builder.setMessage(text).setTitle("Warning");
+        builder.setMessage(text).setTitle(caller.getString(R.string.warning));
         AlertDialog dialog = builder.create();
         dialog.show();
     }
@@ -41,8 +41,8 @@ public class PopupMessage {
         alertDialogBuilder
             .setMessage(message)
             .setCancelable(false)
-            .setPositiveButton(Translate.id(R.string.vote_option_yes),yesListener)
-            .setNegativeButton(Translate.id(R.string.vote_option_no), noListener);
+            .setPositiveButton(caller.getString(R.string.vote_option_yes),yesListener)
+            .setNegativeButton(caller.getString(R.string.vote_option_no), noListener);
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
@@ -61,7 +61,7 @@ public class PopupMessage {
         alertDialogBuilder
             .setMessage(message)
             .setCancelable(false)
-            .setPositiveButton(Translate.id(R.string.ok), okListener);
+            .setPositiveButton(context.getString(R.string.ok), okListener);
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();

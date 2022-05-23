@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.TreeMap;
 
 import com.econnect.API.JsonResult;
+import com.econnect.Utilities.Translate;
+import com.econnect.client.R;
 
 
 public class ImageService {
@@ -63,14 +65,13 @@ public class ImageService {
             this.images = images;
         }
     }
-    
-    // This token should be stored in the backend and retrieved from there
-    private final String _IMAGESHACK_UPLOAD_URL = "https://api.imageshack.com/v2/images";
-    
+
     private final IUploadClient _uploadClient = new ApacheUploadClient();
     
     // Upload an image, returns an UploadResult object
     public UploadResult uploadImage(File file) {
+        final String IMAGESHACK_UPLOAD_URL = "https://api.imageshack.com/v2/images";
+
         // Add parameters
         TreeMap<String, String> params = new TreeMap<>();
         params.put("key", ApiKey.IMAGESHACK_TOKEN);
@@ -78,17 +79,15 @@ public class ImageService {
         params.put("comments_disabled", "true");
         
         // Parse result
-        String resultString = _uploadClient.upload(_IMAGESHACK_UPLOAD_URL, "file", file, params);
+        String resultString = _uploadClient.upload(IMAGESHACK_UPLOAD_URL, "file", file, params);
         JsonResult result = JsonResult.parse(resultString);
         
         Boolean success = result.getObject("success", Boolean.class);
         if (success == null || !success) {
-            throw new RuntimeException("Image upload failed");
+            throw new RuntimeException(Translate.id(R.string.image_upload_failed));
         }
-        
-        UploadResult uploadResult = result.getObject("result", UploadResult.class);
-        
-        return uploadResult;
+
+        return result.getObject("result", UploadResult.class);
     }
     
     // Upload an image to a server and return the url to the uploaded image

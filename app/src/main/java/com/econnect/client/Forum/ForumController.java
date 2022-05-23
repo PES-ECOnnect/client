@@ -67,7 +67,7 @@ public class ForumController {
             }
             catch (Exception e) {
                 ExecutionThread.UI(_fragment, ()->{
-                    PopupMessage.warning(_fragment, "Could not fetch tags:\n" + e.getMessage());
+                    PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_fetch_tags) + "\n" + e.getMessage());
                 });
             }
         });
@@ -89,7 +89,7 @@ public class ForumController {
                 });
             } catch (Exception e) {
                 ExecutionThread.UI(_fragment, () -> {
-                    PopupMessage.warning(_fragment, "Could not fetch posts:\n" + e.getMessage());
+                    PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_fetch_posts) + "\n" + e.getMessage());
                     _fragment.enableInput(true);
                 });
             }
@@ -146,7 +146,7 @@ public class ForumController {
                 // [username] on ECOnnect: [text]  Check out ECOnnect at ...
                 String text = _fragment.getString(R.string.on_econnect, post.username) + "\n" + post.text + "\n\n" +
                         _fragment.getString(R.string.check_out_econnect) +
-                        " https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID;
+                        _fragment.getString(R.string.playstore_base_url) + BuildConfig.APPLICATION_ID;
                 Bitmap bmp = BitmapLoader.fromURL(post.imageurl);
                 if (bmp != null) ShareManager.shareTextAndImage(text, bmp, _fragment.requireContext());
                 else ShareManager.shareText(text, _fragment.requireContext());
@@ -157,7 +157,7 @@ public class ForumController {
         @Override
         public void delete(ForumService.Post post, int position) {
             // Show confirmation dialog
-            PopupMessage.yesNoDialog(_fragment, "Delete post", "Are you sure?", (dialog, id) -> {
+            PopupMessage.yesNoDialog(_fragment, _fragment.getString(R.string.delete_post), _fragment.getString(R.string.want_to_delete_post), (dialog, id) -> {
                 // Execute in non-ui thread
                 ExecutionThread.nonUI(()-> {
                     // Delete post
@@ -167,7 +167,7 @@ public class ForumController {
                         ExecutionThread.UI(_fragment, ()-> _fragment.deletePost(position));
                     }
                     catch (Exception e) {
-                        ExecutionThread.UI(_fragment, ()-> PopupMessage.warning(_fragment, "Could not delete post:\n" + e.getMessage()));
+                        ExecutionThread.UI(_fragment, ()-> PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_delete_post) + "\n" + e.getMessage()));
                     }
                 });
             });
@@ -184,7 +184,7 @@ public class ForumController {
                 }
                 catch (Exception e) {
                     ExecutionThread.UI(_fragment, ()-> {
-                        PopupMessage.warning(_fragment, "Could not cast vote:\n" + e.getMessage());
+                        PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_cast_vote) + "\n" + e.getMessage());
                     });
                 }
             });

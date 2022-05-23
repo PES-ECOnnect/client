@@ -6,6 +6,7 @@ import com.econnect.API.ProfileService;
 import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
+import com.econnect.client.R;
 
 
 public class ProfileController {
@@ -38,7 +39,7 @@ public class ProfileController {
             catch (Exception e) {
                 // Return to UI for showing errors
                 ExecutionThread.UI(_fragment, ()->{
-                    PopupMessage.warning(_fragment, "Could not get user info: " + e.getMessage());
+                    PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_get_user_info) + e.getMessage());
                 });
             }
         });

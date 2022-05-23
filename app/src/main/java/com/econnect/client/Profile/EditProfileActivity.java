@@ -5,11 +5,13 @@ import android.content.Intent;
 import androidx.fragment.app.Fragment;
 
 import com.econnect.Utilities.FragmentContainerActivity;
+import com.econnect.Utilities.Translate;
+import com.econnect.client.R;
 
 public class EditProfileActivity extends FragmentContainerActivity {
 
     public EditProfileActivity() {
-        super("Edit profile");
+        super(Translate.id(R.string.edit_profile));
     }
 
     @Override

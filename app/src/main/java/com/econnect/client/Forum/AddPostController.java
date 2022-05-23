@@ -10,6 +10,7 @@ import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.FileUtils;
 import com.econnect.Utilities.PopupMessage;
+import com.econnect.client.R;
 
 import java.io.*;
 import java.net.URL;
@@ -29,7 +30,7 @@ public class AddPostController {
 
         // Local validation
         if (text_post.isEmpty()) {
-            PopupMessage.warning(_fragment, "You have to fill the text area");
+            PopupMessage.warning(_fragment, _fragment.getString(R.string.must_fill_text));
             return;
         }
         _fragment.enableInput(false);
@@ -43,7 +44,7 @@ public class AddPostController {
                 // Return to UI for showing errors
                 ExecutionThread.UI(_fragment, ()->{
                     _fragment.enableInput(true);
-                    PopupMessage.warning(_fragment, "Could not add new post: " + e.getMessage());
+                    PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_create_post) + e.getMessage());
                 });
             }
         });
@@ -58,13 +59,13 @@ public class AddPostController {
         try {
             tempFile = FileUtils.from(_fragment.requireContext(), image);
         } catch (Exception e) {
-            throw new RuntimeException("Could not convert URI to File: " + e.getMessage(), e);
+            throw new RuntimeException(_fragment.getString(R.string.could_not_convert_uri_file) + e.getMessage(), e);
         }
 
         final ImageService service = new ImageService();
         String url = service.uploadImageToUrl(tempFile);
         if (!isValidURL(url)) {
-            throw new RuntimeException("The generated URL is invalid: " + url);
+            throw new RuntimeException(_fragment.getString(R.string.invalid_generated_url) + url);
         }
         return url;
     }

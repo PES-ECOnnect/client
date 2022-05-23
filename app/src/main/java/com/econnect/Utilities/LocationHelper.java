@@ -12,6 +12,7 @@ import androidx.annotation.RequiresPermission;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.econnect.client.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.Task;
@@ -31,7 +32,7 @@ public class LocationHelper {
 
         // Check if location is enabled
         if (!isLocationEnabled(fragment.requireContext())) {
-            callback.error("Please enable location first");
+            callback.error(fragment.getString(R.string.enable_location));
             return;
         }
 
@@ -39,7 +40,7 @@ public class LocationHelper {
         Task<Location> task = locationClient.getCurrentLocation(PRIORITY_BALANCED_POWER_ACCURACY, null);
         task.addOnSuccessListener(fragment.requireActivity(), location -> {
             if (location == null) {
-                callback.error("Could not get current location");
+                callback.error(fragment.getString(R.string.could_not_get_location));
                 return;
             }
             callback.success(location);

@@ -1,9 +1,6 @@
 package com.econnect.client.RegisterLogin;
 
-import android.app.AlertDialog;
 import android.view.View;
-
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.econnect.API.RegisterService;
 import com.econnect.API.ServiceFactory;
@@ -13,10 +10,10 @@ import com.econnect.Utilities.SettingsFile;
 import com.econnect.client.R;
 
 public class RegisterController {
-    private final RegisterFragment fragment;
+    private final RegisterFragment _fragment;
 
     RegisterController(RegisterFragment fragment) {
-        this.fragment = fragment;
+        this._fragment = fragment;
     }
 
     // Boilerplate for interfacing with the fragment
@@ -25,31 +22,30 @@ public class RegisterController {
 
     private void registerButtonClick() {
         // Get text fields
-        String user_name = fragment.getUsernameText();
-        String user_pass = fragment.getPasswordText();
-        String user_email = fragment.getEmailText();
+        String user_name = _fragment.getUsernameText();
+        String user_pass = _fragment.getPasswordText();
+        String user_email = _fragment.getEmailText();
 
         // Local validation
         if (user_email.isEmpty() || user_name.isEmpty() || user_pass.isEmpty()) {
-            PopupMessage.warning(fragment, "You have to fill all the fields");
+            PopupMessage.warning(_fragment, _fragment.getString(R.string.must_fill_all_fields));
             return;
         }
-        fragment.enableInput(false);
-        // TODO: Call signup endpoint
+        _fragment.enableInput(false);
         ExecutionThread.nonUI(() -> {
             try{
                 RegisterService registerService = ServiceFactory.getInstance().getRegisterService();
-                SettingsFile file = new SettingsFile(fragment);
+                SettingsFile file = new SettingsFile(_fragment);
                 registerService.register(user_email, user_pass, user_name, file);
-                ExecutionThread.UI(fragment, ()->{
-                    fragment.enableInput(true);
-                    ExecutionThread.navigate(fragment, R.id.action_successful_register);
+                ExecutionThread.UI(_fragment, ()->{
+                    _fragment.enableInput(true);
+                    ExecutionThread.navigate(_fragment, R.id.action_successful_register);
                 });
 
             } catch (Exception e){
-                ExecutionThread.UI(fragment, ()->{
-                    fragment.enableInput(true);
-                    PopupMessage.warning(fragment, "Could not register: " + e.getMessage());
+                ExecutionThread.UI(_fragment, ()->{
+                    _fragment.enableInput(true);
+                    PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_signup) + e.getMessage());
                 });
             }
 
@@ -58,6 +54,6 @@ public class RegisterController {
     }
 
     private void loginButtonClick() {
-        ExecutionThread.navigateUp(fragment);
+        ExecutionThread.navigateUp(_fragment);
     }
 }

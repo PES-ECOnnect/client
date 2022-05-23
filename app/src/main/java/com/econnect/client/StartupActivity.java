@@ -67,7 +67,7 @@ public class StartupActivity extends AppCompatActivity {
 
     private void exceptionHandler(Thread thread, Throwable throwable) {
         printTraceToClipboard(throwable);
-        PopupMessage.showToast(this, Translate.id(R.string.stack_trace_clipboard));
+        PopupMessage.showToast(this, getString(R.string.stack_trace_clipboard));
         printTraceToFile(throwable);
 
         // Exit

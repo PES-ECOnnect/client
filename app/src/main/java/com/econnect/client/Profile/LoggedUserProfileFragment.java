@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.econnect.API.ProfileService;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
-import com.econnect.Utilities.Translate;
 import com.econnect.client.Profile.Medals.MedalUtils;
 import com.econnect.client.R;
 
@@ -105,9 +104,9 @@ public class LoggedUserProfileFragment extends ProfileFragment {
 
         deleteButton.setOnClickListener(view -> {
             TextView confirmation = deleterPopupView.findViewById(R.id.deleteAccountConfirmation);
-            String accept = Translate.id(R.string.i_accept_text);
+            String accept = getString(R.string.i_accept_text);
             if (!confirmation.getText().toString().equals(accept)) {
-                PopupMessage.warning(this, Translate.id(R.string.type_exactly, accept));
+                PopupMessage.warning(this, getString(R.string.type_exactly, accept));
                 return;
             }
             _ctrl.deleteAccount();

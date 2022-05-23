@@ -35,11 +35,11 @@ public class DetailsActivity extends FragmentContainerActivity {
         IDetailsController ctrl;
         switch (type) {
             case "product":
-                setTitle("Product details");
+                setTitle(getString(R.string.product_details));
                 ctrl = new ProductDetailsController(fragment, itemId);
                 break;
             case "company":
-                setTitle("Company details");
+                setTitle(getString(R.string.company_details));
                 ctrl = new CompanyDetailsController(fragment, itemId);
                 break;
             default:

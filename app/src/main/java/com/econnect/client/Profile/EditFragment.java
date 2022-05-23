@@ -4,12 +4,9 @@ import static com.econnect.Utilities.BitmapLoader.fromURL;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.net.Uri;
 import android.text.Editable;
-import android.text.NoCopySpan;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.ImageView;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -29,7 +26,7 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
     private String _email;
     private String _about;
     private final Boolean _isPrivate;
-    private String _pictureURL;
+    private final String _pictureURL;
 
     private Uri _selectedImage = null;
 
@@ -50,8 +47,6 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
         this._about = about;
         this._isPrivate = isPrivate;
         this._pictureURL = pictureURL;
-
-        System.out.println("fragment: " + this._pictureURL);
     }
 
     @Override
@@ -75,14 +70,14 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
         binding.changeImageButton.setOnClickListener(view-> {
             _ctrl.changeProfilePicture();
             binding.changeImageButton.setEnabled(false);
-            PopupMessage.showToast(this, "Image updated: this could take some time");
+            PopupMessage.showToast(this, getString(R.string.image_updated));
         });
 
         binding.deleteImageButton.setOnClickListener(view -> {
            _ctrl.removeProfilePicture();
            binding.deleteImageButton.setEnabled(false);
            binding.changeImageButton.setEnabled(false);
-           PopupMessage.showToast(this, "Image updated: this could take some time");
+           PopupMessage.showToast(this, getString(R.string.image_updated));
         });
 
         binding.editUsernameText.addTextChangedListener(new AccountTextWatcher(()->{
@@ -106,11 +101,11 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
         String newPassword = binding.newPasswordText.getText().toString();
         String oldPassword = binding.oldPasswordText.getText().toString();
         if (oldPassword.isEmpty() || newPassword.isEmpty()) {
-            PopupMessage.warning(this, "You have to fill old and new passwords");
+            PopupMessage.warning(this, getString(R.string.must_fill_passwords));
             return;
         }
         if (newPassword.equals(oldPassword)) {
-            PopupMessage.warning(this, "The new password must not be the same as the old one");
+            PopupMessage.warning(this, getString(R.string.password_conflict));
             return;
         }
         _ctrl.changePassword(oldPassword, newPassword);
@@ -142,7 +137,6 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
         ExecutionThread.nonUI(()->{
             Bitmap bmp = fromURL(_pictureURL);
             ExecutionThread.UI(this, ()-> {
-                // TODO: set defaultimage for users
                 if (bmp == null) image.setImageDrawable(userDefaultImage);
                 else {
                     image.setImageBitmap(bmp);

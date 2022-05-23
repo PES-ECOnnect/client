@@ -19,7 +19,6 @@
     <string name="username_textbox_hint">User Name</string>
     <string name="register_button_text">REGISTER</string>
     <string name="already_have_an_account_text">Already have an account</string>
-    <string name="about_textbox_hint">About</string>
 
     <string name="search_products_hint">Search</string>
     <string name="log_out">Log Out</string>
@@ -47,7 +46,7 @@
     <string name="post_image_description">Image attached to post</string>
     <string name="user_medal_description">User medal</string>
 
-    <string name="check_out_econnect">Check out ECOnnect at</string>
+    <string name="check_out_econnect">"Check out ECOnnect at "</string>
     <string name="on_econnect">%s on ECOnnect:</string>
     <string name="invalid_date_warning">Invalid date</string>
     <string name="hours_ago">%d hours ago</string>
@@ -55,7 +54,7 @@
     <string name="minutes_ago">%d minutes ago</string>
     <string name="minutes_ago_one">%d minute ago</string>
     <string name="delete_hint">Delete</string>
-    <string name="warning">WARNING</string>
+    <string name="warning">Warning</string>
     <string name="delete_account_text">You are going to delete your account. Write \'I ACCEPT\' to confirm.</string>
     <string name="i_accept_text">I ACCEPT</string>
     <string name="cancel">Cancel</string>
@@ -129,7 +128,7 @@
     <string name="could_not_update_medal">"Could not update the active medal: "</string>
     <string name="no_account_found">No account found for this email</string>
     <string name="server_error_code">"The server responded with error code "</string>
-    <string name="session_expired">This session has expired, please logout and try again</string>
+    <string name="session_expired_exception">This session has expired, please logout and try again</string>
     <string name="profile_is_private">The profile of this user is private</string>
     <string name="username_taken">This username has already been taken</string>
     <string name="company_does_not_exist">The company with id %d does not exist</string>
@@ -149,6 +148,58 @@
     <string name="email_exists">There is already an account with this email</string>
     <string name="enter_valid_email">Please enter a valid email</string>
     <string name="incorrect_medal">This medal is incorrect</string>
+    <string name="image_upload_failed">Image upload failed</string>
+    <string name="could_not_fetch_companies">Could not fetch companies:</string>
+    <string name="nearby_companies">Nearby companies</string>
+    <string name="could_not_get_home">Could not get home location:</string>
+    <string name="could_not_fetch_carpool">Could not fetch carpool points:</string>
+    <string name="could_not_connect_elektrogo">Couldn\'t connect to ElektroGo server, please enable the UPC VPN</string>
+    <string name="download_elektrogo">Download the ElektroGo app for more info</string>
+    <string name="elektrogo_website" translatable="false">https://marccastellsdostal.wixsite.com/elektrogo</string>
+    <string name="could_not_get_location_permission">Could not get location permission</string>
+    <string name="must_fill_text">You have to fill the text field</string>
+    <string name="could_not_create_post">"Could not add new post: "</string>
+    <string name="could_not_convert_uri_file">"Could not convert URI to File: "</string>
+    <string name="invalid_generated_url">"The generated URL is invalid: "</string>
+    <string name="could_not_fetch_tags">Could not fetch tags:</string>
+    <string name="could_not_fetch_posts">Could not fetch posts:</string>
+    <string name="playstore_base_url" translatable="false">https://play.google.com/store/apps/details?id=</string>
+    <string name="delete_post">Delete post</string>
+    <string name="want_to_delete_post">Are you sure you want to delete your post?</string>
+    <string name="could_not_delete_post">Could not delete post:</string>
+    <string name="could_not_cast_vote">Could not cast vote:</string>
+    <string name="new_post">New post</string>
+    <string name="could_not_get_company_info">Could not get company info:</string>
+    <string name="missing_stars">You need to select some stars to review</string>
+    <string name="product_details">Product details</string>
+    <string name="company_details">Company details</string>
+    <string name="could_not_get_product_info">Could not get product info:</string>
+    <string name="could_not_add_review">Could not add review:</string>
+    <string name="any_type">Any</string>
+    <string name="could_not_fetch_types">Could not fetch product types:</string>
+    <string name="could_not_fetch_products">Could not fetch products:</string>
+    <string name="image_updated">Updating image, this could take some time</string>
+    <string name="must_fill_passwords">You have to fill old and new passwords</string>
+    <string name="password_conflict">The new password must not be the same as the old one</string>
+    <string name="password_updated">Password updated successfully</string>
+    <string name="could_not_update_password">"Could not update password: "</string>
+    <string name="could_not_change_visibility">"Could not change account visibility: "</string>
+    <string name="could_not_update_email">"Could not update email address: "</string>
+    <string name="could_not_update_username">"Could not update username: "</string>
+    <string name="could_not_update_about">"Could not update the user info: "</string>
+    <string name="could_not_get_user_info">"Could not get user info: "</string>
+    <string name="user_profile">User profile</string>
+    <string name="google_login_error">Could not login using Google</string>
+    <string name="must_fill_all_fields">You have to fill all the fields</string>
+    <string name="could_not_login">"Could not login: "</string>
+    <string name="google_signup_error">"Could not create account with Google: "</string>
+    <string name="could_not_signup">"Could not register: "</string>
+    <string name="login_again">Please login again</string>
+    <string name="back_to_exit">Tap BACK again to exit</string>
+    <string name="session_expired">This session has expired</string>
+    <string name="enable_location">Please enable location first</string>
+    <string name="could_not_get_location">Could not get current location</string>
+    <string name="error_sharing">"There has been an error while sharing: "</string>
 
 
 </resources>

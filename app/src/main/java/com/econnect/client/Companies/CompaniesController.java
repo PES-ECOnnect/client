@@ -14,7 +14,9 @@ import com.econnect.API.CompanyService;
 import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
+import com.econnect.Utilities.Translate;
 import com.econnect.client.ItemDetails.DetailsActivity;
+import com.econnect.client.R;
 
 public class CompaniesController {
     private final CompaniesFragment _fragment;
@@ -47,7 +49,7 @@ public class CompaniesController {
         }
         catch (Exception e){
             ExecutionThread.UI(_fragment, ()->{
-                PopupMessage.warning(_fragment, "Could not fetch companies:\n" + e.getMessage());
+                PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_fetch_companies) + "\n" + e.getMessage());
             });
         }
     }

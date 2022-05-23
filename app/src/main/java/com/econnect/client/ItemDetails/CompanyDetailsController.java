@@ -11,6 +11,7 @@ import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.BitmapLoader;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
+import com.econnect.client.R;
 
 public class CompanyDetailsController implements IDetailsController {
 
@@ -53,7 +54,7 @@ public class CompanyDetailsController implements IDetailsController {
             }
             catch (Exception e) {
                 ExecutionThread.UI(_fragment, () -> {
-                    PopupMessage.warning(_fragment, "Could not get company info:\n" + e.getMessage());
+                    PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_get_company_info) + "\n" + e.getMessage());
                 });
             }
         });
@@ -62,7 +63,7 @@ public class CompanyDetailsController implements IDetailsController {
     @Override
     public void reviewProduct() {
         if(stars == 0) {
-            PopupMessage.warning(_fragment, "You need to select some stars to review");
+            PopupMessage.warning(_fragment, _fragment.getString(R.string.missing_stars));
             return;
         }
         ExecutionThread.nonUI(()->{
@@ -71,7 +72,9 @@ public class CompanyDetailsController implements IDetailsController {
                 reviewService.reviewProduct(_companyId, stars);
                 updateReview();
             } catch (Exception e){
-                throw e;
+                ExecutionThread.UI(_fragment, () -> {
+                    PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_add_review) + "\n" + e.getMessage());
+                });
             }
         });
 
@@ -95,7 +98,7 @@ public class CompanyDetailsController implements IDetailsController {
             }
             catch (Exception e){
                 ExecutionThread.UI(_fragment, () -> {
-                    PopupMessage.warning(_fragment, "Could not cast vote:\n" + e.getMessage());
+                    PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_cast_vote) + "\n" + e.getMessage());
                 });
             }
         });

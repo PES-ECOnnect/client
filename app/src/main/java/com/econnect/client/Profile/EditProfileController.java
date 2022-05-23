@@ -13,6 +13,7 @@ import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.FileUtils;
 import com.econnect.Utilities.PopupMessage;
+import com.econnect.client.R;
 
 import java.io.File;
 import java.net.URL;
@@ -33,14 +34,14 @@ public class EditProfileController {
                 ProfileService profileService = ServiceFactory.getInstance().getProfileService();
                 profileService.updatePassword(oldP, newP);
                 ExecutionThread.UI(_fragment, ()->{
-                    PopupMessage.showToast(_fragment, "Password updated successfully");
+                    PopupMessage.showToast(_fragment, _fragment.getString(R.string.password_updated));
                     _fragment.clearPasswordFields();
                 });
             }
             catch (Exception e) {
                 // Return to UI for showing errors
                 ExecutionThread.UI(_fragment, ()->{
-                    PopupMessage.warning(_fragment, "Could not update password: " + e.getMessage());
+                    PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_update_password) + e.getMessage());
                 });
             }
         });
@@ -58,7 +59,7 @@ public class EditProfileController {
             catch (Exception e) {
                 // Return to UI for showing errors
                 ExecutionThread.UI(_fragment, ()->{
-                    PopupMessage.warning(_fragment, "Could not update private attribute: " + e.getMessage());
+                    PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_change_visibility) + e.getMessage());
                 });
             }
         });
@@ -77,7 +78,7 @@ public class EditProfileController {
             catch (Exception e) {
                 // Return to UI for showing errors
                 ExecutionThread.UI(_fragment, ()->{
-                    PopupMessage.warning(_fragment, "Could not update email: " + e.getMessage());
+                    PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_update_email) + e.getMessage());
                 });
             }
         });
@@ -95,7 +96,7 @@ public class EditProfileController {
             catch (Exception e) {
                 // Return to UI for showing errors
                 ExecutionThread.UI(_fragment, ()->{
-                    PopupMessage.warning(_fragment, "Could not update username: " + e.getMessage());
+                    PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_update_username) + e.getMessage());
                 });
             }
         });
@@ -112,7 +113,7 @@ public class EditProfileController {
             catch (Exception e) {
                 // Return to UI for showing errors
                 ExecutionThread.UI(_fragment, ()->{
-                    PopupMessage.warning(_fragment, "Could not update username" + e.getMessage());
+                    PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_update_about) + e.getMessage());
                 });
             }
         });
@@ -122,7 +123,6 @@ public class EditProfileController {
         // Get picture url
         ExecutionThread.nonUI(() ->{
             String url = getImageUrl();
-            System.out.println(url);
             // Call Service
             ProfileService profileService = ServiceFactory.getInstance().getProfileService();
             profileService.updatePicture(url);
@@ -137,15 +137,14 @@ public class EditProfileController {
         try {
             tempFile = FileUtils.from(_fragment.requireContext(), image);
         } catch (Exception e) {
-            throw new RuntimeException("Could not convert URI to File " + e.getMessage(), e);
+            throw new RuntimeException(_fragment.getString(R.string.could_not_convert_uri_file) + e.getMessage(), e);
         }
 
         final ImageService service = new ImageService();
         String url = service.uploadImageToUrl(tempFile);
         if (!isValidURL(url)) {
-            throw new RuntimeException("The generated URL is invalid" + url);
+            throw new RuntimeException(_fragment.getString(R.string.invalid_generated_url) + url);
         }
-        System.out.println(url);
         return url;
     }
 

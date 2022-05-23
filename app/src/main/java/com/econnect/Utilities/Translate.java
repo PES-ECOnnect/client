@@ -42,6 +42,7 @@ public class Translate {
 
             String name = id2NameMapping.get(id);
             String format = name2StringMapping.get(name);
+            assert format != null;
             return String.format(format, formatArgs);
         }
     }

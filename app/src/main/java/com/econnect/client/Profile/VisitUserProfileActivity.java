@@ -10,12 +10,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.econnect.Utilities.FragmentContainerActivity;
+import com.econnect.Utilities.Translate;
 import com.econnect.client.R;
 
 public class VisitUserProfileActivity extends FragmentContainerActivity {
 
     public VisitUserProfileActivity() {
-        super("User profile");
+        super(Translate.id(R.string.user_profile));
     }
 
     @Override

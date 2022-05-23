@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
             // Display error message. Block this thread until the user selects OK
             ExecutionThread.UI_blocking(_selectedFragment, ()->{
-                PopupMessage.okDialog(_selectedFragment, "Session expired", "Please login again", (dialog, id)->{
+                PopupMessage.okDialog(_selectedFragment, getString(R.string.session_expired), getString(R.string.login_again), (dialog, id)->{
                     // Return to login screen
                     this.finish();
                     // User selected OK, unblock thread
@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             _doubleBackToExitPressedOnce = true;
-            PopupMessage.showToast(MainActivity.this, "Please click BACK again to exit");
+            PopupMessage.showToast(MainActivity.this, getString(R.string.back_to_exit));
 
             // Wait 2 seconds before clearing flag
             android.os.Handler handler = new android.os.Handler(Looper.getMainLooper());

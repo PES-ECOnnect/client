@@ -16,8 +16,9 @@
         android:layout_marginRight="24dp"
         android:text="@string/warning"
         android:textAlignment="center"
+        android:textAllCaps="true"
         android:textSize="20sp"
-        android:textStyle="bold|italic"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView

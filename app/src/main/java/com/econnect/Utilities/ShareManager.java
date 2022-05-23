@@ -8,6 +8,8 @@ import android.os.Environment;
 
 import androidx.core.content.FileProvider;
 
+import com.econnect.client.R;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,8 +25,6 @@ public class ShareManager {
     }
 
     public static void shareTextAndImage(String text, Bitmap image, Context context) {
-        //String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/share.png";
-
         final File outputDir = context.getCacheDir();
         final File outputFile;
         try {
@@ -35,13 +35,12 @@ public class ShareManager {
             out.close();
         }
         catch (IOException e) {
-            throw new RuntimeException("There has been an error while sharing: " + e.getMessage(), e);
+            throw new RuntimeException(context.getString(R.string.error_sharing) + e.getMessage(), e);
         }
         Uri bmpUri = FileProvider.getUriForFile(context, "com.econnect.client.fileprovider", outputFile);
 
         Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
         shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        //.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         shareIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
         shareIntent.putExtra(Intent.EXTRA_TEXT, text);
         shareIntent.setType("image/png");

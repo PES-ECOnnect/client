@@ -5,11 +5,13 @@ import android.content.Intent;
 import androidx.fragment.app.Fragment;
 
 import com.econnect.Utilities.FragmentContainerActivity;
+import com.econnect.Utilities.Translate;
+import com.econnect.client.R;
 
 public class CompanyMapActivity extends FragmentContainerActivity {
 
     public CompanyMapActivity() {
-        super("Nearby companies");
+        super(Translate.id(R.string.nearby_companies));
     }
 
     @Override

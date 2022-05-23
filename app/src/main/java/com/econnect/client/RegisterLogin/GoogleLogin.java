@@ -7,6 +7,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult;
 import androidx.fragment.app.Fragment;
 
+import com.econnect.Utilities.Translate;
 import com.econnect.client.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -62,7 +63,7 @@ public class GoogleLogin implements IThirdPartyLogin {
         }
         catch (ApiException e) {
             // There has been an error, maybe user has cancelled login. Do nothing
-            _callback.printError("Could not login using Google");
+            _callback.printError(Translate.id(R.string.google_login_error));
         }
     }
 }

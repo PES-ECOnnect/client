@@ -1,35 +1,30 @@
 package com.econnect.client.Products;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.AdapterView;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 
-import com.econnect.API.ElektroGo.CarpoolService;
 import com.econnect.API.ProductService;
 import com.econnect.API.ProductTypesService;
 import com.econnect.API.ProductTypesService.ProductType;
 import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
+import com.econnect.Utilities.Translate;
 import com.econnect.client.ItemDetails.DetailsActivity;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.Task;
+import com.econnect.client.R;
 
 import java.util.ArrayList;
 
 public class ProductsController {
 
     private final ProductsFragment _fragment;
-    private static final String _ALL_TYPES = "Any";
+    private static final String _ALL_TYPES = Translate.id(R.string.any_type);
     private final ActivityResultLauncher<Intent> _activityLauncher;
 
     public ProductsController(ProductsFragment fragment) {
@@ -67,7 +62,7 @@ public class ProductsController {
         }
         catch (Exception e) {
             ExecutionThread.UI(_fragment, ()->{
-                PopupMessage.warning(_fragment, "Could not fetch product types:\n" + e.getMessage());
+                PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_fetch_types) + "\n" + e.getMessage());
             });
         }
     }
@@ -86,7 +81,7 @@ public class ProductsController {
         }
         catch (Exception e) {
             ExecutionThread.UI(_fragment, ()->{
-                PopupMessage.warning(_fragment, "Could not fetch products:\n" + e.getMessage());
+                PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_fetch_products) + "\n" + e.getMessage());
             });
         }
     }

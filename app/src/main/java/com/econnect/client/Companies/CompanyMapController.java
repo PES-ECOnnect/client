@@ -9,8 +9,6 @@ import android.net.Uri;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.econnect.API.CompanyService;
 import com.econnect.API.CompanyService.Company;
@@ -22,6 +20,7 @@ import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.LocationHelper;
 import com.econnect.Utilities.PopupMessage;
 import com.econnect.client.ItemDetails.DetailsActivity;
+import com.econnect.client.R;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -81,7 +80,7 @@ public class CompanyMapController {
             }
             catch (Exception e){
                 ExecutionThread.UI(_fragment, ()->{
-                    PopupMessage.warning(_fragment, "Could not fetch companies:\n" + e.getMessage());
+                    PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_fetch_companies) + "\n" + e.getMessage());
                 });
             }
             try {
@@ -95,7 +94,7 @@ public class CompanyMapController {
             }
             catch (Exception e) {
                 ExecutionThread.UI(_fragment, ()->{
-                    PopupMessage.warning(_fragment, "Could not get home location:\n" + e.getMessage());
+                    PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_get_home) + "\n" + e.getMessage());
                 });
             }
             try {
@@ -109,7 +108,7 @@ public class CompanyMapController {
             }
             catch (Exception e){
                 ExecutionThread.UI(_fragment, ()->{
-                    PopupMessage.showToast(_fragment, "Could not fetch carpool points:\n" + e.getMessage());
+                    PopupMessage.showToast(_fragment, _fragment.getString(R.string.could_not_fetch_carpool) + "\n" + e.getMessage());
                 });
             }
         });
@@ -130,7 +129,7 @@ public class CompanyMapController {
         }
         if (!success) {
             ExecutionThread.UI(_fragment, ()->
-                PopupMessage.showToast(_fragment, "Couldn't connect to ElektroGo server, please enable the UPC VPN")
+                PopupMessage.showToast(_fragment, _fragment.getString(R.string.could_not_connect_elektrogo))
             );
             return new CarpoolPoint[0];
         }
@@ -169,9 +168,9 @@ public class CompanyMapController {
             _activityLauncher.launch(intent);
         }
         else if (tag instanceof CarpoolPoint) {
-            PopupMessage.showToast(_fragment, "Download the ElektroGo app for more info");
+            PopupMessage.showToast(_fragment, _fragment.getString(R.string.download_elektrogo));
             Intent viewIntent  = new Intent("android.intent.action.VIEW",
-                    Uri.parse("https://marccastellsdostal.wixsite.com/elektrogo"));
+                    Uri.parse(_fragment.getString(R.string.elektrogo_website)));
             _fragment.startActivity(viewIntent);
         }
         else if (tag instanceof String && tag.equals("Home")) {
@@ -234,7 +233,7 @@ public class CompanyMapController {
             // If we got the permission, try again.
             centerOnLocation();
         }
-        else PopupMessage.showToast(_fragment, "Could not get location permission");
+        else PopupMessage.showToast(_fragment, _fragment.getString(R.string.could_not_get_location_permission));
     }
 
     void centerOnHome() {

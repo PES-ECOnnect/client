@@ -12,7 +12,6 @@ import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
 import com.econnect.Utilities.SettingsFile;
-import com.econnect.Utilities.Translate;
 import com.econnect.client.R;
 import com.econnect.client.StartupActivity;
 
@@ -46,7 +45,7 @@ public class LoggedUserProfileController extends ProfileController {
 
     public void logoutButtonClick() {
         // Show dialog
-        PopupMessage.yesNoDialog(_fragment, Translate.id(R.string.log_out), Translate.id(R.string.want_to_logout), (dialog, id) -> {
+        PopupMessage.yesNoDialog(_fragment, _fragment.getString(R.string.log_out), _fragment.getString(R.string.want_to_logout), (dialog, id) -> {
             // If YES option is selected:
             ExecutionThread.nonUI(() -> {
                 // Logout
@@ -92,7 +91,7 @@ public class LoggedUserProfileController extends ProfileController {
             catch (Exception e) {
                 // Return to UI for showing errors
                 ExecutionThread.UI(_fragment, ()->{
-                    PopupMessage.warning(_fragment, Translate.id(R.string.could_not_update_medal) + e.getMessage());
+                    PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_update_medal) + e.getMessage());
                 });
             }
         });
@@ -109,14 +108,14 @@ public class LoggedUserProfileController extends ProfileController {
                 loginService.localLogout();
 
                 ExecutionThread.UI(_fragment, ()->{
-                    PopupMessage.showToast(_fragment, Translate.id(R.string.account_deleted));
+                    PopupMessage.showToast(_fragment, _fragment.getString(R.string.account_deleted));
                     _fragment.requireActivity().finish();
                 });
             }
             catch (Exception e) {
                 // Return to UI for showing errors
                 ExecutionThread.UI(_fragment, ()->{
-                    PopupMessage.warning(_fragment, Translate.id(R.string.could_not_delete_account) + e.getMessage());
+                    PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_delete_account) + e.getMessage());
                 });
             }
         });
@@ -149,6 +148,6 @@ public class LoggedUserProfileController extends ProfileController {
                 throw new RuntimeException("Unrecognized language");
         }
         
-        PopupMessage.showToast(_fragment, Translate.id(R.string.language_applied_when_restarted));
+        PopupMessage.showToast(_fragment, _fragment.getString(R.string.language_applied_when_restarted));
     }
 }

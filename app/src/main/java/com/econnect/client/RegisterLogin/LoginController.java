@@ -38,7 +38,7 @@ public class LoginController {
 
         // Local validation
         if (user_email.isEmpty() || user_pass.isEmpty()) {
-            PopupMessage.warning(_fragment, "You have to fill all the fields");
+            PopupMessage.warning(_fragment, _fragment.getString(R.string.must_fill_all_fields));
             return;
         }
         _fragment.enableInput(false);
@@ -52,7 +52,7 @@ public class LoginController {
                 // Return to UI for showing errors
                 ExecutionThread.UI(_fragment, ()->{
                     _fragment.enableInput(true);
-                    PopupMessage.warning(_fragment, "Could not login: " + e.getMessage());
+                    PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_login) + e.getMessage());
                 });
             }
         });
@@ -95,7 +95,7 @@ public class LoginController {
                     // Generic error
                     ExecutionThread.UI(_fragment, ()->{
                         _fragment.enableInput(true);
-                        PopupMessage.warning(_fragment, "Could not login with Google: " + e.getMessage());
+                        PopupMessage.warning(_fragment, _fragment.getString(R.string.google_login_error) + ": " + e.getMessage());
                     });
                 }
             });
@@ -127,7 +127,7 @@ public class LoginController {
                 // Generic error
                 ExecutionThread.UI(_fragment, ()->{
                     _fragment.enableInput(true);
-                    PopupMessage.warning(_fragment, "Could not create account with Google: " + e.getMessage());
+                    PopupMessage.warning(_fragment, _fragment.getString(R.string.google_signup_error) + e.getMessage());
                 });
                 // After the first popup, stop trying to create the account and exit
                 return;
