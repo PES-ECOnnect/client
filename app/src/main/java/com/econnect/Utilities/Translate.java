@@ -1,5 +1,7 @@
 package com.econnect.Utilities;
 
+import android.annotation.SuppressLint;
+
 import com.econnect.client.R;
 import com.econnect.client.StartupActivity;
 
@@ -12,6 +14,7 @@ import java.util.Scanner;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class Translate {
 
@@ -46,6 +49,20 @@ public class Translate {
             return String.format(format, formatArgs);
         }
     }
+
+    public static String getMappingsDebug() {
+        if (id2NameMapping == null || name2StringMapping == null)
+            loadStringsUnitTest();
+        return convertMap(id2NameMapping) + "\n\n" + convertMap(name2StringMapping);
+    }
+    @SuppressLint("NewApi")
+    private static String convertMap(TreeMap<?, ?> map) {
+        String mapAsString = map.keySet().stream()
+                .map(key -> key + "=" + map.get(key))
+                .collect(Collectors.joining(", ", "{", "}"));
+        return mapAsString;
+    }
+
 
 
 

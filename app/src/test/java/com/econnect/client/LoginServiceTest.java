@@ -4,6 +4,7 @@ import org.junit.*;
 
 import com.econnect.API.*;
 import com.econnect.API.HttpClient.StubHttpClient;
+import com.econnect.Utilities.Translate;
 
 import static org.junit.Assert.*;
 
@@ -104,5 +105,10 @@ public class LoginServiceTest {
             sv.logout(),
             "User token not set"
         );
+    }
+
+    @Test
+    public void validateMaps() {
+        assertEquals("_", Translate.getMappingsDebug());
     }
 }
