@@ -106,9 +106,4 @@ public class LoginServiceTest {
             "User token not set"
         );
     }
-
-    @Test
-    public void validateMaps() {
-        assertEquals("_", Translate.getMappingsDebug());
-    }
 }

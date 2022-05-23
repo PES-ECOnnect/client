@@ -15,6 +15,7 @@
 local.properties
 app/release/*
 .idea
+.vscode
 
 
 /app/src/main/java/com/econnect/API/ImageUpload/ApiKey.java

@@ -41,10 +41,6 @@ jobs:
         dependencies-cache-enabled: true
         configuration-cache-enabled: true
         arguments: processDebugResources
-       
-    - run: tree app/build/intermediates/runtime_symbol_list
-    - run: tree app/src/main/res
-    
     - run: mkdir -p app/src/main/resources/values
     - run: cp app/build/intermediates/runtime_symbol_list/debug/R.txt app/src/main/resources/R.txt
     - run: cp app/src/main/res/values/strings.xml app/src/main/resources/values/R.txt

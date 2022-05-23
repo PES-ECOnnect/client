@@ -44,6 +44,18 @@ jobs:
             ${{ runner.os }}-gradle-
     
     ## Build artifact ##
+    - name: Prepare R.txt
+      uses: eskatos/gradle-command-action@v1.3.3
+      with:
+        gradle-version: current
+        wrapper-cache-enabled: true
+        dependencies-cache-enabled: true
+        configuration-cache-enabled: true
+        arguments: processDebugResources
+    - run: mkdir -p app/src/main/resources/values
+    - run: cp app/build/intermediates/runtime_symbol_list/debug/R.txt app/src/main/resources/R.txt
+    - run: cp app/src/main/res/values/strings.xml app/src/main/resources/values/R.txt
+        
     - name: Build all artifacts
       id: buildAllApks
       uses: eskatos/gradle-command-action@v1.3.3

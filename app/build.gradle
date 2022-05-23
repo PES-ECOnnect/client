@@ -49,8 +49,8 @@ android {
     }
 
     sourceSets {
-        test.resources.srcDirs += '/build/intermediates/runtime_symbol_list/debug'
-        test.resources.srcDirs += '/src/main/res'
+        test.resources.srcDirs += './build/intermediates/runtime_symbol_list/debug'
+        test.resources.srcDirs += './src/main/res'
     }
 }
 
