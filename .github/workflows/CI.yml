@@ -42,9 +42,10 @@ jobs:
         configuration-cache-enabled: true
         arguments: processDebugResources
        
-    - run: tree build/intermediates/runtime_symbol_list
-    - run: tree src/main/res
-       
+    - run: tree build
+    - run: tree src
+    - run: tree .
+           
     - name: Run Unit Tests
       id: runTests
       uses: eskatos/gradle-command-action@v1.3.3
