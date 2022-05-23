@@ -1,6 +1,8 @@
 package com.econnect.API.Exceptions;
 
 import com.econnect.API.ApiConstants;
+import com.econnect.Utilities.Translate;
+import com.econnect.client.R;
 
 public class ProfileIsPrivateException extends ApiException {
 
@@ -10,6 +12,6 @@ public class ProfileIsPrivateException extends ApiException {
 
     @Override
     public String getMessage() {
-        return "The profile of this user is private";
+        return Translate.id(R.string.profile_is_private);
     }
 }

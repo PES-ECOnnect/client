@@ -77,15 +77,15 @@ public class LoggedUserProfileFragment extends ProfileFragment {
         languageDialog.show();
 
         englishButton.setOnClickListener(view -> {
-            _ctrl.changeLanguage("english");
+            _ctrl.changeLanguage(LoggedUserProfileController.LocaleLanguage.ENGLISH);
             languageDialog.dismiss();
         });
         spanishButton.setOnClickListener(view -> {
-            _ctrl.changeLanguage("spanish");
+            _ctrl.changeLanguage(LoggedUserProfileController.LocaleLanguage.SPANISH);
             languageDialog.dismiss();
         });
         catalanButton.setOnClickListener(view -> {
-            _ctrl.changeLanguage("catalan");
+            _ctrl.changeLanguage(LoggedUserProfileController.LocaleLanguage.CATALAN);
             languageDialog.dismiss();
         });
 

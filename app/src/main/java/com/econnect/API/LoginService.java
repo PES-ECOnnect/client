@@ -5,6 +5,8 @@ import java.util.TreeMap;
 import com.econnect.API.Exceptions.ApiException;
 import com.econnect.API.Exceptions.AccountNotFoundException;
 import com.econnect.Utilities.SettingsFile;
+import com.econnect.Utilities.Translate;
+import com.econnect.client.R;
 
 public class LoginService extends Service {
 
@@ -38,9 +40,9 @@ public class LoginService extends Service {
                 case ApiConstants.ERROR_USER_NOT_FOUND:
                     throw new AccountNotFoundException();
                 case ApiConstants.ERROR_WRONG_PASSWORD:
-                    throw new RuntimeException("Incorrect password for this email");
+                    throw new RuntimeException(Translate.id(R.string.incorrect_password));
                 case ApiConstants.ERROR_BANNED:
-                    throw new RuntimeException("Your account has been suspended!");
+                    throw new RuntimeException(Translate.id(R.string.account_suspended));
                 default:
                     throw e;
             }
@@ -102,22 +104,22 @@ public class LoginService extends Service {
     public void pingServer() {
         // Call API (no parameters needed)
         final String EXPECTED_RESPONSE = "PES Econnect Root!";
-        String result = null;
+        String result;
         try {
             result = getRaw(ApiConstants.BASE_URL, null);
         }
         catch (Exception e) {
-            System.err.println("Error sending ping to server:\n" + e.getMessage());
+            System.err.println(Translate.id(R.string.error_ping) + "\n" + e.getMessage());
             return;
         }
 
         if (result == null) {
-            System.err.println("Warning: Server is not responding to ping");
+            System.err.println(Translate.id(R.string.server_not_responding));
             return;
         }
         if (!result.equals(EXPECTED_RESPONSE)) {
-            System.err.println("Warning: Server returned invalid response to ping '" + result + "'");
-            System.err.println("(expected '" + EXPECTED_RESPONSE + "')");
+            System.err.println(Translate.id(R.string.invalid_response) + " '" + result + "'");
+            System.err.println(Translate.id(R.string.ping_expected, EXPECTED_RESPONSE));
         }
     }
 }

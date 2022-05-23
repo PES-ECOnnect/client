@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 
 import com.econnect.API.Exceptions.ApiException;
 import com.econnect.Utilities.BitmapLoader;
+import com.econnect.Utilities.Translate;
+import com.econnect.client.R;
 
 import java.util.Locale;
 import java.util.TreeMap;
@@ -74,20 +76,12 @@ public class ForumService extends Service {
         // No tag means all posts
         if (tag != null) params.put(ApiConstants.POST_TAG, tag);
         
-        JsonResult result = null;
-        try {
-            // Call API
-            super.needsToken = true;
-            result = get(ApiConstants.POSTS_PATH, params);
-        }
-        catch (ApiException e) {
-            switch (e.getErrorCode()) {
-                // This endpoint does not throw any errors
-                default:
-                    throw e;
-            }
-        }
-        
+        JsonResult result;
+        // Call API
+        super.needsToken = true;
+        result = get(ApiConstants.POSTS_PATH, params);
+        // This endpoint does not throw any errors
+
         // Parse result
         Post[] posts = result.getArray(ApiConstants.RET_RESULT, Post[].class);
         assertResultNotNull(posts, result);
@@ -111,7 +105,7 @@ public class ForumService extends Service {
         catch (ApiException e) {
             switch (e.getErrorCode()) {
                 case ApiConstants.ERROR_INCORRECT_INSERTION:
-                    throw new RuntimeException("Insertion error");
+                    throw new RuntimeException(Translate.id(R.string.post_insertion_error));
                 default:
                     throw e;
             }
@@ -122,7 +116,7 @@ public class ForumService extends Service {
     // Delete a post
     public void deletePost(int postId) {
         
-        JsonResult result = null;
+        JsonResult result;
         try {
             // Call API
             super.needsToken = true;
@@ -131,9 +125,9 @@ public class ForumService extends Service {
         catch (ApiException e) {
             switch (e.getErrorCode()) {
                 case ApiConstants.ERROR_POST_NOT_EXISTS:
-                    throw new RuntimeException("The post with id " + postId + " does not exist");
+                    throw new RuntimeException(Translate.id(R.string.post_does_not_exist, postId));
                 case ApiConstants.ERROR_USER_NOT_POST_OWNER:
-                    throw new RuntimeException("You don't have permission to delete this post");
+                    throw new RuntimeException(Translate.id(R.string.delete_post_not_owner));
                 default:
                     throw e;
             }
@@ -145,19 +139,11 @@ public class ForumService extends Service {
 
     public Tag[] getAllTags() {
 
-        JsonResult result = null;
-        try {
-            // Call API
-            super.needsToken = true;
-            result = get(ApiConstants.TAGS_PATH, null);
-        }
-        catch (ApiException e) {
-            switch (e.getErrorCode()) {
-                // This endpoint does not throw any errors
-                default:
-                    throw e;
-            }
-        }
+        JsonResult result;
+        // Call API
+        super.needsToken = true;
+        result = get(ApiConstants.TAGS_PATH, null);
+        // This endpoint does not throw any errors
 
         // Parse result
         Tag[] tags = result.getArray(ApiConstants.RET_RESULT, Tag[].class);
@@ -171,16 +157,16 @@ public class ForumService extends Service {
         params.put(ApiConstants.POST_IS_LIKE, Boolean.toString(isLike));
         params.put(ApiConstants.POST_REMOVE, Boolean.toString(remove));
 
-        JsonResult result = null;
+        JsonResult result;
         try {
             // Call API
             super.needsToken = true;
-            result = post(String.format(ApiConstants.POST_LIKE_PATH, id), params, null);
+            result = post(String.format(Locale.US, ApiConstants.POST_LIKE_PATH, id), params, null);
         }
         catch (ApiException e) {
             switch (e.getErrorCode()) {
                 case ApiConstants.ERROR_POST_NOT_EXISTS:
-                    throw new RuntimeException("The post with id " + id + " does not exist");
+                    throw new RuntimeException(Translate.id(R.string.post_not_exists, id));
                 default:
                     throw e;
             }

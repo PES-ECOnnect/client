@@ -5,6 +5,10 @@ import android.graphics.Bitmap;
 import com.econnect.API.Exceptions.ApiException;
 import com.econnect.Utilities.BitmapLoader;
 import com.econnect.API.ProductService.ProductDetails.Question;
+import com.econnect.Utilities.Translate;
+import com.econnect.client.R;
+
+import java.util.Locale;
 
 public class CompanyService extends Service {
     
@@ -39,10 +43,10 @@ public class CompanyService extends Service {
         public String getSecondaryText() {
             // Display coordinates in format: "12.3456N 34.5678W"
             String latStr, lonStr;
-            if (lat >= 0) latStr = String.format("%.04fN", lat);
-            else latStr = String.format("%.04fS", -lat);
-            if (lon >= 0) lonStr = String.format("%.04fE", lon);
-            else lonStr = String.format("%.04fW", -lon);
+            if (lat >= 0) latStr = String.format(Locale.getDefault(), "%.04fN", lat);
+            else latStr = String.format(Locale.getDefault(), "%.04fS", -lat);
+            if (lon >= 0) lonStr = String.format(Locale.getDefault(), "%.04fE", lon);
+            else lonStr = String.format(Locale.getDefault(), "%.04fW", -lon);
 
             return latStr + ", " + lonStr;
         }
@@ -120,7 +124,7 @@ public class CompanyService extends Service {
 
     // Get company details
     public CompanyDetails getCompanyDetails(int companyId) {
-        JsonResult result = null;
+        JsonResult result;
         try {
             // Call API
             super.needsToken = true;
@@ -129,7 +133,7 @@ public class CompanyService extends Service {
         catch (ApiException e) {
             switch (e.getErrorCode()) {
                 case ApiConstants.ERROR_COMPANY_NOT_EXISTS:
-                    throw new RuntimeException("The company with id " + companyId + " does not exist");
+                    throw new RuntimeException(Translate.id(R.string.company_does_not_exist, companyId));
                 default:
                     throw e;
             }

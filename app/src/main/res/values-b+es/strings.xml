@@ -20,7 +20,7 @@
     <string name="already_have_an_account_text">Ya tengo una cuenta</string>
 
     <string name="search_products_hint">Buscar</string>
-    <string name="logout_button_text">Cerrar sesión</string>
+    <string name="log_out">Cerrar sesión</string>
     <string name="filter_type_text">Filtrar por el tipo de producto</string>
     <string name="filter_type_hint">Tipo de producto</string>
     <string name="product_image_description">Imagen del producto</string>
@@ -119,4 +119,33 @@
     <string name="not_unlocked_yet">Sin desbloquear</string>
     <string name="my_home">Mi casa</string>
     <string name="type_exactly">Tienes que escribir exactamente \'%s\' (en mayúsculas)</string>
+    <string name="stack_trace_clipboard">Stack trace copiada al portapapeles</string>
+    <string name="language_applied_when_restarted">Los cambios de idioma se aplicarán la próxima vez que se reinicie la aplicación</string>
+    <string name="want_to_logout">¿Estás seguro de que quieres cerrar sesión?</string>
+    <string name="ok">De acuerdo</string>
+    <string name="could_not_delete_account">"No se pudo eliminar la cuenta: "</string>
+    <string name="account_deleted">Cuenta eliminada con éxito. Volviendo al inicio de sesión...</string>
+    <string name="could_not_update_medal">"No se pudo actualizar la medalla activa: "</string>
+    <string name="no_account_found">No se encontró ninguna cuenta para este correo electrónico</string>
+    <string name="server_error_code">"El servidor ha respondido con el código de error "</string>
+    <string name="session_expired">Esta sesión ha expirado, por favor cierre la sesión y vuelva a intentarlo</string>
+    <string name="profile_is_private">El perfil de este usuario es privado</string>
+    <string name="username_taken">Ya existe un usuario con este nombre</string>
+    <string name="company_does_not_exist">La empresa con id %d no existe</string>
+    <string name="post_insertion_error">El servidor no ha podido crear este post</string>
+    <string name="post_does_not_exist">El post con id %d no existe</string>
+    <string name="delete_post_not_owner">No tienes permiso para eliminar este post</string>
+    <string name="post_not_exists">El post con id %d no existe</string>
+    <string name="incorrect_password">Contraseña incorrecta para este correo</string>
+    <string name="account_suspended">¡Tu cuenta ha sido suspendida!</string>
+    <string name="error_ping">Error al enviar ping al servidor:</string>
+    <string name="server_not_responding">Advertencia: el servidor no responde al ping</string>
+    <string name="invalid_response">Advertencia: el servidor devolvió una respuesta no válida al ping</string>
+    <string name="ping_expected">(se esperaba \'%s\')</string>
+    <string name="product_type_not_exists">El tipo de producto %s no existe</string>
+    <string name="product_id_not_found">El producto con id %d no existe</string>
+    <string name="old_password_incorrect">La contraseña antigua es incorrecta</string>
+    <string name="email_exists">Ya existe una cuenta con este correo</string>
+    <string name="enter_valid_email">Por favor introduzca una dirección de correo válida</string>
+    <string name="incorrect_medal">Esta medalla es incorrecta</string>
 </resources>

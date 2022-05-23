@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.econnect.Utilities.PopupMessage;
 import com.econnect.Utilities.SettingsFile;
+import com.econnect.Utilities.Translate;
 import com.econnect.client.RegisterLogin.RegisterActivity;
 
 import java.io.File;
@@ -66,7 +67,7 @@ public class StartupActivity extends AppCompatActivity {
 
     private void exceptionHandler(Thread thread, Throwable throwable) {
         printTraceToClipboard(throwable);
-        PopupMessage.showToast(this, "Stack trace copied to clipboard");
+        PopupMessage.showToast(this, Translate.id(R.string.stack_trace_clipboard));
         printTraceToFile(throwable);
 
         // Exit

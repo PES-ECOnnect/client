@@ -81,7 +81,7 @@ public class ProfileServiceTest {
     public void tesUpdateUsernameExistent() {
         expectException(() ->
                 sv.updateUsername("userExistent"),
-                "This username already exists"
+                "This username has already been taken"
         );
     }
 
@@ -109,7 +109,7 @@ public class ProfileServiceTest {
     public void tesUpdateEmailExistent() {
         expectException(() ->
                 sv.updateEmail("emailExistent"),
-                "This email already exists"
+                "There is already an account with this email"
         );
     }
 

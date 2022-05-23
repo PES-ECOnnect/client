@@ -1,8 +1,5 @@
 package com.econnect.client.Profile;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 
 import androidx.activity.result.ActivityResult;
@@ -15,6 +12,8 @@ import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
 import com.econnect.Utilities.SettingsFile;
+import com.econnect.Utilities.Translate;
+import com.econnect.client.R;
 import com.econnect.client.StartupActivity;
 
 
@@ -47,7 +46,7 @@ public class LoggedUserProfileController extends ProfileController {
 
     public void logoutButtonClick() {
         // Show dialog
-        PopupMessage.yesNoDialog(_fragment, "Log out", "Are you sure?", (dialog, id) -> {
+        PopupMessage.yesNoDialog(_fragment, Translate.id(R.string.log_out), Translate.id(R.string.want_to_logout), (dialog, id) -> {
             // If YES option is selected:
             ExecutionThread.nonUI(() -> {
                 // Logout
@@ -93,7 +92,7 @@ public class LoggedUserProfileController extends ProfileController {
             catch (Exception e) {
                 // Return to UI for showing errors
                 ExecutionThread.UI(_fragment, ()->{
-                    PopupMessage.warning(_fragment, "Could not update the active medal: " + e.getMessage());
+                    PopupMessage.warning(_fragment, Translate.id(R.string.could_not_update_medal) + e.getMessage());
                 });
             }
         });
@@ -110,20 +109,25 @@ public class LoggedUserProfileController extends ProfileController {
                 loginService.localLogout();
 
                 ExecutionThread.UI(_fragment, ()->{
-                    PopupMessage.showToast(_fragment, "Account deleted successfully.\nReturning to login...");
+                    PopupMessage.showToast(_fragment, Translate.id(R.string.account_deleted));
                     _fragment.requireActivity().finish();
                 });
             }
             catch (Exception e) {
                 // Return to UI for showing errors
                 ExecutionThread.UI(_fragment, ()->{
-                    PopupMessage.warning(_fragment, "Could not delete account: " + e.getMessage());
+                    PopupMessage.warning(_fragment, Translate.id(R.string.could_not_delete_account) + e.getMessage());
                 });
             }
         });
     }
 
-    public void changeLanguage(String language) {
+    enum LocaleLanguage {
+        ENGLISH,
+        SPANISH,
+        CATALAN
+    }
+    public void changeLanguage(LocaleLanguage language) {
         final SettingsFile file = new SettingsFile(_fragment);
 
         // ISO 639 language codes
@@ -132,19 +136,19 @@ public class LoggedUserProfileController extends ProfileController {
         final String CATALAN_CODE = "ca";
 
         switch (language) {
-            case "english":
+            case ENGLISH:
                 file.putString(StartupActivity.CUSTOM_LANGUAGE_KEY, ENGLISH_CODE);
                 break;
-            case "spanish":
+            case SPANISH:
                 file.putString(StartupActivity.CUSTOM_LANGUAGE_KEY, SPANISH_CODE);
                 break;
-            case "catalan":
+            case CATALAN:
                 file.putString(StartupActivity.CUSTOM_LANGUAGE_KEY, CATALAN_CODE);
                 break;
             default:
                 throw new RuntimeException("Unrecognized language");
         }
         
-        PopupMessage.showToast(_fragment, "Language changes will be applied next time the app is restarted");
+        PopupMessage.showToast(_fragment, Translate.id(R.string.language_applied_when_restarted));
     }
 }

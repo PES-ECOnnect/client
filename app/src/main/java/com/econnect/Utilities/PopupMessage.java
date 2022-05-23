@@ -41,8 +41,8 @@ public class PopupMessage {
         alertDialogBuilder
             .setMessage(message)
             .setCancelable(false)
-            .setPositiveButton("Yes",yesListener)
-            .setNegativeButton("No", noListener);
+            .setPositiveButton(Translate.id(R.string.vote_option_yes),yesListener)
+            .setNegativeButton(Translate.id(R.string.vote_option_no), noListener);
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
@@ -61,7 +61,7 @@ public class PopupMessage {
         alertDialogBuilder
             .setMessage(message)
             .setCancelable(false)
-            .setPositiveButton("OK", okListener);
+            .setPositiveButton(Translate.id(R.string.ok), okListener);
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();

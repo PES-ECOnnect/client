@@ -1,6 +1,8 @@
 package com.econnect.API.Exceptions;
 
 import com.econnect.API.ApiConstants;
+import com.econnect.Utilities.Translate;
+import com.econnect.client.R;
 
 public class UsernameExistsException extends ApiException {
 
@@ -10,6 +12,6 @@ public class UsernameExistsException extends ApiException {
 
     @Override
     public String getMessage() {
-        return "This username has already been taken";
+        return Translate.id(R.string.username_taken);
     }
 }

@@ -6,6 +6,8 @@ import java.util.TreeMap;
 
 import com.econnect.API.Exceptions.ApiException;
 import com.econnect.Utilities.BitmapLoader;
+import com.econnect.Utilities.Translate;
+import com.econnect.client.R;
 
 public class ProductService extends Service {
     
@@ -106,7 +108,7 @@ public class ProductService extends Service {
         params.put(ApiConstants.PRODUCT_TYPE, type);
         
         
-        JsonResult result = null;
+        JsonResult result;
         try {
             // Call API
             super.needsToken = true;
@@ -115,7 +117,7 @@ public class ProductService extends Service {
         catch (ApiException e) {
             switch (e.getErrorCode()) {
                 case ApiConstants.ERROR_TYPE_NOT_EXISTS:
-                    throw new RuntimeException("The product type " + type + " does not exist");
+                    throw new RuntimeException(Translate.id(R.string.product_type_not_exists, type));
                 default:
                     throw e;
             }
@@ -130,7 +132,7 @@ public class ProductService extends Service {
     
     // Get product details
     public ProductDetails getProductDetails(int productId) {
-        JsonResult result = null;
+        JsonResult result;
         try {
             // Call API
             super.needsToken = true;
@@ -139,7 +141,7 @@ public class ProductService extends Service {
         catch (ApiException e) {
             switch (e.getErrorCode()) {
                 case ApiConstants.ERROR_PRODUCT_NOT_EXISTS:
-                    throw new RuntimeException("The product with id " + productId + " does not exist");
+                    throw new RuntimeException(Translate.id(R.string.product_id_not_found, productId));
                 default:
                     throw e;
             }

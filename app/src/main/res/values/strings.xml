@@ -22,7 +22,7 @@
     <string name="about_textbox_hint">About</string>
 
     <string name="search_products_hint">Search</string>
-    <string name="logout_button_text">Logout</string>
+    <string name="log_out">Log Out</string>
     <string name="filter_type_text">Filter by product type</string>
     <string name="filter_type_hint">Product Type</string>
     <string name="product_image_description">Product image</string>
@@ -58,7 +58,7 @@
     <string name="warning">WARNING</string>
     <string name="delete_account_text">You are going to delete your account. Write \'I ACCEPT\' to confirm.</string>
     <string name="i_accept_text">I ACCEPT</string>
-    <string name="cancel">CANCEL</string>
+    <string name="cancel">Cancel</string>
     <string name="delete">DELETE</string>
     <string name="write_your_opinion">Write your opinion:</string>
     <string name="add_post">Create Post</string>
@@ -120,6 +120,35 @@
     <string name="not_unlocked_yet">Not unlocked yet</string>
     <string name="my_home">My home</string>
     <string name="type_exactly">You must type exactly \'%s\' (in uppercase)</string>
+    <string name="stack_trace_clipboard">Stack trace copied to clipboard</string>
+    <string name="language_applied_when_restarted">Language changes will be applied next time the app is restarted</string>
+    <string name="want_to_logout">Are you sure you want to log out?</string>
+    <string name="ok">OK</string>
+    <string name="could_not_delete_account">"Could not delete account: "</string>
+    <string name="account_deleted">Account deleted successfully. Returning to login…</string>
+    <string name="could_not_update_medal">"Could not update the active medal: "</string>
+    <string name="no_account_found">No account found for this email</string>
+    <string name="server_error_code">"The server responded with error code "</string>
+    <string name="session_expired">This session has expired, please logout and try again</string>
+    <string name="profile_is_private">The profile of this user is private</string>
+    <string name="username_taken">This username has already been taken</string>
+    <string name="company_does_not_exist">The company with id %d does not exist</string>
+    <string name="post_insertion_error">The server was unable to create this post</string>
+    <string name="post_does_not_exist">The post with id %d does not exist</string>
+    <string name="delete_post_not_owner">You don\'t have permission to delete this post</string>
+    <string name="post_not_exists">The post with id %d does not exist</string>
+    <string name="incorrect_password">Incorrect password for this email</string>
+    <string name="account_suspended">Your account has been suspended!</string>
+    <string name="error_ping">Error sending ping to server:</string>
+    <string name="server_not_responding">Warning: Server is not responding to ping</string>
+    <string name="invalid_response">Warning: Server returned invalid response to ping</string>
+    <string name="ping_expected">(expected \'%s\')</string>
+    <string name="product_type_not_exists">The product type %s does not exist</string>
+    <string name="product_id_not_found">The product with id %d does not exist</string>
+    <string name="old_password_incorrect">The old password is incorrect</string>
+    <string name="email_exists">There is already an account with this email</string>
+    <string name="enter_valid_email">Please enter a valid email</string>
+    <string name="incorrect_medal">This medal is incorrect</string>
 
 
 </resources>

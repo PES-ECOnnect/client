@@ -1,6 +1,8 @@
 package com.econnect.API.Exceptions;
 
 import com.econnect.API.ApiConstants;
+import com.econnect.Utilities.Translate;
+import com.econnect.client.R;
 
 public class InvalidTokenApiException extends ApiException {
     public InvalidTokenApiException() {
@@ -9,6 +11,6 @@ public class InvalidTokenApiException extends ApiException {
     
     @Override
     public String getMessage() {
-        return "This session has expired, please logout and try again";
+        return Translate.id(R.string.session_expired);
     }
 }

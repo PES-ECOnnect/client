@@ -1,9 +1,9 @@
 package com.econnect.API;
 
-import android.location.Location;
-
 import com.econnect.API.Exceptions.ApiException;
 import com.econnect.API.Exceptions.ProfileIsPrivateException;
+import com.econnect.Utilities.Translate;
+import com.econnect.client.R;
 
 import java.util.TreeMap;
 
@@ -86,7 +86,6 @@ public class ProfileService extends Service {
 
         assertResultNotNull(username, result);
         assertResultNotNull(medals, result);
-        System.out.println("otheruser"+pictureURL);
 
         return new User(username,Integer.parseInt(activeMedal), null, null, medals, null, about, pictureURL);
     }
@@ -104,7 +103,7 @@ public class ProfileService extends Service {
         } catch (ApiException e) {
             switch (e.getErrorCode()) {
                 case ApiConstants.ERROR_ACCOUNT_USERNAME_EXISTS:
-                    throw new RuntimeException("This username already exists");
+                    throw new RuntimeException(Translate.id(R.string.username_taken));
                 default:
                     throw e;
             }
@@ -126,7 +125,7 @@ public class ProfileService extends Service {
         } catch (ApiException e) {
             switch (e.getErrorCode()) {
                 case ApiConstants.ERROR_ACCOUNT_INCORRECT_PASSWORD:
-                    throw new RuntimeException("The old password is incorrect");
+                    throw new RuntimeException(Translate.id(R.string.old_password_incorrect));
                 default:
                     throw e;
             }
@@ -147,9 +146,9 @@ public class ProfileService extends Service {
         } catch (ApiException e) {
             switch (e.getErrorCode()) {
                 case ApiConstants.ERROR_EMAIL_EXISTS:
-                    throw new RuntimeException("This email already exists");
+                    throw new RuntimeException(Translate.id(R.string.email_exists));
                 case ApiConstants.ERROR_ACCOUNT_INVALID_EMAIL:
-                    throw new RuntimeException("Please enter a valid email");
+                    throw new RuntimeException(Translate.id(R.string.enter_valid_email));
                 default:
                     throw e;
             }
@@ -162,19 +161,9 @@ public class ProfileService extends Service {
         // Add parameters
         TreeMap<String, String> params = new TreeMap<>();
         params.put(ApiConstants.NEW_USER_ABOUT, text);
-        JsonResult result;
-        try {
-            // Call API
-            super.needsToken = true;
-            result = put(ApiConstants.ACCOUNT_ABOUT_PATH, params, null);
-        } catch (ApiException e) {
-            switch (e.getErrorCode()){
-                case ApiConstants.ERROR_INVALID_TOKEN:
-                    throw new RuntimeException("Invalid token");
-                default:
-                    throw e;
-            }
-        }
+        // Call API
+        super.needsToken = true;
+        JsonResult result = put(ApiConstants.ACCOUNT_ABOUT_PATH, params, null);
         // Parse result
         super.expectOkStatus(result);
     }
@@ -191,7 +180,7 @@ public class ProfileService extends Service {
         } catch (ApiException e) {
             switch (e.getErrorCode()) {
                 case ApiConstants.ERROR_INVALID_MEDAL:
-                    throw new RuntimeException("This medal is incorrect");
+                    throw new RuntimeException(Translate.id(R.string.incorrect_medal));
                 default:
                     throw e;
             }

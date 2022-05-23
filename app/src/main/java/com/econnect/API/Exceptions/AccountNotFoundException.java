@@ -1,6 +1,8 @@
 package com.econnect.API.Exceptions;
 
 import com.econnect.API.ApiConstants;
+import com.econnect.Utilities.Translate;
+import com.econnect.client.R;
 
 public class AccountNotFoundException extends ApiException {
 
@@ -10,6 +12,6 @@ public class AccountNotFoundException extends ApiException {
 
     @Override
     public String getMessage() {
-        return "No account found for this email";
+        return Translate.id(R.string.no_account_found);
     }
 }
