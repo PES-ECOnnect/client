@@ -33,6 +33,14 @@ jobs:
       run: echo '${{ secrets.IMAGESHACK_KEY }}' > app/src/main/java/com/econnect/API/ImageUpload/ApiKey.java
         
 
+    - name: Prepare R.txt
+      uses: eskatos/gradle-command-action@v1.3.3
+      with:
+        gradle-version: current
+        wrapper-cache-enabled: true
+        dependencies-cache-enabled: true
+        configuration-cache-enabled: true
+        arguments: processDebugResources
        
     - name: Run Unit Tests
       id: runTests
@@ -43,4 +51,4 @@ jobs:
         dependencies-cache-enabled: true
         configuration-cache-enabled: true
         # Run ./gradlew test
-        arguments: test --info --tests com.econnect.client.LoginServiceTest.validateMaps
+        arguments: test --info
