@@ -53,4 +53,4 @@ jobs:
         dependencies-cache-enabled: true
         configuration-cache-enabled: true
         # Run ./gradlew test
-        arguments: test
+        arguments: test --info
