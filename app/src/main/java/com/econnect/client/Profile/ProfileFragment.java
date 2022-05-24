@@ -18,6 +18,7 @@ import com.econnect.client.R;
 import com.econnect.client.databinding.FragmentProfileBinding;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class ProfileFragment extends CustomFragment<FragmentProfileBinding> {
@@ -72,11 +73,14 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> {
         }
 
         // Set medal list
-        MedalListAdapter medals_adapter = new MedalListAdapter(this, u.medals, false);
+        ArrayList<ProfileService.Medal> unlockedMedals = new ArrayList<>(u.medals.length + 1);
+        unlockedMedals.add(new ProfileService.Medal(0));
+        unlockedMedals.addAll(Arrays.asList(u.medals));
+        MedalListAdapter medals_adapter = new MedalListAdapter(this, unlockedMedals, false);
         binding.medalsList.setAdapter(medals_adapter);
 
         // Set locked medal list
-        ArrayList<ProfileService.Medal> aux = new ArrayList<>();
+        ArrayList<ProfileService.Medal> remainingMedals = new ArrayList<>();
         // For each medal, check if it's unlocked. Skip the "none" medal
         for (int i = 1; i < MedalUtils.getNumMedals(); ++i) {
             boolean unlocked = false;
@@ -86,11 +90,9 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> {
                     break;
                 }
             }
-            if (!unlocked) aux.add(new ProfileService.Medal(i));
+            if (!unlocked) remainingMedals.add(new ProfileService.Medal(i));
         }
 
-        ProfileService.Medal[] remainingMedals = new ProfileService.Medal[aux.size()];
-        remainingMedals = aux.toArray(remainingMedals);
         MedalListAdapter lockedMedalsAdapter = new MedalListAdapter(this, remainingMedals, true);
         binding.lockedMedalsList.setAdapter(lockedMedalsAdapter);
         binding.lockedMedalsList.setEnabled(false);

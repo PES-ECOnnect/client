@@ -141,6 +141,11 @@ public class ProductDetailsController implements IDetailsController {
         });
     }
 
+    @Override
+    public int getPreviousReview() {
+        return _product.userRate;
+    }
+
     public void updateReview(){// _product.ratings_user;
         if(_product.userRate != 0) /* el usuario ha votado */{
             _product.ratings[_product.userRate]--;

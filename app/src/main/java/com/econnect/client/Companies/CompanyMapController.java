@@ -33,6 +33,9 @@ public class CompanyMapController {
     private final ActivityResultLauncher<Intent> _activityLauncher;
     private final ActivityResultLauncher<String> _requestPermissionLauncher;
     private volatile GoogleMap _googleMap = null;
+    // Initial position and zoom of map. By default, center on BCN
+    private LatLng startPosition = new LatLng(41.8, 1.67);
+    private float startZoom = 7;
 
     // Initialization
 
@@ -48,6 +51,11 @@ public class CompanyMapController {
         );
     }
 
+    public void setStartPosition(LatLng pos) {
+        startPosition = pos;
+        startZoom = 17;
+    }
+
     public void onMapReady(GoogleMap googleMap) {
         _googleMap = googleMap;
 
@@ -56,7 +64,7 @@ public class CompanyMapController {
         _googleMap.setOnInfoWindowClickListener(this::onClickMarker);
 
         // Initial camera position
-        CameraUpdate c = CameraUpdateFactory.newLatLngZoom(new LatLng(41.8, 1.67), 7);
+        CameraUpdate c = CameraUpdateFactory.newLatLngZoom(startPosition, startZoom);
         _googleMap.moveCamera(c);
     }
 

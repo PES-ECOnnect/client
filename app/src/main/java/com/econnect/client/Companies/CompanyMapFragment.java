@@ -36,6 +36,11 @@ public class CompanyMapFragment extends CustomFragment<FragmentCompaniesMapBindi
         super(FragmentCompaniesMapBinding.class);
     }
 
+    public CompanyMapFragment(double lat, double lon) {
+        super(FragmentCompaniesMapBinding.class);
+        _ctrl.setStartPosition(new LatLng(lat, lon));
+    }
+
     @Override
     protected void addListeners() {
         binding.centerMap.setOnClickListener(view -> _ctrl.centerOnLocation());
