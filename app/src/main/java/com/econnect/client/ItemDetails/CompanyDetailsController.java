@@ -123,6 +123,9 @@ public class CompanyDetailsController implements IDetailsController {
 
     @Override
     public int getPreviousReview() {
+        if(_company == null){
+            return 0;
+        }
         return _company.userRate;
     }
 

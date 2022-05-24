@@ -143,6 +143,9 @@ public class ProductDetailsController implements IDetailsController {
 
     @Override
     public int getPreviousReview() {
+        if(_product == null){
+            return 0;
+        }
         return _product.userRate;
     }
 

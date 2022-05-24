@@ -1,66 +1,73 @@
 package com.econnect.client.Profile;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.R.layout;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
+import com.econnect.API.IAbstractProduct;
+import com.econnect.API.ProductService;
 import com.econnect.Utilities.CustomFragment;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
+import com.econnect.client.Companies.CompaniesListAdapter;
+import com.econnect.client.ItemDetails.DetailsActivity;
 import com.econnect.client.R;
 import com.econnect.client.databinding.FragmentEditProfileBinding;
+import com.econnect.client.databinding.FragmentSetHomeBinding;
 
-public class SetHomeFragment extends CustomFragment<FragmentEditProfileBinding> {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-    EditText postal_code, street, street_num, escala, floor, door;
-    Button change_street, verify, cancel, save;
+public class SetHomeFragment extends CustomFragment<FragmentSetHomeBinding> {
+
+    EditText postal_code, street, street_num, home_value;
+    Button change_street, building_button, cancel, save;
+    String[] streets;
     private final SetHomeController _ctrl = new SetHomeController(this);
-
+    private StreetListAdapter _streetAdapter;
 
 
     public SetHomeFragment() {
-        super(FragmentEditProfileBinding.class);
+        super(FragmentSetHomeBinding.class);
 
     }
 
+
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        View v = this.getLayoutInflater().inflate(R.layout.fragment_set_home, null);
+    protected void addListeners() {
+        View v = this.getView();
 
         postal_code = v.findViewById(R.id.postal_code_num);
         street = v.findViewById(R.id.street_text);
         street_num = v.findViewById(R.id.num_street_value);
-        escala = v.findViewById(R.id.escala_value);
-        floor = v.findViewById(R.id.floor_num);
-        door = v.findViewById(R.id.door_value);
+        home_value = v.findViewById(R.id.home_value);
 
         change_street = v.findViewById(R.id.change_street_button);
-        verify = v.findViewById(R.id.check_home_button);
+        building_button = v.findViewById(R.id.check_home_button);
         cancel = v.findViewById(R.id.cancel_button);
         save = v.findViewById(R.id.save_button);
 
         street.setFocusable(false);
         street_num.setFocusable(false);
-        escala.setFocusable(false);
-        floor.setFocusable(false);
-        door.setFocusable(false);
+        home_value.setFocusable(false);
 
         change_street.setEnabled(false);
-        verify.setEnabled(false);
+        building_button.setEnabled(false);
         save.setEnabled(false);
-    }
 
-    @Override
-    protected void addListeners() {
         postal_code.addTextChangedListener(new AccountTextWatcher(()->{
             if (postal_code.getText().toString().length() == 5){
                 change_street.setEnabled(true);
@@ -70,11 +77,12 @@ public class SetHomeFragment extends CustomFragment<FragmentEditProfileBinding> 
             street_num.setFocusable(true);
         }));
         street_num.addTextChangedListener(new AccountTextWatcher(()-> {
-            escala.setFocusable(true);
-            floor.setFocusable(true);
-            door.setFocusable(true);
-            verify.setEnabled(true);
+            building_button.setEnabled(true);
         }));
+        change_street.setOnClickListener(view -> {
+            _ctrl.getStreets(postal_code.getText().toString());
+        });
+
 
 
     }
@@ -97,14 +105,45 @@ public class SetHomeFragment extends CustomFragment<FragmentEditProfileBinding> 
     }
 
     public void createStreetDialog() {
+
+
         AlertDialog.Builder streetBuilder = new AlertDialog.Builder(requireContext());
 
-        final View streetPopupView = getLayoutInflater().inflate(R.layout.delete_account, null);
+        View streetPopupView = getLayoutInflater().inflate(R.layout.street_list, null);
 
+        ListView sl = streetPopupView.findViewById(R.id.streetList);
+        int highlightColor = ContextCompat.getColor(requireContext(), R.color.green);
+        _streetAdapter = new StreetListAdapter(this, highlightColor, streets);
+        sl.setAdapter(_streetAdapter);
+//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this.getActivity(), layout.simple_list_item_1, streets);
+
+        //sl.setAdapter(arrayAdapter);
 
         streetBuilder.setView(streetPopupView);
         AlertDialog streetlist = streetBuilder.create();
         streetlist.show();
+
+        sl.setOnItemClickListener((parent, view, position, id) -> {
+            // Launch new activity DetailsActivity
+            street.setText(sl.getItemAtPosition(position).toString());
+            streetlist.dismiss();
+        });
+
+    }
+
+    public void setStreetsList(String[] s){
+        this.streets = s;
+    }
+
+    public void selectHomeDialog() {
+        AlertDialog.Builder homeBuilder = new AlertDialog.Builder(requireContext());
+
+        final View homePopupView = getLayoutInflater().inflate(R.layout.delete_account, null);
+
+
+        homeBuilder.setView(homePopupView);
+        AlertDialog homelist = homeBuilder.create();
+        homelist.show();
 
     }
 }

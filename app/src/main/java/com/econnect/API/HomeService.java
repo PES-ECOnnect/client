@@ -80,14 +80,12 @@ public class HomeService extends Service{
         return homes;
     }
 
-    public City getCity(String zipcode) {
+    public String[] getCity(String zipcode) {
         JsonResult result;
-        TreeMap<String, String> params = new TreeMap<>();
-        params.put(ApiConstants.ZIPCODE, zipcode);
         // Call API
         try{
-            super.needsToken = false;
-            result = get(ApiConstants.CITY_PATH, params);
+            super.needsToken = true;
+            result = get(ApiConstants.CITY_PATH + "/" + zipcode, null);
         } catch (ApiException e) {
             switch (e.getErrorCode()) {
                 case ApiConstants.ERROR_CITY_NOT_EXISTS:
@@ -98,9 +96,9 @@ public class HomeService extends Service{
         }
 
         // Parse result
-        City city = result.getObject(ApiConstants.RET_RESULT, City.class);
-        assertResultNotNull(city, result);
-        return city;
+        String[] s = result.getArray(ApiConstants.RET_RESULT, String[].class);
+        assertResultNotNull(s, result);
+        return s;
     }
 
     public boolean setHome(String zipcode, String street_name, String num, String escala, String pis, String porta) {
