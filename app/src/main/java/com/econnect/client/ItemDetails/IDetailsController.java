@@ -15,4 +15,7 @@ public interface IDetailsController {
     void setStars(int i);
 
     void answerQuestion(int questionId, QuestionAnswer answer);
+
+    int getPreviousReview();
+
 }

@@ -109,11 +109,10 @@ public class ProductDetailsFragment extends CustomFragment<FragmentProductDetail
         binding.productNameText.setText(name);
     }
 
-    public void createReviewDialog(){
+    private void createReviewDialog(){
         AlertDialog.Builder reviewBuilder = new AlertDialog.Builder(getContext());
 
         final View reviewPopupView = getLayoutInflater().inflate(R.layout.reviewpopup, null);
-
 
         star1Rpopup = reviewPopupView.findViewById(R.id.star1Rpopup);
         star2Rpopup = reviewPopupView.findViewById(R.id.star2Rpopup);
@@ -132,7 +131,8 @@ public class ProductDetailsFragment extends CustomFragment<FragmentProductDetail
         star5Rpopup.setOnClickListener(view -> _ctrl.setStars(5));
 
         // Reset stars
-        _ctrl.setStars(0);
+        int prevNumStars = _ctrl.getPreviousReview();
+        _ctrl.setStars(prevNumStars);
 
         Button reviewpopup_cancel = reviewPopupView.findViewById(R.id.reviewpopup_cancel);
         reviewpopup_cancel.setOnClickListener(view -> review.dismiss());

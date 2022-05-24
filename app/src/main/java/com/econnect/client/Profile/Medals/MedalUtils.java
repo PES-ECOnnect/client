@@ -11,6 +11,8 @@ import com.econnect.client.StartupActivity;
 
 public class MedalUtils {
 
+    private MedalUtils() {}
+
     private enum Medals {
         None(0, R.string.medal_none, R.drawable.ic_medal_24),
         EficienciaA(1, R.string.medal_eficiencia_a, R.drawable.medal_eficiencia_a),

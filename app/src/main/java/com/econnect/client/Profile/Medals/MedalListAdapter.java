@@ -13,17 +13,18 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.econnect.API.ProfileService;
+import com.econnect.API.ProfileService.Medal;
 import com.econnect.client.R;
+
+import java.util.ArrayList;
 
 
 public class MedalListAdapter extends BaseAdapter {
-    private final Fragment owner;
-    private final ProfileService.Medal[] medals;
+    private final ArrayList<Medal> medals;
     private static LayoutInflater _inflater = null;
     private final boolean _gray;
 
-    public MedalListAdapter(Fragment owner, ProfileService.Medal[] medals, boolean gray) {
-        this.owner = owner;
+    public MedalListAdapter(Fragment owner, ArrayList<Medal> medals, boolean gray) {
         this.medals = medals;
         _gray = gray;
         _inflater = (LayoutInflater) owner.requireContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -31,24 +32,24 @@ public class MedalListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return medals.length;
+        return medals.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return medals[position];
+        return medals.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return medals[position].idmedal;
+        return medals.get(position).idmedal;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
         // Initialize view and product
-        final ProfileService.Medal m = medals[position];
+        final Medal m = medals.get(position);
         final View vi;
         if (convertView != null) vi = convertView;
         else vi = _inflater.inflate(R.layout.medal_list_item, null);

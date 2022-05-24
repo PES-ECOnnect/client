@@ -104,6 +104,11 @@ public class CompanyDetailsController implements IDetailsController {
         });
     }
 
+    @Override
+    public int getPreviousReview() {
+        return _company.userRate;
+    }
+
     public void updateQuestionsUi(int idQuestionUpdated, QuestionAnswer newAnswer){
         ProductService.ProductDetails.Question q = _company.getQuestion(idQuestionUpdated);
         String oldAnswer = q.user_answer;
