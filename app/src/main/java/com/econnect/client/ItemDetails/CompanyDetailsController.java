@@ -1,6 +1,12 @@
 package com.econnect.client.ItemDetails;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.view.View;
+
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 
 import com.econnect.API.CompanyService;
 import com.econnect.API.CompanyService.CompanyDetails;
@@ -11,20 +17,30 @@ import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.BitmapLoader;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
+import com.econnect.client.Companies.CompanyMapActivity;
 import com.econnect.client.R;
 
 public class CompanyDetailsController implements IDetailsController {
+
+    private final ActivityResultLauncher<Intent> _activityLauncher;
 
     private final ProductDetailsFragment _fragment;
     private final int _companyId;
     private CompanyDetails _company;
     private int stars;
 
-
     public CompanyDetailsController(ProductDetailsFragment fragment, int companyId) {
         this._fragment = fragment;
         this._companyId = companyId;
         stars = 0;
+
+        _activityLauncher = fragment.registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                this::launchDetailsCallback
+        );
+    }
+    private void launchDetailsCallback(ActivityResult result) {
+        ExecutionThread.nonUI(this::updateUIElements);
     }
 
     public void setStars(int i){
@@ -34,6 +50,7 @@ public class CompanyDetailsController implements IDetailsController {
 
     @Override
     public void updateUIElements() {
+        _fragment.showMapButton(mapButtonClick());
         ExecutionThread.nonUI(() -> {
             try {
                 // Get company
@@ -158,5 +175,17 @@ public class CompanyDetailsController implements IDetailsController {
         ExecutionThread.UI(_fragment, () -> {
             _fragment.setAverageRating(_company.ratings);
         });
+    }
+
+    private View.OnClickListener mapButtonClick() {
+        return view -> {
+            // If API call has not finished yet, do nothing
+            if (_company == null) return;
+            // Launch new activity DetailsActivity
+            Intent intent = new Intent(_fragment.getContext(), CompanyMapActivity.class);
+            intent.putExtra("lat", _company.latitude);
+            intent.putExtra("lon", _company.longitude);
+            _activityLauncher.launch(intent);
+        };
     }
 }

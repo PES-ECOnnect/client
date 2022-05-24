@@ -144,5 +144,9 @@ public class ProductDetailsFragment extends CustomFragment<FragmentProductDetail
         });
     }
 
+    void showMapButton(View.OnClickListener listener) {
+        binding.viewMapButtonDetails.setVisibility(View.VISIBLE);
+        binding.viewMapButtonDetails.setOnClickListener(listener);
+    }
 
 }
