@@ -44,6 +44,7 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> {
     protected void addListeners() {
         // Hide floating button for non-logged user profile
         binding.profileMenuButton.setVisibility(View.GONE);
+        binding.reportButton.setOnClickListener(_ctrl.reportUser());
     }
 
     @Override
@@ -74,7 +75,7 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> {
 
         // Set medal list
         ArrayList<ProfileService.Medal> unlockedMedals = new ArrayList<>(u.medals.length + 1);
-        unlockedMedals.add(new ProfileService.Medal(0));
+        if (shouldAddNullMedal()) unlockedMedals.add(new ProfileService.Medal(0));
         unlockedMedals.addAll(Arrays.asList(u.medals));
         MedalListAdapter medals_adapter = new MedalListAdapter(this, unlockedMedals, false);
         binding.medalsList.setAdapter(medals_adapter);
@@ -108,5 +109,10 @@ public class ProfileFragment extends CustomFragment<FragmentProfileBinding> {
             });
         });
 
+    }
+
+    // Override this method if we need to add a "no medal"
+    protected boolean shouldAddNullMedal() {
+        return false;
     }
 }

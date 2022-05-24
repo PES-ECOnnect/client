@@ -31,6 +31,7 @@ public class ProductDetailsFragment extends CustomFragment<FragmentProductDetail
 
     @Override
     protected void addListeners() {
+        if (_ctrl == null) return;
         binding.addRatingButton.setOnClickListener(view -> createReviewDialog());
         _ctrl.updateUIElements();
     }

@@ -198,4 +198,12 @@
     <string name="enable_location">Primer, activeu la ubicació</string>
     <string name="could_not_get_location">No s\'ha pogut obtenir la ubicació actual</string>
     <string name="error_sharing">"S'ha produït un error en compartir: "</string>
+    <string name="report_post">Reportar post</string>
+    <string name="want_to_report_post">Vols marcar aquest post com a inadequat?</string>
+    <string name="post_reported">El post ha estat reportat</string>
+    <string name="could_not_report_post">No s\'ha pogut reportar el post:</string>
+    <string name="report_user">Reportar usuari</string>
+    <string name="want_to_report_user">Vols marcar el perfil d\'aquest usuari com a inadequat?</string>
+    <string name="could_not_report_user">No s\'ha pogut reportar l\'usuari:</string>
+    <string name="user_reported">L\'usuari ha estat reportat</string>
 </resources>

@@ -183,14 +183,18 @@ public class PostListAdapter extends BaseAdapter {
             throw new RuntimeException("Invalid user option: " + p.useroption);
         }
 
-        // Display delete button
+        // Display delete and report buttons
         ImageButton deleteButton = vi.findViewById(R.id.deletePostButton);
+        ImageButton reportButton = vi.findViewById(R.id.reportPostButton);
         if (p.ownpost) {
             deleteButton.setVisibility(View.VISIBLE);
+            reportButton.setVisibility(View.GONE);
             deleteButton.setOnClickListener(view -> _callback.delete(p, position));
         }
         else {
+            reportButton.setVisibility(View.VISIBLE);
             deleteButton.setVisibility(View.GONE);
+            reportButton.setOnClickListener(view -> _callback.report(p, position));
         }
 
         return vi;

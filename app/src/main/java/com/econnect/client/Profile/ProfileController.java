@@ -1,7 +1,10 @@
 package com.econnect.client.Profile;
 
 
+import android.view.View;
+
 import com.econnect.API.Exceptions.ProfileIsPrivateException;
+import com.econnect.API.ForumService;
 import com.econnect.API.ProfileService;
 import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
@@ -49,5 +52,28 @@ public class ProfileController {
     protected ProfileService.User getUser() {
         ProfileService service = ServiceFactory.getInstance().getProfileService();
         return service.getInfoOtherUser(_userId);
+    }
+
+    View.OnClickListener reportUser() {
+        return view -> {
+            // Show confirmation dialog
+            PopupMessage.yesNoDialog(_fragment, _fragment.getString(R.string.report_user), _fragment.getString(R.string.want_to_report_user), (dialog, id) -> {
+                // Execute in non-ui thread
+                ExecutionThread.nonUI(()-> {
+                    // Delete post
+                    ProfileService service = ServiceFactory.getInstance().getProfileService();
+                    try {
+                        service.reportUser(_userId);
+                        ExecutionThread.UI(_fragment, ()-> {
+                            _fragment.requireActivity().finish();
+                            PopupMessage.showToast(_fragment, _fragment.getString(R.string.user_reported));
+                        });
+                    }
+                    catch (Exception e) {
+                        ExecutionThread.UI(_fragment, ()-> PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_report_user) + "\n" + e.getMessage()));
+                    }
+                });
+            });
+        };
     }
 }

@@ -200,6 +200,14 @@
     <string name="enable_location">Please enable location first</string>
     <string name="could_not_get_location">Could not get current location</string>
     <string name="error_sharing">"There has been an error while sharing: "</string>
+    <string name="report_post">Report post</string>
+    <string name="want_to_report_post">Do you want to flag this post as inappropriate?</string>
+    <string name="post_reported">The post has been reported</string>
+    <string name="could_not_report_post">Could not report post:</string>
+    <string name="report_user">Report user</string>
+    <string name="want_to_report_user">Do you want to flag the profile of this user as inappropriate?</string>
+    <string name="user_reported">The user has been reported</string>
+    <string name="could_not_report_user">Could not report user:</string>
 
 
 </resources>
