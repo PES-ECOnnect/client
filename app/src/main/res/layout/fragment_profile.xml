@@ -183,6 +183,7 @@
         android:contentDescription="@string/edit_profile"
         android:focusable="true"
         android:onClick="showProfileMenu"
+        app:tint="@color/mtrl_btn_text_color_selector"
         android:src="@drawable/ic_apps_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
