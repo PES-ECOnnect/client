@@ -18,4 +18,5 @@ app/release/*
 .vscode
 
 
-/app/src/main/java/com/econnect/API/ImageUpload/ApiKey.java
+app/src/main/java/com/econnect/API/ImageUpload/ApiKey.java
+app/src/main/java/com/econnect/API/Translate/ApiKey.java
