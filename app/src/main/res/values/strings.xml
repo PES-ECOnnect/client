@@ -202,8 +202,8 @@
     <string name="error_sharing">"There has been an error while sharing: "</string>
     <string name="postal_code_num">00000</string>
     <string name="set_home">Set Home</string>
-    <string name="city_not_exists" />
-    <string name="building_not_exists" />
+    <string name="city_not_exists" >There is no city with the zipcode %s</string>
+    <string name="building_not_exists" >Building not exists</string>
 
 
 </resources>

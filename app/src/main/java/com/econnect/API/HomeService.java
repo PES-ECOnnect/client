@@ -99,7 +99,7 @@ public class HomeService extends Service{
         } catch (ApiException e) {
             switch (e.getErrorCode()) {
                 case ApiConstants.ERROR_CITY_NOT_EXISTS:
-                    throw new RuntimeException(Translate.id(R.string.city_not_exists));
+                    throw new RuntimeException(Translate.id(R.string.city_not_exists, zipcode));
                 default:
                     throw e;
             }

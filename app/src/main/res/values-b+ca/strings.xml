@@ -200,7 +200,7 @@
     <string name="error_sharing">"S'ha produït un error en compartir: "</string>
     <string name="postal_code_num">00000</string>
     <string name="set_home">Establir domicili</string>
-    <string name="city_not_exists" />
-    <string name="building_not_exists" />
+    <string name="city_not_exists" >There is no city with the zipcode %s</string>
+    <string name="building_not_exists" >Building not exists</string>
 
 </resources>

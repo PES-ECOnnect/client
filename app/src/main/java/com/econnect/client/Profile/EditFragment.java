@@ -13,6 +13,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.content.ContextCompat;
 
+import com.econnect.Utilities.BasicTextWatcher;
 import com.econnect.Utilities.CustomFragment;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
@@ -80,15 +81,15 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
            PopupMessage.showToast(this, getString(R.string.image_updated));
         });
 
-        binding.editUsernameText.addTextChangedListener(new AccountTextWatcher(()->{
+        binding.editUsernameText.addTextChangedListener(new BasicTextWatcher(() -> {
             boolean sameText = binding.editUsernameText.getText().toString().equals(_username);
             binding.changeNameButton.setEnabled(!sameText);
         }));
-        binding.editEmailText.addTextChangedListener(new AccountTextWatcher(()->{
+        binding.editEmailText.addTextChangedListener(new BasicTextWatcher(() -> {
             boolean sameText = binding.editEmailText.getText().toString().equals(_email);
             binding.changeEmailButton.setEnabled(!sameText);
         }));
-        binding.editAboutText.addTextChangedListener(new AccountTextWatcher(()->{
+        binding.editAboutText.addTextChangedListener(new BasicTextWatcher(() -> {
             boolean sameText = binding.editAboutText.getText().toString().equals(_about);
             binding.changeAboutButton.setEnabled(!sameText);
         }));
@@ -149,24 +150,6 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
     public void clearPasswordFields() {
         binding.oldPasswordText.setText("");
         binding.newPasswordText.setText("");
-    }
-
-
-    private static class AccountTextWatcher implements TextWatcher {
-        private final Runnable _runnable;
-        public AccountTextWatcher(Runnable runnable) {
-            _runnable = runnable;
-        }
-        public void beforeTextChanged(CharSequence var1, int var2, int var3, int var4) {
-            // Do nothing
-        }
-        public void onTextChanged(CharSequence var1, int var2, int var3, int var4) {
-            // Call runnable
-            _runnable.run();
-        }
-        public void afterTextChanged(Editable var1) {
-            // Do nothing
-        }
     }
 
     Uri getSelectedImageUri() {
