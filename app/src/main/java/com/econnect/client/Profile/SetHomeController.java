@@ -28,41 +28,23 @@ public class SetHomeController {
         }
     }
 
-    private void getStreets(String zipcode) {
+    public void getBuilding(String zipcode, String street, String num) {
+        _fragment.disableInput();
         ExecutionThread.nonUI(() -> {
             try {
                 HomeService homeService = ServiceFactory.getInstance().getHomeService();
-                String[] streets = homeService.getCity(zipcode);
+                HomeService.Homes[] homes = homeService.getHomesBuilding(zipcode, street, num);
                 ExecutionThread.UI(_fragment, () -> {
-                    _fragment.setStreetsList(streets);
+                    _fragment.selectHomeDialog(homes);
                     _fragment.enableSecondStep(true);
                 });
             }
             catch (Exception e) {
                 // Return to UI for showing errors
                 ExecutionThread.UI(_fragment, ()->{
-                    PopupMessage.warning(_fragment, "Could not get city info: " + e.getMessage());
-                    _fragment.enableFirstStep(true);
+                    PopupMessage.showToast(_fragment, "There is no building with this street and number");
+                    _fragment.enableSecondStep(true);
                 });
-            }
-        });
-    }
-
-    public void getBuilding(String zipcode, String street, String num) {
-        ExecutionThread.nonUI(() -> {
-            try {
-                HomeService homeService = ServiceFactory.getInstance().getHomeService();
-                HomeService.Homes[] h = homeService.getHomesBuilding(zipcode, street, num);
-                ExecutionThread.UI(_fragment, () -> {
-                    _fragment.selectHomeDialog(h);
-                });
-            }
-            catch (Exception e) {
-                // Return to UI for showing errors
-                ExecutionThread.UI(_fragment, ()->{
-                    PopupMessage.warning(_fragment, _fragment.getString(R.string.city_not_exists) + e.getMessage());
-                });
-
             }
         });
     }
@@ -79,6 +61,26 @@ public class SetHomeController {
                     PopupMessage.warning(_fragment, _fragment.getString(R.string.city_not_exists) + e.getMessage());
                 });
 
+            }
+        });
+    }
+
+    private void getStreets(String zipcode) {
+        ExecutionThread.nonUI(() -> {
+            try {
+                HomeService homeService = ServiceFactory.getInstance().getHomeService();
+                String[] streets = homeService.getCity(zipcode);
+                ExecutionThread.UI(_fragment, () -> {
+                    _fragment.setStreetsList(streets);
+                    _fragment.enableSecondStep(true);
+                });
+            }
+            catch (Exception e) {
+                // Return to UI for showing errors
+                ExecutionThread.UI(_fragment, ()->{
+                    PopupMessage.warning(_fragment, "Could not get city info: " + e.getMessage());
+                    _fragment.enableFirstStep(true);
+                });
             }
         });
     }

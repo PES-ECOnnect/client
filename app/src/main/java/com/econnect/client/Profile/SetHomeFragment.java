@@ -23,27 +23,29 @@ public class SetHomeFragment extends CustomFragment<FragmentSetHomeBinding> {
     @Override
     protected void addListeners() {
         binding.checkHomeButton.setEnabled(false);
-        binding.saveButton.setEnabled(false);
         binding.streetNameBox.setEnabled(false);
         binding.streetNumBox.setEnabled(false);
-        binding.streetNameDropdown.addTextChangedListener(new BasicTextWatcher(()-> {
-            boolean streetEmpty = binding.streetNameDropdown.getText().toString().isEmpty();
-            boolean numEmpty = binding.streetNameDropdown.getText().toString().isEmpty();
-            binding.checkHomeButton.setEnabled(!streetEmpty && !numEmpty);
-        }));
+        binding.streetNameDropdown.addTextChangedListener(streetAndNumberTextWatcher());
+        binding.streetNumText.addTextChangedListener(streetAndNumberTextWatcher());
 
         binding.postalCodeNum.addTextChangedListener(new BasicTextWatcher(()->
                 _ctrl.zipcodeChanged(binding.postalCodeNum.getText().toString()))
         );
 
-        /*
-        street_num.addTextChangedListener(new BasicTextWatcher(()-> {
-            building_button.setEnabled(true);
-        }));
-        change_street.setOnClickListener(view -> {
-            _ctrl.getStreets(postal_code.getText().toString());
+        binding.checkHomeButton.setOnClickListener(view -> {
+            String zipcode = binding.postalCodeNum.getText().toString();
+            String street = binding.streetNameDropdown.getText().toString();
+            String number = binding.streetNumText.getText().toString();
+            _ctrl.getBuilding(zipcode, street, number);
         });
-*/
+    }
+
+    private BasicTextWatcher streetAndNumberTextWatcher() {
+        return new BasicTextWatcher(()-> {
+            boolean streetEmpty = binding.streetNameDropdown.getText().toString().isEmpty();
+            boolean numEmpty = binding.streetNameDropdown.getText().toString().isEmpty();
+            binding.checkHomeButton.setEnabled(!streetEmpty && !numEmpty);
+        });
     }
 
     void disableInput() {
@@ -72,36 +74,13 @@ public class SetHomeFragment extends CustomFragment<FragmentSetHomeBinding> {
         if (!enabled) {
             binding.streetNameDropdown.setText("", false);
         }
+        String street = binding.streetNameDropdown.getText().toString();
+        String number = binding.streetNameDropdown.getText().toString();
+        if (!street.isEmpty() && !number.isEmpty()) {
+            binding.checkHomeButton.setEnabled(true);
+        }
     }
 
-
-
-/*
-    public void createStreetDialog() {
-
-        AlertDialog.Builder streetBuilder = new AlertDialog.Builder(requireContext());
-
-        View streetPopupView = getLayoutInflater().inflate(R.layout.street_list, null);
-
-        ListView sl = streetPopupView.findViewById(R.id.streetList);
-        int highlightColor = ContextCompat.getColor(requireContext(), R.color.green);
-        StreetListAdapter _streetAdapter = ;
-        sl.setAdapter(_streetAdapter);
-//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this.getActivity(), layout.simple_list_item_1, streets);
-
-        //sl.setAdapter(arrayAdapter);
-
-        streetBuilder.setView(streetPopupView);
-        AlertDialog streetlist = streetBuilder.create();
-        streetlist.show();
-
-        sl.setOnItemClickListener((parent, view, position, id) -> {
-            //street.setText(sl.getItemAtPosition(position).toString());
-            streetlist.dismiss();
-        });
-
-    }
-*/
     public void setStreetsList(String[] streets){
         StreetListAdapter adapter = new StreetListAdapter(this, streets);
         binding.streetNameDropdown.setAdapter(adapter);
