@@ -174,6 +174,28 @@ public class ForumController {
         }
 
         @Override
+        public void report(ForumService.Post post, int position) {
+            // Show confirmation dialog
+            PopupMessage.yesNoDialog(_fragment, _fragment.getString(R.string.report_post), _fragment.getString(R.string.want_to_report_post), (dialog, id) -> {
+                // Execute in non-ui thread
+                ExecutionThread.nonUI(()-> {
+                    // Delete post
+                    ForumService service = ServiceFactory.getInstance().getForumService();
+                    try {
+                        service.reportPost(post.postid);
+                        ExecutionThread.UI(_fragment, ()-> {
+                            _fragment.deletePost(position);
+                            PopupMessage.showToast(_fragment, _fragment.getString(R.string.post_reported));
+                        });
+                    }
+                    catch (Exception e) {
+                        ExecutionThread.UI(_fragment, ()-> PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_report_post) + "\n" + e.getMessage()));
+                    }
+                });
+            });
+        }
+
+        @Override
         public void vote(ForumService.Post post, boolean isLike, boolean remove) {
             // Execute in non-ui thread
             ExecutionThread.nonUI(()-> {

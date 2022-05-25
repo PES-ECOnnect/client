@@ -37,6 +37,7 @@ public class CompaniesFragment extends CustomFragment<FragmentCompaniesBinding> 
     }
 
     void filterCompaniesList() {
+        if (_companiesAdapter == null) return;
         _companiesAdapter.getFilter().filter(binding.searchText.getText());
     }
 

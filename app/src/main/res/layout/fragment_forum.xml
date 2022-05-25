@@ -59,6 +59,7 @@
         android:layout_marginBottom="32dp"
         android:clickable="true"
         android:focusable="true"
+        app:tint="@color/mtrl_btn_text_color_selector"
         android:src="@drawable/ic_add_24"
         app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
         app:layout_constraintBottom_toBottomOf="parent"

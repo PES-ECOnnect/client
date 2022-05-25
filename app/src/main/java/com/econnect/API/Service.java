@@ -53,7 +53,7 @@ public abstract class Service {
         return parseResult(getRaw(url, params));
     }
     protected String getRaw(String url, Map<String,String> params) throws ApiException {
-        String result = null;
+        String result;
         try {
             result = _httpClient.get(url, params);
         }

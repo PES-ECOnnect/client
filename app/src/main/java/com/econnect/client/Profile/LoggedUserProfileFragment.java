@@ -33,6 +33,7 @@ public class LoggedUserProfileFragment extends ProfileFragment {
         // Show locked medals list
         binding.lockedMedalsText.setVisibility(View.VISIBLE);
         binding.lockedMedalsList.setVisibility(View.VISIBLE);
+        binding.reportButton.setVisibility(View.GONE);
     }
 
     @Override
@@ -148,5 +149,11 @@ public class LoggedUserProfileFragment extends ProfileFragment {
             });
 
         };
+    }
+
+    @Override
+    protected boolean shouldAddNullMedal() {
+        // Show "no medal item"
+        return true;
     }
 }

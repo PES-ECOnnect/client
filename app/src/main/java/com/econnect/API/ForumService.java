@@ -137,6 +137,28 @@ public class ForumService extends Service {
         expectOkStatus(result);
     }
 
+    // Report a post
+    public void reportPost(int postId) {
+
+        JsonResult result;
+        try {
+            // Call API
+            super.needsToken = true;
+            result = post(ApiConstants.POSTS_PATH + "/" + postId + "/report", null, null);
+        }
+        catch (ApiException e) {
+            switch (e.getErrorCode()) {
+                case ApiConstants.ERROR_POST_NOT_EXISTS:
+                    throw new RuntimeException(Translate.id(R.string.post_does_not_exist, postId));
+                default:
+                    throw e;
+            }
+        }
+
+        // Parse result
+        expectOkStatus(result);
+    }
+
     public Tag[] getAllTags() {
 
         JsonResult result;

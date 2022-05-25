@@ -208,4 +208,12 @@
     <string name="street_number">Número</string>
     <string name="find_homes">Buscar</string>
     <string name="save">Guardar</string>
+    <string name="report_post">Reportar post</string>
+    <string name="want_to_report_post">¿Quieres marcar este post como inapropiado?</string>
+    <string name="post_reported">El post ha sido reportado</string>
+    <string name="could_not_report_post">No se ha podido reportar el post:</string>
+    <string name="report_user">Reportar usuario</string>
+    <string name="could_not_report_user">No se ha podido reportar el usuario:</string>
+    <string name="user_reported">El usuario ha sido reportado</string>
+    <string name="want_to_report_user">¿Quieres marcar el perfil de este usuario como inapropiado?</string>
 </resources>

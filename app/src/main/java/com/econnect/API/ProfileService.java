@@ -241,4 +241,13 @@ public class ProfileService extends Service {
         if (lat == null || lon == null) return null;
         return new HomeCoords(lat, lon);
     }
+
+    public void reportUser(int userId) {
+        // Call API
+        super.needsToken = true;
+        JsonResult result = post(ApiConstants.USERS_PATH + "/" + userId + "/report", null, null);
+
+        // Parse result
+        expectOkStatus(result);
+    }
 }
