@@ -202,5 +202,12 @@
     <string name="set_home">Establir domicili</string>
     <string name="city_not_exists" >There is no city with the zipcode %s</string>
     <string name="building_not_exists" >Building not exists</string>
+    <string name="enter_postal_code">1. Introdueix el teu codi postal</string>
+    <string name="zipcode">Codi postal</string>
+    <string name="find_building">2. Busca el teu edifici</string>
+    <string name="street">Carrer</string>
+    <string name="street_number">Número</string>
+    <string name="find_homes">Buscar</string>
+    <string name="save">Guardar</string>
 
 </resources>

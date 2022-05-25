@@ -21,11 +21,13 @@ public class HomeService extends Service{
 
     public static class Homes {
         // Important: The name of these attributes must match the ones in the returned JSON
+        public final String numero;
         public final String escala;
         public final String pis;
         public final String porta;
 
-        public Homes(String escala, String pis, String porta) {
+        public Homes(String numero, String escala, String pis, String porta) {
+            this.numero = numero;
             this.escala = escala;
             this.pis = pis;
             this.porta = porta;
@@ -107,9 +109,9 @@ public class HomeService extends Service{
         params.put(ApiConstants.ZIPCODE, zipcode);
         params.put(ApiConstants.STREET_NAME, street_name);
         params.put(ApiConstants.STREET_NUM, num);
-        params.put(ApiConstants.ESCALA, escala);
-        params.put(ApiConstants.FLOOR, pis);
-        params.put(ApiConstants.DOOR, porta);
+        if (escala != null) params.put(ApiConstants.ESCALA, escala);
+        if (pis != null) params.put(ApiConstants.FLOOR, pis);
+        if (porta != null) params.put(ApiConstants.DOOR, porta);
         // Call API
         try{
             super.needsToken = true;

@@ -204,6 +204,13 @@
     <string name="set_home">Set Home</string>
     <string name="city_not_exists" >There is no city with the zipcode %s</string>
     <string name="building_not_exists" >Building not exists</string>
+    <string name="enter_postal_code">1. Enter your postal code</string>
+    <string name="zipcode">Zipcode</string>
+    <string name="find_building">2. Find your building</string>
+    <string name="street">Street</string>
+    <string name="street_number">Number</string>
+    <string name="find_homes">Find</string>
+    <string name="save">Save</string>
 
 
 </resources>

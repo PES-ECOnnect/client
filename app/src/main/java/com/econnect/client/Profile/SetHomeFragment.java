@@ -2,7 +2,11 @@ package com.econnect.client.Profile;
 
 import android.app.AlertDialog;
 import android.view.View;
+import android.widget.ListView;
 
+import androidx.core.content.ContextCompat;
+
+import com.econnect.API.HomeService;
 import com.econnect.Utilities.BasicTextWatcher;
 import com.econnect.Utilities.CustomFragment;
 import com.econnect.client.R;
@@ -103,15 +107,40 @@ public class SetHomeFragment extends CustomFragment<FragmentSetHomeBinding> {
         binding.streetNameDropdown.setAdapter(adapter);
     }
 
-    public void selectHomeDialog() {
+    public void selectHomeDialog(HomeService.Homes[] h) {
+        String[] homes = transformHomes(h);
+
         AlertDialog.Builder homeBuilder = new AlertDialog.Builder(requireContext());
 
-        final View homePopupView = getLayoutInflater().inflate(R.layout.delete_account, null);
+        View homePopupView = getLayoutInflater().inflate(R.layout.street_list, null);
 
+        ListView sl = homePopupView.findViewById(R.id.streetList);
+        int highlightColor = ContextCompat.getColor(requireContext(), R.color.green);
+        //_homeAdapter = new StreetListAdapter(this, highlightColor, homes);
+        //sl.setAdapter(_homeAdapter);
+//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this.getActivity(), layout.simple_list_item_1, streets);
+
+        //sl.setAdapter(arrayAdapter);
 
         homeBuilder.setView(homePopupView);
-        AlertDialog homelist = homeBuilder.create();
-        homelist.show();
+        AlertDialog homeslist = homeBuilder.create();
+        homeslist.show();
 
+        sl.setOnItemClickListener((parent, view, position, id) -> {
+            // Launch new activity DetailsActivity
+            HomeService.Homes home = h[position];
+            //home_value.setText(sl.getItemAtPosition(position).toString());
+            homeslist.dismiss();
+        });
+
+    }
+
+    public String[] transformHomes(HomeService.Homes[] h){
+        int n = h.length;
+        String[] res = new String[n];
+        for(int i = 0; i < n; ++i){
+            res[i] = h[i].numero + " " + h[i].escala + " " + h[i].pis + " " + h[i].porta;
+        }
+        return res;
     }
 }
