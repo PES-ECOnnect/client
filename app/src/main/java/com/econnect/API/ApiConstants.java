@@ -79,8 +79,8 @@ public interface ApiConstants {
 
     //GET attributes Home
     String ZIPCODE = "zipcode";
-    String STREET_NAME= "street_name";
-    String STREET_NUM = "num";
+    String STREET_NAME= "street";
+    String STREET_NUM = "number";
     String ESCALA = "escala";
     String FLOOR = "pis";
     String DOOR = "porta";

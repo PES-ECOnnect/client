@@ -16,6 +16,7 @@ import android.R.layout;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
+import com.econnect.API.HomeService;
 import com.econnect.API.IAbstractProduct;
 import com.econnect.API.ProductService;
 import com.econnect.Utilities.CustomFragment;
@@ -36,8 +37,10 @@ public class SetHomeFragment extends CustomFragment<FragmentSetHomeBinding> {
     EditText postal_code, street, street_num, home_value;
     Button change_street, building_button, cancel, save;
     String[] streets;
+    HomeService.Homes home;
+
     private final SetHomeController _ctrl = new SetHomeController(this);
-    private StreetListAdapter _streetAdapter;
+    private StreetListAdapter _streetAdapter, _homeAdapter;
 
 
     public SetHomeFragment() {
@@ -61,7 +64,7 @@ public class SetHomeFragment extends CustomFragment<FragmentSetHomeBinding> {
         save = v.findViewById(R.id.save_button);
 
         street.setFocusable(false);
-        street_num.setFocusable(false);
+
         home_value.setFocusable(false);
 
         change_street.setEnabled(false);
@@ -75,12 +78,21 @@ public class SetHomeFragment extends CustomFragment<FragmentSetHomeBinding> {
         }));
         street.addTextChangedListener(new AccountTextWatcher(()-> {
             street_num.setFocusable(true);
+            street_num.setEnabled(true);
         }));
         street_num.addTextChangedListener(new AccountTextWatcher(()-> {
             building_button.setEnabled(true);
         }));
         change_street.setOnClickListener(view -> {
             _ctrl.getStreets(postal_code.getText().toString());
+            street_num.setFocusable(true);
+        });
+        building_button.setOnClickListener(view -> {
+            _ctrl.getBuilding(postal_code.getText().toString(), street.getText().toString(), street_num.getText().toString());
+            save.setEnabled(true);
+        });
+        save.setOnClickListener(view -> {
+            _ctrl.setHome(postal_code.getText().toString(), street.getText().toString(), street_num.getText().toString(), home.escala, home.pis, home.porta );
         });
 
 
@@ -135,15 +147,40 @@ public class SetHomeFragment extends CustomFragment<FragmentSetHomeBinding> {
         this.streets = s;
     }
 
-    public void selectHomeDialog() {
+    public void selectHomeDialog(HomeService.Homes[] h) {
+        String[] homes = transformHomes(h);
+
         AlertDialog.Builder homeBuilder = new AlertDialog.Builder(requireContext());
 
-        final View homePopupView = getLayoutInflater().inflate(R.layout.delete_account, null);
+        View homePopupView = getLayoutInflater().inflate(R.layout.street_list, null);
 
+        ListView sl = homePopupView.findViewById(R.id.streetList);
+        int highlightColor = ContextCompat.getColor(requireContext(), R.color.green);
+        _homeAdapter = new StreetListAdapter(this, highlightColor, homes);
+        sl.setAdapter(_homeAdapter);
+//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this.getActivity(), layout.simple_list_item_1, streets);
+
+        //sl.setAdapter(arrayAdapter);
 
         homeBuilder.setView(homePopupView);
-        AlertDialog homelist = homeBuilder.create();
-        homelist.show();
+        AlertDialog homeslist = homeBuilder.create();
+        homeslist.show();
 
+        sl.setOnItemClickListener((parent, view, position, id) -> {
+            // Launch new activity DetailsActivity
+            home = h[position];
+            home_value.setText(sl.getItemAtPosition(position).toString());
+            homeslist.dismiss();
+        });
+
+    }
+
+    public String[] transformHomes(HomeService.Homes[] h){
+        int n = h.length;
+        String[] res = new String[n];
+        for(int i = 0; i < n; ++i){
+            res[i] = h[i].numero + " " + h[i].escala + " " + h[i].pis + " " + h[i].porta;
+        }
+        return res;
     }
 }

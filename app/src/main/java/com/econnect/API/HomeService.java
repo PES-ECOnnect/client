@@ -21,14 +21,23 @@ public class HomeService extends Service{
 
     public static class Homes {
         // Important: The name of these attributes must match the ones in the returned JSON
-        public final String escala;
-        public final String pis;
-        public final String porta;
+        public String numero;
+        public String escala;
+        public String pis;
+        public String porta;
 
-        public Homes(String escala, String pis, String porta) {
+        public Homes(String numero, String escala, String pis, String porta) {
+            this.numero = numero;
             this.escala = escala;
             this.pis = pis;
             this.porta = porta;
+        }
+
+        public void removeNulls(){
+            if(this.numero == null) this.numero = "";
+            if(this.escala == null) this.escala = "";
+            if(this.pis == null) this.pis = "";
+            if(this.porta == null) this.porta = "";
         }
     }
 
@@ -77,6 +86,7 @@ public class HomeService extends Service{
         // Parse result
         Homes[] homes = result.getArray(ApiConstants.RET_RESULT, Homes[].class);
         assertResultNotNull(homes, result);
+        for(int i = 0; i < homes.length; ++i) homes[i].removeNulls();
         return homes;
     }
 
@@ -107,9 +117,9 @@ public class HomeService extends Service{
         params.put(ApiConstants.ZIPCODE, zipcode);
         params.put(ApiConstants.STREET_NAME, street_name);
         params.put(ApiConstants.STREET_NUM, num);
-        params.put(ApiConstants.ESCALA, escala);
-        params.put(ApiConstants.FLOOR, pis);
-        params.put(ApiConstants.DOOR, porta);
+        if(!escala.equals("")) params.put(ApiConstants.ESCALA, escala);
+        if(!pis.equals("")) params.put(ApiConstants.FLOOR, pis);
+        if(!porta.equals("")) params.put(ApiConstants.DOOR, porta);
         // Call API
         try{
             super.needsToken = true;
