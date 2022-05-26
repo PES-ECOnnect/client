@@ -31,6 +31,8 @@ jobs:
       
     - name: Create ImageShack token
       run: echo '${{ secrets.IMAGESHACK_KEY }}' > app/src/main/java/com/econnect/API/ImageUpload/ApiKey.java
+    - name: Create Translate token
+      run: echo '${{ secrets.TRANSLATE_KEY }}' > app/src/main/java/com/econnect/API/Translate/ApiKey.java
         
         
     # This may improve performance
