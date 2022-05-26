@@ -102,7 +102,7 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/changeEmailButton"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:baselineAlignBottom="false"
@@ -144,7 +144,7 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/changeAboutButton"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:baselineAlignBottom="false"
@@ -157,6 +157,15 @@
                     tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
 
             </LinearLayout>
+
+            <Button
+                android:id="@+id/set_home_button"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/set_home"
+                app:icon="@drawable/ic_home_24"
+                tools:ignore="TextContrastCheck" />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/switchPrivate"
@@ -200,7 +209,8 @@
                     android:clickable="true"
                     android:enabled="false"
                     android:text="@string/change_profile_image"
-                    tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
+                    tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck"
+                    android:focusable="true" />
 
                 <Space
                     android:layout_width="8dp"
@@ -217,7 +227,8 @@
                     android:clickable="true"
                     android:enabled="false"
                     android:text="@string/remove_image"
-                    tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
+                    tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck"
+                    android:focusable="true" />
             </LinearLayout>
 
             <TextView

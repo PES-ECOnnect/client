@@ -59,8 +59,8 @@ public class LoggedUserProfileFragment extends ProfileFragment {
             else if (itemId == R.id.profile_translate) {
                 createTranslateDialog();
             }
-            else if (itemId == R.id.set_home){
-                _ctrl.setHomeClick();
+            else {
+                throw new RuntimeException("Unrecognized menu option");
             }
             return true;
         });

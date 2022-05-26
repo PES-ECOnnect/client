@@ -2,6 +2,7 @@ package com.econnect.client.Profile;
 
 import static com.econnect.Utilities.BitmapLoader.fromURL;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -93,6 +94,11 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
             boolean sameText = binding.editAboutText.getText().toString().equals(_about);
             binding.changeAboutButton.setEnabled(!sameText);
         }));
+
+        binding.setHomeButton.setOnClickListener(view -> {
+            Intent intent = new Intent(requireContext(), SetHomeActivity.class);
+            requireActivity().startActivity(intent);
+        });
 
         binding.changePassword.setOnClickListener(view -> changePassword());
         setDefaultValues();

@@ -198,7 +198,7 @@
     <string name="could_not_get_location">No se pudo obtener la ubicación actual</string>
     <string name="error_sharing">"Ha habido un error al compartir: "</string>
     <string name="postal_code_num">00000</string>
-    <string name="set_home">Establecer Domicilio</string>
+    <string name="set_home">Establecer domicilio</string>
     <string name="city_not_exists" >There is no city with the zipcode %s</string>
     <string name="building_not_exists" >Building not exists</string>
     <string name="enter_postal_code">1. Introduce tu código postal</string>
@@ -216,4 +216,16 @@
     <string name="could_not_report_user">No se ha podido reportar el usuario:</string>
     <string name="user_reported">El usuario ha sido reportado</string>
     <string name="want_to_report_user">¿Quieres marcar el perfil de este usuario como inapropiado?</string>
+    <string name="select_home">3. Selecciona tu domicilio</string>
+    <string name="none_staircase">[ninguna]</string>
+    <string name="none_floor">[ninguno]</string>
+    <string name="none_door">[ninguna]</string>
+    <string name="staircase">Escalera:</string>
+    <string name="floor">Piso:</string>
+    <string name="door">Puerta:</string>
+    <string name="no_building">No hay ningún edificio con esta calle y número en nuestra base de datos</string>
+    <string name="set_home_ok">Domicilio configurado correctamente</string>
+    <string name="could_not_set_home">"No se ha podido establecer el nuevo domicilio: "</string>
+    <string name="could_not_get_city">"No se pudieron obtener los datos del municipio: "</string>
+    <string name="set_home_confirmation">¿Quieres seleccionarlo como tu domicilio?</string>
 </resources>

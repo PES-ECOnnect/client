@@ -218,4 +218,16 @@
     <string name="want_to_report_user">Vols marcar el perfil d\'aquest usuari com a inadequat?</string>
     <string name="could_not_report_user">No s\'ha pogut reportar l\'usuari:</string>
     <string name="user_reported">L\'usuari ha estat reportat</string>
+    <string name="select_home">3. Selecciona el teu domicili</string>
+    <string name="none_staircase">[cap]</string>
+    <string name="none_floor">[cap]</string>
+    <string name="none_door">[cap]</string>
+    <string name="staircase">Escala:</string>
+    <string name="floor">Planta:</string>
+    <string name="door">Porta:</string>
+    <string name="no_building">No hi ha cap edifici amb aquest carrer i número a la nostra base de dades</string>
+    <string name="set_home_ok">Domicili configurat correctament</string>
+    <string name="could_not_set_home">"No s'ha pogut establir el nou domicili: "</string>
+    <string name="could_not_get_city">"No s'han pogut obtenir les dades del municipi: "</string>
+    <string name="set_home_confirmation">Vols seleccionar-lo com el teu domicili?</string>
 </resources>

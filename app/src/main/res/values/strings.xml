@@ -219,6 +219,18 @@
     <string name="want_to_report_user">Do you want to flag the profile of this user as inappropriate?</string>
     <string name="user_reported">The user has been reported</string>
     <string name="could_not_report_user">Could not report user:</string>
+    <string name="select_home">3. Select your home</string>
+    <string name="none_staircase">[none]</string>
+    <string name="none_floor">[none]</string>
+    <string name="none_door">[none]</string>
+    <string name="staircase">Staircase:</string>
+    <string name="floor">Floor:</string>
+    <string name="door">Door:</string>
+    <string name="no_building">There is no building with this street and number in our dataset</string>
+    <string name="set_home_ok">Home set correctly</string>
+    <string name="could_not_set_home">"Could not set new home location: "</string>
+    <string name="could_not_get_city">"Could not get city info: "</string>
+    <string name="set_home_confirmation">Do you want to set this as your home?</string>
 
 
 </resources>

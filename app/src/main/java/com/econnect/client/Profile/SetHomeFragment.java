@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat;
 import com.econnect.API.HomeService;
 import com.econnect.Utilities.BasicTextWatcher;
 import com.econnect.Utilities.CustomFragment;
+import com.econnect.Utilities.PopupMessage;
 import com.econnect.client.R;
 import com.econnect.client.databinding.FragmentSetHomeBinding;
 
@@ -43,7 +44,7 @@ public class SetHomeFragment extends CustomFragment<FragmentSetHomeBinding> {
     private BasicTextWatcher streetAndNumberTextWatcher() {
         return new BasicTextWatcher(()-> {
             boolean streetEmpty = binding.streetNameDropdown.getText().toString().isEmpty();
-            boolean numEmpty = binding.streetNameDropdown.getText().toString().isEmpty();
+            boolean numEmpty = binding.streetNumText.getText().toString().isEmpty();
             binding.checkHomeButton.setEnabled(!streetEmpty && !numEmpty);
         });
     }
@@ -75,7 +76,7 @@ public class SetHomeFragment extends CustomFragment<FragmentSetHomeBinding> {
             binding.streetNameDropdown.setText("", false);
         }
         String street = binding.streetNameDropdown.getText().toString();
-        String number = binding.streetNameDropdown.getText().toString();
+        String number = binding.streetNumText.getText().toString();
         if (!street.isEmpty() && !number.isEmpty()) {
             binding.checkHomeButton.setEnabled(true);
         }
@@ -86,8 +87,7 @@ public class SetHomeFragment extends CustomFragment<FragmentSetHomeBinding> {
         binding.streetNameDropdown.setAdapter(adapter);
     }
 
-    public void selectHomeDialog(HomeService.Homes[] h) {
-        String[] homes = transformHomes(h);
+    public void selectHomeDialog(HomeService.Home[] homes) {
 
         AlertDialog.Builder homeBuilder = new AlertDialog.Builder(requireContext());
 
@@ -95,31 +95,22 @@ public class SetHomeFragment extends CustomFragment<FragmentSetHomeBinding> {
 
         ListView sl = homePopupView.findViewById(R.id.streetList);
         int highlightColor = ContextCompat.getColor(requireContext(), R.color.green);
-        //_homeAdapter = new StreetListAdapter(this, highlightColor, homes);
-        //sl.setAdapter(_homeAdapter);
-//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this.getActivity(), layout.simple_list_item_1, streets);
-
-        //sl.setAdapter(arrayAdapter);
+        HomeListAdapter _homeAdapter = new HomeListAdapter(this, homes);
+        sl.setAdapter(_homeAdapter);
 
         homeBuilder.setView(homePopupView);
         AlertDialog homeslist = homeBuilder.create();
         homeslist.show();
 
         sl.setOnItemClickListener((parent, view, position, id) -> {
-            // Launch new activity DetailsActivity
-            HomeService.Homes home = h[position];
-            //home_value.setText(sl.getItemAtPosition(position).toString());
+            HomeService.Home home = homes[position];
+            String zipcode = binding.postalCodeNum.getText().toString();
+            String street = binding.streetNameDropdown.getText().toString();
+            PopupMessage.yesNoDialog(this, getString(R.string.set_home), getString(R.string.set_home_confirmation), (dialog, dId)->
+                    _ctrl.setHome(zipcode, street, home)
+            );
             homeslist.dismiss();
         });
 
-    }
-
-    public String[] transformHomes(HomeService.Homes[] h){
-        int n = h.length;
-        String[] res = new String[n];
-        for(int i = 0; i < n; ++i){
-            res[i] = h[i].numero + " " + h[i].escala + " " + h[i].pis + " " + h[i].porta;
-        }
-        return res;
     }
 }

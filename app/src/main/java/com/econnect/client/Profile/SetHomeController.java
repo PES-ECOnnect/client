@@ -1,13 +1,10 @@
 package com.econnect.client.Profile;
 
 import com.econnect.API.HomeService;
-import com.econnect.API.ProfileService;
 import com.econnect.API.ServiceFactory;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
 import com.econnect.client.R;
-
-import java.util.Arrays;
 
 public class SetHomeController {
     private final SetHomeFragment _fragment;
@@ -33,7 +30,7 @@ public class SetHomeController {
         ExecutionThread.nonUI(() -> {
             try {
                 HomeService homeService = ServiceFactory.getInstance().getHomeService();
-                HomeService.Homes[] homes = homeService.getHomesBuilding(zipcode, street, num);
+                HomeService.Home[] homes = homeService.getHomesBuilding(zipcode, street, num);
                 ExecutionThread.UI(_fragment, () -> {
                     _fragment.selectHomeDialog(homes);
                     _fragment.enableSecondStep(true);
@@ -42,25 +39,28 @@ public class SetHomeController {
             catch (Exception e) {
                 // Return to UI for showing errors
                 ExecutionThread.UI(_fragment, ()->{
-                    PopupMessage.showToast(_fragment, "There is no building with this street and number");
+                    PopupMessage.showToast(_fragment, _fragment.getString(R.string.no_building));
                     _fragment.enableSecondStep(true);
                 });
             }
         });
     }
 
-    public void setHome(String zipcode, String street, String num, String escala, String pis, String porta) {
+    public void setHome(String zipcode, String street, HomeService.Home home) {
         ExecutionThread.nonUI(() -> {
             try {
                 HomeService homeService = ServiceFactory.getInstance().getHomeService();
-                homeService.setHome(zipcode, street, num, escala, pis, porta);
+                homeService.setHome(zipcode, street, home);
+                ExecutionThread.UI(_fragment, ()->{
+                    PopupMessage.showToast(_fragment, _fragment.getString(R.string.set_home_ok));
+                    _fragment.requireActivity().finish();
+                });
             }
             catch (Exception e) {
                 // Return to UI for showing errors
                 ExecutionThread.UI(_fragment, ()->{
-                    PopupMessage.warning(_fragment, _fragment.getString(R.string.city_not_exists) + e.getMessage());
+                    PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_set_home) + e.getMessage());
                 });
-
             }
         });
     }
@@ -78,7 +78,7 @@ public class SetHomeController {
             catch (Exception e) {
                 // Return to UI for showing errors
                 ExecutionThread.UI(_fragment, ()->{
-                    PopupMessage.warning(_fragment, "Could not get city info: " + e.getMessage());
+                    PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_get_city) + e.getMessage());
                     _fragment.enableFirstStep(true);
                 });
             }

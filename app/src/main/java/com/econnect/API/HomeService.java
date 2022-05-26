@@ -1,7 +1,6 @@
 package com.econnect.API;
 
 import com.econnect.API.Exceptions.ApiException;
-import com.econnect.API.Exceptions.ProfileIsPrivateException;
 import com.econnect.Utilities.Translate;
 import com.econnect.client.R;
 
@@ -19,14 +18,14 @@ public class HomeService extends Service{
         }
     }
 
-    public static class Homes {
+    public static class Home {
         // Important: The name of these attributes must match the ones in the returned JSON
         public final String numero;
         public final String escala;
         public final String pis;
         public final String porta;
 
-        public Homes(String numero, String escala, String pis, String porta) {
+        public Home(String numero, String escala, String pis, String porta) {
             this.numero = numero;
             this.escala = escala;
             this.pis = pis;
@@ -57,7 +56,7 @@ public class HomeService extends Service{
     }*/
 
 
-    public Homes[] getHomesBuilding(String zipcode, String street_name, String num) {
+    public Home[] getHomesBuilding(String zipcode, String street_name, String num) {
         JsonResult result;
         TreeMap<String, String> params = new TreeMap<>();
         params.put(ApiConstants.ZIPCODE, zipcode);
@@ -77,7 +76,7 @@ public class HomeService extends Service{
         }
 
         // Parse result
-        Homes[] homes = result.getArray(ApiConstants.RET_RESULT, Homes[].class);
+        Home[] homes = result.getArray(ApiConstants.RET_RESULT, Home[].class);
         assertResultNotNull(homes, result);
         return homes;
     }
@@ -103,15 +102,15 @@ public class HomeService extends Service{
         return s;
     }
 
-    public boolean setHome(String zipcode, String street_name, String num, String escala, String pis, String porta) {
+    public boolean setHome(String zipcode, String street_name, Home home) {
         JsonResult result;
         TreeMap<String, String> params = new TreeMap<>();
         params.put(ApiConstants.ZIPCODE, zipcode);
         params.put(ApiConstants.STREET_NAME, street_name);
-        params.put(ApiConstants.STREET_NUM, num);
-        if (escala != null) params.put(ApiConstants.ESCALA, escala);
-        if (pis != null) params.put(ApiConstants.FLOOR, pis);
-        if (porta != null) params.put(ApiConstants.DOOR, porta);
+        params.put(ApiConstants.STREET_NUM, home.numero);
+        if (home.escala != null) params.put(ApiConstants.ESCALA, home.escala);
+        if (home.pis != null) params.put(ApiConstants.FLOOR, home.pis);
+        if (home.porta != null) params.put(ApiConstants.DOOR, home.porta);
         // Call API
         try{
             super.needsToken = true;
