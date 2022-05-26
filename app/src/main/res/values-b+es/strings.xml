@@ -228,4 +228,6 @@
     <string name="could_not_set_home">"No se ha podido establecer el nuevo domicilio: "</string>
     <string name="could_not_get_city">"No se pudieron obtener los datos del municipio: "</string>
     <string name="set_home_confirmation">¿Quieres seleccionarlo como tu domicilio?</string>
+    <string name="could_not_translate">No se pudo traducir el texto</string>
+    <string name="original_text">Texto original:</string>
 </resources>

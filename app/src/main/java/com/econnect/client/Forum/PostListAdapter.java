@@ -21,8 +21,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.econnect.API.ForumService.Post;
+import com.econnect.API.Translate.TranslateService;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.HashtagPatternMatcher;
+import com.econnect.Utilities.PopupMessage;
+import com.econnect.Utilities.Translate;
 import com.econnect.Utilities.URLPatternMatcher;
 import com.econnect.client.Profile.Medals.MedalUtils;
 import com.econnect.client.R;
@@ -103,26 +106,21 @@ public class PostListAdapter extends BaseAdapter {
             medalImage.setImageDrawable(medalDrawable);
         }
 
-
         // Set post body
-        TextView textBody = vi.findViewById(R.id.postContentText);
-        // Required for clickable tags to work
-        textBody.setMovementMethod(LinkMovementMethod.getInstance());
-        Spannable spannable = new SpannableString(p.text);
-        // Iterate for all instances of '#'
-        new HashtagPatternMatcher().find(p.text, (start, end) -> {
-            // Set color and make bold, also make clickable
-            String tag = p.text.substring(start+1, end);
-            spannable.setSpan(new TagClickableSpan(tag), start, end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-        });
-        // Iterate for all URLs
-        new URLPatternMatcher().find(p.text, (start, end) -> {
-            // Set color and make bold, also make clickable
-            String tag = p.text.substring(start, end);
-            spannable.setSpan(new LinkClickableSpan(tag), start, end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-        });
+        setBody(vi, p.text);
 
-        textBody.setText(spannable, TextView.BufferType.SPANNABLE);
+        // Attempt to translate post body
+        ExecutionThread.nonUI(()->{
+            try {
+                TranslateService.Translation t = new TranslateService().translateToCurrentLang(_owner.requireContext(), p.text);
+                if (t.translatedText.equals(p.text)) return;
+                String text = t.translatedText + "\n\n" + Translate.id(R.string.original_text) + "\n" + p.text;
+                ExecutionThread.UI(_owner, ()-> setBody(vi, text));
+            }
+            catch (Exception e) {
+                ExecutionThread.UI(_owner, ()-> PopupMessage.showToast(_owner, Translate.id(R.string.could_not_translate)));
+            }
+        });
 
         // Set likes and dislikes
         TextView likes = vi.findViewById(R.id.likesAmountText);
@@ -198,6 +196,27 @@ public class PostListAdapter extends BaseAdapter {
         }
 
         return vi;
+    }
+
+    private void setBody(View vi, String body) {
+        TextView textBody = vi.findViewById(R.id.postContentText);
+        // Required for clickable tags to work
+        textBody.setMovementMethod(LinkMovementMethod.getInstance());
+        Spannable spannable = new SpannableString(body);
+        // Iterate for all instances of '#'
+        new HashtagPatternMatcher().find(body, (start, end) -> {
+            // Set color and make bold, also make clickable
+            String tag = body.substring(start+1, end);
+            spannable.setSpan(new TagClickableSpan(tag), start, end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        });
+        // Iterate for all URLs
+        new URLPatternMatcher().find(body, (start, end) -> {
+            // Set color and make bold, also make clickable
+            String tag = body.substring(start, end);
+            spannable.setSpan(new LinkClickableSpan(tag), start, end, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        });
+
+        textBody.setText(spannable, TextView.BufferType.SPANNABLE);
     }
 
     private String timestampToString(long timestamp) {

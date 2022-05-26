@@ -230,4 +230,6 @@
     <string name="could_not_set_home">"No s'ha pogut establir el nou domicili: "</string>
     <string name="could_not_get_city">"No s'han pogut obtenir les dades del municipi: "</string>
     <string name="set_home_confirmation">Vols seleccionar-lo com el teu domicili?</string>
+    <string name="could_not_translate">No s\'ha pogut traduir el text</string>
+    <string name="original_text">Text original:</string>
 </resources>

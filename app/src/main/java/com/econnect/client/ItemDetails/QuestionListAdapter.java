@@ -11,6 +11,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.econnect.API.ProductService.ProductDetails.Question;
+import com.econnect.API.Translate.TranslateService;
+import com.econnect.API.Translate.TranslateService.Translation;
+import com.econnect.Utilities.ExecutionThread;
+import com.econnect.Utilities.PopupMessage;
+import com.econnect.Utilities.Translate;
 import com.econnect.client.R;
 
 public class QuestionListAdapter extends BaseAdapter {
@@ -63,9 +68,27 @@ public class QuestionListAdapter extends BaseAdapter {
         // Set question text
         TextView questionText = vi.findViewById(R.id.questionText);
         String text;
-        if (totalVotes != 1) text = vi.getResources().getString(R.string.question_text_and_votes, q.text, totalVotes);
-        else text = vi.getResources().getString(R.string.question_text_and_votes_one, q.text, totalVotes);
+        if (totalVotes != 1) text = Translate.id(R.string.question_text_and_votes, q.text, totalVotes);
+        else text = Translate.id(R.string.question_text_and_votes_one, q.text, totalVotes);
         questionText.setText(text);
+
+        // Attempt to translate question text
+        ExecutionThread.nonUI(()->{
+            try {
+                Translation t = new TranslateService().translateToCurrentLang(_fragment.requireContext(), q.text);
+                ExecutionThread.UI(_fragment, ()-> {
+                    String text2;
+                    if (totalVotes != 1) text2 = Translate.id(R.string.question_text_and_votes, t.translatedText, totalVotes);
+                    else text2 = Translate.id(R.string.question_text_and_votes_one, t.translatedText, totalVotes);
+                    questionText.setText(text2);
+                });
+            }
+            catch (Exception e) {
+                ExecutionThread.UI(_fragment, ()-> {
+                    PopupMessage.showToast(_fragment, Translate.id(R.string.could_not_translate));
+                });
+            }
+        });
 
         // Set percent
         ProgressBar bar = vi.findViewById(R.id.questionPercentBar);

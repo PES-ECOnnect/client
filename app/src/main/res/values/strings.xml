@@ -231,6 +231,8 @@
     <string name="could_not_set_home">"Could not set new home location: "</string>
     <string name="could_not_get_city">"Could not get city info: "</string>
     <string name="set_home_confirmation">Do you want to set this as your home?</string>
+    <string name="could_not_translate">Could not translate text</string>
+    <string name="original_text">Original text:</string>
 
 
 </resources>

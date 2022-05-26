@@ -1,7 +1,6 @@
 package com.econnect.client.Products;
 
 import android.graphics.drawable.Drawable;
-import android.view.View;
 import android.widget.ArrayAdapter;
 
 import androidx.core.content.ContextCompat;
