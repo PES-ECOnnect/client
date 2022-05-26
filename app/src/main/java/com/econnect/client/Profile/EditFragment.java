@@ -30,15 +30,12 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
     private final Boolean _isPrivate;
     private final String _pictureURL;
 
-    private Uri _selectedImage = null;
-
     private final ActivityResultLauncher<String> _getContentLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
         if (uri == null) return;
-        _selectedImage = uri;
         binding.editUserImage.setImageURI(uri);
-        binding.changeImageButton.setEnabled(true);
         binding.deleteImageButton.setEnabled(true);
-        //binding.removeImageButton.setVisibility(View.VISIBLE);
+        _ctrl.changeProfilePicture(uri);
+        PopupMessage.showToast(this, getString(R.string.image_updated));
     });
 
     public EditFragment(String username, String email, String about,Boolean isPrivate, String pictureURL) {
@@ -69,16 +66,9 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
             _getContentLauncher.launch("image/*");
         });
 
-        binding.changeImageButton.setOnClickListener(view-> {
-            _ctrl.changeProfilePicture();
-            binding.changeImageButton.setEnabled(false);
-            PopupMessage.showToast(this, getString(R.string.image_updated));
-        });
-
         binding.deleteImageButton.setOnClickListener(view -> {
            _ctrl.removeProfilePicture();
            binding.deleteImageButton.setEnabled(false);
-           binding.changeImageButton.setEnabled(false);
            PopupMessage.showToast(this, getString(R.string.image_updated));
         });
 
@@ -156,10 +146,6 @@ public class EditFragment extends CustomFragment<FragmentEditProfileBinding> {
     public void clearPasswordFields() {
         binding.oldPasswordText.setText("");
         binding.newPasswordText.setText("");
-    }
-
-    Uri getSelectedImageUri() {
-        return _selectedImage;
     }
 
     public void removeProfileImage() {

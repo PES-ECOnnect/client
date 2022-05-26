@@ -119,18 +119,17 @@ public class EditProfileController {
         });
     }
 
-    public void changeProfilePicture() {
+    public void changeProfilePicture(Uri image) {
         // Get picture url
         ExecutionThread.nonUI(() ->{
-            String url = getImageUrl();
+            String url = getImageUrl(image);
             // Call Service
             ProfileService profileService = ServiceFactory.getInstance().getProfileService();
             profileService.updatePicture(url);
         });
     }
 
-    private String getImageUrl() {
-        Uri image = _fragment.getSelectedImageUri();
+    private String getImageUrl(Uri image) {
         if (image == null)
             return "";
         File tempFile;
