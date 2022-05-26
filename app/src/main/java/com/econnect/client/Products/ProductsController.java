@@ -13,6 +13,8 @@ import com.econnect.API.ProductService;
 import com.econnect.API.ProductTypesService;
 import com.econnect.API.ProductTypesService.ProductType;
 import com.econnect.API.ServiceFactory;
+import com.econnect.API.Translate.TranslateService;
+import com.econnect.API.Translate.TranslateService.Translation;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
 import com.econnect.Utilities.Translate;
@@ -20,12 +22,15 @@ import com.econnect.client.ItemDetails.DetailsActivity;
 import com.econnect.client.R;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ProductsController {
 
     private final ProductsFragment _fragment;
     private static final String _ALL_TYPES = Translate.id(R.string.any_type);
     private final ActivityResultLauncher<Intent> _activityLauncher;
+    // Store types for finding real name later
+    ProductType[] _storedTypes;
 
     public ProductsController(ProductsFragment fragment) {
         this._fragment = fragment;
@@ -51,13 +56,27 @@ public class ProductsController {
             // Get types
             ProductTypesService service = ServiceFactory.getInstance().getProductTypesService();
             ProductType[] types = service.getProductTypes();
+            _storedTypes = types;
             // Allocate space for items (with extra "Any" element)
-            ArrayList<String> items = new ArrayList<>(types.length + 1);
+            final ArrayList<String> items = new ArrayList<>(types.length + 1);
             items.add(_ALL_TYPES);
             for (ProductType t : types) items.add(t.name);
 
             ExecutionThread.UI(_fragment, () -> {
                 _fragment.setTypesDropdownElements(items);
+            });
+
+            // Attempt to translate items
+            TranslateService ts = new TranslateService();
+            final ArrayList<String> translatedItems = new ArrayList<>(types.length + 1);
+            translatedItems.add(_ALL_TYPES);
+            for (ProductType t : types) {
+                Translation tr = ts.translateToCurrentLang(_fragment.requireContext(), t.name);
+                t.translatedName = tr.translatedText;
+                translatedItems.add(tr.translatedText);
+            }
+            ExecutionThread.UI(_fragment, () -> {
+                _fragment.setTypesDropdownElements(translatedItems);
             });
         }
         catch (Exception e) {
@@ -134,5 +153,12 @@ public class ProductsController {
 
             _activityLauncher.launch(intent);
         };
+    }
+
+    public String getTypeFromString(String translatedName) {
+        for (ProductType type : _storedTypes) {
+            if (Objects.equals(type.translatedName, translatedName)) return type.name;
+        }
+        return _ALL_TYPES;
     }
 }

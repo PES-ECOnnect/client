@@ -55,40 +55,37 @@ public class QuestionListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Initialize view and product
-        View vi = convertView;
-        if (vi == null) {
-            vi = inflater.inflate(R.layout.question_list_item, null);
-        }
+        final View vi = convertView != null ? convertView : inflater.inflate(R.layout.question_list_item, null);
         final Question q = _questions[position];
         int totalVotes = q.num_no + q.num_yes;
         int percentVotes;
         if (totalVotes > 0) percentVotes = (100 * q.num_yes) / totalVotes;
         else percentVotes = -1;
 
-        // Set question text
-        TextView questionText = vi.findViewById(R.id.questionText);
-        String text;
-        if (totalVotes != 1) text = Translate.id(R.string.question_text_and_votes, q.text, totalVotes);
-        else text = Translate.id(R.string.question_text_and_votes_one, q.text, totalVotes);
-        questionText.setText(text);
+        if (q.translatedText == null) {
+            // Translations not loaded: Set original question text and get translation
+            setText(vi, q.text, totalVotes);
 
-        // Attempt to translate question text
-        ExecutionThread.nonUI(()->{
-            try {
-                Translation t = new TranslateService().translateToCurrentLang(_fragment.requireContext(), q.text);
-                ExecutionThread.UI(_fragment, ()-> {
-                    String text2;
-                    if (totalVotes != 1) text2 = Translate.id(R.string.question_text_and_votes, t.translatedText, totalVotes);
-                    else text2 = Translate.id(R.string.question_text_and_votes_one, t.translatedText, totalVotes);
-                    questionText.setText(text2);
-                });
-            }
-            catch (Exception e) {
-                ExecutionThread.UI(_fragment, ()-> {
-                    PopupMessage.showToast(_fragment, Translate.id(R.string.could_not_translate));
-                });
-            }
-        });
+            // Attempt to translate question text
+            ExecutionThread.nonUI(()->{
+                try {
+                    Translation t = new TranslateService().translateToCurrentLang(_fragment.requireContext(), q.text);
+                    // Store translation
+                    q.translatedText = t.translatedText;
+                    ExecutionThread.UI(_fragment, ()-> setText(vi, t.translatedText, totalVotes));
+                }
+                catch (Exception e) {
+                    q.translatedText = q.text;
+                    ExecutionThread.UI(_fragment, ()-> {
+                        PopupMessage.showToast(_fragment, Translate.id(R.string.could_not_translate));
+                    });
+                }
+            });
+        }
+        else {
+            // Translations already loaded
+            setText(vi, q.translatedText, totalVotes);
+        }
 
         // Set percent
         ProgressBar bar = vi.findViewById(R.id.questionPercentBar);
@@ -131,6 +128,14 @@ public class QuestionListAdapter extends BaseAdapter {
         }
 
         return vi;
+    }
+
+    private void setText(View vi, String text, int totalVotes) {
+        TextView questionText = vi.findViewById(R.id.questionText);
+        String displayedText;
+        if (totalVotes != 1) displayedText = Translate.id(R.string.question_text_and_votes, text, totalVotes);
+        else displayedText = Translate.id(R.string.question_text_and_votes_one, text, totalVotes);
+        questionText.setText(displayedText);
     }
 
     private void setVoteButtonListener(int id, ImageButton voteButton, IDetailsController.QuestionAnswer answer) {

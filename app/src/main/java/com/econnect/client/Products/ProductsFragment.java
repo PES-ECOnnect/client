@@ -47,7 +47,7 @@ public class ProductsFragment extends CustomFragment<FragmentProductsBinding> {
 
     void filterProductList() {
         if (_products_adapter == null) return;
-        String type = binding.filterDropdown.getText().toString();
+        String type = _ctrl.getTypeFromString(binding.filterDropdown.getText().toString());
         if (type.equals(_ctrl.getDefaultType())) type = null;
 
         _products_adapter.setFilterType(type);

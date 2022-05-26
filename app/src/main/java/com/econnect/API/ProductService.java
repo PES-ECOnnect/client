@@ -61,6 +61,7 @@ public class ProductService extends Service {
             public int num_no;
             public int num_yes;
             public final String text;
+            public String translatedText = null;
             public String user_answer;
             public Question(int questionid, int num_no, int num_yes, String text, String user_answer) {
                 this.questionid = questionid;
