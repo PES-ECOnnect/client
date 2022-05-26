@@ -25,7 +25,27 @@ public class SetHomeController {
         }
     }
 
-    public void getBuilding(String zipcode, String street, String num) {
+    private void getStreets(String zipcode) {
+        ExecutionThread.nonUI(() -> {
+            try {
+                HomeService homeService = ServiceFactory.getInstance().getHomeService();
+                HomeService.Street[] streets = homeService.getCity(zipcode);
+                ExecutionThread.UI(_fragment, () -> {
+                    _fragment.setStreetsList(streets);
+                    _fragment.enableSecondStep(true);
+                });
+            }
+            catch (Exception e) {
+                // Return to UI for showing errors
+                ExecutionThread.UI(_fragment, ()->{
+                    PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_get_city) + e.getMessage());
+                    _fragment.enableFirstStep(true);
+                });
+            }
+        });
+    }
+
+    public void getBuilding(String zipcode, HomeService.Street street, String num) {
         _fragment.disableInput();
         ExecutionThread.nonUI(() -> {
             try {
@@ -46,11 +66,11 @@ public class SetHomeController {
         });
     }
 
-    public void setHome(String zipcode, String street, HomeService.Home home) {
+    public void setHome(String zipcode, HomeService.Home home) {
         ExecutionThread.nonUI(() -> {
             try {
                 HomeService homeService = ServiceFactory.getInstance().getHomeService();
-                homeService.setHome(zipcode, street, home);
+                homeService.setHome(zipcode, home);
                 ExecutionThread.UI(_fragment, ()->{
                     PopupMessage.showToast(_fragment, _fragment.getString(R.string.set_home_ok));
                     _fragment.requireActivity().finish();
@@ -60,26 +80,6 @@ public class SetHomeController {
                 // Return to UI for showing errors
                 ExecutionThread.UI(_fragment, ()->{
                     PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_set_home) + e.getMessage());
-                });
-            }
-        });
-    }
-
-    private void getStreets(String zipcode) {
-        ExecutionThread.nonUI(() -> {
-            try {
-                HomeService homeService = ServiceFactory.getInstance().getHomeService();
-                String[] streets = homeService.getCity(zipcode);
-                ExecutionThread.UI(_fragment, () -> {
-                    _fragment.setStreetsList(streets);
-                    _fragment.enableSecondStep(true);
-                });
-            }
-            catch (Exception e) {
-                // Return to UI for showing errors
-                ExecutionThread.UI(_fragment, ()->{
-                    PopupMessage.warning(_fragment, _fragment.getString(R.string.could_not_get_city) + e.getMessage());
-                    _fragment.enableFirstStep(true);
                 });
             }
         });

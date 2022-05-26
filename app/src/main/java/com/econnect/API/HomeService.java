@@ -9,12 +9,13 @@ import java.util.TreeMap;
 public class HomeService extends Service{
     HomeService(){}
 
-    public static class City {
+    public static class Street {
         public final String name;
-        public final String[] street_names;
-        public City (String name, String[] street_names) {
+        public final String[] aliases;
+
+        public Street(String name, String[] aliases) {
             this.name = name;
-            this.street_names = street_names;
+            this.aliases = aliases;
         }
     }
 
@@ -24,43 +25,33 @@ public class HomeService extends Service{
         public final String escala;
         public final String pis;
         public final String porta;
+        public final String num_cas;
+        public final String carrer;
 
-        public Home(String numero, String escala, String pis, String porta) {
+        public Home(String numero, String escala, String pis, String porta, String num_cas, String carrer) {
             this.numero = numero;
             this.escala = escala;
             this.pis = pis;
             this.porta = porta;
+            this.num_cas = num_cas;
+            this.carrer = carrer;
         }
     }
 
-   /* public static class HomeCoords {
-        public final double latitude;
-        public final double longitude;
-        public HomeCoords(double lat, double lon) {
-            latitude = lat;
-            longitude = lon;
+
+    public Home[] getHomesBuilding(String zipcode, Street street, String num) {
+        StringBuilder street_aliases = new StringBuilder();
+        boolean first = true;
+        for (String alias : street.aliases) {
+            if (first) first = false;
+            else street_aliases.append("#");
+            street_aliases.append(alias);
         }
-    }
 
-     public HomeCoords getHomeLocation() {
-        // Call API
-        super.needsToken = true;
-        JsonResult result = get(ApiConstants.HOME_PATH, null);
-
-        // Parse result
-        Double lat = result.getObject("lat", Double.class);
-        Double lon = result.getObject("lon", Double.class);
-
-        if (lat == null || lon == null) return null;
-        return new HomeCoords(lat, lon);
-    }*/
-
-
-    public Home[] getHomesBuilding(String zipcode, String street_name, String num) {
         JsonResult result;
         TreeMap<String, String> params = new TreeMap<>();
         params.put(ApiConstants.ZIPCODE, zipcode);
-        params.put(ApiConstants.STREET_NAME, street_name);
+        params.put(ApiConstants.STREET_NAME, street_aliases.toString());
         params.put(ApiConstants.STREET_NUM, num);
         // Call API
         try{
@@ -81,7 +72,7 @@ public class HomeService extends Service{
         return homes;
     }
 
-    public String[] getCity(String zipcode) {
+    public Street[] getCity(String zipcode) {
         JsonResult result;
         // Call API
         try{
@@ -97,16 +88,16 @@ public class HomeService extends Service{
         }
 
         // Parse result
-        String[] s = result.getArray(ApiConstants.RET_RESULT, String[].class);
+        Street[] s = result.getArray(ApiConstants.RET_RESULT, Street[].class);
         assertResultNotNull(s, result);
         return s;
     }
 
-    public boolean setHome(String zipcode, String street_name, Home home) {
+    public void setHome(String zipcode, Home home) {
         JsonResult result;
         TreeMap<String, String> params = new TreeMap<>();
         params.put(ApiConstants.ZIPCODE, zipcode);
-        params.put(ApiConstants.STREET_NAME, street_name);
+        params.put(ApiConstants.STREET_NAME, home.carrer);
         params.put(ApiConstants.STREET_NUM, home.numero);
         if (home.escala != null) params.put(ApiConstants.ESCALA, home.escala);
         if (home.pis != null) params.put(ApiConstants.FLOOR, home.pis);
@@ -123,17 +114,7 @@ public class HomeService extends Service{
                     throw e;
             }
         }
-
         // Parse result
-        try {
-            super.expectOkStatus(result);
-            return true;
-        } catch (Exception e){
-            // This should never happen, the API should always return an ok status or an error building
-            return false;
-        }
+        expectOkStatus(result);
     }
-
-
-
 }

@@ -45,9 +45,11 @@ public class ProfileService extends Service {
     public static class HomeCoords {
         public final double latitude;
         public final double longitude;
-        public HomeCoords(double lat, double lon) {
+        public final String address;
+        public HomeCoords(double lat, double lon, String addr) {
             latitude = lat;
             longitude = lon;
+            address = addr;
         }
     }
 
@@ -237,9 +239,10 @@ public class ProfileService extends Service {
         // Parse result
         Double lat = result.getObject("lat", Double.class);
         Double lon = result.getObject("lon", Double.class);
+        String address = result.getAttribute("address");
 
         if (lat == null || lon == null) return null;
-        return new HomeCoords(lat, lon);
+        return new HomeCoords(lat, lon, address);
     }
 
     public void reportUser(int userId) {

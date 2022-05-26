@@ -12,20 +12,22 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.econnect.API.ForumService;
+import com.econnect.API.HomeService;
 import com.econnect.client.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class StreetListAdapter extends BaseAdapter implements Filterable {
 
 
     private static LayoutInflater inflater = null;
-    private final String[] _streets;
-    private List<String> _displayedData;
+    private final HomeService.Street[] _streets;
+    private List<HomeService.Street> _displayedData;
 
-    public StreetListAdapter(Fragment owner, String[] streets) {
+    public StreetListAdapter(Fragment owner, HomeService.Street[] streets) {
         inflater = (LayoutInflater) owner.requireContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this._streets = streets;
         _displayedData = Arrays.asList(streets);
@@ -38,16 +40,12 @@ public class StreetListAdapter extends BaseAdapter implements Filterable {
 
     @Override
     public Object getItem(int position) {
-        return _displayedData.get(position);
+        return _displayedData.get(position).name;
     }
 
     @Override
     public long getItemId(int position) {
         return position;
-    }
-
-    public List<String> getList(){
-        return _displayedData;
     }
 
     @Override
@@ -59,7 +57,7 @@ public class StreetListAdapter extends BaseAdapter implements Filterable {
         }
 
         TextView nameStreet = vi.findViewById(R.id.street_name);
-        nameStreet.setText(_displayedData.get(position));
+        nameStreet.setText(_displayedData.get(position).name);
 
         return vi;
     }
@@ -82,11 +80,11 @@ public class StreetListAdapter extends BaseAdapter implements Filterable {
                 // Ignore case and trim
                 String queryLower = constraint.toString().toLowerCase().trim();
                 // Get only the tags that contain (or begin with) the query
-                ArrayList<String> containQuery = new ArrayList<>();
-                ArrayList<String> beginWithQuery = new ArrayList<>();
-                for (String street : _streets) {
+                ArrayList<HomeService.Street> containQuery = new ArrayList<>();
+                ArrayList<HomeService.Street> beginWithQuery = new ArrayList<>();
+                for (HomeService.Street street : _streets) {
                     // Add type to the corresponding list
-                    String name = street.toLowerCase();
+                    String name = street.name.toLowerCase();
                     if (name.startsWith(queryLower)) {
                         beginWithQuery.add(street);
                     }
@@ -106,9 +104,16 @@ public class StreetListAdapter extends BaseAdapter implements Filterable {
             @Override
             @SuppressWarnings("unchecked")
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                _displayedData = (List<String>) results.values;
+                _displayedData = (List<HomeService.Street>) results.values;
                 notifyDataSetChanged();
             }
         };
+    }
+
+    public HomeService.Street getStreet(String streetName) {
+        for (HomeService.Street s : _streets) {
+            if (Objects.equals(s.name, streetName)) return s;
+        }
+        return null;
     }
 }

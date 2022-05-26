@@ -13,6 +13,9 @@ import androidx.appcompat.content.res.AppCompatResources;
 
 import com.econnect.API.CompanyService.Company;
 import com.econnect.API.ElektroGo.CarpoolService.CarpoolPoint;
+import com.econnect.API.ProfileService;
+import com.econnect.API.ServiceFactory;
+import com.econnect.Utilities.ExecutionThread;
 import com.econnect.client.R;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
@@ -24,9 +27,18 @@ import java.util.Locale;
 public class CompanyMapInfoAdapter implements GoogleMap.InfoWindowAdapter {
 
     private final LayoutInflater _inflater;
+    private String homeAddress = null;
 
     public CompanyMapInfoAdapter(Context context) {
         _inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        ExecutionThread.nonUI(()->{
+            ProfileService service = ServiceFactory.getInstance().getProfileService();
+            ProfileService.HomeCoords loc = service.getHomeLocation();
+            if (loc != null) {
+                homeAddress = loc.address;
+            }
+        });
     }
 
     @Nullable
@@ -87,7 +99,11 @@ public class CompanyMapInfoAdapter implements GoogleMap.InfoWindowAdapter {
             return v;
         }
         else if (tag instanceof String && tag.equals("Home")) {
-            return _inflater.inflate(R.layout.map_popup_myhome, null);
+            final View v = _inflater.inflate(R.layout.map_popup_myhome, null);
+            TextView addressText = v.findViewById(R.id.home_address);
+            if (homeAddress == null) addressText.setVisibility(View.GONE);
+            else addressText.setText(homeAddress);
+            return v;
         }
         else {
             throw new RuntimeException("Unrecognized tag type");

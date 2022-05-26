@@ -35,9 +35,8 @@ public class SetHomeFragment extends CustomFragment<FragmentSetHomeBinding> {
 
         binding.checkHomeButton.setOnClickListener(view -> {
             String zipcode = binding.postalCodeNum.getText().toString();
-            String street = binding.streetNameDropdown.getText().toString();
             String number = binding.streetNumText.getText().toString();
-            _ctrl.getBuilding(zipcode, street, number);
+            _ctrl.getBuilding(zipcode, selectedStreet(), number);
         });
     }
 
@@ -82,7 +81,7 @@ public class SetHomeFragment extends CustomFragment<FragmentSetHomeBinding> {
         }
     }
 
-    public void setStreetsList(String[] streets){
+    public void setStreetsList(HomeService.Street[] streets){
         StreetListAdapter adapter = new StreetListAdapter(this, streets);
         binding.streetNameDropdown.setAdapter(adapter);
     }
@@ -94,7 +93,6 @@ public class SetHomeFragment extends CustomFragment<FragmentSetHomeBinding> {
         View homePopupView = getLayoutInflater().inflate(R.layout.street_list, null);
 
         ListView sl = homePopupView.findViewById(R.id.streetList);
-        int highlightColor = ContextCompat.getColor(requireContext(), R.color.green);
         HomeListAdapter _homeAdapter = new HomeListAdapter(this, homes);
         sl.setAdapter(_homeAdapter);
 
@@ -105,12 +103,16 @@ public class SetHomeFragment extends CustomFragment<FragmentSetHomeBinding> {
         sl.setOnItemClickListener((parent, view, position, id) -> {
             HomeService.Home home = homes[position];
             String zipcode = binding.postalCodeNum.getText().toString();
-            String street = binding.streetNameDropdown.getText().toString();
+
             PopupMessage.yesNoDialog(this, getString(R.string.set_home), getString(R.string.set_home_confirmation), (dialog, dId)->
-                    _ctrl.setHome(zipcode, street, home)
+                    _ctrl.setHome(zipcode, home)
             );
             homeslist.dismiss();
         });
+    }
 
+    private HomeService.Street selectedStreet() {
+        String streetName = binding.streetNameDropdown.getText().toString();
+        return ((StreetListAdapter) binding.streetNameDropdown.getAdapter()).getStreet(streetName);
     }
 }
