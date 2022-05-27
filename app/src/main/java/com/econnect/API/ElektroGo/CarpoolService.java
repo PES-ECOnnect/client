@@ -49,7 +49,7 @@ public class CarpoolService extends Service {
     public CarpoolPoint[] getPoints(double lat, double lon, float radiusKm) throws ApiException {
         // Add parameters
         TreeMap<String, String> params = new TreeMap<>();
-        params.put(ElektroGoAPIConstants.CARPOOL_PARAM_TOKEN, ElektroGoAPIConstants.ELEKTROGO_TOKEN);
+        params.put(ElektroGoAPIConstants.CARPOOL_PARAM_TOKEN, ApiKey.ELEKTROGO_TOKEN);
         params.put(ElektroGoAPIConstants.CARPOOL_PARAM_LAT, Double.toString(lat));
         params.put(ElektroGoAPIConstants.CARPOOL_PARAM_LON, Double.toString(lon));
         params.put(ElektroGoAPIConstants.CARPOOL_PARAM_RADIUS, Float.toString(radiusKm));
