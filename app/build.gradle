@@ -33,6 +33,11 @@ android {
         throw new GradleException("Could not read version.properties!")
     }
 
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
 
     buildTypes {
         release {

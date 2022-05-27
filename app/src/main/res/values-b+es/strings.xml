@@ -85,8 +85,8 @@
     <string name="translate">Cambiar idioma</string>
     <string name="change_language">Selecciona tu idioma (es necesario reiniciar la app):</string>
     <string name="english">Inglés</string>
-    <string name="catalan">Catalan</string>
-    <string name="spanish">Castellano</string>
+    <string name="catalan">Catalán</string>
+    <string name="spanish">Español</string>
     <string name="profile_picture">Foto de perfil</string>
     <string name="change_profile_image">Cambiar imagen</string>
 
