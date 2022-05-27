@@ -33,6 +33,8 @@ jobs:
       run: echo '${{ secrets.IMAGESHACK_KEY }}' > app/src/main/java/com/econnect/API/ImageUpload/ApiKey.java
     - name: Create Translate token
       run: echo '${{ secrets.TRANSLATE_KEY }}' > app/src/main/java/com/econnect/API/Translate/ApiKey.java
+    - name: Create ElektroGo token
+      run: echo '${{ secrets.ELEKTROGO_KEY }}' > app/src/main/java/com/econnect/API/ElektroGo/ApiKey.java
         
         
     # This may improve performance

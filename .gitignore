@@ -20,3 +20,4 @@ app/release/*
 
 app/src/main/java/com/econnect/API/ImageUpload/ApiKey.java
 app/src/main/java/com/econnect/API/Translate/ApiKey.java
+app/src/main/java/com/econnect/API/ElektroGo/ApiKey.java
