@@ -232,4 +232,5 @@
     <string name="set_home_confirmation">Vols seleccionar-lo com el teu domicili?</string>
     <string name="could_not_translate">No s\'ha pogut traduir el text</string>
     <string name="original_text">Text original:</string>
+    <string name="translate_text">Traduir al català</string>
 </resources>

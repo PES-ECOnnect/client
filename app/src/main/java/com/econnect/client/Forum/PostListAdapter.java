@@ -108,19 +108,10 @@ public class PostListAdapter extends BaseAdapter {
 
         // Set post body
         setBody(vi, p.text);
-
-        // Attempt to translate post body
-        ExecutionThread.nonUI(()->{
-            try {
-                TranslateService.Translation t = new TranslateService().translateToCurrentLang(_owner.requireContext(), p.text);
-                if (t.translatedText.equals(p.text)) return;
-                String text = t.translatedText + "\n\n" + Translate.id(R.string.original_text) + "\n" + p.text;
-                ExecutionThread.UI(_owner, ()-> setBody(vi, text));
-            }
-            catch (Exception e) {
-                ExecutionThread.UI(_owner, ()-> PopupMessage.showToast(_owner, Translate.id(R.string.could_not_translate)));
-            }
-        });
+        // Set listener for translating
+        TextView translateButton = vi.findViewById(R.id.translate_button);
+        translateButton.setVisibility(View.VISIBLE);
+        translateButton.setOnClickListener(view -> translateTextAsync(vi, p.text));
 
         // Set likes and dislikes
         TextView likes = vi.findViewById(R.id.likesAmountText);
@@ -321,5 +312,26 @@ public class PostListAdapter extends BaseAdapter {
 
         // Call API
         _callback.vote(p, like, removeThis);
+    }
+
+    private void translateTextAsync(View vi, String text) {
+        // Attempt to translate post body
+        ExecutionThread.nonUI(()->{
+            try {
+                // Get translation. If it's the same, ignore
+                TranslateService.Translation t = new TranslateService().translateToCurrentLang(_owner.requireContext(), text);
+                if (!t.translatedText.equals(text)) {
+                    // Set the translated text
+                    String translation = t.translatedText + "\n\n" + Translate.id(R.string.original_text) + "\n" + text;
+                    ExecutionThread.UI(_owner, ()-> setBody(vi, translation));
+                }
+                // Hide the translate button
+                TextView translateButton = vi.findViewById(R.id.translate_button);
+                ExecutionThread.UI(_owner, ()-> translateButton.setVisibility(View.GONE));
+            }
+            catch (Exception e) {
+                ExecutionThread.UI(_owner, ()-> PopupMessage.showToast(_owner, Translate.id(R.string.could_not_translate)));
+            }
+        });
     }
 }

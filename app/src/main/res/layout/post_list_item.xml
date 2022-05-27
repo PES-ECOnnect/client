@@ -53,22 +53,35 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"
         android:layout_weight="1"
         android:paddingLeft="16dp"
         android:paddingTop="4dp"
         android:paddingRight="16dp"
         tools:text="Lorem ipsum \ndolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem" />
 
+    <TextView
+        android:id="@+id/translate_button"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center_vertical"
+        android:text="@string/translate_text"
+        android:textColor="@color/green"
+        android:textStyle="bold"
+        tools:ignore="TextContrastCheck" />
+
     <ImageView
         android:id="@+id/postImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="8dp"
         android:adjustViewBounds="true"
         android:contentDescription="@string/post_image_description"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
+        android:paddingBottom="4dp"
         android:scaleType="fitCenter"
         tools:ignore="ImageContrastCheck"
         tools:srcCompat="@tools:sample/avatars" />
@@ -79,7 +92,6 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="16dp"
-        android:paddingTop="8dp"
         android:paddingRight="16dp"
         android:paddingBottom="8dp">
 
