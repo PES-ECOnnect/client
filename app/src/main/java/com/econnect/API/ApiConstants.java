@@ -4,7 +4,7 @@ package com.econnect.API;
 public interface ApiConstants {
     // PATHS
     String BASE_URL_DEV = "http://10.0.2.2:5000";
-    String BASE_URL_DEPLOY = "https://pes-econnect.herokuapp.com";
+    String BASE_URL_DEPLOY = "https://econnect.up.railway.app";
     String BASE_URL = BASE_URL_DEPLOY;
 
     String LOGIN_PATH = "/account/login";
