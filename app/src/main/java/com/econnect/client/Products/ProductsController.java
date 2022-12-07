@@ -155,9 +155,15 @@ public class ProductsController {
         };
     }
 
-    public String getTypeFromString(String translatedName) {
+    public String getTypeFromString(String typeName) {
         for (ProductType type : _storedTypes) {
-            if (Objects.equals(type.translatedName, translatedName)) return type.name;
+            if (type.translatedName == null) {
+                // Could not translate types, compare with regular name
+                if (Objects.equals(type.name, typeName)) return type.name;
+            } else {
+                // Type dropdown has been translated, compare with translated name
+                if (Objects.equals(type.translatedName, typeName)) return type.name;
+            }
         }
         return _ALL_TYPES;
     }
