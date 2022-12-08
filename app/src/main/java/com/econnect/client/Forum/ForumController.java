@@ -20,6 +20,7 @@ import com.econnect.Utilities.BitmapLoader;
 import com.econnect.Utilities.ExecutionThread;
 import com.econnect.Utilities.PopupMessage;
 import com.econnect.Utilities.ShareManager;
+import com.econnect.Utilities.SettingsFile;
 import com.econnect.client.BuildConfig;
 import com.econnect.client.Profile.VisitUserProfileActivity;
 import com.econnect.client.R;
