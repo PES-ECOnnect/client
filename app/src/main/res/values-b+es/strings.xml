@@ -106,9 +106,9 @@
     <string name="medal_producte_or">Valorar 20 productos</string>
     <string name="medal_producte_plata">Valorar 10 productos</string>
     <string name="medal_producte_bronze">Valorar 1 producto</string>
-    <string name="medal_forum_or">Hacer 25 posts en el forum</string>
-    <string name="medal_forum_plata">Hacer 10 posts en el forum</string>
-    <string name="medal_forum_bronze">Hacer 1 post en el forum</string>
+    <string name="medal_forum_or">Hacer 25 posts en el foro</string>
+    <string name="medal_forum_plata">Hacer 10 posts en el foro</string>
+    <string name="medal_forum_bronze">Hacer 1 post en el foro</string>
     <string name="medal_like_or">Dar 100 likes/dislikes</string>
     <string name="medal_like_plata">Dar 20 likes/dislikes</string>
     <string name="medal_like_bronze">Dar 1 like/dislike</string>
@@ -231,4 +231,7 @@
     <string name="could_not_translate">No se pudo traducir el texto</string>
     <string name="original_text">Texto original:</string>
     <string name="translate_text">Traducir al español</string>
+    
+    <string name="forum_policy">¿Aceptas la política de uso?</string>
+    <string name="forum_policy_text">Al usar este foro aceptas los siguientes términos y condiciones: 1) No publiques ningún contenido ofensivo, racista, discriminatorio o sexualmente explícito. 2) No publiques ningún contenido ilegal o que viole los derechos de otros. 3) Trata a otros usuarios con respeto. 4) No publiques información personal sobre ti o sobre otros. 5) No publiques spam o anuncios.</string>
 </resources>

@@ -233,4 +233,8 @@
     <string name="could_not_translate">No s\'ha pogut traduir el text</string>
     <string name="original_text">Text original:</string>
     <string name="translate_text">Traduir al català</string>
+
+    <string name="forum_policy">Acceptes les condicions d\'ús del fòrum?</string>
+    <string name="forum_policy_text">En utilitzar aquest fòrum acceptes les següents condicions d\'ús: 1) No publiquis cap contingut ofensiu, racista, xenòfob o sexualment explícit. 2) No publiquis cap contingut il.legal o que vulneri els drets d\'altres. 3) Tracta els altres usuaris amb respecte. 4) No publiquis cap informació personal sobre tu mateix o sobre altres. 5) No publiquis spam o publicitat.</string>
+
 </resources>

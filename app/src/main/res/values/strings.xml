@@ -235,5 +235,7 @@
     <string name="original_text">Original text:</string>
     <string name="translate_text">Translate to English</string>
 
+    <string name="forum_policy">Do you accept the user policy?</string>
+    <string name="forum_policy_text">By using this forum you agree to the following terms and conditions: 1) Do not publish any offensive, racist, hateful or sexually explicit content. 2) Do not post any content that is illegal or violates the rights of others. 3) Treat other users with respect. 4) Do not post any personal information about yourself or others. 5) Do not post any spam or advertisements. </string>
 
 </resources>

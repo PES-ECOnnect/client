@@ -30,6 +30,9 @@ public class ForumController {
     private boolean _listContainsAllTags = true;
     private final ActivityResultLauncher<Intent> _activityLauncher;
 
+    // Key for storing whether the user has seen the forum policy
+    private final String FORUM_POLICY_SHOWN = "forum_policy_shown";
+
     public ForumController(ForumFragment fragment) {
         this._fragment = fragment;
         _activityLauncher = fragment.registerForActivityResult(
@@ -223,10 +226,32 @@ public class ForumController {
 
     View.OnClickListener addPostOnClick() {
         return (view) -> {
-            // Launch new activity PostActivity
-            Intent intent = new Intent(_fragment.getContext(), PostActivity.class);
-            _activityLauncher.launch(intent);
+            // Intent for launching new PostActivity
+            final Intent postIntent = new Intent(_fragment.getContext(), PostActivity.class);
+            
+            // The first time the user clicks on the add post button, show a popup message
+            if (!hasSeenForumPolicy()) {
+                PopupMessage.yesNoDialog(_fragment, _fragment.getString(R.string.forum_policy), _fragment.getString(R.string.forum_policy_text), (dialog, id) -> {
+                    setForumPolicySeen(true);
+                    _activityLauncher.launch(postIntent);
+                });
+            }
+            else {
+                // Launch the post activity
+                _activityLauncher.launch(postIntent);
+            }
         };
+    }
+    
+    // Returns true if the user has seen the forum policy
+    private boolean hasSeenForumPolicy() {
+        final SettingsFile file = new SettingsFile(_fragment);
+        final Boolean has_seen = file.getBoolean(FORUM_POLICY_SHOWN);
+        return has_seen != null && has_seen;
+    }
+    private void setForumPolicySeen(boolean seen) {
+        final SettingsFile file = new SettingsFile(_fragment);
+        file.putBoolean(FORUM_POLICY_SHOWN, seen);
     }
 
     final OnBackPressedCallback backPressedHandler = new OnBackPressedCallback(true) {

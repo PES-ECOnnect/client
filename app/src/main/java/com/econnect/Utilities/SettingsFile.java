@@ -27,12 +27,20 @@ public class SettingsFile {
             return null;
         return _sharedPref.getInt(key, -1);
     }
+    public Boolean getBoolean(String key) {
+        if (!_sharedPref.contains(key))
+            return null;
+        return _sharedPref.getBoolean(key, false);
+    }
 
     public void putString(String key, String value) {
         _sharedPref.edit().putString(key, value).apply();
     }
     public void putInt(String key, int value) {
         _sharedPref.edit().putInt(key, value).apply();
+    }
+    public void putBoolean(String key, boolean value) {
+        _sharedPref.edit().putBoolean(key, value).apply();
     }
 
     // Remove a key
